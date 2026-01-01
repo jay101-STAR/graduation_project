@@ -1,9 +1,168 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0" version="29.2.9">
   <diagram name="Page-1" id="WEorrAwjLD5vItjSLwBc">
-    <mxGraphModel>
+    <mxGraphModel dx="1226" dy="807" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="HZwOjIOZlV330co81w-H-2" parent="1" style="rounded=1;arcSize=20;strokeWidth=2" value="PC: 取指阶段" vertex="1">
+          <mxGeometry height="54" width="123" x="138" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="HZwOjIOZlV330co81w-H-3" parent="1" style="rounded=1;arcSize=20;strokeWidth=2;" value="ID: 译码阶段" vertex="1">
+          <mxGeometry height="54" width="119" x="838" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="HZwOjIOZlV330co81w-H-4" parent="1" style="rounded=1;arcSize=20;strokeWidth=2;" value="EX: 执行阶段" vertex="1">
+          <mxGeometry height="54" width="122" x="1161" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="HZwOjIOZlV330co81w-H-5" parent="1" style="rounded=1;arcSize=20;strokeWidth=2;" value="RegisterFile: 寄存器堆" vertex="1">
+          <mxGeometry height="54" width="189" x="1520" y="227" as="geometry" />
+        </mxCell>
+        <mxCell id="HZwOjIOZlV330co81w-H-6" parent="1" style="ellipse;aspect=fixed;strokeWidth=2;whiteSpace=wrap;" value="Inst ROM" vertex="1">
+          <mxGeometry height="77" width="77" x="511" y="208.5" as="geometry" />
+        </mxCell>
+        <mxCell id="HZwOjIOZlV330co81w-H-7" parent="1" style="ellipse;aspect=fixed;strokeWidth=2;whiteSpace=wrap;" value="Clk/Rst" vertex="1">
+          <mxGeometry height="68" width="68" x="20" y="213" as="geometry" />
+        </mxCell>
+        <mxCell id="HZwOjIOZlV330co81w-H-8" edge="1" parent="1" source="HZwOjIOZlV330co81w-H-7" style="curved=1;startArrow=none;endArrow=block;exitX=0.71;exitY=1;entryX=0;entryY=0.5;rounded=0;" target="HZwOjIOZlV330co81w-H-2" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="113" y="247" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HZwOjIOZlV330co81w-H-9" edge="1" parent="1" source="HZwOjIOZlV330co81w-H-7" style="curved=1;startArrow=none;endArrow=block;exitX=0.85;exitY=0;entryX=0.35;entryY=0;rounded=0;" target="HZwOjIOZlV330co81w-H-5" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="113" y="20" />
+              <mxPoint x="1406" y="20" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HZwOjIOZlV330co81w-H-10" edge="1" parent="1" source="HZwOjIOZlV330co81w-H-2" style="curved=1;startArrow=none;endArrow=block;exitX=0.74;exitY=0;entryX=0;entryY=0.42;rounded=0;" target="HZwOjIOZlV330co81w-H-6" value="openmips_instrom_addr (next_pc)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="386" y="79" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HZwOjIOZlV330co81w-H-11" edge="1" parent="1" source="HZwOjIOZlV330co81w-H-2" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.14;entryX=0;entryY=0.76;rounded=0;" target="HZwOjIOZlV330co81w-H-6" value="openmips_instrom_ren">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="386" y="189" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HZwOjIOZlV330co81w-H-12" edge="1" parent="1" source="HZwOjIOZlV330co81w-H-6" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.51;entryX=0.07;entryY=0;rounded=0;" target="HZwOjIOZlV330co81w-H-3" value="instrom_openmips_data">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="713" y="107" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HZwOjIOZlV330co81w-H-13" edge="1" parent="1" source="HZwOjIOZlV330co81w-H-2" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.67;entryX=0;entryY=0.93;rounded=0;" target="HZwOjIOZlV330co81w-H-3" value="pc_id_pc">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="386" y="275" />
+              <mxPoint x="713" y="275" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HZwOjIOZlV330co81w-H-14" edge="1" parent="1" source="HZwOjIOZlV330co81w-H-3" style="curved=1;startArrow=none;endArrow=block;exitX=0.74;exitY=0;entryX=0.32;entryY=0;rounded=0;" target="HZwOjIOZlV330co81w-H-5" value="id_reg_rs1_addr/ren">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1053" y="52" />
+              <mxPoint x="1406" y="52" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HZwOjIOZlV330co81w-H-15" edge="1" parent="1" source="HZwOjIOZlV330co81w-H-3" style="curved=1;startArrow=none;endArrow=block;exitX=0.83;exitY=0;entryX=0.25;entryY=0;rounded=0;" target="HZwOjIOZlV330co81w-H-5" value="id_reg_rs2_addr/ren">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1053" y="96" />
+              <mxPoint x="1406" y="96" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HZwOjIOZlV330co81w-H-16" edge="1" parent="1" source="HZwOjIOZlV330co81w-H-5" style="curved=1;startArrow=none;endArrow=block;exitX=0.35;exitY=1;entryX=0.67;entryY=1;rounded=0;" target="HZwOjIOZlV330co81w-H-3" value="reg_id_rs1_data">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1406" y="416" />
+              <mxPoint x="1053" y="416" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HZwOjIOZlV330co81w-H-17" edge="1" parent="1" source="HZwOjIOZlV330co81w-H-5" style="curved=1;startArrow=none;endArrow=block;exitX=0.38;exitY=1;entryX=0.64;entryY=1;rounded=0;" target="HZwOjIOZlV330co81w-H-3" value="reg_id_rs2_data">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1406" y="460" />
+              <mxPoint x="1053" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HZwOjIOZlV330co81w-H-18" edge="1" parent="1" source="HZwOjIOZlV330co81w-H-3" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.11;entryX=0.16;entryY=0;rounded=0;" target="HZwOjIOZlV330co81w-H-4" value="id_ex_pc">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1053" y="149" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HZwOjIOZlV330co81w-H-19" edge="1" parent="1" source="HZwOjIOZlV330co81w-H-3" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.43;entryX=0;entryY=0.05;rounded=0;" target="HZwOjIOZlV330co81w-H-4" value="id_ex_rs1/rs2_data">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1053" y="193" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HZwOjIOZlV330co81w-H-20" edge="1" parent="1" source="HZwOjIOZlV330co81w-H-3" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.74;entryX=0;entryY=0.35;rounded=0;" target="HZwOjIOZlV330co81w-H-4" value="id_ex_rd_addr/wen">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1053" y="237" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HZwOjIOZlV330co81w-H-21" edge="1" parent="1" source="HZwOjIOZlV330co81w-H-3" style="curved=1;startArrow=none;endArrow=block;exitX=0.95;exitY=1;entryX=0;entryY=0.64;rounded=0;" target="HZwOjIOZlV330co81w-H-4" value="id_ex_aluc/alucex">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1053" y="281" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HZwOjIOZlV330co81w-H-22" edge="1" parent="1" source="HZwOjIOZlV330co81w-H-4" style="curved=1;startArrow=none;endArrow=block;exitX=0.81;exitY=0;entryX=0.16;entryY=0;rounded=0;" target="HZwOjIOZlV330co81w-H-5" value="ex_reg_rd_data (Result)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1406" y="128" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HZwOjIOZlV330co81w-H-23" edge="1" parent="1" source="HZwOjIOZlV330co81w-H-4" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.46;entryX=0;entryY=0.82;rounded=0;" target="HZwOjIOZlV330co81w-H-5" value="ex_reg_rd_addr">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1406" y="253" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HZwOjIOZlV330co81w-H-24" edge="1" parent="1" source="HZwOjIOZlV330co81w-H-4" style="curved=1;startArrow=none;endArrow=block;exitX=0.82;exitY=1;entryX=0.32;entryY=1;rounded=0;" target="HZwOjIOZlV330co81w-H-5" value="ex_reg_rd_wen">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1406" y="384" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HZwOjIOZlV330co81w-H-25" edge="1" parent="1" source="HZwOjIOZlV330co81w-H-4" style="curved=1;startArrow=none;endArrow=block;exitX=0;exitY=0.96;entryX=1;entryY=0.99;rounded=0;" target="HZwOjIOZlV330co81w-H-2" value="ex_pc_pc_data (JumpTarget)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1053" y="328" />
+              <mxPoint x="386" y="328" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HZwOjIOZlV330co81w-H-26" edge="1" parent="1" source="HZwOjIOZlV330co81w-H-4" style="curved=1;startArrow=none;endArrow=block;exitX=0.22;exitY=1;entryX=0.78;entryY=1;rounded=0;" target="HZwOjIOZlV330co81w-H-2" value="ex_pc_pc_wen (BranchFlag)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1053" y="396" />
+              <mxPoint x="386" y="396" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
