@@ -1,0 +1,164 @@
+0 
+47
++define+fsdb
++itf+/home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/linux64/lib/vcsdp_lite.tab
++v2k
++vcsd1
++vpi
+-Mamsrun=
+-Masflags=
+-Mcc=gcc-4.8
+-Mcfl= -pipe -fPIC -O -I/home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/include
+-Mcplusplus=g++-4.8
+-Mcrt0=
+-Mcrtn=
+-Mcsrc=
+-Mexternalobj=
+-Mldflags= -Wl,--no-as-needed -rdynamic
+-Mobjects= /home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/linux64/lib/libvirsim.so /home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/linux64/lib/liberrorinf.so /home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/linux64/lib/libsnpsmalloc.so /home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/linux64/lib/libvfs.so
+-Mout=simv
+-Msaverestoreobj=/home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/linux64/lib/vcs_save_restore_new.o
+-Msyslibs=/home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2/share/PLI/VCS/LINUX64/pli.a -ldl
+-Mvcsaceobjs=
+-Mxcflags= -pipe -fPIC -I/home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/include
+-P
+-Xufe=2steps
+-debug_acc+fsdb
+-debug_access+r
+-fsdb
+-full64
+-gen_obj
+-kdb
+-lca
+-picarchive
+-sverilog
+-timescale=1ns/1ns
+./vsrc/define.v
+./vsrc/ex.v
+./vsrc/id.v
+./vsrc/instrom.v
+./vsrc/mux.v
+./vsrc/muxwithdefault.v
+./vsrc/openmips.v
+./vsrc/pc.v
+./vsrc/reg.v
+./vsrc/registerfile.v
+./vsrc/testbench.v
+./vsrc/top.v
+/home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/linux64/bin/vcs1
+/home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2/share/PLI/VCS/LINUX64/verdi.tab
+90
+sysc_uni_pwd=/home/jay/Desktop/graduation_project
+_CE_M=
+_CE_CONDA=
+XMODIFIERS=@im=ibus
+XDG_SESSION_TYPE=wayland
+XDG_SESSION_DESKTOP=ubuntu
+XDG_SESSION_CLASS=user
+XDG_RUNTIME_DIR=/run/user/1000
+XDG_MENU_PREFIX=gnome-
+XDG_DATA_DIRS=/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+XDG_CURRENT_DESKTOP=ubuntu:GNOME
+XDG_CONFIG_DIRS=/etc/xdg/xdg-ubuntu:/etc/xdg
+XAUTHORITY=/run/user/1000/.mutter-Xwaylandauth.3MYNI3
+WAYLAND_DISPLAY=wayland-0
+VTE_VERSION=7600
+VMR_MODE_FLAG=64
+VERDI_HOME=/home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2
+VERDI_DIR=/home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2
+VCS_TARGET_ARCH=amd64
+VCS_MX_HOME_INTERNAL=1
+VCS_MODE_FLAG=64
+VCS_LCAMSG_PRINT_OFF=1
+VCS_HOME=/home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2
+VCS_DEPTH=0
+VCS_ARG_ADDED_FOR_TMP=1
+VCS_ARCH_OVERRIDE=linux
+VCS_ARCH=linux64
+USERNAME=jay
+UNAME=/bin/uname
+TOOL_HOME=/home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/linux64
+TMUX_PLUGIN_MANAGER_PATH=~/.config/tmux/plugins/
+TMUX_PANE=%1
+TMUX=/tmp/tmux-1000/default,2506613,0
+TERM_PROGRAM_VERSION=3.4
+TERM_PROGRAM=tmux
+SYSTEMD_EXEC_PID=2762
+SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
+SNPS_VERDI_INTERNAL_LP_XML_NEW_FLOW=1
+SNPS_VCS_INTERNAL_UBUNTU_PRE_LDFLAGS=  
+SESSION_MANAGER=local/jay-VMware-Virtual-Platform:@/tmp/.ICE-unix/2725,unix/jay-VMware-Virtual-Platform:/tmp/.ICE-unix/2725
+SCRNAME=vcs
+SCRIPT_NAME=vcs
+QT_IM_MODULE=ibus
+QT_ACCESSIBILITY=1
+OVA_UUM=0
+OSH=/home/jay/.oh-my-bash
+NVM_INC=/home/jay/.nvm/versions/node/v20.18.3/include/node
+NVM_DIR=/home/jay/.nvm
+NVM_CD_FLAGS=
+NVM_BIN=/home/jay/.nvm/versions/node/v20.18.3/bin
+NVBOARD_HOME=/home/jay/Desktop/ics2024/ysyx-workbench/nvboard
+NPI_PLATFORM=LINUX64_GNU_472
+NPC_HOME=/home/jay/Desktop/ics2024/ysyx-workbench/npc
+NOVAS_INST_DIR=/home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2
+NOVAS_HOME=/home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2
+NEMU_HOME=/home/jay/Desktop/ics2024/ysyx-workbench/nemu
+MFLAGS=
+MEMORY_PRESSURE_WRITE=c29tZSAyMDAwMDAgMjAwMDAwMAA=
+MEMORY_PRESSURE_WATCH=/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.Shell@wayland.service/memory.pressure
+MAKE_TERMOUT=/dev/pts/2
+MAKE_TERMERR=/dev/pts/2
+MAKELEVEL=1
+MAKEFLAGS=
+LSCOLORS=Gxfxcxdxdxegedabagacad
+LESSOPEN=| /usr/bin/lesspipe %s
+LESSCLOSE=/usr/bin/lesspipe %s %s
+LESS=-R
+LC_CTYPE=en_US.UTF-8
+LC_ALL=C
+IM_CONFIG_PHASE=1
+IM_CONFIG_CHECK_ENV=1
+HISTFILESIZE=2147450879
+GTK_MODULES=gail:atk-bridge
+GSM_SKIP_SSH_AGENT_WORKAROUND=true
+GNOME_TERMINAL_SERVICE=:1.109
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/7ffaf12c_decc_4d20_9f34_b9e174440786
+GNOME_SHELL_SESSION_MODE=ubuntu
+GNOME_SETUP_DISPLAY=:1
+GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+GDMSESSION=ubuntu
+DVE_HOME=/home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/gui/dve
+DESKTOP_SESSION=ubuntu
+DEBUGINFOD_URLS=https://debuginfod.ubuntu.com 
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+CONDA_SHLVL=0
+CONDA_PYTHON_EXE=/home/jay/anaconda3/bin/python
+CONDA_EXE=/home/jay/anaconda3/bin/conda
+COLORTERM=truecolor
+CLUTTER_DISABLE_MIPMAPPED_TEXT=1
+AM_HOME=/home/jay/Desktop/ics2024/ysyx-workbench/abstract-machine
+0
+15
+1767352953 /home/jay/Desktop/graduation_project/vsrc/define.v
+1767448121 ./vsrc/openmips.v
+1767352953 ./vsrc/define.v
+1767446012 ./vsrc/ex.v
+1767428577 ./vsrc/instrom.v
+1767428374 ./vsrc/testbench.v
+1767423428 ./vsrc/top.v
+1767352922 ./vsrc/mux.v
+1767445968 ./vsrc/muxwithdefault.v
+1767426072 ./vsrc/id.v
+1767425465 ./vsrc/pc.v
+1767352969 ./vsrc/reg.v
+1767448352 ./vsrc/registerfile.v
+1551421246 /home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/linux64/lib/vcsdp_lite.tab
+1550753332 /home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2/share/PLI/VCS/LINUX64/verdi.tab
+4
+1551422344 /home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/linux64/lib/libvirsim.so
+1551421792 /home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/linux64/lib/liberrorinf.so
+1551421768 /home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/linux64/lib/libsnpsmalloc.so
+1551421789 /home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/linux64/lib/libvfs.so
+1767449389 simv.daidir
+-1 partitionlib

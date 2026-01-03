@@ -1,0 +1,114 @@
+@verdi rc file Version 1.0
+[General]
+saveDB = TRUE
+relativePath = FALSE
+saveSingleView = FALSE
+saveNWaveWinId = 
+VerdiVersion = Verdi_O-2018.09-SP2
+[KeyNote]
+Line1 = Automatic Backup 0
+Line2 = Save Open Database Information: Yes
+Line3 = Path Option: Absolute Paths
+Line4 = Windows Option: All Windows
+[TestBench]
+ConstrViewShow = 0
+InherViewShow = 0
+FSDBMsgShow = 0
+AnnotationShow = 0
+Console = FALSE
+powerDumped = 0
+[Verdi_1]
+workMode = hardwareDebug
+[hb]
+postSimFile = /home/jay/Desktop/graduation_project/testbench.fsdb
+syncTime = 210
+viewport = 66 32 2198 1291 0 0 385 2192
+activeNode = "testbench.top.openmips0.pc0.pc_id"
+activeScope = "testbench.top.openmips0.pc0.pc_id"
+activeFile = "./vsrc/reg.v"
+interactiveMode = False
+viewType = Source
+simulatorMode = False
+sourceBeginLine = 8
+baMode = False
+srcLineNum = True
+AutoWrap = True
+IdentifyFalseLogic = False
+syncSignal = False
+traceMode = Hierarchical
+showTraceInSchema = True
+paMode = False
+funcMode = False
+powerAwareAnnot = True
+amsAnnot = True
+traceCrossHier = True
+DnDtraceCrossHierOnly = True
+traceIncTopPort = False
+leadingZero = False
+signalPane = False
+Scope1 = "testbench.top.openmips0.pc0.pc_id"
+Scope2 = "testbench.top.openmips0"
+Scope3 = "testbench.top.openmips0.id0"
+Scope4 = "testbench.top.openmips0.ex0"
+Scope5 = "testbench.top.instrom0.i0"
+Scope6 = "testbench.top.instrom0"
+Scope7 = "testbench.top.instrom0.i0.i0"
+Scope8 = "testbench.top"
+Scope9 = "testbench"
+Scope10 = "mux"
+multipleSelection = 1 8 13 0 0
+sdfCheckUndef = FALSE
+simFlow = FALSE
+[hb.design]
+importCmd = "-dbdir" "/home/jay/Desktop/graduation_project/simv.daidir" 
+invokeDir = /home/jay/Desktop/graduation_project
+[hb.sourceTab.1]
+scope = testbench.top.openmips0.pc0.pc_id
+File = /home/jay/Desktop/graduation_project/vsrc/reg.v
+Line = 9
+[nMemoryManager]
+WaveformFile = /home/jay/Desktop/graduation_project/testbench.fsdb
+UserActionNum = 0
+nMemWindowNum = 0
+[wave.0]
+viewPort = 0 30 2198 531 603 65
+primaryWindow = TRUE
+SessionFile = /home/jay/Desktop/graduation_project/verdiLog/novas_autosave.ses.wave.0
+displayGrid = FALSE
+hierarchicalName = FALSE
+snap = TRUE
+displayLeadingZeros = FALSE
+fixDelta = FALSE
+displayCursorMarker = FALSE
+autoUpdate = FALSE
+highlightGlitchs = FALSE
+waveformSyncCursorMarker = FALSE
+waveformSyncHorizontalRange = FALSE
+waveformSyncVerticalscroll = FALSE
+displayErrors = TRUE
+displayMsgSymbols = TRUE
+showMsgDescriptions = TRUE
+autoFit = FALSE
+displayDeltaY = FALSE
+centerCursor = FALSE
+[wave.1]
+viewPort = 0 30 2198 531 160 65
+primaryWindow = FALSE
+Empty = /home/jay/Desktop/graduation_project/verdiLog/novas_autosave.ses.wave.1
+displayGrid = FALSE
+hierarchicalName = FALSE
+snap = TRUE
+displayLeadingZeros = FALSE
+fixDelta = FALSE
+displayCursorMarker = FALSE
+autoUpdate = FALSE
+highlightGlitchs = FALSE
+waveformSyncCursorMarker = FALSE
+waveformSyncHorizontalRange = FALSE
+waveformSyncVerticalscroll = FALSE
+displayErrors = TRUE
+displayMsgSymbols = TRUE
+showMsgDescriptions = TRUE
+autoFit = FALSE
+displayDeltaY = FALSE
+centerCursor = FALSE

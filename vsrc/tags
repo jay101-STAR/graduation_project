@@ -1,0 +1,134 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ascii_out	ysyx_24090013_top.v	/^	reg [7:0]ascii_out;$/;"	r
+buffer	ysyx_24090013_top.v	/^    reg [9:0] buffer;        \/\/ ps2_data bits$/;"	r
+clk	ysyx_24090013_Reg.v	/^  input clk,$/;"	p
+clk	ysyx_24090013_registerfile.v	/^	input clk,$/;"	p
+clk	ysyx_24090013_registerfile.v	/^  input clk,$/;"	p
+clk	ysyx_24090013_top.v	/^	input clk,$/;"	p
+clk	ysyx_24090013_top.v	/^    input clk,clrn,ps2_clk,ps2_data;$/;"	p
+clrn	ysyx_24090013_top.v	/^    input clk,clrn,ps2_clk,ps2_data;$/;"	p
+count	ysyx_24090013_top.v	/^    reg [3:0] count;  \/\/ count ps2_data bits$/;"	r
+data	ysyx_24090013_top.v	/^    output [7:0] data;$/;"	p
+data_list	ysyx_24090013_mux.v	/^  wire [DATA_LEN-1:0] data_list [NR_KEY-1:0];$/;"	n
+data_list	ysyx_24090013_muxwithdefault.v	/^  wire [DATA_LEN-1:0] data_list [NR_KEY-1:0];$/;"	n
+default_out	ysyx_24090013_muxwithdefault.v	/^  input [DATA_LEN-1:0] default_out,$/;"	p
+din	ysyx_24090013_Reg.v	/^  input [WIDTH-1:0] din,$/;"	p
+fifo	ysyx_24090013_top.v	/^    reg [7:0] fifo[7:0];     \/\/ data fifo$/;"	r
+func3	ysyx_24090013_id.v	/^	wire [2:0] func3 = id_inst[14:12];$/;"	n
+func7	ysyx_24090013_id.v	/^	wire [6:0] func7 = id_inst[31:25];$/;"	n
+hit	ysyx_24090013_mux.v	/^  reg hit;$/;"	r
+hit	ysyx_24090013_muxwithdefault.v	/^  reg hit;$/;"	r
+i	ysyx_24090013_mux.v	/^  integer i;$/;"	r
+i	ysyx_24090013_muxwithdefault.v	/^  integer i;$/;"	r
+id_ex_aluc	ysyx_24090013_id.v	/^	output [7:0]  id_ex_aluc $/;"	p
+id_inst	ysyx_24090013_id.v	/^	input [31:0] id_inst,$/;"	p
+id_reg_rs1_addr	ysyx_24090013_id.v	/^	output [4:0] id_reg_rs1_addr,id_reg_rs2_addr,$/;"	p
+id_reg_rs2_addr	ysyx_24090013_id.v	/^	output [4:0] id_reg_rs1_addr,id_reg_rs2_addr,$/;"	p
+if_instrom_en	ysyx_24090013_instrom.v	/^	input if_instrom_en,$/;"	p
+if_instrom_inst	ysyx_24090013_instrom.v	/^	output [31:0]if_instrom_inst$/;"	p
+in	ysyx_24090013_top.v	/^	input [3:0] in,$/;"	p
+input	ysyx_24090013_Reg.v	/^  input rst,$/;"	p
+input	ysyx_24090013_Reg.v	/^  input wen,$/;"	p
+input	ysyx_24090013_id.v	/^	input [31:0] reg_id_rs1_data,reg_id_rs2_data,$/;"	p
+input	ysyx_24090013_instrom.v	/^	input  [31:0]if_instrom_pc,$/;"	p
+input	ysyx_24090013_mux.v	/^  input [DATA_LEN-1:0] default_out,$/;"	p
+input	ysyx_24090013_mux.v	/^  input [KEY_LEN-1:0] key,$/;"	p
+input	ysyx_24090013_muxwithdefault.v	/^  input [DATA_LEN-1:0] default_out,$/;"	p
+input	ysyx_24090013_muxwithdefault.v	/^  input [KEY_LEN-1:0] key,$/;"	p
+input	ysyx_24090013_muxwithdefault.v	/^  input [NR_KEY*(KEY_LEN + DATA_LEN)-1:0] lut$/;"	p
+input	ysyx_24090013_pc.v	/^	input clk,$/;"	p
+input	ysyx_24090013_pc.v	/^	input en,$/;"	p
+input	ysyx_24090013_registerfile.v	/^	input [31:0]wdata,$/;"	p
+input	ysyx_24090013_registerfile.v	/^	input [4:0]raddr,$/;"	p
+input	ysyx_24090013_registerfile.v	/^	input wen,$/;"	p
+input	ysyx_24090013_registerfile.v	/^  input [4:0]raddr,$/;"	p
+input	ysyx_24090013_registerfile.v	/^  input [DATA_WIDTH-1:0] wdata,$/;"	p
+input	ysyx_24090013_registerfile.v	/^  input wen,$/;"	p
+input	ysyx_24090013_top.v	/^	input en,$/;"	p
+input	ysyx_24090013_top.v	/^	input ps2_data,$/;"	p
+input	ysyx_24090013_top.v	/^	input rst,$/;"	p
+inst_rom	ysyx_24090013_instrom.v	/^	reg [31:0] inst_rom [0:1023];$/;"	r
+inst_type	ysyx_24090013_id.v	/^	wire [2:0] inst_type;$/;"	n
+key	ysyx_24090013_mux.v	/^  input [KEY_LEN-1:0] key,$/;"	p
+key	ysyx_24090013_muxwithdefault.v	/^  input [KEY_LEN-1:0] key,$/;"	p
+key_list	ysyx_24090013_mux.v	/^  wire [KEY_LEN-1:0] key_list [NR_KEY-1:0];$/;"	n
+key_list	ysyx_24090013_muxwithdefault.v	/^  wire [KEY_LEN-1:0] key_list [NR_KEY-1:0];$/;"	n
+lut	ysyx_24090013_mux.v	/^  input [NR_KEY*(KEY_LEN + DATA_LEN)-1:0] lut$/;"	p
+lut	ysyx_24090013_muxwithdefault.v	/^  input [NR_KEY*(KEY_LEN + DATA_LEN)-1:0] lut$/;"	p
+lut_out	ysyx_24090013_mux.v	/^  reg [DATA_LEN-1 : 0] lut_out;$/;"	r
+lut_out	ysyx_24090013_muxwithdefault.v	/^  reg [DATA_LEN-1 : 0] lut_out;$/;"	r
+new_pc	ysyx_24090013_pc.v	/^	wire [31:0]new_pc;$/;"	n
+next_pc	ysyx_24090013_pc.v	/^	output [31:0]next_pc$/;"	p
+nextdata_n	ysyx_24090013_top.v	/^    input nextdata_n;$/;"	p
+now_pc	ysyx_24090013_pc.v	/^	input [31:0]now_pc,$/;"	p
+op7	ysyx_24090013_id.v	/^	wire [6:0] op7 = id_inst[6:0];$/;"	n
+out	ysyx_24090013_mux.v	/^  output [DATA_LEN-1:0] out,$/;"	p
+out	ysyx_24090013_muxwithdefault.v	/^  output [DATA_LEN-1:0] out,$/;"	p
+output	ysyx_24090013_id.v	/^	output [31:0] id_ex_rs1_data,id_ex_rs2_data,$/;"	p
+output	ysyx_24090013_top.v	/^    output reg [7:0] ascii  \/\/ 输出的ASCII码$/;"	p
+pair_list	ysyx_24090013_mux.v	/^  wire [PAIR_LEN-1:0] pair_list [NR_KEY-1:0];$/;"	n
+pair_list	ysyx_24090013_muxwithdefault.v	/^  wire [PAIR_LEN-1:0] pair_list [NR_KEY-1:0];$/;"	n
+ps2_clk	ysyx_24090013_top.v	/^	input ps2_clk,$/;"	p
+ps2_clk	ysyx_24090013_top.v	/^    input clk,clrn,ps2_clk,ps2_data;$/;"	p
+ps2_clk_sync	ysyx_24090013_top.v	/^    reg [2:0] ps2_clk_sync;$/;"	r
+ps2_data	ysyx_24090013_top.v	/^    input clk,clrn,ps2_clk,ps2_data;$/;"	p
+ps2_keyboard	ysyx_24090013_top.v	/^module ps2_keyboard(clk,clrn,ps2_clk,ps2_data,data,$/;"	m
+ps2next	ysyx_24090013_top.v	/^	reg ps2ready,ps2next,ps2over;$/;"	r
+ps2out	ysyx_24090013_top.v	/^	reg [7:0] ps2out;$/;"	r
+ps2over	ysyx_24090013_top.v	/^	reg ps2ready,ps2next,ps2over;$/;"	r
+ps2ready	ysyx_24090013_top.v	/^	reg ps2ready,ps2next,ps2over;$/;"	r
+ps2segin	ysyx_24090013_top.v	/^	reg [23:0] ps2segin;$/;"	r
+r_ptr	ysyx_24090013_top.v	/^    reg [2:0] w_ptr,r_ptr;   \/\/ fifo write and read pointers$/;"	r
+rdata	ysyx_24090013_registerfile.v	/^	output [31:0]rdata$/;"	p
+rdata	ysyx_24090013_registerfile.v	/^  output [31:0]rdata$/;"	p
+reg	ysyx_24090013_Reg.v	/^  output reg [WIDTH-1:0] dout$/;"	p
+reg	ysyx_24090013_mux.v	/^  output reg [DATA_LEN-1:0] out,$/;"	p
+reg	ysyx_24090013_muxwithdefault.v	/^  output reg [DATA_LEN-1:0] out,$/;"	p
+reg	ysyx_24090013_top.v	/^	output reg  [7:0] out$/;"	p
+reg	ysyx_24090013_top.v	/^    output reg overflow;     \/\/ fifo overflow$/;"	p
+reg	ysyx_24090013_top.v	/^    output reg ready;$/;"	p
+registerfile	ysyx_24090013_registerfile.v	/^module registerfile #(parameter ADDR_WIDTH = 1,parameter DATA_WIDTH = 1) ($/;"	m
+ren	ysyx_24090013_registerfile.v	/^	input ren,$/;"	p
+ren	ysyx_24090013_registerfile.v	/^  input ren,$/;"	p
+rf	ysyx_24090013_registerfile.v	/^  reg [DATA_WIDTH-1:0] rf [2**ADDR_WIDTH-1:0];$/;"	r
+rst	ysyx_24090013_pc.v	/^	input rst,$/;"	p
+sampling	ysyx_24090013_top.v	/^    wire sampling = ps2_clk_sync[2] & ~ps2_clk_sync[1];$/;"	n
+scancode	ysyx_24090013_top.v	/^    input [7:0] scancode,   \/\/ 输入的扫描码$/;"	p
+scancode_to_ascii	ysyx_24090013_top.v	/^module scancode_to_ascii ($/;"	m
+seg1	ysyx_24090013_top.v	/^	output [7:0] seg1,seg2,seg3,seg4,seg5,seg6,seg7,seg8$/;"	p
+seg2	ysyx_24090013_top.v	/^	output [7:0] seg1,seg2,seg3,seg4,seg5,seg6,seg7,seg8$/;"	p
+seg3	ysyx_24090013_top.v	/^	output [7:0] seg1,seg2,seg3,seg4,seg5,seg6,seg7,seg8$/;"	p
+seg38	ysyx_24090013_top.v	/^module seg38($/;"	m
+seg4	ysyx_24090013_top.v	/^	output [7:0] seg1,seg2,seg3,seg4,seg5,seg6,seg7,seg8$/;"	p
+seg5	ysyx_24090013_top.v	/^	output [7:0] seg1,seg2,seg3,seg4,seg5,seg6,seg7,seg8$/;"	p
+seg6	ysyx_24090013_top.v	/^	output [7:0] seg1,seg2,seg3,seg4,seg5,seg6,seg7,seg8$/;"	p
+seg7	ysyx_24090013_top.v	/^	output [7:0] seg1,seg2,seg3,seg4,seg5,seg6,seg7,seg8$/;"	p
+seg8	ysyx_24090013_top.v	/^	output [7:0] seg1,seg2,seg3,seg4,seg5,seg6,seg7,seg8$/;"	p
+segcounth	ysyx_24090013_top.v	/^	reg [3:0]segcountl,segcounth;$/;"	r
+segcountl	ysyx_24090013_top.v	/^	reg [3:0]segcountl,segcounth;$/;"	r
+segen	ysyx_24090013_top.v	/^	reg segen;$/;"	r
+state_current	ysyx_24090013_top.v	/^	reg [3:0] state_current,state_next;$/;"	r
+state_next	ysyx_24090013_top.v	/^	reg [3:0] state_current,state_next;$/;"	r
+stateidle	ysyx_24090013_top.v	/^	parameter stateidle = 4'b1000;$/;"	c
+stateread	ysyx_24090013_top.v	/^	parameter stateread = 4'b0001;$/;"	c
+statewait	ysyx_24090013_top.v	/^	parameter statewait = 4'b0100;$/;"	c
+statework	ysyx_24090013_top.v	/^	parameter statework = 4'b0010;$/;"	c
+top	ysyx_24090013_top.v	/^module top($/;"	m
+w_ptr	ysyx_24090013_top.v	/^    reg [2:0] w_ptr,r_ptr;   \/\/ fifo write and read pointers$/;"	r
+waddr	ysyx_24090013_registerfile.v	/^	input [4:0] waddr,$/;"	p
+waddr	ysyx_24090013_registerfile.v	/^  input [ADDR_WIDTH-1:0] waddr,$/;"	p
+ysyx_24090013_MuxKeyInternal	ysyx_24090013_mux.v	/^module ysyx_24090013_MuxKeyInternal #(parameter NR_KEY = 2, parameter KEY_LEN = 1, parameter DATA_LEN = 1, parameter HAS_DEFAULT = 0) ($/;"	m
+ysyx_24090013_MuxKeyInternal	ysyx_24090013_muxwithdefault.v	/^module ysyx_24090013_MuxKeyInternal #(parameter NR_KEY = 2, parameter KEY_LEN = 1,parameter DATA_LEN = 1,parameter  HAS_DEFAULT = 0) ($/;"	m
+ysyx_24090013_Reg	ysyx_24090013_Reg.v	/^module ysyx_24090013_Reg #(parameter WIDTH = 1, parameter RESET_VAL = 0) ($/;"	m
+ysyx_24090013_id	ysyx_24090013_id.v	/^module ysyx_24090013_id($/;"	m
+ysyx_24090013_if	ysyx_24090013_if.v	/^module ysyx_24090013_if($/;"	m
+ysyx_24090013_instrom	ysyx_24090013_instrom.v	/^module ysyx_24090013_instrom($/;"	m
+ysyx_24090013_mux	ysyx_24090013_mux.v	/^module ysyx_24090013_mux #(parameter NR_KEY = 2, parameter KEY_LEN = 1, parameter DATA_LEN = 1) ($/;"	m
+ysyx_24090013_muxwithdefault	ysyx_24090013_muxwithdefault.v	/^module ysyx_24090013_muxwithdefault #(parameter NR_KEY = 2, parameter KEY_LEN = 1, parameter DATA_LEN = 1) ($/;"	m
+ysyx_24090013_pc	ysyx_24090013_pc.v	/^module ysyx_24090013_pc($/;"	m
+ysyx_24090013_registerfile	ysyx_24090013_registerfile.v	/^module ysyx_24090013_registerfile($/;"	m

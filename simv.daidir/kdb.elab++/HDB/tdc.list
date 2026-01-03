@@ -1,0 +1,11 @@
+./vsrc/ex.v
+./vsrc/id.v
+./vsrc/instrom.v
+./vsrc/mux.v
+./vsrc/muxwithdefault.v
+./vsrc/openmips.v
+./vsrc/pc.v
+./vsrc/reg.v
+./vsrc/registerfile.v
+./vsrc/testbench.v
+./vsrc/top.v
