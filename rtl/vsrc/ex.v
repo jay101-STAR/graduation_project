@@ -1,4 +1,4 @@
-`include "/home/jay/Desktop/graduation_project/vsrc/define.v"
+`include "/home/jay/Desktop/graduation_project/rtl/vsrc/define.v"
 // `include "/home/jay/Desktop/graduation_project/vsrc/muxwithdefault.v"
 module ex (
     input [3:0] id_ex_aluc,

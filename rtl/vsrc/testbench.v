@@ -24,7 +24,7 @@ module testbench ();
   );
 
   initial begin
-    $fsdbDumpfile("/home/jay/Desktop/graduation_project/testbench.fsdb");
+    $fsdbDumpfile("/home/jay/Desktop/graduation_project/rtl/testbench.fsdb");
     $fsdbDumpvars("+all");
   end
 

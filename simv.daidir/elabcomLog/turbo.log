@@ -1,7 +1,0 @@
-Command Line: /home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/linux64/bin/elabcom -logdir simv.daidir/elabcomLog -simvdaidir simv.daidir -lib simv.daidir/work -saveLevel -elab simv.daidir/kdb -simflow -simdir simv.daidir/kdb_libs -top mux testbench -ssv -ssy -Lf work +disable_message+C00380+C00381 +disable_message+C00388+C00389
-uname(Linux jay-VMware-Virtual-Platform 6.14.0-37-generic #37~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Nov 20 10:25:38 UTC 2 x86_64)
-[INFO] error/warning message 'C00380' has been suppressed.
-[INFO] error/warning message 'C00381' has been suppressed.
-[INFO] error/warning message 'C00388' has been suppressed.
-[INFO] error/warning message 'C00389' has been suppressed.
-au time 0.028307 0.005024 0.019597 delta 92872704 92872704 total 170483712 170483712

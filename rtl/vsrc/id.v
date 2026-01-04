@@ -1,4 +1,4 @@
-`include "/home/jay/Desktop/graduation_project/vsrc/define.v"
+`include "/home/jay/Desktop/graduation_project/rtl/vsrc/define.v"
 
 // `include "muxwithdefault.v"
 module id (
