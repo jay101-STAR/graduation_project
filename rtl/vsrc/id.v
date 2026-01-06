@@ -33,6 +33,9 @@ module id (
   //12位立即数扩展,为高位有符号扩展
   wire [11:0] immI = id_inst[31:20];
   wire [31:0] sign_extended_immI = {{20{immI[11]}}, immI[11:0]};
+  //12 位立即数扩展，为高位有符号扩展，为低位零扩展
+  wire [11:0] immB = {id_inst[31], id_inst[7], id_inst[30:25], id_inst[11:8]};
+  wire [31:0] sign_extended_immB = {{19{immB[11]}}, immB[11:0], 1'b0};
   //20位立即数扩展,为低位零扩展
   wire [19:0] immU = id_inst[31:12];
   wire [31:0] low_extended_immU = {immU[19:0], 12'b0};
@@ -48,7 +51,7 @@ module id (
   //传递pc值
   assign id_ex_pc = pc_id_pc;
 
-  muxwithdefault #(7, 7, 4) i1 (
+  muxwithdefault #(11, 7, 4) i1 (
       inst_type,
       op7,
       `NO_TYPE,
@@ -59,6 +62,12 @@ module id (
         `I_TYPE,
         7'b1101111,
         `J_TYPE,
+        7'b0100011,
+        `S_TYPE,
+        7'b0000011,
+        `L_TYPE,
+        7'b1100011,
+        `B_TYPE,
         7'b1100111,
         `JALR_TYPE,
         7'b0110111,
@@ -66,11 +75,13 @@ module id (
         7'b0010111,
         `AUIPC_TYPE,
         7'b1110011,
-        `I_TYPE_E_TYPE
+        `E_TYPE_ZICSR_TYPE,
+        7'b0001111,
+        `FENCE_TYPE
       }
   );
   assign id_ex_aluc = inst_type;
-  muxwithdefault #(6, 4, 1) i2 (
+  muxwithdefault #(7, 4, 1) i2 (
       id_reg_rs1_ren,
       inst_type,
       1'b0,
@@ -78,6 +89,8 @@ module id (
         `R_TYPE,
         1'b1,
         `I_TYPE,
+        1'b1,
+        `B_TYPE,
         1'b1,
         `J_TYPE,
         1'b0,
@@ -89,7 +102,7 @@ module id (
         1'b0
       }
   );
-  muxwithdefault #(6, 4, 1) i3 (
+  muxwithdefault #(7, 4, 1) i3 (
       id_reg_rs2_ren,
       inst_type,
       1'b0,
@@ -98,6 +111,8 @@ module id (
         1'b1,
         `I_TYPE,
         1'b0,
+        `B_TYPE,
+        1'b1,
         `J_TYPE,
         1'b0,
         `JALR_TYPE,
@@ -161,7 +176,10 @@ module id (
       func3,
       8'b0,
       {
-        `ADD_INST, `ADD_TYPE  //include ADD,ADDI
+        `ADD_INST,
+        `ADD_TYPE,  //include ADD,ADDI
+        `SLL_INST,
+        `SLL_TYPE  //include SLL,SLLI
       }
   );
   muxwithdefault #(1, 7, 8) i9 (
@@ -189,7 +207,7 @@ module id (
         `AUIPCC_TYPE
       }
   );
-  muxwithdefault #(6, 4, 1) i11 (
+  muxwithdefault #(7, 4, 1) i11 (
       id_ex_rd_wen,
       inst_type,
       1'b0,
@@ -198,6 +216,8 @@ module id (
         1'b1,
         `I_TYPE,
         1'b1,
+        `B_TYPE,
+        1'b0,
         `J_TYPE,
         1'b1,
         `JALR_TYPE,

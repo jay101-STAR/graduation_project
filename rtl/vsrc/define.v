@@ -8,7 +8,9 @@
 `define LUI_TYPE 4'b0110 
 `define AUIPC_TYPE 4'b0111
 `define JALR_TYPE  4'b1000
-`define I_TYPE_E_TYPE  4'b1001
+`define E_TYPE_ZICSR_TYPE  4'b1001
+`define L_TYPE 4'b1010
+`define FENCE_TYPE 4'b1011
 `define NO_TYPE 4'b0000 
 
 `define R_ASA_TYPE 7'b0000000
@@ -19,6 +21,7 @@
 `define AUIPCC_TYPE 8'b00000010 //delegate AUIPC
 `define JALRR_TYPE  8'b00000011 //delegate JALR
 `define JAL_TYPE    8'b00000100 //delegate JAL
+`define SLL_TYPE    8'b00000101 //delegate SLL,SLLI
 //func7
 `define R_ASA_INST 7'b0000000 //R_TYPE except SUB and SRA
 `define R_SUA_INST 7'b0100000 //SUB and SUA's func7
@@ -26,6 +29,9 @@
 //func3
 `define ADD_INST 3'b000
 `define ADDI_INST 3'b000
+`define SLL_INST 3'b001
+`define SLLI_INST 3'b001
+`
 `define EBREAK_INST 3'b000
 
 `define HIT_GOOD_TRAP 1

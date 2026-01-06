@@ -9,7 +9,7 @@ module instrom (
   /* initial $readmemh("/home/jay/Desktop/ics2024/ysyx-workbench/npc/vsrc/instrom.data",inst_rom); */
   reg [31:0] inst_rom[0:31];
   // `UNPACK_ARRAY(32, 512, inst_rom, inst_rom_1)
-  initial $readmemh("/home/jay/Desktop/graduation_project/vsrc/instrom.data", inst_rom);
+  initial $readmemh("/home/jay/Desktop/graduation_project/rtl/vsrc/instrom/instrom.hex", inst_rom);
   initial begin
     if (openmips_instrom_addr[1:0] != 2'b00) begin
       $display("PC is not 4-byte aligned");

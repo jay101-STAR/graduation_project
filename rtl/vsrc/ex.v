@@ -17,6 +17,7 @@ module ex (
 );
   wire [31:0] ex_reg_rd_data1;
   wire [31:0] result_add = id_ex_rs1_data + id_ex_rs2_data;
+  wire [31:0] result_sll = id_ex_rs1_data << id_ex_rs2_data[4:0];
   wire [31:0] pc_plus_4 = id_ex_pc + 4;
   //得到修改的pc的值
   muxwithdefault #(2, 4, 1) i0 (
@@ -32,13 +33,15 @@ module ex (
       {`J_TYPE, result_add, `JALR_TYPE, {result_add[31:1], 1'b0}}
   );
   //得出rd_data的值
-  muxwithdefault #(5, 8, 32) i1 (
+  muxwithdefault #(6, 8, 32) i1 (
       ex_reg_rd_data1,
       id_ex_alucex,
       32'b0,
       {
         `ADD_TYPE,
         result_add,
+        `SLL_TYPE,
+        result_sll,
         `AUIPCC_TYPE,
         result_add,
         `LUII_TYPE,

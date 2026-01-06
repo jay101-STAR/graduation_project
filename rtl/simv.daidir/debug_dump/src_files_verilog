@@ -1,0 +1,12 @@
+/home/jay/Desktop/graduation_project/rtl/vsrc/define.v
+/home/jay/Desktop/graduation_project/rtl/vsrc/ex.v
+/home/jay/Desktop/graduation_project/rtl/vsrc/id.v
+/home/jay/Desktop/graduation_project/rtl/vsrc/instrom.v
+/home/jay/Desktop/graduation_project/rtl/vsrc/mux.v
+/home/jay/Desktop/graduation_project/rtl/vsrc/muxwithdefault.v
+/home/jay/Desktop/graduation_project/rtl/vsrc/openmips.v
+/home/jay/Desktop/graduation_project/rtl/vsrc/pc.v
+/home/jay/Desktop/graduation_project/rtl/vsrc/reg.v
+/home/jay/Desktop/graduation_project/rtl/vsrc/registerfile.v
+/home/jay/Desktop/graduation_project/rtl/vsrc/testbench.v
+/home/jay/Desktop/graduation_project/rtl/vsrc/top.v

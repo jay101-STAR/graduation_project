@@ -2,11 +2,11 @@ Magic 271485
 Revision Verdi_O-2018.09-SP2
 
 ; Window Layout <x> <y> <width> <height> <signalwidth> <valuewidth>
-viewPort 0 30 2198 531 603 65
+viewPort 0 30 1703 517 160 65
 
 ; File list:
 ; openDirFile [-d delimiter] [-s time_offset] [-rf auto_bus_rule_file] path_name file_name
-openDirFile -d / "" "/home/jay/Desktop/graduation_project/testbench.fsdb"
+openDirFile -d / "" "/home/jay/Desktop/graduation_project/rtl/testbench.fsdb"
 
 ; file time scale:
 ; fileTimeScale ### s|ms|us|ns|ps
@@ -16,16 +16,16 @@ signalSpacing 5
 
 ; windowTimeUnit is used for zoom, cursor & marker
 ; waveform viewport range
-zoom 184.026705 230.547918
-cursor 210.000000
+zoom 316.818132 539.018132
+cursor 0.000000
 marker 0.000000
 
 ; user define markers
 ; userMarker time_pos marker_name color linestyle
 ; visible top row signal index
-top 0
+top 24
 ; marker line index
-markerPos 1
+markerPos 33
 
 ; event list
 ; addEvent event_name event_expression
@@ -46,8 +46,40 @@ curSTATUS ByChange
 
 
 addGroup "G1"
-activeDirFile "" "/home/jay/Desktop/graduation_project/testbench.fsdb"
-addSignal -h 21 /testbench/top/openmips0/id0/id_inst[31:0]
+activeDirFile "" "/home/jay/Desktop/graduation_project/rtl/testbench.fsdb"
+addSignal -expanded -h 27 /testbench/top/openmips0/registerfile0/i0/rf[31:0]
+addSignal -h 27 -holdScope rf[31][31:0]
+addSignal -h 27 -holdScope rf[30][31:0]
+addSignal -h 27 -holdScope rf[29][31:0]
+addSignal -h 27 -holdScope rf[28][31:0]
+addSignal -h 27 -holdScope rf[27][31:0]
+addSignal -h 27 -holdScope rf[26][31:0]
+addSignal -h 27 -holdScope rf[25][31:0]
+addSignal -h 27 -holdScope rf[24][31:0]
+addSignal -h 27 -holdScope rf[23][31:0]
+addSignal -h 27 -holdScope rf[22][31:0]
+addSignal -h 27 -holdScope rf[21][31:0]
+addSignal -h 27 -holdScope rf[20][31:0]
+addSignal -h 27 -holdScope rf[19][31:0]
+addSignal -h 27 -holdScope rf[18][31:0]
+addSignal -h 27 -holdScope rf[17][31:0]
+addSignal -h 27 -holdScope rf[16][31:0]
+addSignal -h 27 -holdScope rf[15][31:0]
+addSignal -h 27 -holdScope rf[14][31:0]
+addSignal -h 27 -holdScope rf[13][31:0]
+addSignal -h 27 -holdScope rf[12][31:0]
+addSignal -h 27 -holdScope rf[11][31:0]
+addSignal -h 27 -holdScope rf[10][31:0]
+addSignal -h 27 -holdScope rf[9][31:0]
+addSignal -h 27 -holdScope rf[8][31:0]
+addSignal -h 27 -holdScope rf[7][31:0]
+addSignal -h 27 -holdScope rf[6][31:0]
+addSignal -h 27 -holdScope rf[5][31:0]
+addSignal -h 27 -holdScope rf[4][31:0]
+addSignal -h 27 -holdScope rf[3][31:0]
+addSignal -h 27 -holdScope rf[2][31:0]
+addSignal -h 27 -holdScope rf[1][31:0]
+addSignal -h 27 -holdScope rf[0][31:0]
 addGroup "G2"
 
 ; getSignalForm Scope Hierarchy Status

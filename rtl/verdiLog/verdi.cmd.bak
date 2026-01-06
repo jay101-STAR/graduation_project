@@ -1,365 +1,45 @@
-verdiDockWidgetUndock -dock widgetDock_<Message>
-simSetSimulator "-vcssv" -exec "/home/jay/Desktop/graduation_project/simv" -args
-debImport "-dbdir" "/home/jay/Desktop/graduation_project/simv.daidir"
-debLoadSimResult /home/jay/Desktop/graduation_project/testbench.fsdb
+verdiDockWidgetDisplay -dock widgetDock_<Signal_List>
+simSetSimulator "-vcssv" -exec "/home/jay/Desktop/graduation_project/rtl/simv" \
+           -args
+debImport "-dbdir" "/home/jay/Desktop/graduation_project/rtl/simv.daidir"
+debLoadSimResult /home/jay/Desktop/graduation_project/rtl/testbench.fsdb
 wvCreateWindow
-verdiDockWidgetHide -dock widgetDock_<Message>
 srcHBSelect "testbench" -win $_nTrace1
 srcSetScope -win $_nTrace1 "testbench" -delim "."
 srcHBSelect "testbench" -win $_nTrace1
 srcHBSelect "testbench.top" -win $_nTrace1
+srcHBSelect "testbench.top" -win $_nTrace1
 srcSetScope -win $_nTrace1 "testbench.top" -delim "."
 srcHBSelect "testbench.top" -win $_nTrace1
-srcHBSelect "testbench.top.openmips0" -win $_nTrace1
-srcSetScope -win $_nTrace1 "testbench.top.openmips0" -delim "."
-srcHBDrag -win $_nTrace1
-srcHBSelect "testbench.top.openmips0.registerfile0" -win $_nTrace1
-srcHBSelect "testbench.top.openmips0.registerfile0" -win $_nTrace1
-srcSetScope -win $_nTrace1 "testbench.top.openmips0.registerfile0" -delim "."
-srcHBSelect "testbench.top.openmips0.registerfile0" -win $_nTrace1
-srcHBSelect "testbench.top.openmips0.registerfile0.i0" -win $_nTrace1
-srcSetScope -win $_nTrace1 "testbench.top.openmips0.registerfile0.i0" -delim "."
-srcHBSelect "testbench.top.openmips0.registerfile0.i0" -win $_nTrace1
 srcDeselectAll -win $_nTrace1
-srcSelect -signal "rf\[rs1_raddr\]" -line 63 -pos 1 -win $_nTrace1
-srcDeselectAll -win $_nTrace1
-srcSelect -signal "rf" -line 49 -pos 1 -win $_nTrace1
-wvAddSignal -win $_nWave2 "/testbench/top/openmips0/registerfile0/i0/rf\[31:0\]"
-wvSetPosition -win $_nWave2 {("G1" 0)}
-wvSetPosition -win $_nWave2 {("G1" 1)}
-wvSetPosition -win $_nWave2 {("G1" 1)}
-wvSelectSignal -win $_nWave2 {( "G1" 1 )} 
-wvExpandBus -win $_nWave2 {("G1" 1)}
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-srcDeselectAll -win $_nTrace1
-srcDeselectAll -win $_nTrace1
-srcDeselectAll -win $_nTrace1
-srcSelect -signal "waddr" -line 38 -pos 1 -win $_nTrace1
-wvSetPosition -win $_nWave2 {("G1" 22)}
-wvSetPosition -win $_nWave2 {("G1" 23)}
-wvSetPosition -win $_nWave2 {("G1" 24)}
-wvSetPosition -win $_nWave2 {("G1" 25)}
-wvSetPosition -win $_nWave2 {("G1" 26)}
-wvSetPosition -win $_nWave2 {("G1" 0)}
-wvSetPosition -win $_nWave2 {("G1" 32)}
-wvSetPosition -win $_nWave2 {("G1" 33)}
-wvSetPosition -win $_nWave2 {("G2" 0)}
-wvAddSignal -win $_nWave2 \
-           "/testbench/top/openmips0/registerfile0/i0/waddr\[4:0\]"
-wvSetPosition -win $_nWave2 {("G2" 0)}
-wvSetPosition -win $_nWave2 {("G2" 1)}
-wvSetPosition -win $_nWave2 {("G2" 1)}
-srcDeselectAll -win $_nTrace1
-srcSelect -signal "wdata" -line 37 -pos 1 -win $_nTrace1
-wvSetPosition -win $_nWave2 {("G1" 23)}
-wvSetPosition -win $_nWave2 {("G1" 22)}
-wvSetPosition -win $_nWave2 {("G1" 23)}
-wvSetPosition -win $_nWave2 {("G1" 24)}
-wvSetPosition -win $_nWave2 {("G1" 25)}
-wvSetPosition -win $_nWave2 {("G1" 26)}
-wvSetPosition -win $_nWave2 {("G1" 27)}
-wvSetPosition -win $_nWave2 {("G1" 28)}
-wvSetPosition -win $_nWave2 {("G1" 0)}
-wvSetPosition -win $_nWave2 {("G1" 33)}
-wvSetPosition -win $_nWave2 {("G2" 0)}
-wvSetPosition -win $_nWave2 {("G2" 1)}
-wvSetPosition -win $_nWave2 {("G3" 0)}
-wvSetPosition -win $_nWave2 {("G1" 0)}
-wvSetPosition -win $_nWave2 {("G3" 0)}
-wvAddSignal -win $_nWave2 \
-           "/testbench/top/openmips0/registerfile0/i0/wdata\[31:0\]"
-wvSetPosition -win $_nWave2 {("G3" 0)}
-wvSetPosition -win $_nWave2 {("G3" 1)}
-wvSetPosition -win $_nWave2 {("G3" 1)}
-srcDeselectAll -win $_nTrace1
-srcSelect -signal "clk" -line 35 -pos 1 -win $_nTrace1
-srcSelect -win $_nTrace1 -range {35 64 4 1 3 1}
-srcDeselectAll -win $_nTrace1
-srcDeselectAll -win $_nTrace1
-srcSelect -signal "clk" -line 35 -pos 1 -win $_nTrace1
-wvSetPosition -win $_nWave2 {("G1" 25)}
-wvSetPosition -win $_nWave2 {("G1" 24)}
-wvSetPosition -win $_nWave2 {("G1" 25)}
-wvSetPosition -win $_nWave2 {("G1" 26)}
-wvSetPosition -win $_nWave2 {("G1" 27)}
-wvSetPosition -win $_nWave2 {("G1" 28)}
-wvSetPosition -win $_nWave2 {("G1" 29)}
-wvSetPosition -win $_nWave2 {("G1" 30)}
-wvSetPosition -win $_nWave2 {("G1" 0)}
-wvSetPosition -win $_nWave2 {("G2" 0)}
-wvSetPosition -win $_nWave2 {("G2" 1)}
-wvSetPosition -win $_nWave2 {("G3" 0)}
-wvSetPosition -win $_nWave2 {("G3" 1)}
-wvSetPosition -win $_nWave2 {("G4" 0)}
-wvAddSignal -win $_nWave2 "/testbench/top/openmips0/registerfile0/i0/clk"
-wvSetPosition -win $_nWave2 {("G4" 0)}
-wvSetPosition -win $_nWave2 {("G4" 1)}
-wvSetPosition -win $_nWave2 {("G4" 1)}
-wvScrollUp -win $_nWave2 3
-wvScrollUp -win $_nWave2 4
-wvSelectSignal -win $_nWave2 {( "G1" 30 )} 
-wvScrollDown -win $_nWave2 0
-wvScrollUp -win $_nWave2 24
-wvScrollDown -win $_nWave2 19
-wvCut -win $_nWave2
-wvSetPosition -win $_nWave2 {("G4" 1)}
-wvScrollDown -win $_nWave2 0
-wvSelectSignal -win $_nWave2 {( "G1" 8 )} 
-srcHBSelect "testbench.top.instrom0" -win $_nTrace1
-srcSetScope -win $_nTrace1 "testbench.top.instrom0" -delim "."
-srcHBSelect "testbench.top.instrom0" -win $_nTrace1
-srcHBSelect "testbench.top.instrom0.i0" -win $_nTrace1
-srcSetScope -win $_nTrace1 "testbench.top.instrom0.i0" -delim "."
-srcHBSelect "testbench.top.instrom0.i0" -win $_nTrace1
-srcHBSelect "testbench.top.openmips0" -win $_nTrace1
-srcSetScope -win $_nTrace1 "testbench.top.openmips0" -delim "."
-srcHBSelect "testbench.top.openmips0" -win $_nTrace1
-srcHBSelect "testbench.top.openmips0.id0" -win $_nTrace1
-srcSetScope -win $_nTrace1 "testbench.top.openmips0.id0" -delim "."
-srcHBSelect "testbench.top.openmips0.id0" -win $_nTrace1
-srcDeselectAll -win $_nTrace1
-srcSelect -signal "id_inst" -line 6 -pos 1 -win $_nTrace1
-wvSetPosition -win $_nWave2 {("G1" 5)}
-wvSetPosition -win $_nWave2 {("G1" 8)}
-wvSetPosition -win $_nWave2 {("G3" 0)}
-wvSetPosition -win $_nWave2 {("G3" 1)}
-wvSetPosition -win $_nWave2 {("G4" 0)}
-wvSetPosition -win $_nWave2 {("G4" 1)}
-wvSetPosition -win $_nWave2 {("G5" 0)}
-wvSetPosition -win $_nWave2 {("G1" 0)}
-wvSetPosition -win $_nWave2 {("G5" 0)}
-wvAddSignal -win $_nWave2 "/testbench/top/openmips0/id0/id_inst\[31:0\]"
-wvSetPosition -win $_nWave2 {("G5" 0)}
-wvSetPosition -win $_nWave2 {("G5" 1)}
-wvSetPosition -win $_nWave2 {("G5" 1)}
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-srcDeselectAll -win $_nTrace1
-srcSelect -signal "reg_id_rs1_data" -line 7 -pos 1 -win $_nTrace1
-wvSetPosition -win $_nWave2 {("G1" 5)}
-wvSetPosition -win $_nWave2 {("G1" 7)}
-wvSetPosition -win $_nWave2 {("G1" 8)}
-wvSetPosition -win $_nWave2 {("G2" 0)}
-wvSetPosition -win $_nWave2 {("G2" 1)}
-wvSetPosition -win $_nWave2 {("G3" 0)}
-wvSetPosition -win $_nWave2 {("G3" 1)}
-wvSetPosition -win $_nWave2 {("G4" 0)}
-wvSetPosition -win $_nWave2 {("G1" 0)}
-wvSetPosition -win $_nWave2 {("G6" 0)}
-wvAddSignal -win $_nWave2 "/testbench/top/openmips0/id0/reg_id_rs1_data\[31:0\]"
-wvSetPosition -win $_nWave2 {("G6" 0)}
-wvSetPosition -win $_nWave2 {("G6" 1)}
-wvSetPosition -win $_nWave2 {("G6" 1)}
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 0
-srcDeselectAll -win $_nTrace1
-srcSelect -signal "reg_id_rs2_data" -line 8 -pos 1 -win $_nTrace1
-wvSetPosition -win $_nWave2 {("G1" 7)}
-wvSetPosition -win $_nWave2 {("G1" 6)}
-wvSetPosition -win $_nWave2 {("G1" 7)}
-wvSetPosition -win $_nWave2 {("G1" 8)}
-wvSetPosition -win $_nWave2 {("G1" 0)}
-wvSetPosition -win $_nWave2 {("G2" 1)}
-wvSetPosition -win $_nWave2 {("G3" 0)}
-wvSetPosition -win $_nWave2 {("G3" 1)}
-wvSetPosition -win $_nWave2 {("G4" 0)}
-wvSetPosition -win $_nWave2 {("G4" 1)}
-wvSetPosition -win $_nWave2 {("G5" 0)}
-wvSetPosition -win $_nWave2 {("G5" 1)}
-wvSetPosition -win $_nWave2 {("G6" 0)}
-wvSetPosition -win $_nWave2 {("G6" 1)}
-wvSetPosition -win $_nWave2 {("G7" 0)}
-wvSetPosition -win $_nWave2 {("G1" 0)}
-wvSetPosition -win $_nWave2 {("G7" 0)}
-wvAddSignal -win $_nWave2 "/testbench/top/openmips0/id0/reg_id_rs2_data\[31:0\]"
-wvSetPosition -win $_nWave2 {("G7" 0)}
-wvSetPosition -win $_nWave2 {("G7" 1)}
-wvSetPosition -win $_nWave2 {("G7" 1)}
-srcDeselectAll -win $_nTrace1
-srcSelect -signal "id_reg_rs1_addr" -line 13 -pos 1 -win $_nTrace1
-srcDeselectAll -win $_nTrace1
-srcSelect -signal "id_ex_rs1_data" -line 15 -pos 1 -win $_nTrace1
-wvSetPosition -win $_nWave2 {("G1" 7)}
-wvSetPosition -win $_nWave2 {("G1" 6)}
-wvSetPosition -win $_nWave2 {("G1" 5)}
-wvSetPosition -win $_nWave2 {("G1" 6)}
-wvSetPosition -win $_nWave2 {("G1" 7)}
-wvSetPosition -win $_nWave2 {("G1" 8)}
-wvSetPosition -win $_nWave2 {("G2" 0)}
-wvSetPosition -win $_nWave2 {("G2" 1)}
-wvSetPosition -win $_nWave2 {("G3" 0)}
-wvSetPosition -win $_nWave2 {("G3" 1)}
-wvSetPosition -win $_nWave2 {("G4" 0)}
-wvSetPosition -win $_nWave2 {("G1" 0)}
-wvSetPosition -win $_nWave2 {("G5" 1)}
-wvSetPosition -win $_nWave2 {("G6" 0)}
-wvSetPosition -win $_nWave2 {("G6" 1)}
-wvSetPosition -win $_nWave2 {("G7" 1)}
-wvSetPosition -win $_nWave2 {("G8" 0)}
-wvSetPosition -win $_nWave2 {("G1" 0)}
-wvSetPosition -win $_nWave2 {("G8" 0)}
-wvAddSignal -win $_nWave2 "/testbench/top/openmips0/id0/id_ex_rs1_data\[31:0\]"
-wvSetPosition -win $_nWave2 {("G8" 0)}
-wvSetPosition -win $_nWave2 {("G8" 1)}
-wvSetPosition -win $_nWave2 {("G8" 1)}
-srcDeselectAll -win $_nTrace1
-srcSelect -signal "id_ex_rs2_data" -line 16 -pos 1 -win $_nTrace1
-wvSetPosition -win $_nWave2 {("G2" 0)}
-wvSetPosition -win $_nWave2 {("G3" 1)}
-wvSetPosition -win $_nWave2 {("G4" 0)}
-wvSetPosition -win $_nWave2 {("G5" 0)}
-wvSetPosition -win $_nWave2 {("G6" 1)}
-wvSetPosition -win $_nWave2 {("G1" 0)}
-wvSetPosition -win $_nWave2 {("G8" 1)}
-wvSetPosition -win $_nWave2 {("G9" 0)}
-wvAddSignal -win $_nWave2 "/testbench/top/openmips0/id0/id_ex_rs2_data\[31:0\]"
-wvSetPosition -win $_nWave2 {("G9" 0)}
-wvSetPosition -win $_nWave2 {("G9" 1)}
-wvSetPosition -win $_nWave2 {("G9" 1)}
-srcHBSelect "testbench.top.openmips0.registerfile0" -win $_nTrace1
-srcSetScope -win $_nTrace1 "testbench.top.openmips0.registerfile0" -delim "."
-srcHBSelect "testbench.top.openmips0.registerfile0" -win $_nTrace1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 0
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 5
-wvScrollUp -win $_nWave2 2
-wvScrollDown -win $_nWave2 8
-wvScrollUp -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 0
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 0
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
+srcSelect -signal "clk" -line 2 -pos 1 -win $_nTrace1
+wvAddSignal -win $_nWave3 "/testbench/top/clk"
+wvSetPosition -win $_nWave3 {("G1" 0)}
+wvSetPosition -win $_nWave3 {("G1" 1)}
+wvSetPosition -win $_nWave3 {("G1" 1)}
+verdiDockWidgetSetCurTab -dock windowDock_InteractiveConsole_2
+verdiDockWidgetSetCurTab -dock widgetDock_<Message>
+verdiDockWidgetSetCurTab -dock windowDock_OneSearch
+verdiDockWidgetSetCurTab -dock windowDock_nWave_3
+srcSignalView -on
+verdiWindowWorkMode -win $_Verdi_1 -interactiveDebug
+srcTBInvokeSim
+srcTraceLoad "testbench.top.clk" -win $_nTrace1
+srcTraceLoad "testbench.top.openmips0.pc0.en.clk" -win $_nTrace1
+srcTraceLoad "testbench.top.openmips0.pc0.en.clk" -win $_nTrace1
+srcTraceLoad "testbench.top.openmips0.pc0.en.clk" -win $_nTrace1
+srcTraceLoad "testbench.top.openmips0.pc0.en.clk" -win $_nTrace1
+srcTraceLoad "testbench.top.openmips0.pc0.en.clk" -win $_nTrace1
+srcTraceLoad "testbench.top.openmips0.pc0.en.clk" -win $_nTrace1
+srcTraceLoad "testbench.top.openmips0.pc0.en.clk" -win $_nTrace1
+verdiSetTimeUnit 10n
+srcTraceLoad "testbench.top.openmips0.pc0.en.clk" -win $_nTrace1
+srcTraceLoad "testbench.top.openmips0.pc0.en.clk" -win $_nTrace1
+srcTraceLoad "testbench.top.openmips0.pc0.en.clk" -win $_nTrace1
+srcTBRunSim
+srcTBSimReset
+verdiSetTimeUnit 10n
+srcTraceLoad "testbench.top.openmips0.pc0.en.clk" -win $_nTrace1
+srcTraceLoad "testbench.top.openmips0.pc0.en.clk" -win $_nTrace1
+nsMsgSwitchTab -tab general
 debExit
