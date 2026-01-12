@@ -4,42 +4,27 @@ simSetSimulator "-vcssv" -exec "/home/jay/Desktop/graduation_project/rtl/simv" \
 debImport "-dbdir" "/home/jay/Desktop/graduation_project/rtl/simv.daidir"
 debLoadSimResult /home/jay/Desktop/graduation_project/rtl/testbench.fsdb
 wvCreateWindow
+srcHBSelect "mux.i0" -win $_nTrace1
+srcSetScope -win $_nTrace1 "mux.i0" -delim "."
+srcHBSelect "mux.i0" -win $_nTrace1
 srcHBSelect "testbench" -win $_nTrace1
 srcSetScope -win $_nTrace1 "testbench" -delim "."
 srcHBSelect "testbench" -win $_nTrace1
 srcHBSelect "testbench.top" -win $_nTrace1
-srcHBSelect "testbench.top" -win $_nTrace1
 srcSetScope -win $_nTrace1 "testbench.top" -delim "."
 srcHBSelect "testbench.top" -win $_nTrace1
-srcDeselectAll -win $_nTrace1
-srcSelect -signal "clk" -line 2 -pos 1 -win $_nTrace1
-wvAddSignal -win $_nWave3 "/testbench/top/clk"
-wvSetPosition -win $_nWave3 {("G1" 0)}
-wvSetPosition -win $_nWave3 {("G1" 1)}
-wvSetPosition -win $_nWave3 {("G1" 1)}
-verdiDockWidgetSetCurTab -dock windowDock_InteractiveConsole_2
-verdiDockWidgetSetCurTab -dock widgetDock_<Message>
-verdiDockWidgetSetCurTab -dock windowDock_OneSearch
-verdiDockWidgetSetCurTab -dock windowDock_nWave_3
-srcSignalView -on
-verdiWindowWorkMode -win $_Verdi_1 -interactiveDebug
-srcTBInvokeSim
-srcTraceLoad "testbench.top.clk" -win $_nTrace1
-srcTraceLoad "testbench.top.openmips0.pc0.en.clk" -win $_nTrace1
-srcTraceLoad "testbench.top.openmips0.pc0.en.clk" -win $_nTrace1
-srcTraceLoad "testbench.top.openmips0.pc0.en.clk" -win $_nTrace1
-srcTraceLoad "testbench.top.openmips0.pc0.en.clk" -win $_nTrace1
-srcTraceLoad "testbench.top.openmips0.pc0.en.clk" -win $_nTrace1
-srcTraceLoad "testbench.top.openmips0.pc0.en.clk" -win $_nTrace1
-srcTraceLoad "testbench.top.openmips0.pc0.en.clk" -win $_nTrace1
-verdiSetTimeUnit 10n
-srcTraceLoad "testbench.top.openmips0.pc0.en.clk" -win $_nTrace1
-srcTraceLoad "testbench.top.openmips0.pc0.en.clk" -win $_nTrace1
-srcTraceLoad "testbench.top.openmips0.pc0.en.clk" -win $_nTrace1
-srcTBRunSim
-srcTBSimReset
-verdiSetTimeUnit 10n
-srcTraceLoad "testbench.top.openmips0.pc0.en.clk" -win $_nTrace1
-srcTraceLoad "testbench.top.openmips0.pc0.en.clk" -win $_nTrace1
-nsMsgSwitchTab -tab general
+srcHBSelect "testbench.top.openmips0" -win $_nTrace1
+srcSetScope -win $_nTrace1 "testbench.top.openmips0" -delim "."
+srcHBSelect "testbench.top.openmips0" -win $_nTrace1
+srcHBSelect "testbench.top.openmips0.registerfile0" -win $_nTrace1
+srcSetScope -win $_nTrace1 "testbench.top.openmips0.registerfile0" -delim "."
+srcHBSelect "testbench.top.openmips0.registerfile0" -win $_nTrace1
+srcHBSelect "testbench.top.openmips0.registerfile0.i0" -win $_nTrace1
+srcSetScope -win $_nTrace1 "testbench.top.openmips0.registerfile0.i0" -delim "."
+srcHBSelect "testbench.top.openmips0.registerfile0.i0" -win $_nTrace1
+srcSignalViewSelect "testbench.top.openmips0.registerfile0.i0.rf\[31:0\]"
+srcSignalViewAddSelectedToWave -win $_nTrace1
+wvSelectSignal -win $_nWave3 {( "G1" 1 )} 
+wvExpandBus -win $_nWave3 {("G1" 1)}
+wvSelectSignal -win $_nWave3 {( "G1" 29 )} 
 debExit

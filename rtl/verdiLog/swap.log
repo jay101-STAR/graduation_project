@@ -1,54 +1,51 @@
 version: (200506)
 
 available memory: 64M bytes
-used memory: 450560 bytes [need 440K bytes if disable swap]
+used memory: 376832 bytes [need 368K bytes if disable swap]
 
-used block: 13 [memory(13) file(0)]
-                 [ 8K(7) 64K(6) { total 440K bytes } ]
-overhead: (9522) bytes for (13) blocks [Average: (732) bytes/block]
+used block: 11 [memory(11) file(0)]
+                 [ 8K(6) 64K(5) { total 368K bytes } ]
+overhead: (9522) bytes for (11) blocks [Average: (865) bytes/block]
 
 write  => 0(times) 0K(bytes) [0K bytes to file]
-read   => 6(times) 61K(bytes) [10K bytes compressed data from file]
-access => 138485(times) 1096M(bytes)
-          [hit ratio: 99.9957%]
+read   => 5(times) 32K(bytes) [6K bytes compressed data from file]
+access => 110834(times) 878M(bytes)
+          [hit ratio: 99.9955%]
 
 time: write(0) read(0)  unit: second
 
 swap file directory: (/home/jay/Desktop/graduation_project/rtl/verdiLog)
-used swap file number: (7)
+used swap file number: (6)
 
 
 
 swap file manager:
 arrSize: (256)
-idxCnt: (8)
+idxCnt: (7)
 closeHead: (1)
-closeTail: (7)
-openCnt: (7)
-fid(7): fd(1073741829) fileName(/home/jay/Desktop/graduation_project/rtl/simv.daidir/kdb.elab++/work.lib++/registerfile.v.tdc)
-	size(2944) lastModTime(1767667321) curModTime(1767667321)
-	mode(rb)	hot(0) cool(6) pos(0)
-fid(6): fd(1073741828) fileName(/home/jay/Desktop/graduation_project/rtl/simv.daidir/kdb.elab++/work.lib++/id.v.tdc)
-	size(7460) lastModTime(1767667321) curModTime(1767667321)
-	mode(rb)	hot(7) cool(5) pos(0)
+closeTail: (6)
+openCnt: (6)
+fid(6): fd(1073741828) fileName(/home/jay/Desktop/graduation_project/rtl/simv.daidir/kdb.elab++/work.lib++/registerfile.v.tdc)
+	size(2944) lastModTime(1767769744) curModTime(1767769744)
+	mode(rb)	hot(0) cool(5) pos(0)
 fid(5): fd(1073741827) fileName(/home/jay/Desktop/graduation_project/rtl/simv.daidir/kdb.elab++/work.lib++/openmips.v.tdc)
-	size(3563) lastModTime(1767667321) curModTime(1767667321)
+	size(3558) lastModTime(1767769744) curModTime(1767769744)
 	mode(rb)	hot(6) cool(4) pos(0)
 fid(4): fd(1073741826) fileName(/home/jay/Desktop/graduation_project/rtl/simv.daidir/kdb.elab++/work.lib++/top.v.tdc)
-	size(1267) lastModTime(1767667321) curModTime(1767667321)
+	size(1267) lastModTime(1767769744) curModTime(1767769744)
 	mode(rb)	hot(5) cool(3) pos(0)
 fid(3): fd(1073741825) fileName(/home/jay/Desktop/graduation_project/rtl/simv.daidir/kdb.elab++/work.lib++/testbench.v.tdc)
-	size(1356) lastModTime(1767667321) curModTime(1767667321)
+	size(1356) lastModTime(1767769744) curModTime(1767769744)
 	mode(rb)	hot(4) cool(2) pos(0)
-fid(2): fd(33) fileName(/home/jay/Desktop/graduation_project/rtl/verdiLog/_swap_0001#8323329#11003)
-	size(0) lastModTime(0) curModTime(1767667455)
+fid(2): fd(33) fileName(/home/jay/Desktop/graduation_project/rtl/verdiLog/_swap_0001#8323329#684883)
+	size(0) lastModTime(0) curModTime(1767769762)
 	mode(w+b)	hot(3) cool(1) pos(0)
 fid(1): fd(1073741824) fileName(/home/jay/Desktop/graduation_project/rtl/simv.daidir/kdb.elab++/work.lib++/mux.v.tdc)
-	size(2756) lastModTime(1767667321) curModTime(1767667321)
+	size(2756) lastModTime(1767769744) curModTime(1767769744)
 	mode(rb)	hot(2) cool(0) pos(0)
 fid(0): fd(0) fileName(NULL)
 	mode(NULL)	hot(0) cool(0) pos(0)
 ==================================================
-mySelf(326510c0) pre(32003b50) next(0)
+mySelf(18046d80) pre(179fdd50) next(0)
 version(200506)
 date(Feb 11 2019 22:10:27)

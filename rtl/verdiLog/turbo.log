@@ -1,3 +1,3 @@
 Command Line: /home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2/platform/LINUXAMD64/bin/Novas -ssf /home/jay/Desktop/graduation_project/rtl/testbench.fsdb
 uname(Linux jay-VMware-Virtual-Platform 6.14.0-37-generic #37~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Nov 20 10:25:38 UTC 2 x86_64)
-au time 148.527404 2.499762 3.948586 delta 544219136 544219136 total 915587072 915587072
+au time 17.245810 2.042737 1.644486 delta 610689024 610689024 total 982061056 982061056

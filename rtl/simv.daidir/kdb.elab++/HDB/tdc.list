@@ -1,3 +1,4 @@
+./vsrc/csr.v
 ./vsrc/ex.v
 ./vsrc/id.v
 ./vsrc/instrom.v

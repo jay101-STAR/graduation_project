@@ -15,7 +15,7 @@ input_file="$1"
 base_name="${input_file%.*}"
 
 # 编译生成中间文件
-riscv32-unknown-elf-as -march=rv32i -o "${base_name}.o" "$input_file"
+riscv32-unknown-elf-as -march=rv32im -mno-relax -o "${base_name}.o" "$input_file"
 
 # 转换为纯二进制文件
 riscv32-unknown-elf-objcopy -O binary "${base_name}.o" "${base_name}.bin"

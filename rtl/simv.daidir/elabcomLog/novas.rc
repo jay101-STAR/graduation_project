@@ -404,6 +404,9 @@ QwShortcutDialog = 14,49,800,600
 nsWindowManager = 14,49,738,404
 QwWarnMsgDlg = 66,123,600,250
 Verdi_1_timeUnitDlg = 14,49,433,102
+TextFindBrowseForm_base = 14,49,535,322
+textFindByHier = 14,49,442,368
+searchScope_base = 14,49,558,548
 QwUserAskDlg = 992,616,347,198
 [Relationship]
 hideRecursiceNode = FALSE
@@ -483,16 +486,16 @@ vcs_svOption =
 thirdpartyIdx = -1
 NoAppendOption = FALSE
 ScsDebugAll = FALSE
+smartlog = FALSE
 simType = vcssv
 bSVTBMode = TRUE
 SimMode = TRUE
 interactiveDebugging = TRUE
 KeepBreakPoints = FALSE
 vcs_svPath = /home/jay/Desktop/graduation_project/rtl/simv
-smartlog = FALSE
 [SimulationPlus2]
-eventDumpUnfinish = FALSE
 dumpPowerRoot = FALSE
+eventDumpUnfinish = FALSE
 [Source]
 wordWrapOn = TRUE
 viewReuse = TRUE
@@ -520,8 +523,8 @@ nLineSize = 1024
 [Test]
 verbose_progress = FALSE
 [TestBenchBrowser]
--showUVMDynamicHierTreeWin = FALSE
 DataViewTooltip = TRUE
+-showUVMDynamicHierTreeWin = FALSE
 [Text]
 hdlTypeName = blue4
 hdlLibrary = blue4
@@ -697,34 +700,34 @@ DefaultLogTimeUnit = "1.000000ns"
 parRuleSets = "/home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2/share/VIA/Apps/PredefinedParRules/par_rule_OVM.rc /home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2/share/VIA/Apps/PredefinedParRules/par_rule_UVM.rc /home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-20\
 18.09-SP2/share/VIA/Apps/PredefinedParRules/par_rule_LP.rc /home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2/share/VIA/Apps/PredefinedParRules/par_rule_VCS.rc "
 [VIA.interactiveDebug.preference.vgifColumnSettingRC.setting0.column0]
-name = Time
+name = Severity
 width = 60
-visualIndex = 0
+visualIndex = 1
 isHidden = FALSE
 isUserChangeColumnVisible = FALSE
 [VIA.interactiveDebug.preference.vgifColumnSettingRC.setting0.column1]
-name = Type
-width = 60
-visualIndex = 3
-isHidden = TRUE
-isUserChangeColumnVisible = FALSE
-[VIA.interactiveDebug.preference.vgifColumnSettingRC.setting0.column2]
 name = Message
 width = 2000
 visualIndex = 4
 isHidden = FALSE
 isUserChangeColumnVisible = FALSE
-[VIA.interactiveDebug.preference.vgifColumnSettingRC.setting0.column3]
+[VIA.interactiveDebug.preference.vgifColumnSettingRC.setting0.column2]
 name = Code
 width = 60
 visualIndex = 2
 isHidden = FALSE
 isUserChangeColumnVisible = FALSE
-[VIA.interactiveDebug.preference.vgifColumnSettingRC.setting0.column4]
-name = Severity
+[VIA.interactiveDebug.preference.vgifColumnSettingRC.setting0.column3]
+name = Time
 width = 60
-visualIndex = 1
+visualIndex = 0
 isHidden = FALSE
+isUserChangeColumnVisible = FALSE
+[VIA.interactiveDebug.preference.vgifColumnSettingRC.setting0.column4]
+name = Type
+width = 60
+visualIndex = 3
+isHidden = TRUE
 isUserChangeColumnVisible = FALSE
 [VIA.oneSearch.preference]
 DefaultDisplayTimeUnit = "1.000000ns"
@@ -733,27 +736,27 @@ DefaultLogTimeUnit = "1.000000ns"
 [VIA.oneSearch.preference.vgifColumnSettingRC.setting0]
 parRuleSets = ""
 [VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column0]
-name = Type
-width = 60
-visualIndex = 3
-isHidden = TRUE
-isUserChangeColumnVisible = FALSE
-[VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column1]
-name = Message
-width = 2000
-visualIndex = 4
-isHidden = FALSE
-isUserChangeColumnVisible = FALSE
-[VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column2]
 name = Time
 width = 60
 visualIndex = 0
 isHidden = TRUE
 isUserChangeColumnVisible = FALSE
-[VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column3]
+[VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column1]
 name = Code
 width = 60
 visualIndex = 2
+isHidden = TRUE
+isUserChangeColumnVisible = FALSE
+[VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column2]
+name = Message
+width = 2000
+visualIndex = 4
+isHidden = FALSE
+isUserChangeColumnVisible = FALSE
+[VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column3]
+name = Type
+width = 60
+visualIndex = 3
 isHidden = TRUE
 isUserChangeColumnVisible = FALSE
 [VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column4]
@@ -783,7 +786,7 @@ scope_to_save_with_macro
 open_file_dir
 open_rc_file_dir
 getSignalForm = 0 0 800 479 100 30 100 30
-viewPort = 0 30 1460 563 160 65
+viewPort = 0 30 1703 458 276 213
 signalSpacing = 5
 digitalSignalHeight = 15
 analogSignalHeight = 98
@@ -1661,7 +1664,7 @@ AddImportArgument = FALSE
 LineBreakWithScope = TRUE
 StopAfterCompileOption = -s
 [wave.0]
-viewPort = 0 30 1460 563 160 65
+viewPort = 0 30 1703 458 276 213
 [wave.1]
 viewPort = 0 30 2198 531 160 65
 [wave.2]

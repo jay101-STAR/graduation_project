@@ -3,9 +3,9 @@ module openmips (
     input clk,
     input rst,
 
-    input [31:0] instrom_openmips_data,
+    input  [31:0] instrom_openmips_data,
     output [31:0] openmips_instrom_addr,
-    output openmips_instrom_ren
+    output        openmips_instrom_ren
 );
   //connect pc to id
   wire [31:0] pc_id_pc;
@@ -24,7 +24,10 @@ module openmips (
   wire [3 : 0] id_ex_aluc;
   wire [7 : 0] id_ex_alucex;
   wire [ 31:0] id_ex_pc;
-
+  wire [  4:0] id_ex_rs1_addr;
+  wire [ 11:0] id_ex_csr_addr;
+  wire         id_ex_is_csr;
+  wire         id_ex_branch_taken;
   //connect ex to regsterfile
   wire [ 31:0] ex_reg_rd_data;
   wire [4 : 0] ex_reg_rd_addr;
@@ -36,13 +39,13 @@ module openmips (
 
 
   pc pc0 (
-      .clk(clk),
-      .rst(rst),
-      .ren(openmips_instrom_ren),
-      .ex_pc_pc_wen(ex_pc_pc_wen),
+      .clk          (clk),
+      .rst          (rst),
+      .ren          (openmips_instrom_ren),
+      .ex_pc_pc_wen (ex_pc_pc_wen),
       .ex_pc_pc_data(ex_pc_pc_data),
-      .next_pc(openmips_instrom_addr),
-      .pc_id_pc(pc_id_pc)
+      .next_pc      (openmips_instrom_addr),
+      .pc_id_pc     (pc_id_pc)
   );
 
   id id0 (
@@ -64,18 +67,18 @@ module openmips (
   );
 
   ex ex0 (
-      .id_ex_aluc(id_ex_aluc),
-      .id_ex_alucex(id_ex_alucex),
-      .id_ex_rd_addr(id_ex_rd_addr),
-      .id_ex_rd_wen(id_ex_rd_wen),
+      .id_ex_aluc    (id_ex_aluc),
+      .id_ex_alucex  (id_ex_alucex),
+      .id_ex_rd_addr (id_ex_rd_addr),
+      .id_ex_rd_wen  (id_ex_rd_wen),
       .id_ex_rs1_data(id_ex_rs1_data),
       .id_ex_rs2_data(id_ex_rs2_data),
-      .id_ex_pc(id_ex_pc),
-      .ex_reg_rd_wen(ex_reg_rd_wen),
+      .id_ex_pc      (id_ex_pc),
+      .ex_reg_rd_wen (ex_reg_rd_wen),
       .ex_reg_rd_data(ex_reg_rd_data),
       .ex_reg_rd_addr(ex_reg_rd_addr),
-      .ex_pc_pc_wen(ex_pc_pc_wen),
-      .ex_pc_pc_data(ex_pc_pc_data)
+      .ex_pc_pc_wen  (ex_pc_pc_wen),
+      .ex_pc_pc_data (ex_pc_pc_data)
   );
 
   chj_registerfile registerfile0 (

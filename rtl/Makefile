@@ -10,7 +10,7 @@ VCS = vcs -full64 -sverilog -timescale=1ns/1ns \
 		-LDFLAGS -Wl,--no-as-needed \
 		 $(SRCS)	
 comp:
-	./vsrc/instrom/asm2hex.sh ./vsrc/instrom/instrom.s
+	./vsrc/instrom/llvm.sh ./vsrc/instrom/instrom.s
 	$(VCS) 
 	./simv -l sim.log
 
