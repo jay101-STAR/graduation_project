@@ -57,7 +57,7 @@
 `define CSRRCI_TYPE 8'b00100010
 `define EBREAK_TYPE 8'b00100100
 `define ECALL_TYPE  8'b00100101
-`define MRET_TYPE   8'b00100101
+`define MRET_TYPE   8'b00100110
 
 //func7
 `define R_ASA_INST 7'b0000000 //R_TYPE except SUB and SRA

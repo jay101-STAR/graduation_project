@@ -1,0 +1,82 @@
+@verdi rc file Version 1.0
+[General]
+saveDB = TRUE
+relativePath = FALSE
+saveSingleView = FALSE
+saveNWaveWinId = 
+VerdiVersion = Verdi_O-2018.09-SP2
+[KeyNote]
+Line1 = Automatic Backup 0
+Line2 = Save Open Database Information: Yes
+Line3 = Path Option: Absolute Paths
+Line4 = Windows Option: All Windows
+[TestBench]
+ConstrViewShow = 0
+InherViewShow = 0
+FSDBMsgShow = 0
+AnnotationShow = 0
+Console = FALSE
+powerDumped = 0
+[hb]
+postSimFile = /home/jay/Desktop/graduation_project/test/tb_driver_ctrl.fsdb
+syncTime = 0
+viewport = 66 32 2198 1291 0 0 234 2196
+activeNode = "tb_driver_ctrl"
+activeScope = "tb_driver_ctrl"
+activeFile = "./tb_driver_ctrl.v"
+interactiveMode = False
+viewType = Source
+simulatorMode = False
+sourceBeginLine = 7
+baMode = False
+srcLineNum = True
+AutoWrap = True
+IdentifyFalseLogic = False
+syncSignal = False
+traceMode = Hierarchical
+showTraceInSchema = True
+paMode = False
+funcMode = False
+powerAwareAnnot = True
+amsAnnot = True
+traceCrossHier = True
+DnDtraceCrossHierOnly = True
+traceIncTopPort = False
+leadingZero = False
+signalPane = True
+Scope1 = "tb_driver_ctrl"
+multipleSelection = 1 8 3 0 0
+sdfCheckUndef = FALSE
+simFlow = FALSE
+[hb.design]
+importCmd = "-dbdir" "/home/jay/Desktop/graduation_project/test/simv.daidir" 
+invokeDir = /home/jay/Desktop/graduation_project/test
+[hb.sourceTab.1]
+scope = tb_driver_ctrl
+File = /home/jay/Desktop/graduation_project/test/tb_driver_ctrl.v
+Line = 8
+[nMemoryManager]
+WaveformFile = /home/jay/Desktop/graduation_project/test/tb_driver_ctrl.fsdb
+UserActionNum = 0
+nMemWindowNum = 0
+[wave.0]
+viewPort = 0 33 2198 591 151 65
+primaryWindow = TRUE
+SessionFile = /home/jay/Desktop/graduation_project/test/verdiLog/novas_autosave.ses.wave.0
+displayGrid = FALSE
+hierarchicalName = FALSE
+snap = TRUE
+displayLeadingZeros = FALSE
+fixDelta = FALSE
+displayCursorMarker = FALSE
+autoUpdate = FALSE
+highlightGlitchs = FALSE
+waveformSyncCursorMarker = FALSE
+waveformSyncHorizontalRange = FALSE
+waveformSyncVerticalscroll = FALSE
+displayErrors = TRUE
+displayMsgSymbols = TRUE
+showMsgDescriptions = TRUE
+autoFit = FALSE
+displayDeltaY = FALSE
+centerCursor = FALSE

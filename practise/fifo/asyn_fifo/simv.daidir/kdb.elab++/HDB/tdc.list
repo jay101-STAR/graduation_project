@@ -1,0 +1,3 @@
+./fifo.v
+./ram.v
+./testbench.v

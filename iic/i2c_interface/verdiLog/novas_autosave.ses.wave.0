@@ -1,0 +1,78 @@
+Magic 271485
+Revision Verdi_O-2018.09-SP2
+
+; Window Layout <x> <y> <width> <height> <signalwidth> <valuewidth>
+viewPort 0 33 2198 540 207 65
+
+; File list:
+; openDirFile [-d delimiter] [-s time_offset] [-rf auto_bus_rule_file] path_name file_name
+openDirFile -d / "" "/home/jay/Desktop/graduation_project/i2c_interface/i2c_test.fsdb"
+
+; file time scale:
+; fileTimeScale ### s|ms|us|ns|ps
+
+; signal spacing:
+signalSpacing 5
+
+; windowTimeUnit is used for zoom, cursor & marker
+; waveform viewport range
+zoom 92148642.084661 92326015.444036
+cursor 92269349.32343466580
+marker 0.000000
+
+; user define markers
+; userMarker time_pos marker_name color linestyle
+; visible top row signal index
+top 0
+; marker line index
+markerPos 2
+
+; event list
+; addEvent event_name event_expression
+; curEvent event_name
+
+
+
+COMPLEX_EVENT_BEGIN
+
+
+COMPLEX_EVENT_END
+
+
+
+; toolbar current search type
+; curSTATUS search_type
+curSTATUS ByChange
+
+
+aliasmapname i2c_master.state
+nalias IDLE		4'b0000		NULL
+nalias WRITE_DATA		4'b0100		NULL
+nalias START_COND		4'b0001		NULL
+nalias ACK_WRITE		4'b0101		NULL
+nalias STOP_COND		4'b1000		NULL
+nalias ADDR		4'b0010		NULL
+nalias READ_DATA		4'b0110		NULL
+nalias ACK_ADDR		4'b0011		NULL
+nalias ACK_READ		4'b0111		NULL
+
+aliasmapname i2c_slave.state
+nalias ACK_ADDR		3'b010		NULL
+nalias ACK_READ		3'b110		NULL
+nalias WRITE_DATA		3'b011		NULL
+nalias IDLE		3'b000		NULL
+nalias ACK_WRITE		3'b100		NULL
+nalias ADDR		3'b001		NULL
+nalias READ_DATA		3'b101		NULL
+
+addGroup "G1"
+aliasname i2c_master.state
+activeDirFile "" "/home/jay/Desktop/graduation_project/i2c_interface/i2c_test.fsdb"
+addSignal -h 21 -UNSIGNED -HEX /i2c_tb/master/state[3:0]
+aliasname i2c_master.state
+addSignal -h 21 -UNSIGNED -HEX -holdScope next_state[3:0]
+addGroup "G2"
+
+; getSignalForm Scope Hierarchy Status
+; active file of getSignalForm
+

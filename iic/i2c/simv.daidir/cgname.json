@@ -1,0 +1,20 @@
+{
+    "i2c_eeprom_tb": [
+        "i2c_eeprom_tb",
+        "LRhIH",
+        "module",
+        2
+    ],
+    "std": [
+        "std",
+        "reYIK",
+        "module",
+        1
+    ],
+    "...MASTER...": [
+        "SIM",
+        "amcQw",
+        "module",
+        3
+    ]
+}

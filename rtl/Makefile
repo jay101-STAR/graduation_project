@@ -11,12 +11,38 @@ VCS = vcs -full64 -sverilog -timescale=1ns/1ns \
 		 $(SRCS)	
 comp:
 	./vsrc/instrom/llvm.sh ./vsrc/instrom/instrom.s
-	$(VCS) 
+	$(VCS)
+	./simv -l sim.log
+
+test-load-store:
+	./vsrc/instrom/llvm.sh ./vsrc/instrom/load_store_test.s
+	$(VCS)
+	./simv -l sim.log
+
+test-unaligned:
+	./vsrc/instrom/llvm.sh ./vsrc/instrom/unaligned_test.s
+	cp ./vsrc/instrom/unaligned_test.hex ./vsrc/instrom/instrom.hex
+	$(VCS)
+	./simv -l sim.log
+
+test-unaligned-comprehensive:
+	./vsrc/instrom/llvm.sh ./vsrc/instrom/comprehensive_unaligned_test.s
+	cp ./vsrc/instrom/comprehensive_unaligned_test.hex ./vsrc/instrom/instrom.hex
+	$(VCS)
 	./simv -l sim.log
 
 
-verdi: comp
+test-riscv:
+	./vsrc/instrom/elf2hex.sh ../verification/riscv-tests/isa/rv32ui-p-ld_st ./vsrc/instrom/instrom.hex
+	$(VCS)
+	./simv -l sim.log
+
+verdi_self_test: comp
 	verdi -ssf /home/jay/Desktop/graduation_project/rtl/testbench.fsdb
+
+verdi_official_test: test-riscv
+	verdi -ssf /home/jay/Desktop/graduation_project/rtl/testbench.fsdb
+
 
 
 clean:

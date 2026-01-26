@@ -10,13 +10,15 @@ module ex (
     input [ 4:0] id_ex_rs1_addr,
     input [31:0] id_ex_pc,
 
-    input id_ex_branch_taken,
-    input id_ex_csr_addr,
-    input id_ex_is_csr,
+    input        id_ex_branch_taken,
+    input [11:0] id_ex_csr_addr,
+    input        id_ex_is_csr,
 
     input [31:0] csr_ex_data,
     input [31:0] csr_ex_trap_vector,  //异常时的跳转地址
     input [31:0] csr_ex_mepc,         //异常指令所在的地址
+
+    input [31:0] dataram_ex_rdata,
 
     output [31:0] ex_reg_rd_data,
     output [ 4:0] ex_reg_rd_addr,
@@ -32,13 +34,36 @@ module ex (
     output [31:0] ex_csr_trap_cause,
 
     output        ex_pc_pc_wen,
-    output [31:0] ex_pc_pc_data
+    output [31:0] ex_pc_pc_data,
+
+    output [31:0] ex_dataram_addr,
+    output [31:0] ex_dataram_wdata,
+    output        ex_dataram_wen,
+    output        ex_dataram_ren,
+    output [ 7:0] ex_dataram_alucex
 
 );
   wire [31:0] ex_reg_rd_data1;
   wire [31:0] result_add = id_ex_rs1_data + id_ex_rs2_data;
   wire [31:0] result_sll = id_ex_rs1_data << id_ex_rs2_data[4:0];
+  wire [31:0] result_srl = id_ex_rs1_data >> id_ex_rs2_data[4:0];
   wire [31:0] pc_plus_4 = id_ex_pc + 4;
+
+  // Additional ALU operation results
+  wire [31:0] result_sub = id_ex_rs1_data - id_ex_rs2_data;
+  wire [31:0] result_xor = id_ex_rs1_data ^ id_ex_rs2_data;
+  wire [31:0] result_or = id_ex_rs1_data | id_ex_rs2_data;
+  wire [31:0] result_and = id_ex_rs1_data & id_ex_rs2_data;
+  wire [31:0] result_sra = $signed(id_ex_rs1_data) >>> id_ex_rs2_data[4:0];
+  wire [31:0] result_slt = ($signed(id_ex_rs1_data) < $signed(id_ex_rs2_data)) ? 32'd1 : 32'd0;
+  wire [31:0] result_sltu = (id_ex_rs1_data < id_ex_rs2_data) ? 32'd1 : 32'd0;
+
+  // memory interface
+  assign ex_dataram_addr   = (id_ex_aluc == `L_TYPE) ? (id_ex_rs1_data + id_ex_rs2_data) : id_ex_rs1_data;
+  assign ex_dataram_wdata = id_ex_rs2_data;
+  assign ex_dataram_wen = (id_ex_aluc == `S_TYPE);
+  assign ex_dataram_ren = (id_ex_aluc == `L_TYPE);
+  assign ex_dataram_alucex = id_ex_alucex;
 
   // trap 优先级最高，必须单独判断
   wire pc_redirect_trap = ex_csr_trap_valid;
@@ -79,13 +104,21 @@ module ex (
   // verilog_format: off
 
   //得出rd_data的值
-  muxwithdefault #(12, 8, 32) i1 (
+  muxwithdefault #(20, 8, 32) i1 (
       ex_reg_rd_data1,
       id_ex_alucex,
       32'b0,
       {
         `ADD_TYPE    ,result_add     ,
+        `SUB_TYPE    ,result_sub     ,
         `SLL_TYPE    ,result_sll     ,
+        `SLT_TYPE    ,result_slt     ,
+        `SLTU_TYPE   ,result_sltu    ,
+        `XOR_TYPE    ,result_xor     ,
+        `SRL_TYPE    ,result_srl     ,
+        `SRA_TYPE    ,result_sra     ,
+        `OR_TYPE     ,result_or      ,
+        `AND_TYPE    ,result_and     ,
         `AUIPCC_TYPE ,result_add     ,
         `LUII_TYPE   ,id_ex_rs1_data ,//immU
         `JALL_TYPE   ,pc_plus_4      ,
@@ -100,7 +133,7 @@ module ex (
       }
   );
 
-  muxwithdefault #(7, 4, 32) i2 (
+  muxwithdefault #(8, 4, 32) i2 (
       ex_reg_rd_data,
       id_ex_aluc,
       32'b0,
@@ -111,12 +144,13 @@ module ex (
         `AUIPC_TYPE ,ex_reg_rd_data1 ,
         `JAL_TYPE   ,ex_reg_rd_data1 ,
         `JALR_TYPE  ,ex_reg_rd_data1 ,
-        `CSR_TYPE   ,ex_reg_rd_data1
+        `CSR_TYPE   ,ex_reg_rd_data1 ,
+        `L_TYPE     ,dataram_ex_rdata
       }
   );
 
   //将wen,addr的值传递给regfile
-  muxwithdefault #(7, 4, 1) i3 (
+  muxwithdefault #(8, 4, 1) i3 (
       ex_reg_rd_wen,
       id_ex_aluc,
       1'b0,
@@ -127,12 +161,13 @@ module ex (
         `JALR_TYPE  ,id_ex_rd_wen ,
         `LUI_TYPE   ,id_ex_rd_wen ,
         `AUIPC_TYPE ,id_ex_rd_wen ,
-        `CSR_TYPE   ,id_ex_rd_wen
+        `CSR_TYPE   ,id_ex_rd_wen ,
+        `L_TYPE     ,id_ex_rd_wen
       }
   );
 
 
-  muxwithdefault #(7, 4, 5) i4 (
+  muxwithdefault #(8, 4, 5) i4 (
       ex_reg_rd_addr,
       id_ex_aluc,
       5'b0,
@@ -143,7 +178,8 @@ module ex (
         `JALR_TYPE  ,id_ex_rd_addr ,
         `LUI_TYPE   ,id_ex_rd_addr ,
         `AUIPC_TYPE ,id_ex_rd_addr ,
-        `CSR_TYPE   ,id_ex_rd_addr
+        `CSR_TYPE   ,id_ex_rd_addr ,
+        `L_TYPE     ,id_ex_rd_addr
       }
   );
   // ex to csr
@@ -163,7 +199,7 @@ module ex (
   //verilog_format: off
 
   muxwithdefault #(2, 8, 32) ex_csr_mcause1 (
-      ex_csr_mcause,
+      ex_csr_trap_cause,
       id_ex_alucex,
       32'b0,
       {`EBREAK_TYPE, 32'd3, `ECALL_TYPE, 32'd11}

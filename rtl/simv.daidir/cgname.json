@@ -1,61 +1,31 @@
 {
-    "...MASTER...": [
-        "SIM",
-        "amcQw",
-        "module",
-        6
-    ],
     "std": [
         "std",
         "reYIK",
         "module",
         1
     ],
-    "muxwithdefault_0001": [
-        "muxwithdefault_0001",
-        "x93J4",
-        "module",
-        3
-    ],
     "muxwithdefault_0003": [
         "muxwithdefault_0003",
         "cU2rR",
         "module",
-        8
+        5
+    ],
+    "dataram": [
+        "dataram",
+        "GAMq1",
+        "module",
+        2
     ],
     "muxwithdefault": [
         "muxwithdefault",
         "wmStg",
         "module",
-        9
+        3
     ],
     "muxwithdefault_0002": [
         "muxwithdefault_0002",
         "YU6qy",
-        "module",
-        7
-    ],
-    "muxwithdefault_0004": [
-        "muxwithdefault_0004",
-        "g8pt1",
-        "module",
-        11
-    ],
-    "muxwithdefault_0006": [
-        "muxwithdefault_0006",
-        "gIVmA",
-        "module",
-        13
-    ],
-    "csr": [
-        "csr",
-        "cNThd",
-        "module",
-        17
-    ],
-    "mux": [
-        "mux",
-        "RZvU4",
         "module",
         4
     ],
@@ -63,6 +33,36 @@
         "testbench",
         "iAVhC",
         "module",
-        5
+        9
+    ],
+    "muxwithdefault_0004": [
+        "muxwithdefault_0004",
+        "g8pt1",
+        "module",
+        7
+    ],
+    "mux": [
+        "mux",
+        "RZvU4",
+        "module",
+        8
+    ],
+    "muxwithdefault_0006": [
+        "muxwithdefault_0006",
+        "gIVmA",
+        "module",
+        6
+    ],
+    "instrom": [
+        "instrom",
+        "ju8uQ",
+        "module",
+        10
+    ],
+    "...MASTER...": [
+        "SIM",
+        "amcQw",
+        "module",
+        11
     ]
 }

@@ -1,0 +1,6 @@
+@elabcom rc file Version 1.0
+[oh]
+invokeDir = /home/jay/Desktop/graduation_project/i2c_interface
+hostCommand = -lib /home/jay/Desktop/graduation_project/i2c_interface/simv.daidir/work -saveLevel -elab /home/jay/Desktop/graduation_project/i2c_interface/simv.daidir/kdb -simflow -simdir /home/jay/Desktop/graduation_project/i2c_interface/simv.daidir/kdb_libs -top i2c_t\
+b -Lf work +disable_message+C00380+C00381 +disable_message+C00388+C00389 -SNPS_ELABCOM -saveElab
+simType = VCS

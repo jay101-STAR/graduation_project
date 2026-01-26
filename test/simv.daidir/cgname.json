@@ -1,0 +1,20 @@
+{
+    "std": [
+        "std",
+        "reYIK",
+        "module",
+        1
+    ],
+    "tb_driver_ctrl": [
+        "tb_driver_ctrl",
+        "M8A2h",
+        "module",
+        2
+    ],
+    "...MASTER...": [
+        "SIM",
+        "amcQw",
+        "module",
+        3
+    ]
+}

@@ -1,0 +1,78 @@
+Command: /home/jay/Desktop/graduation_project/practise/fifo/syn_fifo/./simv -l sim.log
+Chronologic VCS simulator copyright 1991-2018
+Contains Synopsys proprietary information.
+Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Jan 17 15:08 2026
+=== Simulation Start ===
+*Verdi* Loading libsscore_vcs201809.so
+FSDB Dumper for VCS, Release Verdi_O-2018.09-SP2, Linux x86_64/64bit, 02/21/2019
+(C) 1996 - 2019 by Synopsys, Inc.
+*Verdi* FSDB WARNING: The FSDB file already exists. Overwriting the FSDB file may crash the programs that are using this file.
+*Verdi* : Create FSDB file '/home/jay/Desktop/graduation_project/practise/fifo/syn_fifo/testbench.fsdb'
+*Verdi* : Begin traversing the scopes, layer (0).
+*Verdi* : Enable +all dumping.
+*Verdi* : End of traversing.
+=== Reset Release ===
+
+--- Test 1: Basic Write ---
+[Time 46000] Write: aa | Full: 0
+[Time 66000] Write: bb | Full: 0
+[Time 86000] Write: cc | Full: 0
+[Time 106000] Write: dd | Full: 0
+
+--- Test 2: Basic Read ---
+[Time 126000] Read : aa | Empty: 0
+[Time 146000] Read : bb | Empty: 0
+[Time 166000] Read : cc | Empty: 0
+[Time 186000] Read : dd | Empty: 1
+
+--- Test 3: Fill FIFO & Check FULL ---
+[Time 206000] Write: 00 | Full: 0
+[Time 226000] Write: 01 | Full: 0
+[Time 246000] Write: 02 | Full: 0
+[Time 266000] Write: 03 | Full: 0
+[Time 286000] Write: 04 | Full: 0
+[Time 306000] Write: 05 | Full: 0
+[Time 326000] Write: 06 | Full: 0
+[Time 346000] Write: 07 | Full: 0
+[Time 366000] Write: 08 | Full: 0
+[Time 386000] Write: 09 | Full: 0
+[Time 406000] Write: 0a | Full: 0
+[Time 426000] Write: 0b | Full: 0
+[Time 446000] Write: 0c | Full: 0
+[Time 466000] Write: 0d | Full: 0
+[Time 486000] Write: 0e | Full: 0
+[Time 506000] Write: 0f | Full: 1
+>>> SUCCESS: FIFO is FULL as expected.
+
+--- Test 4: Write to Full FIFO (Overflow Protection) ---
+[Time 526000] Write: ff | Full: 1
+
+--- Test 5: Empty FIFO & Check EMPTY ---
+[Time 546000] Read : 00 | Empty: 0
+[Time 566000] Read : 01 | Empty: 0
+[Time 586000] Read : 02 | Empty: 0
+[Time 606000] Read : 03 | Empty: 0
+[Time 626000] Read : 04 | Empty: 0
+[Time 646000] Read : 05 | Empty: 0
+[Time 666000] Read : 06 | Empty: 0
+[Time 686000] Read : 07 | Empty: 0
+[Time 706000] Read : 08 | Empty: 0
+[Time 726000] Read : 09 | Empty: 0
+[Time 746000] Read : 0a | Empty: 0
+[Time 766000] Read : 0b | Empty: 0
+[Time 786000] Read : 0c | Empty: 0
+[Time 806000] Read : 0d | Empty: 0
+[Time 826000] Read : 0e | Empty: 0
+[Time 846000] Read : 0f | Empty: 1
+>>> SUCCESS: FIFO is EMPTY as expected.
+
+--- Test 6: Read from Empty FIFO (Underflow Protection) ---
+[Time 866000] Read : 0f | Empty: 1
+
+=== Simulation End ===
+$finish called from file "./testbench.v", line 134.
+$finish at simulation time               886000
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 886000 ps
+CPU Time:      0.150 seconds;       Data structure size:   0.0Mb
+Sat Jan 17 15:08:54 2026

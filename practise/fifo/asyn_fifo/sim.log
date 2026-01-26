@@ -1,0 +1,40 @@
+Command: /home/jay/Desktop/graduation_project/practise/fifo/asyn_fifo/./simv -l sim.log
+Chronologic VCS simulator copyright 1991-2018
+Contains Synopsys proprietary information.
+Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Jan 18 10:51 2026
+*Verdi* Loading libsscore_vcs201809.so
+FSDB Dumper for VCS, Release Verdi_O-2018.09-SP2, Linux x86_64/64bit, 02/21/2019
+(C) 1996 - 2019 by Synopsys, Inc.
+*Verdi* FSDB WARNING: The FSDB file already exists. Overwriting the FSDB file may crash the programs that are using this file.
+*Verdi* : Create FSDB file '/home/jay/Desktop/graduation_project/practise/fifo/asyn_fifo/testbench.fsdb'
+*Verdi* : Begin traversing the scopes, layer (0).
+*Verdi* : Enable +all dumping.
+*Verdi* : End of traversing.
+=== Simulation Start ===
+[TEST 1] Writing data 0 to 15...
+SUCCESS: FIFO is Full properly.
+[TEST 2] Reading back data...
+Read OK: Addr=0, Data=0 (Time: 649)
+Read OK: Addr=1, Data=1 (Time: 681)
+Read OK: Addr=2, Data=2 (Time: 713)
+Read OK: Addr=3, Data=3 (Time: 745)
+Read OK: Addr=4, Data=4 (Time: 777)
+Read OK: Addr=5, Data=5 (Time: 809)
+Read OK: Addr=6, Data=6 (Time: 841)
+Read OK: Addr=7, Data=7 (Time: 873)
+Read OK: Addr=8, Data=8 (Time: 905)
+Read OK: Addr=9, Data=9 (Time: 937)
+Read OK: Addr=10, Data=10 (Time: 969)
+Read OK: Addr=11, Data=11 (Time: 1001)
+Read OK: Addr=12, Data=12 (Time: 1033)
+Read OK: Addr=13, Data=13 (Time: 1065)
+Read OK: Addr=14, Data=14 (Time: 1097)
+Read OK: Addr=15, Data=15 (Time: 1129)
+SUCCESS: FIFO is Empty properly.
+=== Simulation End ===
+$finish called from file "./testbench.v", line 177.
+$finish at simulation time                 1329
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 1329 ns
+CPU Time:      0.140 seconds;       Data structure size:   0.0Mb
+Sun Jan 18 10:51:20 2026

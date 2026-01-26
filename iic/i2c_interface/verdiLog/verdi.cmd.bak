@@ -1,0 +1,18 @@
+simSetSimulator "-vcssv" -exec \
+           "/home/jay/Desktop/graduation_project/i2c_interface/simv" -args
+debImport "-dbdir" \
+          "/home/jay/Desktop/graduation_project/i2c_interface/simv.daidir"
+debLoadSimResult /home/jay/Desktop/graduation_project/i2c_interface/i2c_test.fsdb
+wvCreateWindow
+srcHBSelect "i2c_tb.master" -win $_nTrace1
+srcSetScope -win $_nTrace1 "i2c_tb.master" -delim "."
+srcHBSelect "i2c_tb.master" -win $_nTrace1
+srcSignalViewSelect "i2c_tb.master.state\[3:0\]"
+srcSignalViewAddSelectedToWave -win $_nTrace1
+srcSignalViewSelect "i2c_tb.master.next_state\[3:0\]"
+srcSignalViewAddSelectedToWave -win $_nTrace1
+schCreateWindow -hierFSM -win $_nSchema1 -mode all
+wvZoomIn -win $_nWave2
+wvZoomIn -win $_nWave2
+wvZoomIn -win $_nWave2
+debExit

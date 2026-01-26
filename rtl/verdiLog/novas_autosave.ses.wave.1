@@ -1,0 +1,66 @@
+Magic 271485
+Revision Verdi_O-2018.09-SP2
+
+; Window Layout <x> <y> <width> <height> <signalwidth> <valuewidth>
+viewPort 0 30 1703 527 276 213
+
+; File list:
+; openDirFile [-d delimiter] [-s time_offset] [-rf auto_bus_rule_file] path_name file_name
+openDirFile -d / "" "/home/jay/Desktop/graduation_project/rtl/testbench.fsdb"
+
+; file time scale:
+; fileTimeScale ### s|ms|us|ns|ps
+
+; signal spacing:
+signalSpacing 5
+
+; windowTimeUnit is used for zoom, cursor & marker
+; waveform viewport range
+zoom 359.973490 885.173490
+cursor 0.000000
+marker 0.000000
+
+; user define markers
+; userMarker time_pos marker_name color linestyle
+; visible top row signal index
+top 0
+; marker line index
+markerPos 12
+
+; event list
+; addEvent event_name event_expression
+; curEvent event_name
+
+
+
+COMPLEX_EVENT_BEGIN
+
+
+COMPLEX_EVENT_END
+
+
+
+; toolbar current search type
+; curSTATUS search_type
+curSTATUS ByChange
+
+
+addGroup "G1"
+activeDirFile "" "/home/jay/Desktop/graduation_project/rtl/testbench.fsdb"
+addSignal -h 27 -UNSIGNED -HEX /testbench/top/openmips0/registerfile0/i0/rf[11][31:0]
+addGroup "G2"
+addSignal -h 27 /testbench/top/openmips0/csr0/mie_meie
+addGroup "G4"
+addSignal -h 27 /testbench/top/openmips0/csr0/mie_mtie
+addGroup "G5"
+addSignal -h 27 /testbench/top/openmips0/csr0/mie_msie
+addGroup "G6"
+addSignal -h 27 /testbench/top/openmips0/csr0/ex_csr_rs1_data[31:0]
+addGroup "G7"
+addSignal -h 27 /testbench/top/openmips0/id0/id_ex_rs1_data_for_csr[31:0]
+addSignal -h 27 -holdScope id_reg_rs1_addr[4:0]
+addGroup "G8"
+
+; getSignalForm Scope Hierarchy Status
+; active file of getSignalForm
+

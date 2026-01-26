@@ -15,19 +15,19 @@ ConstrViewShow = 0
 InherViewShow = 0
 FSDBMsgShow = 0
 AnnotationShow = 0
-Console = TRUE
+Console = FALSE
 powerDumped = 0
 [hb]
 postSimFile = /home/jay/Desktop/graduation_project/rtl/testbench.fsdb
 syncTime = 0
-viewport = 66 32 2198 1291 0 0 325 661
+viewport = 66 32 2198 1291 0 0 300 2196
 activeNode = "testbench.top.openmips0.registerfile0.i0"
 activeScope = "testbench.top.openmips0.registerfile0.i0"
 activeFile = "./vsrc/registerfile.v"
 interactiveMode = False
 viewType = Source
 simulatorMode = False
-sourceBeginLine = 30
+sourceBeginLine = 32
 baMode = False
 srcLineNum = True
 AutoWrap = True
@@ -50,7 +50,7 @@ Scope3 = "testbench.top.openmips0"
 Scope4 = "testbench.top"
 Scope5 = "testbench"
 Scope6 = "mux"
-multipleSelection = 1 48 11 0 0
+multipleSelection = 1 32 2 0 0
 sdfCheckUndef = FALSE
 simFlow = FALSE
 [hb.design]
@@ -59,13 +59,13 @@ invokeDir = /home/jay/Desktop/graduation_project/rtl
 [hb.sourceTab.1]
 scope = testbench.top.openmips0.registerfile0.i0
 File = /home/jay/Desktop/graduation_project/rtl/vsrc/registerfile.v
-Line = 31
+Line = 33
 [nMemoryManager]
 WaveformFile = /home/jay/Desktop/graduation_project/rtl/testbench.fsdb
 UserActionNum = 0
 nMemWindowNum = 0
 [wave.0]
-viewPort = 0 30 1703 458 276 213
+viewPort = 0 33 2198 587 199 65
 primaryWindow = TRUE
 SessionFile = /home/jay/Desktop/graduation_project/rtl/verdiLog/novas_autosave.ses.wave.0
 displayGrid = FALSE

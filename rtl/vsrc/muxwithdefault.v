@@ -4,10 +4,10 @@ module muxwithdefault #(
     parameter KEY_LEN  = 1,
     parameter DATA_LEN = 1
 ) (
-    output [DATA_LEN-1:0] out,
-    input [KEY_LEN-1:0] key,
-    input [DATA_LEN-1:0] default_out,
-    input [NR_KEY*(KEY_LEN + DATA_LEN)-1:0] lut
+    output [                   DATA_LEN-1:0] out,
+    input  [                    KEY_LEN-1:0] key,
+    input  [                   DATA_LEN-1:0] default_out,
+    input  [NR_KEY*(KEY_LEN + DATA_LEN)-1:0] lut
 );
   MuxKeyInternalwithdefault #(NR_KEY, KEY_LEN, DATA_LEN, 1) i0 (
       out,
@@ -18,15 +18,15 @@ module muxwithdefault #(
 endmodule
 
 module MuxKeyInternalwithdefault #(
-    parameter NR_KEY = 2,
-    parameter KEY_LEN = 1,
-    parameter DATA_LEN = 1,
+    parameter NR_KEY      = 2,
+    parameter KEY_LEN     = 1,
+    parameter DATA_LEN    = 1,
     parameter HAS_DEFAULT = 0
 ) (
-    output reg [DATA_LEN-1:0] out,
-    input [KEY_LEN-1:0] key,
-    input [DATA_LEN-1:0] default_out,
-    input [NR_KEY*(KEY_LEN + DATA_LEN)-1:0] lut
+    output reg [                   DATA_LEN-1:0] out,
+    input      [                    KEY_LEN-1:0] key,
+    input      [                   DATA_LEN-1:0] default_out,
+    input      [NR_KEY*(KEY_LEN + DATA_LEN)-1:0] lut
 );
 
   localparam PAIR_LEN = KEY_LEN + DATA_LEN;
@@ -48,10 +48,10 @@ module MuxKeyInternalwithdefault #(
   integer i;
   always @(*) begin
     lut_out = 0;
-    hit = 0;
+    hit     = 0;
     for (i = 0; i < NR_KEY; i = i + 1) begin
       lut_out = lut_out | ({DATA_LEN{key == key_list[i]}} & data_list[i]);
-      hit = hit | (key == key_list[i]);
+      hit     = hit | (key == key_list[i]);
     end
     if (!HAS_DEFAULT) out = lut_out;
     else out = (hit ? lut_out : default_out);

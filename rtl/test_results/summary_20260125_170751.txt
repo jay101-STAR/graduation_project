@@ -1,0 +1,31 @@
+========================================
+RISC-V Test Runner (Fast Mode)
+========================================
+Test pattern: rv32ui-p-l*
+Start time: Sun Jan 25 05:07:51 PM CST 2026
+
+Searching for tests matching: rv32ui-p-l*
+Found 7 tests
+
+[FAIL] rv32ui-p-lb: tohost=2
+[FAIL] rv32ui-p-lbu: tohost=2
+[FAIL] rv32ui-p-ld_st: tohost=0
+[FAIL] rv32ui-p-lh: tohost=2
+[FAIL] rv32ui-p-lhu: tohost=2
+[FAIL] rv32ui-p-lui: tohost=3
+[FAIL] rv32ui-p-lw: tohost=2
+
+========================================
+Test Summary
+========================================
+Total tests:   7
+[0;32mPassed:        0[0m
+[0;31mFailed:        7[0m
+[1;33mSkipped:       0[0m
+Pass rate:     0%
+
+End time: Sun Jan 25 05:07:53 PM CST 2026
+
+Results saved to: /home/jay/Desktop/graduation_project/rtl/test_results/summary_20260125_170751.txt
+Failed tests saved to: /home/jay/Desktop/graduation_project/rtl/test_results/failed_tests_20260125_170751.txt
+Individual test logs in: /home/jay/Desktop/graduation_project/rtl/test_results/

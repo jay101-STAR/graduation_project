@@ -1,0 +1,72 @@
+Magic 271485
+Revision Verdi_O-2018.09-SP2
+
+; Window Layout <x> <y> <width> <height> <signalwidth> <valuewidth>
+viewPort 0 30 2198 661 339 255
+
+; File list:
+; openDirFile [-d delimiter] [-s time_offset] [-rf auto_bus_rule_file] path_name file_name
+openDirFile -d / "" "/home/jay/Desktop/graduation_project/practise/fifo/syn_fifo/testbench.fsdb"
+
+; file time scale:
+; fileTimeScale ### s|ms|us|ns|ps
+
+; signal spacing:
+signalSpacing 5
+
+; windowTimeUnit is used for zoom, cursor & marker
+; waveform viewport range
+zoom 706679.616648 817429.616648
+cursor 287019.75672215107
+marker 0.000000
+
+; user define markers
+; userMarker time_pos marker_name color linestyle
+; visible top row signal index
+top 5
+; marker line index
+markerPos 18
+
+; event list
+; addEvent event_name event_expression
+; curEvent event_name
+
+
+
+COMPLEX_EVENT_BEGIN
+
+
+COMPLEX_EVENT_END
+
+
+
+; toolbar current search type
+; curSTATUS search_type
+curSTATUS ByChange
+
+
+addGroup "G1"
+activeDirFile "" "/home/jay/Desktop/graduation_project/practise/fifo/syn_fifo/testbench.fsdb"
+addSignal -expanded -h 27 /testbench/u_fifo/ram_inst/mem[0:15]
+addSignal -h 27 -holdScope mem[0][7:0]
+addSignal -h 27 -holdScope mem[1][7:0]
+addSignal -h 27 -holdScope mem[2][7:0]
+addSignal -h 27 -holdScope mem[3][7:0]
+addSignal -h 27 -holdScope mem[4][7:0]
+addSignal -h 27 -holdScope mem[5][7:0]
+addSignal -h 27 -holdScope mem[6][7:0]
+addSignal -h 27 -holdScope mem[7][7:0]
+addSignal -h 27 -holdScope mem[8][7:0]
+addSignal -h 27 -holdScope mem[9][7:0]
+addSignal -h 27 -holdScope mem[10][7:0]
+addSignal -h 27 -holdScope mem[11][7:0]
+addSignal -h 27 -holdScope mem[12][7:0]
+addSignal -h 27 -holdScope mem[13][7:0]
+addSignal -h 27 -holdScope mem[14][7:0]
+addSignal -h 27 -holdScope mem[15][7:0]
+addSignal -h 27 -holdScope rdata[7:0]
+addGroup "G2"
+
+; getSignalForm Scope Hierarchy Status
+; active file of getSignalForm
+

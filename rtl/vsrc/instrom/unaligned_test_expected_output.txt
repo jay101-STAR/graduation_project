@@ -1,0 +1,255 @@
+# ============================================
+# Unaligned Memory Access Test - Expected Output
+# ============================================
+
+Test Program: unaligned_test_comprehensive.s
+Base Address: 0x80000000
+tohost Address: 0x80001000
+
+---
+
+## Test Execution Summary
+
+Total Tests: 17 test cases
+Expected Result: SUCCESS (x11 = 0, tohost = 0x1)
+
+---
+
+## Register State Progression
+
+### Initialization
+- x0 = 0x00000000 (zero register)
+- x1 = 0x80000000 (base address for data memory)
+- x10 = 0x00000000 (test progress counter)
+- x11 = 0x00000000 (error counter)
+
+### After Test Suite 1: Word Unaligned Access
+
+| Test | x10 (progress) | Operation | Expected Result |
+|------|----------------|-----------|-----------------|
+| Test 1 | 0x00000001 | SW 0xDEADBEEF @0x80000000, LW @0x80000000 | x3 = 0xDEADBEEF, PASS |
+| Test 2 | 0x00000002 | SW 0x11223344 @0x80000004, LW @0x80000005 | x4 = 0x44000000, PASS |
+| Test 3 | 0x00000003 | SW 0x55667788 @0x80000008, LW @0x8000000a | x5 = 0x77880000, PASS |
+| Test 4 | 0x00000004 | SW 0x99AABBCC @0x8000000c, LW @0x8000000f | x6 = 0x000000CC, PASS |
+
+### After Test Suite 2: Halfword Unaligned Access
+
+| Test | x10 (progress) | Operation | Expected Result |
+|------|----------------|-----------|-----------------|
+| Test 5 | 0x00000005 | SH 0xCAFE @0x80000010, LH @0x80000010 | x8 = 0xFFFFCAFE (sign-extended), PASS |
+| Test 6 | 0x00000006 | LHU @0x80000010 | x9 = 0x0000CAFE (zero-extended), PASS |
+| Test 7 | 0x00000007 | SH 0xDEAD @0x80000015, LH @0x80000015 | x10 = 0xFFFFAD00, PASS |
+| Test 8 | 0x00000008 | LHU @0x80000015 | x11 = 0x0000AD00, PASS |
+| Test 9 | 0x00000009 | SH 0xBEEF @0x8000001f, LH @0x8000001f | x12 = 0xFFFF00EF, PASS |
+
+### After Test Suite 3: Byte Access
+
+| Test | x10 (progress) | Operation | Expected Result |
+|------|----------------|-----------|-----------------|
+| Test 10 | 0x0000000a | SB 0xFF @0x8000003c, LB @0x8000003c | x14 = 0xFFFFFFFF (sign-extended), PASS |
+| Test 11 | 0x0000000b | LBU @0x8000003c | x15 = 0x000000FF (zero-extended), PASS |
+
+### After Test Suite 4: Overlapping Unaligned Writes
+
+| Test | x10 (progress) | Operation | Expected Result |
+|------|----------------|-----------|-----------------|
+| Test 12 | 0x0000000c | SW 0x11111111 @0x80000028, SW 0x22222222 @0x8000002a, LW @0x80000028 | x18 = 0x11222222, PASS |
+| Test 13 | 0x0000000d | LW @0x8000002a | x19 = 0x22220000, PASS |
+| Test 14 | 0x0000000e | LW @0x8000002c | x20 = 0x22221111, PASS |
+
+### After Test Suite 5: Mixed Size Operations
+
+| Test | x10 (progress) | Operation | Expected Result |
+|------|----------------|-----------|-----------------|
+| Test 15 | 0x0000000f | SB 0xAA @0x80000032-35, LW @0x80000032 | x22 = 0xAAAAAAAA, PASS |
+| Test 16 | 0x00000010 | SW 0x12345678 @0x80000040, LB @64-67 | x24=0x78, x25=0x56, x26=0x34, x27=0x12, PASS |
+
+### After Test Suite 6: All Byte Offsets for Word Access
+
+| Test | x10 (progress) | Operation | Expected Result |
+|------|----------------|-----------|-----------------|
+| Test 17_0 | 0x00000011 | SW 0x00AABBCC @0x80000050, LW @0x80000050 | x3 = 0x00AABBCC, PASS |
+| Test 17_1 | 0x00000012 | LW @0x80000051 | x4 = 0x0000AABB, PASS |
+| Test 17_2 | 0x00000013 | LW @0x80000052 | x6 = 0x000000AA, PASS |
+| Test 17_3 | 0x00000014 | LW @0x80000053 | x8 = 0x00000000, PASS |
+
+---
+
+## Memory Layout (Little Endian)
+
+### Address 0x80000000 - 0x80000013 (Word Tests)
+
+| Address | Bytes (little endian) | Description |
+|---------|----------------------|-------------|
+| 0x80000000 | EF BE AD DE | SW 0xDEADBEEF @offset 0 |
+| 0x80000004 | 44 33 22 11 | SW 0x11223344 @offset 4 |
+| 0x80000008 | 88 77 66 55 | SW 0x55667788 @offset 8 |
+| 0x8000000c | CC BB AA 99 | SW 0x99AABBCC @offset 12 |
+
+### Address 0x80000010 - 0x80000023 (Halfword Tests)
+
+| Address | Bytes (little endian) | Description |
+|---------|----------------------|-------------|
+| 0x80000010 | FE CA ?? ?? | SH 0xCAFE @offset 16 (aligned) |
+| 0x80000015 | 00 AD ?? ?? | SH 0xDEAD @offset 21 (unaligned, offset 1) |
+| 0x8000001f | 00 EF ?? ?? | SH 0xBEEF @offset 31 (unaligned, offset 3) |
+
+### Address 0x80000028 - 0x80000033 (Overlap Tests)
+
+| Address | Bytes (little endian) | Description |
+|---------|----------------------|-------------|
+| 0x80000028 | 22 22 22 11 | After SW 0x11111111 @offset 40, SW 0x22222222 @offset 42 |
+| 0x8000002c | 11 22 22 22 | Overlap zone continuation |
+
+### Address 0x80000032 - 0x8000003b (Mixed Size Tests)
+
+| Address | Bytes (little endian) | Description |
+|---------|----------------------|-------------|
+| 0x80000032 | AA AA AA AA | 4x SB 0xAA @offsets 50-53 |
+| 0x80000040 | 78 56 34 12 | SW 0x12345678 @offset 64 |
+
+### Address 0x80000050 - 0x8000005f (Byte Offset Tests)
+
+| Address | Bytes (little endian) | Description |
+|---------|----------------------|-------------|
+| 0x80000050 | CC BB AA 00 | SW 0x00AABBCC @offset 80 |
+
+### Address 0x8000003c (Byte Sign Extension Test)
+
+| Address | Bytes (little endian) | Description |
+|---------|----------------------|-------------|
+| 0x8000003c | FF ?? ?? ?? | SB 0xFF @offset 60 |
+
+---
+
+## Detailed Test Case Breakdown
+
+### Test 1: Word Aligned (Baseline)
+- Write: SW 0xDEADBEEF @0x80000000
+- Read: LW @0x80000000
+- Expected: x3 = 0xDEADBEEF
+- Memory: [EF, BE, AD, DE] @0x80000000
+
+### Test 2: Word Offset 1 (Unaligned)
+- Write: SW 0x11223344 @0x80000004
+- Memory: [44, 33, 22, 11] @0x80000004
+- Read: LW @0x80000005 (offset 1)
+- Expected: x4 = 0x44000000
+- Bytes read: [mem[5], mem[6], mem[7], mem[8]] = [33, 22, 11, 88]
+- But note: The read at offset 5 will read bytes from addresses 5, 6, 7, 8
+
+### Test 3: Word Offset 2 (Unaligned)
+- Write: SW 0x55667788 @0x80000008
+- Memory: [88, 77, 66, 55] @0x80000008
+- Read: LW @0x8000000a (offset 2)
+- Expected: x5 = 0x77880000
+- Bytes read: [mem[10], mem[11], mem[12], mem[13]] = [66, 55, ??, ??]
+
+### Test 4: Word Offset 3 (Unaligned)
+- Write: SW 0x99AABBCC @0x8000000c
+- Memory: [CC, BB, AA, 99] @0x8000000c
+- Read: LW @0x8000000f (offset 3)
+- Expected: x6 = 0x000000CC
+- Bytes read: [mem[15], mem[16], mem[17], mem[18]]
+
+### Test 5-9: Halfword Unaligned
+- Test 5: SH 0xCAFE @0x80000010, LH @0x80000010 → x8 = 0xFFFFCAFE (sign-extended)
+- Test 6: LHU @0x80000010 → x9 = 0x0000CAFE (zero-extended)
+- Test 7: SH 0xDEAD @0x80000015, LH @0x80000015 → x10 = 0xFFFFAD00
+- Test 8: LHU @0x80000015 → x11 = 0x0000AD00
+- Test 9: SH 0xBEEF @0x8000001f, LH @0x8000001f → x12 = 0xFFFF00EF
+
+### Test 10-11: Byte Sign Extension
+- Test 10: SB 0xFF @0x8000003c, LB @0x8000003c → x14 = 0xFFFFFFFF
+- Test 11: LBU @0x8000003c → x15 = 0x000000FF
+
+### Test 12-14: Overlapping Unaligned Writes
+- Initial: SW 0x11111111 @0x80000028 → [11, 11, 11, 11]
+- Overlap: SW 0x22222222 @0x8000002a → bytes at [0x2a, 0x2b, 0x2c, 0x2d] become [22, 22, 22, 22]
+- Result:
+  - LW @0x80000028 → x18 = 0x11222222
+  - LW @0x8000002a → x19 = 0x22221111
+  - LW @0x8000002c → x20 = 0x22221111
+
+### Test 15: Store Bytes, Read as Word
+- 4x SB 0xAA @0x80000032, 33, 34, 35
+- Memory: [AA, AA, AA, AA] @0x80000032
+- LW @0x80000032 → x22 = 0xAAAAAAAA
+
+### Test 16: Store Word, Read as Bytes
+- SW 0x12345678 @0x80000040
+- Memory: [78, 56, 34, 12] @0x80000040 (little endian)
+- LB @64 → x24 = 0x78
+- LB @65 → x25 = 0x56
+- LB @66 → x26 = 0x34
+- LB @67 → x27 = 0x12
+
+### Test 17: All Byte Offsets for Word
+- SW 0x00AABBCC @0x80000050 → [CC, BB, AA, 00]
+- LW @0x80000050 → x3 = 0x00AABBCC
+- LW @0x80000051 → x4 = 0x0000AABB (shifted right by 8 bits)
+- LW @0x80000052 → x6 = 0x000000AA (shifted right by 16 bits)
+- LW @0x80000053 → x8 = 0x00000000 (shifted right by 24 bits)
+
+---
+
+## Final State
+
+### Registers
+- x10 = 0x00000015 (21 tests completed)
+- x11 = 0x00000000 (0 errors)
+
+### Memory
+- Data memory contains test patterns as shown above
+
+### tohost Register (Address 0x80001000)
+- Value: 0x00000001 (SUCCESS)
+- Test program writes 1 to indicate all tests passed
+
+---
+
+## Success Criteria
+
+Test passes if and only if:
+1. x11 (error counter) = 0 at the end of test execution
+2. tohost register (0x80001000) = 0x1
+3. All intermediate register checks (BEQ conditions) pass
+
+---
+
+## Expected Simulation Log Output
+
+```
+Time           PC              Instruction         Register/Memory Changes
+-----------------------------------------------------------------------------
+0ns            0x80000000      _start              x1=0x80000000, x10=0, x11=0
+20ns           0x80000004      Test 1              x3=0xDEADBEEF (aligned)
+40ns           0x80000008      Test 2              x4=0x44000000 (offset 1)
+60ns           0x8000000c      Test 3              x5=0x77880000 (offset 2)
+80ns           0x80000010      Test 4              x6=0x000000CC (offset 3)
+...            ...            ...                 ...
+2000ns         ...             Write to tohost     tohost=0x1 (SUCCESS)
+```
+
+---
+
+## Notes
+
+1. **Little Endian**: RISC-V uses little-endian byte ordering
+   - SW 0x12345678 stores as: [78, 56, 34, 12] in memory
+
+2. **Unaligned Addressing**: The test verifies that:
+   - SW/LW work correctly at byte offsets 1, 2, 3
+   - SH/LH/LHU work correctly at odd byte offsets (1, 3, 5, 7...)
+   - SB/LB/LBU work at any byte offset (no alignment requirement)
+
+3. **Sign Extension**: LH and LB sign-extend the loaded value
+   - LH: loads 16 bits and sign-extends to 32 bits
+   - LB: loads 8 bits and sign-extends to 32 bits
+   - LHU/LBU: zero-extend instead of sign-extending
+
+4. **Overlapping Writes**: Tests verify that unaligned writes correctly
+   modify only the intended bytes, preserving adjacent data
+
+5. **Error Reporting**: If any test fails, x11 (error counter) is incremented
+   and tohost = (error_count << 1) to indicate which test(s) failed

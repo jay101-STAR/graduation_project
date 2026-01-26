@@ -1,6 +1,7 @@
 module top (
-    input clk,
-    input rst
+    input         clk,
+    input         rst,
+    output [31:0] tohost_value
     // input [16383:0] inst_rom_1
 
 );
@@ -15,7 +16,8 @@ module top (
 
       .instrom_openmips_data(instrom_openmips_data),
       .openmips_instrom_addr(openmips_instrom_addr),
-      .openmips_instrom_ren (openmips_instrom_ren)
+      .openmips_instrom_ren (openmips_instrom_ren),
+      .tohost_value         (tohost_value)
   );
 
   instrom instrom0 (

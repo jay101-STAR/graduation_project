@@ -1,0 +1,57 @@
+simSetSimulator "-vcssv" -exec \
+           "/home/jay/Desktop/graduation_project/i2c_final_backup/simv" -args
+debImport "-dbdir" \
+          "/home/jay/Desktop/graduation_project/i2c_final_backup/simv.daidir"
+debLoadSimResult \
+           /home/jay/Desktop/graduation_project/i2c_final_backup/i2c_test.fsdb
+wvCreateWindow
+srcHBSelect "i2c_tb.eeprom_inst" -win $_nTrace1
+srcSetScope -win $_nTrace1 "i2c_tb.eeprom_inst" -delim "."
+srcHBSelect "i2c_tb.eeprom_inst" -win $_nTrace1
+srcHBSelect "i2c_tb.master" -win $_nTrace1
+srcSetScope -win $_nTrace1 "i2c_tb.master" -delim "."
+srcHBDrag -win $_nTrace1
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "scl" -line 18 -pos 1 -win $_nTrace1
+wvAddSignal -win $_nWave2 "/i2c_tb/master/scl"
+wvSetPosition -win $_nWave2 {("G1" 0)}
+wvSetPosition -win $_nWave2 {("G1" 1)}
+wvSetPosition -win $_nWave2 {("G1" 1)}
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "sda" -line 17 -pos 1 -win $_nTrace1
+wvSetPosition -win $_nWave2 {("G1" 0)}
+wvSetPosition -win $_nWave2 {("G1" 1)}
+wvSetPosition -win $_nWave2 {("G1" 0)}
+wvSetPosition -win $_nWave2 {("G1" 1)}
+wvSetPosition -win $_nWave2 {("G2" 0)}
+wvAddSignal -win $_nWave2 "/i2c_tb/master/sda"
+wvSetPosition -win $_nWave2 {("G2" 0)}
+wvSetPosition -win $_nWave2 {("G2" 1)}
+wvSetPosition -win $_nWave2 {("G2" 1)}
+wvSetPosition -win $_nWave2 {("G2" 0)}
+wvSetPosition -win $_nWave2 {("G1" 1)}
+wvMoveSelected -win $_nWave2
+wvSetPosition -win $_nWave2 {("G1" 1)}
+wvSetPosition -win $_nWave2 {("G1" 2)}
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "rd_data" -line 14 -pos 1 -win $_nTrace1
+wvSetPosition -win $_nWave2 {("G1" 0)}
+wvSetPosition -win $_nWave2 {("G1" 1)}
+wvSetPosition -win $_nWave2 {("G1" 2)}
+wvSetPosition -win $_nWave2 {("G2" 0)}
+wvSetPosition -win $_nWave2 {("G1" 2)}
+wvSetPosition -win $_nWave2 {("G2" 0)}
+wvSetPosition -win $_nWave2 {("G1" 2)}
+wvAddSignal -win $_nWave2 "/i2c_tb/master/rd_data\[7:0\]"
+wvSetPosition -win $_nWave2 {("G1" 2)}
+wvSetPosition -win $_nWave2 {("G1" 3)}
+wvZoomOut -win $_nWave2
+wvZoomIn -win $_nWave2
+wvCut -win $_nWave2
+wvSetPosition -win $_nWave2 {("G2" 0)}
+wvSetPosition -win $_nWave2 {("G1" 2)}
+wvSelectGroup -win $_nWave2 {G2} {G3}
+wvCut -win $_nWave2
+wvSetPosition -win $_nWave2 {("G1" 2)}
+wvSetPosition -win $_nWave2 {("G1" 2)}
+debExit

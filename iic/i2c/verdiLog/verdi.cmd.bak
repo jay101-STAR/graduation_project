@@ -1,0 +1,43 @@
+simSetSimulator "-vcssv" -exec "/home/jay/Desktop/graduation_project/i2c/simv" \
+           -args
+debImport "-dbdir" "/home/jay/Desktop/graduation_project/i2c/simv.daidir"
+debLoadSimResult /home/jay/Desktop/graduation_project/i2c/i2c_eeprom_test.fsdb
+wvCreateWindow
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "cmd_rw" -line 15 -pos 1 -win $_nTrace1
+srcSelect -win $_nTrace1 -range {15 15 4 4 2 3}
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "rd_data" -line 16 -pos 1 -win $_nTrace1
+wvAddSignal -win $_nWave2 "/i2c_eeprom_tb/rd_data\[7:0\]"
+wvSetPosition -win $_nWave2 {("G1" 0)}
+wvSetPosition -win $_nWave2 {("G1" 1)}
+wvSetPosition -win $_nWave2 {("G1" 1)}
+srcHBSelect "i2c_eeprom_tb.ctrl" -win $_nTrace1
+srcHBSelect "i2c_eeprom_tb.ctrl" -win $_nTrace1
+srcSetScope -win $_nTrace1 "i2c_eeprom_tb.ctrl" -delim "."
+srcHBSelect "i2c_eeprom_tb.ctrl" -win $_nTrace1
+nMemCreateWindow
+nMemGetVariable -win $_nMem0 -var i2c_eeprom_tb.eeprom_inst.memory -delim . -from \
+           DUMPED_BY_SIMULATOR -addrRange {[2047:0]} -wordBitRange {[7:0]} \
+           -wordsInOneRow 8
+nMemNextDump -win $_nMem0
+nMemNextDump -win $_nMem0
+nMemNextDump -win $_nMem0
+nMemNextDump -win $_nMem0
+nMemNextDump -win $_nMem0
+nMemNextDump -win $_nMem0
+nMemNextDump -win $_nMem0
+nMemNextDump -win $_nMem0
+nMemNextDump -win $_nMem0
+nMemNextDump -win $_nMem0
+nMemNextDump -win $_nMem0
+nMemNextDump -win $_nMem0
+nMemNextDump -win $_nMem0
+nMemNextDump -win $_nMem0
+nMemNextDump -win $_nMem0
+nMemNextDump -win $_nMem0
+nMemNextDump -win $_nMem0
+nMemNextDump -win $_nMem0
+nMemNextDump -win $_nMem0
+nMemNextDump -win $_nMem0
+debExit

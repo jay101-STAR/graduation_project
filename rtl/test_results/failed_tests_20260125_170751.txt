@@ -1,0 +1,7 @@
+rv32ui-p-lb
+rv32ui-p-lbu
+rv32ui-p-ld_st
+rv32ui-p-lh
+rv32ui-p-lhu
+rv32ui-p-lui
+rv32ui-p-lw

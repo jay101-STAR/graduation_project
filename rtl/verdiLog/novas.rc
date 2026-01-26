@@ -120,9 +120,9 @@ IfFilterPowerAwareInstruments = FALSE
 [DisabledMessages]
 version = Verdi_O-2018.09-SP2
 [Editor]
-editorName = Texteditor
+editorName = TurboEditor
 [Emacs]
-EmacsFont = "Courier 18"
+EmacsFont = "Clean 14"
 EmacsBG = white
 EmacsFG = black
 [Exclusion]
@@ -227,18 +227,17 @@ Selection-LineWidth = 1
 Orientation = Landscape
 [Form]
 version = Verdi_O-2018.09-SP2
+nMemory/nMemGetVariable.fm = 617,243,759,422
 [General]
 autoSaveSession = FALSE
 TclAutoSource = 
 SyncBrowserDir = TRUE
-ToolbarIconSize = Medium
-verdiAppFont = "Bitstream Vera Sans,-1,20,5,50,0,0,0,0,0", ""
-log_gui_cmd_post_sim = FALSE
+verdiAppFont = "Bitstream Vera Sans,-1,22,5,50,0,0,0,0,0", ""
 DblClick = 250
 Find_Delimiter = .
 ViewMouse13Swap = FALSE
-cmd_enter_form = TRUE
-verdiMonoFont = "Courier 24"
+cmd_enter_form = FALSE
+verdiMonoFont = "Courier 18"
 version = Verdi_O-2018.09-SP2
 SignalCaseInSensitive = FALSE
 ShowWndCtntDuringResizing = FALSE
@@ -292,12 +291,6 @@ bSpecifyPinNameCase = False
 [InteractiveDebug]
 tbvLocalWatchArrayLimit = 50
 tbvDataViewSuperNodeEnabled = FALSE
-Watch_0 = 150 80 115 0
-Watch_1 = 150 80 80 400
-Watch_2 = 150 80 80 200
-Watch_3 = 150 80 80 200
-Watch_4 = 150 80 80 200
-Watch_5 = 150 80 80 200
 [Language]
 EditWindow_Font = COURIER12
 Background = ID_WHITE
@@ -347,8 +340,8 @@ Wave_comment_string_font = -f COURIER12 -c ID_RED5
 HB_designTreeFont = *-adobe-courier-medium-r-*-*-12-*-*-*-*-*-iso8859-*
 Text_font = COURIER12
 nMemory_font = Fixed 14
-Wave_getsignal_form_font = -f COURIER12
-Text_annotFont = Helvetica_M_R_10
+Wave_getsignal_form_font = -f COURIER18
+Text_annotFont = Helvetica_M_R_14
 schematics_fixFontSize = False
 [OtherEditor]
 cmd1 = "xterm -font 9x15 -fg black -bg gray -e"
@@ -399,15 +392,10 @@ savePropStat = FALSE
 savePropDtl = TRUE
 [QtDialog]
 monoFontDlg = 14,49,366,432
-ImportCriticalPathReport = 860,523,609,340
-QwShortcutDialog = 14,49,800,600
-nsWindowManager = 14,49,738,404
-QwWarnMsgDlg = 66,123,600,250
-Verdi_1_timeUnitDlg = 14,49,433,102
-TextFindBrowseForm_base = 14,49,535,322
-textFindByHier = 14,49,442,368
-searchScope_base = 14,49,558,548
-QwUserAskDlg = 992,616,347,198
+CreateBusDialog = 701,323,928,709
+schExtrFSM = 14,49,532,144
+QwWarnMsgDlg = 14,49,600,250
+QwUserAskDlg = 976,595,378,240
 [Relationship]
 hideRecursiceNode = FALSE
 [Session Cache]
@@ -479,8 +467,8 @@ vcs_mixOption = -vhdlrun "-vhpi debussy:FSDBDumpCmd"
 scs_mixPath = scsim
 scs_mixOption = -vhpi debussy:FSDBDumpCmd
 iscCmdSep = FALSE
-interactive_fsdb_file = inter.fsdb
 simXLMode = FALSE
+interactive_fsdb_file = inter.fsdb
 invokeSimPath = work
 vcs_svOption = 
 thirdpartyIdx = -1
@@ -494,7 +482,6 @@ interactiveDebugging = TRUE
 KeepBreakPoints = FALSE
 vcs_svPath = /home/jay/Desktop/graduation_project/rtl/simv
 [SimulationPlus2]
-dumpPowerRoot = FALSE
 eventDumpUnfinish = FALSE
 [Source]
 wordWrapOn = TRUE
@@ -523,7 +510,7 @@ nLineSize = 1024
 [Test]
 verbose_progress = FALSE
 [TestBenchBrowser]
-DataViewTooltip = TRUE
+hideWatchView = TRUE
 -showUVMDynamicHierTreeWin = FALSE
 [Text]
 hdlTypeName = blue4
@@ -605,7 +592,7 @@ hdlSynopsysComment = ID_GREEN2
 pdmlIdentifier = ID_BLACK
 pdmlCommand = ID_BLACK
 pdmlMacro = ID_BLACK
-font = COURIER24
+font = COURIER18
 annotFont = Helvetica_M_R_14
 [Text.1]
 viewport = 66 32 2198 1291 45
@@ -617,7 +604,7 @@ FontSize = 7
 Column = 2
 Annotation = TRUE
 [Texteditor]
-TexteditorFont = "Times 18"
+TexteditorFont = "Clean 14"
 TexteditorBG = white
 TexteditorFG = black
 [ThirdParty]
@@ -696,39 +683,6 @@ viaLogViewerDefaultRuleOneSearchForm = "share/VIA/Apps/PredefinedRules/Misc/Ones
 DefaultDisplayTimeUnit = "1.000000ns"
 DefaultLogTimeUnit = "1.000000ns"
 [VIA.interactiveDebug.preference.vgifColumnSettingRC]
-[VIA.interactiveDebug.preference.vgifColumnSettingRC.setting0]
-parRuleSets = "/home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2/share/VIA/Apps/PredefinedParRules/par_rule_OVM.rc /home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2/share/VIA/Apps/PredefinedParRules/par_rule_UVM.rc /home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-20\
-18.09-SP2/share/VIA/Apps/PredefinedParRules/par_rule_LP.rc /home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2/share/VIA/Apps/PredefinedParRules/par_rule_VCS.rc "
-[VIA.interactiveDebug.preference.vgifColumnSettingRC.setting0.column0]
-name = Severity
-width = 60
-visualIndex = 1
-isHidden = FALSE
-isUserChangeColumnVisible = FALSE
-[VIA.interactiveDebug.preference.vgifColumnSettingRC.setting0.column1]
-name = Time
-width = 60
-visualIndex = 0
-isHidden = FALSE
-isUserChangeColumnVisible = FALSE
-[VIA.interactiveDebug.preference.vgifColumnSettingRC.setting0.column2]
-name = Type
-width = 60
-visualIndex = 3
-isHidden = TRUE
-isUserChangeColumnVisible = FALSE
-[VIA.interactiveDebug.preference.vgifColumnSettingRC.setting0.column3]
-name = Message
-width = 2000
-visualIndex = 4
-isHidden = FALSE
-isUserChangeColumnVisible = FALSE
-[VIA.interactiveDebug.preference.vgifColumnSettingRC.setting0.column4]
-name = Code
-width = 60
-visualIndex = 2
-isHidden = FALSE
-isUserChangeColumnVisible = FALSE
 [VIA.oneSearch.preference]
 DefaultDisplayTimeUnit = "1.000000ns"
 DefaultLogTimeUnit = "1.000000ns"
@@ -736,39 +690,37 @@ DefaultLogTimeUnit = "1.000000ns"
 [VIA.oneSearch.preference.vgifColumnSettingRC.setting0]
 parRuleSets = ""
 [VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column0]
-name = Severity
-width = 60
-visualIndex = 1
-isHidden = TRUE
-isUserChangeColumnVisible = FALSE
-[VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column1]
-name = Type
-width = 60
-visualIndex = 3
-isHidden = TRUE
-isUserChangeColumnVisible = FALSE
-[VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column2]
-name = Code
-width = 60
-visualIndex = 2
-isHidden = TRUE
-isUserChangeColumnVisible = FALSE
-[VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column3]
 name = Message
 width = 2000
 visualIndex = 4
 isHidden = FALSE
 isUserChangeColumnVisible = FALSE
-[VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column4]
+[VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column1]
+name = Code
+width = 60
+visualIndex = 2
+isHidden = TRUE
+isUserChangeColumnVisible = FALSE
+[VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column2]
+name = Type
+width = 60
+visualIndex = 3
+isHidden = TRUE
+isUserChangeColumnVisible = FALSE
+[VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column3]
 name = Time
 width = 60
 visualIndex = 0
 isHidden = TRUE
 isUserChangeColumnVisible = FALSE
-[VIA.parRule]
-parRulePathInterForm = ""
+[VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column4]
+name = Severity
+width = 60
+visualIndex = 1
+isHidden = TRUE
+isUserChangeColumnVisible = FALSE
 [Vi]
-ViFont = "Fixed 20"
+ViFont = "Clean 14"
 ViBG = white
 ViFG = black
 [Wave]
@@ -786,7 +738,7 @@ scope_to_save_with_macro
 open_file_dir
 open_rc_file_dir
 getSignalForm = 0 0 800 479 100 30 100 30
-viewPort = 0 30 1703 677 276 213
+viewPort = 0 33 1096 586 199 65
 signalSpacing = 5
 digitalSignalHeight = 15
 analogSignalHeight = 98
@@ -1058,19 +1010,18 @@ hspiceIncOpenMode = TRUE
 pcSelectMode = TRUE
 hierarchyDelimiter = /
 RecentFile1 = "\"/home/jay/Desktop/graduation_project/rtl/testbench.fsdb\""
-RecentFile2 = "\"/home/jay/Desktop/graduation_project/testbench.fsdb\""
 open_file_time_range = FALSE
 value_window_aligment = Right
 signal_window_alignment = Auto
 ShowDeltaTime = TRUE
-legend_window_font = -f COURIER24 -c ID_CYAN5
-value_window_font = -f COURIER24 -c ID_CYAN5
-curve_window_font = -f COURIER24 -c ID_CYAN5
-group_name_font = -f COURIER24 -c ID_GREEN5
-ruler_value_font = -f COURIER24 -c ID_CYAN5
-analog_ruler_value_font = -f COURIER24 -c ID_CYAN5
-comment_string_font = -f COURIER24 -c ID_RED5
-getsignal_form_font = -f COURIER24
+legend_window_font = -f COURIER18 -c ID_CYAN5
+value_window_font = -f COURIER18 -c ID_CYAN5
+curve_window_font = -f COURIER18 -c ID_CYAN5
+group_name_font = -f COURIER18 -c ID_GREEN5
+ruler_value_font = -f COURIER18 -c ID_CYAN5
+analog_ruler_value_font = -f COURIER18 -c ID_CYAN5
+comment_string_font = -f COURIER18 -c ID_RED5
+getsignal_form_font = -f COURIER18
 SigsCheckNum = on 1000
 filter_synthesized_net = off n
 filterOutNet = on
@@ -1245,7 +1196,7 @@ showCellBitRangeWithAddr = TRUE
 wordsShownInOneRow = 8
 syncCursorTime = FALSE
 fixCellColumnWidth = FALSE
-font = Courier 24
+font = Courier 18
 [planColors]
 plan_fillColor_inactive = lightGray
 plan_fillColor_warning = orange
@@ -1272,6 +1223,7 @@ tsCellModelSetting = 0
 tsContBAError = FALSE
 tsMaxLeafNum = 32768
 [schematics]
+viewport = 178 262 638 516
 schBackgroundColor_qt = #000000 qt_solidLine 1
 schBodyColor_qt = #ffb973 qt_solidLine 1
 schAsmBodyColor_qt = #a5a5ff qt_solidLine 1
@@ -1311,11 +1263,6 @@ schAsmRegColor_qt = #01ffff qt_solidLine
 schAsmTriColor = cyan4 lineSolid
 schAsmTriColor_qt = #01ffff qt_solidLine
 ComputedAnnotColor = ID_PURPLE5
-AutoMergeSettingFile = 
-PowerMapFile = 
-GroundMapFile = 
-CopyScopeNameDelimiter = 
-RegNamingRule = 
 schBackgroundColor = ID_BLACK lineSolid 1
 schBodyColor = ID_ORANGE6 lineSolid 1
 schAsmBodyColor = ID_BLUE7 lineSolid 1
@@ -1441,6 +1388,7 @@ stopOnMOSCell = FALSE
 TraceWithPolarity = False
 shortName = True
 AutoMerge = False
+AutoMergeSettingFile = 
 ShowPowerTip = True
 schModuleName = True
 DisplayLengthwiseTransistor = False
@@ -1466,9 +1414,13 @@ DetailLevel = 4
 RecogFSM = True
 ExpandGenBlock = True
 RecogMem = True
+PowerMapFile = 
+GroundMapFile = 
+CopyScopeNameDelimiter = 
 sdfDelayScale = Default
 sdfDelayType = Typical
 sdfDelayPrecision = 0.01
+RegNamingRule = 
 MagnifierSize = Medium
 MagnifierRatio = X4
 HideUnusedPin = True
@@ -1505,7 +1457,6 @@ IsShowConstantValue = True
 clockTreeBrowser-MarkerColor = ID_YELLOW5
 clockTreeBrowser-SelectedColor = ID_BLUE5
 clockTreeBrowser-ViolationColor = ID_RED5
-viewport = 0 30 1015 708
 [schematics_print]
 Signature = FALSE
 DesignName = PCU
@@ -1576,6 +1527,7 @@ leadingZeros = FALSE
 CellAlign = left
 AlignAttByCol = FALSE
 [tSchema]
+tsDefaultSize = 0
 tfgRegViewBG = ID_BLACK
 tfgStmtViewBG = ID_GRAY1
 tfgSchemaViewBG = ID_BLACK
@@ -1597,7 +1549,6 @@ tfgValue0 = ID_YELLOW5
 tfgValue1 = ID_ORANGE5
 tfgValueX = ID_PURPLE7
 tfgValueZ = ID_ORANGE8
-tsDefaultSize = 0
 [tbvBreakpointDialog]
 alwaysOnTop = FALSE
 [tbvCovergroupDebug]
@@ -1664,9 +1615,9 @@ AddImportArgument = FALSE
 LineBreakWithScope = TRUE
 StopAfterCompileOption = -s
 [wave.0]
-viewPort = 0 30 1703 677 276 213
+viewPort = 0 33 1096 586 199 65
 [wave.1]
-viewPort = 0 30 2198 531 160 65
+viewPort = 127 219 960 332 100 65
 [wave.2]
 viewPort = 38 314 686 205 100 65
 [wave.3]

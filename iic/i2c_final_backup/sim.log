@@ -1,0 +1,61 @@
+Command: /home/jay/Desktop/graduation_project/i2c_final_backup/./simv -l sim.log
+Chronologic VCS simulator copyright 1991-2018
+Contains Synopsys proprietary information.
+Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Jan 23 10:45 2026
+*Verdi* Loading libsscore_vcs201809.so
+FSDB Dumper for VCS, Release Verdi_O-2018.09-SP2, Linux x86_64/64bit, 02/21/2019
+(C) 1996 - 2019 by Synopsys, Inc.
+*Verdi* FSDB WARNING: The FSDB file already exists. Overwriting the FSDB file may crash the programs that are using this file.
+*Verdi* : Create FSDB file '/home/jay/Desktop/graduation_project/i2c_final_backup/i2c_test.fsdb'
+*Verdi* : Begin traversing the scopes, layer (0).
+*Verdi* : Enable +all dumping.
+*Verdi* : End of traversing.
+========================================
+=== I2C Master-Slave Test Started ===
+========================================
+Time: 200000 ns
+
+--- Test 1: Single Byte Write ---
+Writing 0xAA to address 0x000
+eeprm---memory[0]=aa
+Write completed at time 9915000 ns
+
+--- Test 2: Single Byte Read ---
+Reading from address 0x000
+Read completed at time 24625000 ns
+Read data = 0xaa
+✓ SUCCESS: Read data matches written data
+
+--- Test 3: Multi-Byte Write ---
+Writing 5 bytes starting from address 0x100
+Data: 0x10, 0x11, 0x12, 0x13, 0x14
+eeprm---memory[100]=10
+eeprm---memory[101]=11
+eeprm---memory[102]=12
+eeprm---memory[103]=13
+eeprm---memory[104]=14
+Multi-byte write completed at time 83135000 ns
+
+--- Test 4: Multi-Byte Read ---
+Reading 5 bytes starting from address 0x100
+Read from 0x100 = 0x10 (expected 0x10)
+✓ Byte 1 correct
+Read from 0x101 = 0x11 (expected 0x11)
+✓ Byte 2 correct
+Read from 0x102 = 0x12 (expected 0x12)
+✓ Byte 3 correct
+Read from 0x103 = 0x13 (expected 0x13)
+✓ Byte 4 correct
+Read from 0x104 = 0x14 (expected 0x14)
+✓ Byte 5 correct
+
+========================================
+=== All Tests Completed ===
+========================================
+Final time: 158685000 ns
+$finish called from file "i2c_tb.v", line 327.
+$finish at simulation time            163685000
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 163685000 ps
+CPU Time:      0.130 seconds;       Data structure size:   0.0Mb
+Fri Jan 23 10:45:52 2026

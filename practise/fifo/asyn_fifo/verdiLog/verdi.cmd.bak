@@ -1,0 +1,93 @@
+simSetSimulator "-vcssv" -exec \
+           "/home/jay/Desktop/graduation_project/practise/fifo/asyn_fifo/simv" \
+           -args
+debImport "-dbdir" \
+          "/home/jay/Desktop/graduation_project/practise/fifo/asyn_fifo/simv.daidir"
+debLoadSimResult \
+           /home/jay/Desktop/graduation_project/practise/fifo/asyn_fifo/testbench.fsdb
+wvCreateWindow
+srcSignalView -on
+verdiDockWidgetDisplay -dock widgetDock_<Signal_List>
+verdiDockWidgetDisplay -dock widgetDock_<Signal_List>
+srcHBSelect "testbench.wait_r_clk_neg" -win $_nTrace1
+srcHBSelect "testbench.u_fifo" -win $_nTrace1
+srcHBSelect "testbench.u_fifo" -win $_nTrace1
+srcSetScope -win $_nTrace1 "testbench.u_fifo" -delim "."
+srcHBSelect "testbench.u_fifo" -win $_nTrace1
+srcHBSelect "testbench.wait_r_clk_neg" -win $_nTrace1
+srcHBSelect "testbench.wait_r_clk_pos" -win $_nTrace1
+srcHBSelect "testbench.wait_r_clk_neg" -win $_nTrace1
+srcHBSelect "testbench.wait_w_clk_neg" -win $_nTrace1
+srcHBSelect "testbench.wait_w_clk_pos" -win $_nTrace1
+srcHBSelect "testbench.wait_r_clk_pos" -win $_nTrace1
+srcHBSelect "testbench.wait_r_clk_neg" -win $_nTrace1
+srcHBSelect "testbench.wait_r_clk_pos" -win $_nTrace1
+srcHBSelect "testbench.u_fifo.ram_inst" -win $_nTrace1
+srcSetScope -win $_nTrace1 "testbench.u_fifo.ram_inst" -delim "."
+srcHBSelect "testbench.u_fifo.ram_inst" -win $_nTrace1
+srcSignalViewSelect "testbench.u_fifo.ram_inst.rdata\[7:0\]"
+srcSignalViewAddSelectedToWave -win $_nTrace1
+srcSearchString "rdata" -win $_nTrace1 -next -case
+srcSearchString "rdata" -win $_nTrace1 -next -case
+srcSignalViewSelect "testbench.u_fifo.ram_inst.ren"
+srcSignalViewAddSelectedToWave -win $_nTrace1
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "mem\[raddr\]" -line 35 -pos 1 -win $_nTrace1
+srcSearchString "raddr" -win $_nTrace1 -next -case
+srcSearchString "raddr" -win $_nTrace1 -next -case
+srcSearchString "raddr" -win $_nTrace1 -next -case
+srcSearchString "raddr" -win $_nTrace1 -next -case
+srcSearchString "raddr" -win $_nTrace1 -next -case
+srcSearchString "raddr" -win $_nTrace1 -next -case
+srcSignalViewSelect "testbench.u_fifo.ram_inst.raddr\[3:0\]"
+srcSignalViewAddSelectedToWave -win $_nTrace1
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "r_clk" -line 33 -pos 1 -win $_nTrace1
+srcSignalViewSelect "testbench.u_fifo.ram_inst.r_clk"
+srcSignalViewAddSelectedToWave -win $_nTrace1
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "waddr" -win $_nTrace1
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "rdata" -line 35 -pos 1 -win $_nTrace1
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "ren" -line 34 -pos 1 -win $_nTrace1
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "rdata" -line 35 -pos 1 -win $_nTrace1
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "mem\[raddr\]" -line 35 -pos 1 -win $_nTrace1
+srcSignalViewSelect "testbench.u_fifo.ram_inst.mem\[0:15\]"
+srcSignalViewAddSelectedToWave -win $_nTrace1
+wvSelectSignal -win $_nWave3 {( "G1" 5 )} 
+wvSelectSignal -win $_nWave3 {( "G1" 5 )} 
+wvSelectSignal -win $_nWave3 {( "G1" 5 )} 
+wvSelectSignal -win $_nWave3 {( "G1" 5 )} 
+wvExpandBus -win $_nWave3 {("G1" 5)}
+wvCut -win $_nWave3
+wvSetPosition -win $_nWave3 {("G1" 5)}
+srcSignalViewSelect "testbench.u_fifo.ram_inst.wen"
+srcSignalViewAddSelectedToWave -win $_nTrace1
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "w_clk" -line 26 -pos 1 -win $_nTrace1
+srcSignalViewSelect "testbench.u_fifo.ram_inst.w_clk"
+srcSignalViewAddSelectedToWave -win $_nTrace1
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "waddr" -win $_nTrace1
+srcSignalViewSelect "testbench.u_fifo.ram_inst.waddr\[3:0\]"
+srcSignalViewAddSelectedToWave -win $_nTrace1
+srcHBSelect "testbench" -win $_nTrace1
+srcSetScope -win $_nTrace1 "testbench" -delim "."
+srcHBSelect "testbench" -win $_nTrace1
+srcHBSelect "testbench" -win $_nTrace1
+srcSearchString "wen" -win $_nTrace1 -next -case
+srcSearchString "wen" -win $_nTrace1 -next -case
+srcSearchString "wen" -win $_nTrace1 -next -case
+srcSearchString "wen" -win $_nTrace1 -next -case
+srcSearchString "wen" -win $_nTrace1 -next -case
+srcAction -pos 83 2 0 -win $_nTrace1 -name "   " -ctrlKey off
+srcAction -pos 83 2 0 -win $_nTrace1 -name "   " -ctrlKey off
+srcAction -pos 83 2 0 -win $_nTrace1 -name "   " -ctrlKey off
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "wen" -line 84 -pos 1 -win $_nTrace1
+srcDeselectAll -win $_nTrace1
+srcSelect -word -line 81 -pos 1 -win $_nTrace1
+debExit

@@ -14,13 +14,11 @@ srcHBSelect "testbench.top.openmips0" -win $_nTrace1
 srcSetScope -win $_nTrace1 "testbench.top.openmips0" -delim "."
 srcHBSelect "testbench.top.openmips0" -win $_nTrace1
 srcHBSelect "testbench.top.openmips0.registerfile0" -win $_nTrace1
+srcHBSelect "testbench.top.openmips0.registerfile0" -win $_nTrace1
+srcHBSelect "testbench.top.openmips0.registerfile0" -win $_nTrace1
 srcSetScope -win $_nTrace1 "testbench.top.openmips0.registerfile0" -delim "."
 srcHBSelect "testbench.top.openmips0.registerfile0" -win $_nTrace1
 srcHBSelect "testbench.top.openmips0.registerfile0.i0" -win $_nTrace1
 srcSetScope -win $_nTrace1 "testbench.top.openmips0.registerfile0.i0" -delim "."
 srcHBSelect "testbench.top.openmips0.registerfile0.i0" -win $_nTrace1
-srcSignalViewSelect "testbench.top.openmips0.registerfile0.i0.rf\[31:0\]"
-srcSignalViewAddSelectedToWave -win $_nTrace1
-wvSelectSignal -win $_nWave3 {( "G1" 1 )} 
-wvExpandBus -win $_nWave3 {("G1" 1)}
 debExit

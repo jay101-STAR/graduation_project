@@ -39,6 +39,9 @@ module id (
   //12位立即数扩展,为高位有符号扩展
   wire [11:0] immI = id_inst[31:20];
   wire [31:0] sign_extended_immI = {{20{immI[11]}}, immI[11:0]};
+  //S型立即数扩展
+  wire [11:0] immS = {id_inst[31:25], id_inst[11:7]};
+  wire [31:0] sign_extended_immS = {{20{immS[11]}}, immS[11:0]};
   //12 位立即数扩展，为高位有符号扩展，为低位零扩展
   wire [11:0] immB = {id_inst[31], id_inst[7], id_inst[30:25], id_inst[11:8]};
   wire [31:0] sign_extended_immB = {{19{immB[11]}}, immB[11:0], 1'b0};
@@ -80,14 +83,14 @@ module id (
   assign rs1_signedlowerthan_rs2   = ($signed(reg_id_rs1_data) < $signed(reg_id_rs2_data));
   assign rs1_signedbiggerthan_rs2  = (~rs1_signedlowerthan_rs2);
   assign rs1_unsignedlowerthan_rs2 = (reg_id_rs1_data < reg_id_rs2_data);
-  assign rs1_unsignedbigerthan_rs2 = (~rs1_signedlowerthan_rs2);
+  assign rs1_unsignedbigerthan_rs2 = (~rs1_unsignedlowerthan_rs2);
   assign rs1_equal_rs2             = (reg_id_rs1_data == reg_id_rs2_data);
   assign rs1_unequal_rs2           = (~rs1_equal_rs2);
   //标志btype指令是否跳转，1表示跳，0表示不跳转
 
   assign R_TYPE_EX_000 = id_inst[30] ? `SUB_TYPE : `ADD_TYPE;
-  assign R_TYPE_EX_101 = id_inst[30] ? `SRL_TYPE : `SRA_TYPE;
-  assign I_TYPE_EX_101 = id_inst[30] ? `SRL_TYPE : `SRA_TYPE;
+  assign R_TYPE_EX_101 = id_inst[30] ? `SRA_TYPE : `SRL_TYPE;
+  assign I_TYPE_EX_101 = id_inst[30] ? `SRA_TYPE : `SRL_TYPE;
   assign E_TYPE_MRET_TYPE_EX_000 = ((id_inst[21:20] == 2'b00) ? `ECALL_TYPE  :
                                     (id_inst[21:20] == 2'b01) ? `EBREAK_TYPE :
                                     (id_inst[21:20] == 2'b10) ? `MRET_TYPE   : 8'b0) ;
@@ -100,6 +103,8 @@ module id (
   assign id_ex_is_csr = (inst_type == `CSR_TYPE);
   //传递pc值
   assign id_ex_pc = pc_id_pc;
+
+  assign id_ex_csr_addr = id_inst[31:20];
 
 
   muxwithdefault #(6, 8, 1) btype_jump1 (
@@ -139,7 +144,7 @@ module id (
       }
   );
   assign id_ex_aluc = inst_type;
-  muxwithdefault #(8, 4, 1) i2 (
+  muxwithdefault #(10, 4, 1) i2 (
       id_reg_rs1_ren,
       inst_type,
       1'b0,
@@ -151,10 +156,12 @@ module id (
         `JALR_TYPE  ,1'b1 ,
         `LUI_TYPE   ,1'b0 ,
         `AUIPC_TYPE ,1'b0 ,
-        `CSR_TYPE   ,1'b1
+        `CSR_TYPE   ,1'b1 ,
+        `L_TYPE     ,1'b1 ,
+        `S_TYPE     ,1'b1
       }
   );
-  muxwithdefault #(7, 4, 1) i3 (
+  muxwithdefault #(8, 4, 1) i3 (
       id_reg_rs2_ren,
       inst_type,
       1'b0,
@@ -165,10 +172,11 @@ module id (
         `JAL_TYPE   ,1'b0 ,
         `JALR_TYPE  ,1'b0 ,
         `LUI_TYPE   ,1'b0 ,
-        `AUIPC_TYPE ,1'b0
+        `AUIPC_TYPE ,1'b0 ,
+        `S_TYPE     ,1'b1
       }
   );
-  muxwithdefault #(8, 4, 32) i4 (
+  muxwithdefault #(10, 4, 32) i4 (
       id_ex_rs1_data,
       inst_type,
       32'b0,
@@ -180,10 +188,12 @@ module id (
         `JAL_TYPE   ,sign_extended_immJ ,
         `LUI_TYPE   ,low_extended_immU  ,
         `AUIPC_TYPE ,low_extended_immU  ,
-        `CSR_TYPE   ,id_ex_rs1_data_for_csr
+        `CSR_TYPE   ,id_ex_rs1_data_for_csr ,
+        `L_TYPE     ,reg_id_rs1_data    ,
+        `S_TYPE     ,reg_id_rs1_data + sign_extended_immS
       }
   );
-  muxwithdefault #(8, 4, 32) i5 (
+  muxwithdefault #(10, 4, 32) i5 (
       id_ex_rs2_data,
       inst_type,
       32'b0,
@@ -195,7 +205,9 @@ module id (
         `JAL_TYPE   ,pc_id_pc           ,
         `LUI_TYPE   ,32'b0              ,
         `AUIPC_TYPE ,pc_id_pc           ,
-        `CSR_TYPE   ,32'b0
+        `CSR_TYPE   ,32'b0              ,
+        `L_TYPE     ,sign_extended_immI ,
+        `S_TYPE     ,reg_id_rs2_data
 
       }
   );
@@ -250,13 +262,13 @@ module id (
       8'b0,
       {
         `ADDI_INST      ,`ADD_TYPE     ,
-        `SLLI_INST      ,`SLL_TYPE     ,
         `SLTI_INST      ,`SLT_TYPE     ,
         `SLTIU_INST     ,`SLTU_TYPE    ,
         `XORI_INST      ,`XOR_TYPE     ,
-        `SRLI_SRAI_INST ,I_TYPE_EX_101 ,
         `ORI_INST       ,`OR_TYPE      ,
-        `ANDI_INST      ,`AND_TYPE
+        `ANDI_INST      ,`AND_TYPE     ,
+        `SLLI_INST      ,`SLL_TYPE     ,
+        `SRLI_SRAI_INST ,I_TYPE_EX_101
 
       }
   );
@@ -339,7 +351,7 @@ module id (
 
 
 // for id_ex_rd_wen
-  muxwithdefault #(8, 4, 1) i11 (
+  muxwithdefault #(9, 4, 1) i11 (
       id_ex_rd_wen1,
       inst_type,
       1'b0,
@@ -351,7 +363,8 @@ module id (
         `JALR_TYPE  ,1'b1 ,
         `LUI_TYPE   ,1'b1 ,
         `AUIPC_TYPE ,1'b1 ,
-        `CSR_TYPE   ,1'b1
+        `CSR_TYPE   ,1'b1 ,
+        `L_TYPE     ,1'b1
       }
   );
   assign id_ex_rd_wen = (id_ex_rd_addr == 5'b0) ? 1'b0 : id_ex_rd_wen1;  //if rd = x0,not write
