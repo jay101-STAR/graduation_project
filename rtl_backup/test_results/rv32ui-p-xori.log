@@ -1,0 +1,26 @@
+Chronologic VCS simulator copyright 1991-2018
+Contains Synopsys proprietary information.
+Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Feb  9 11:36 2026
+
+Warning-[STASKW_RMIEAFL] Illegal entry
+./vsrc/instrom.v, 12
+  Illegal entry found at file 
+  /home/jay/Desktop/graduation_project/rtl/vsrc/instrom/instrom.hex line 4097 
+  while executing $readmem.
+  Please ensure that the file has proper entries.
+
+*Verdi* Loading libsscore_vcs201809.so
+FSDB Dumper for VCS, Release Verdi_O-2018.09-SP2, Linux x86_64/64bit, 02/21/2019
+(C) 1996 - 2019 by Synopsys, Inc.
+*Verdi* FSDB WARNING: The FSDB file already exists. Overwriting the FSDB file may crash the programs that are using this file.
+*Verdi* : Create FSDB file '/home/jay/Desktop/graduation_project/rtl/testbench.fsdb'
+*Verdi* : Begin traversing the scopes, layer (0).
+*Verdi* : Enable +all dumping.
+*Verdi* : End of traversing.
+[1;31m*** TEST FAILED *** (tohost =          0)[0m
+$finish called from file "./vsrc/testbench.v", line 65.
+$finish at simulation time              1000301
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 1000301 ns
+CPU Time:      0.330 seconds;       Data structure size:   0.4Mb
+Mon Feb  9 11:36:51 2026

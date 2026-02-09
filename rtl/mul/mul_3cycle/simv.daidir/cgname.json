@@ -1,0 +1,26 @@
+{
+    "tb_mul_3cycle": [
+        "tb_mul_3cycle",
+        "wxuvH",
+        "module",
+        3
+    ],
+    "compress": [
+        "compress",
+        "NIRPT",
+        "module",
+        2
+    ],
+    "std": [
+        "std",
+        "reYIK",
+        "module",
+        1
+    ],
+    "...MASTER...": [
+        "SIM",
+        "amcQw",
+        "module",
+        4
+    ]
+}

@@ -1,0 +1,104 @@
+{
+    "instrom": [
+        "instrom",
+        "ju8uQ",
+        "module",
+        15
+    ],
+    "dataram_wb_reg": [
+        "dataram_wb_reg",
+        "SQ0Bk",
+        "module",
+        5
+    ],
+    "std": [
+        "std",
+        "reYIK",
+        "module",
+        1
+    ],
+    "testbench": [
+        "testbench",
+        "iAVhC",
+        "module",
+        14
+    ],
+    "compress": [
+        "compress",
+        "NIRPT",
+        "module",
+        2
+    ],
+    "mux": [
+        "mux",
+        "RZvU4",
+        "module",
+        11
+    ],
+    "...MASTER...": [
+        "SIM",
+        "amcQw",
+        "module",
+        17
+    ],
+    "muxwithdefault_0003": [
+        "muxwithdefault_0003",
+        "cU2rR",
+        "module",
+        8
+    ],
+    "muxwithdefault_0009": [
+        "muxwithdefault_0009",
+        "vyzbB",
+        "module",
+        10
+    ],
+    "muxwithdefault_0001": [
+        "muxwithdefault_0001",
+        "x93J4",
+        "module",
+        6
+    ],
+    "dataram": [
+        "dataram",
+        "GAMq1",
+        "module",
+        3
+    ],
+    "muxwithdefault_0005": [
+        "muxwithdefault_0005",
+        "t197S",
+        "module",
+        9
+    ],
+    "chj_registerfile": [
+        "chj_registerfile",
+        "IJPkw",
+        "module",
+        4
+    ],
+    "muxwithdefault_0002": [
+        "muxwithdefault_0002",
+        "YU6qy",
+        "module",
+        7
+    ],
+    "ex_dataram_reg": [
+        "ex_dataram_reg",
+        "BEZKx",
+        "module",
+        12
+    ],
+    "csr": [
+        "csr",
+        "cNThd",
+        "module",
+        13
+    ],
+    "wb": [
+        "wb",
+        "DgZ94",
+        "module",
+        16
+    ]
+}

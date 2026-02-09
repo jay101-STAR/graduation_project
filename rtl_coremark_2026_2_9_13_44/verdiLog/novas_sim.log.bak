@@ -1,0 +1,89 @@
+simSetSimulator "-vcssv" -exec "/home/jay/Desktop/graduation_project/rtl/simv" \
+           -args
+debImport "-dbdir" "/home/jay/Desktop/graduation_project/rtl/simv.daidir"
+debLoadSimResult /home/jay/Desktop/graduation_project/rtl/testbench.fsdb
+wvCreateWindow
+srcHBSelect "testbench" -win $_nTrace1
+srcSetScope -win $_nTrace1 "testbench" -delim "."
+srcHBSelect "testbench" -win $_nTrace1
+srcHBSelect "testbench.top" -win $_nTrace1
+srcSetScope -win $_nTrace1 "testbench.top" -delim "."
+srcHBSelect "testbench.top" -win $_nTrace1
+srcHBSelect "testbench.top.openmips0" -win $_nTrace1
+srcSetScope -win $_nTrace1 "testbench.top.openmips0" -delim "."
+srcHBSelect "testbench.top.openmips0" -win $_nTrace1
+srcHBSelect "testbench.top.openmips0.id0" -win $_nTrace1
+srcSetScope -win $_nTrace1 "testbench.top.openmips0.id0" -delim "."
+srcHBSelect "testbench.top.openmips0.id0" -win $_nTrace1
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "pc_id_pc" -line 7 -pos 1 -win $_nTrace1
+srcSignalViewSelect "testbench.top.openmips0.id0.pc_id_pc\[31:0\]"
+srcSignalViewAddSelectedToWave -win $_nTrace1
+wvZoomIn -win $_nWave3
+wvZoomIn -win $_nWave3
+wvZoomIn -win $_nWave3
+wvZoomIn -win $_nWave3
+wvZoomOut -win $_nWave3
+wvSetCursor -win $_nWave3 251.180784 -snap {("G1" 1)}
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+wvSearchNext -win $_nWave3
+debExit

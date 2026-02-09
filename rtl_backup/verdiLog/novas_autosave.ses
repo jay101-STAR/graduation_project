@@ -1,0 +1,87 @@
+@verdi rc file Version 1.0
+[General]
+saveDB = TRUE
+relativePath = FALSE
+saveSingleView = FALSE
+saveNWaveWinId = 
+VerdiVersion = Verdi_O-2018.09-SP2
+[KeyNote]
+Line1 = Automatic Backup 0
+Line2 = Save Open Database Information: Yes
+Line3 = Path Option: Absolute Paths
+Line4 = Windows Option: All Windows
+[TestBench]
+ConstrViewShow = 0
+InherViewShow = 0
+FSDBMsgShow = 0
+AnnotationShow = 0
+Console = TRUE
+powerDumped = 0
+[hb]
+postSimFile = /home/jay/Desktop/graduation_project/rtl/testbench.fsdb
+syncTime = 0
+viewport = 66 32 2292 1291 0 0 325 859
+activeNode = "mux"
+activeScope = "mux"
+activeFile = "./vsrc/mux.v"
+interactiveMode = False
+viewType = Source
+simulatorMode = False
+sourceBeginLine = 30
+baMode = False
+srcLineNum = True
+AutoWrap = True
+IdentifyFalseLogic = False
+syncSignal = False
+traceMode = Hierarchical
+showTraceInSchema = True
+paMode = False
+funcMode = False
+powerAwareAnnot = True
+amsAnnot = True
+traceCrossHier = True
+DnDtraceCrossHierOnly = True
+traceIncTopPort = False
+leadingZero = False
+signalPane = True
+Scope1 = "mux"
+multipleSelection = 1 42 2 0 0
+sdfCheckUndef = FALSE
+simFlow = FALSE
+[hb.design]
+importCmd = "-dbdir" "/home/jay/Desktop/graduation_project/rtl/simv.daidir" 
+invokeDir = /home/jay/Desktop/graduation_project/rtl
+[hb.sourceTab.1]
+scope = mux
+File = /home/jay/Desktop/graduation_project/rtl/vsrc/mux.v
+Line = 31
+[nMemoryManager]
+WaveformFile = /home/jay/Desktop/graduation_project/rtl/testbench.fsdb
+UserActionNum = 0
+nMemWindowNum = 1
+[nMemoryWindow_0]
+nMemGetVariable = -var testbench.top.openmips0.dataram0.mem -from DUMPED_BY_SIMULATOR -addrRange [0:32767] -wordBitRange [31:0] -wordsInOneRow 8
+nMemSetTime = -time 1530000
+nMemSetDispOptions = -addrRadix Hex -addrColWidth 120 -valueColWidth 100
+nMemSetRadix = -format Hex -notation Unsigned
+[wave.0]
+viewPort = 0 33 1143 670 339 255
+primaryWindow = TRUE
+SessionFile = /home/jay/Desktop/graduation_project/rtl/verdiLog/novas_autosave.ses.wave.0
+displayGrid = FALSE
+hierarchicalName = FALSE
+snap = TRUE
+displayLeadingZeros = FALSE
+fixDelta = FALSE
+displayCursorMarker = FALSE
+autoUpdate = FALSE
+highlightGlitchs = FALSE
+waveformSyncCursorMarker = FALSE
+waveformSyncHorizontalRange = FALSE
+waveformSyncVerticalscroll = FALSE
+displayErrors = TRUE
+displayMsgSymbols = TRUE
+showMsgDescriptions = TRUE
+autoFit = FALSE
+displayDeltaY = FALSE
+centerCursor = FALSE

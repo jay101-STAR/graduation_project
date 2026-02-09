@@ -1,0 +1,10 @@
+========================================
+RISC-V Test Runner (Fast Mode)
+========================================
+Test pattern: rv32ui-p-simple
+Start time: Sun Jan 25 01:39:02 PM CST 2026
+
+Searching for tests matching: rv32ui-p-simple
+Found 1 tests
+
+[PASS] rv32ui-p-simple

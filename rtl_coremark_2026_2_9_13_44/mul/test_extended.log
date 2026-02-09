@@ -1,0 +1,101 @@
+Command: /home/jay/Desktop/graduation_project/rtl/mul/./simv_extended -l test_extended.log
+Chronologic VCS simulator copyright 1991-2018
+Contains Synopsys proprietary information.
+Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Feb  6 15:16 2026
+============================================================
+扩展测试开始 - 覆盖更多极端情况
+============================================================
+
+------------------------------------------------------------
+测试组 1: 边界值附近的数
+------------------------------------------------------------
+[PASS] Test 1: unsigned: (MAX-1) * 2
+[PASS] Test 2: unsigned: (MAX-1) * (MAX-1)
+[PASS] Test 3: unsigned: 1 * (MAX-1)
+[PASS] Test 4: signed: (MAX_INT-1) * 2
+[PASS] Test 5: signed: (MAX_INT-1) * (MAX_INT-1)
+[PASS] Test 6: signed: (MIN_INT+1) * 2
+[PASS] Test 7: signed: (MIN_INT+1) * (MIN_INT+1)
+[PASS] Test 8: signed: (MAX_INT-1) * (MIN_INT+1)
+------------------------------------------------------------
+测试组 2: 小负数测试
+------------------------------------------------------------
+[PASS] Test 9: signed: -2 * 2
+[PASS] Test 10: signed: -2 * -2
+[PASS] Test 11: signed: -3 * 3
+[PASS] Test 12: signed: -3 * -3
+[PASS] Test 13: signed: -100 * 100
+[PASS] Test 14: signed: -100 * -100
+[PASS] Test 15: signed: -1000 * 1000
+------------------------------------------------------------
+测试组 3: 更多位模式测试
+------------------------------------------------------------
+[PASS] Test 16: unsigned: 0x0F0F0F0F * 0xF0F0F0F0
+[PASS] Test 17: unsigned: 0x0F0F0F0F * 0x0F0F0F0F
+[PASS] Test 18: unsigned: 0xF0F0F0F0 * 0xF0F0F0F0
+[PASS] Test 19: unsigned: 0x000000FF * 0xFFFFFF00
+[PASS] Test 20: unsigned: 0x0000FF00 * 0x00FF0000
+[PASS] Test 21: unsigned: 0x00FF0000 * 0xFF000000
+[PASS] Test 22: unsigned: 0x00000003 * 0x00000003
+[PASS] Test 23: unsigned: 0x00000007 * 0x00000007
+[PASS] Test 24: unsigned: 0x0000000F * 0x0000000F
+[PASS] Test 25: unsigned: 0x000000FF * 0x000000FF
+[PASS] Test 26: unsigned: 0x0000FFFF * 0x0000FFFF
+------------------------------------------------------------
+测试组 4: Booth编码特殊情况
+------------------------------------------------------------
+[PASS] Test 27: unsigned: 0b111 * 10
+[PASS] Test 28: unsigned: 0b11111 * 10
+[PASS] Test 29: unsigned: 0b11111111 * 10
+[PASS] Test 30: unsigned: 0x55555555 * 3
+[PASS] Test 31: unsigned: 0xAAAAAAAA * 3
+[PASS] Test 32: unsigned: 0x80000001 * 2
+[PASS] Test 33: unsigned: 0x40000002 * 2
+------------------------------------------------------------
+测试组 5: 奇偶数组合
+------------------------------------------------------------
+[PASS] Test 34: unsigned: 3 * 5 (奇×奇)
+[PASS] Test 35: unsigned: 7 * 11 (奇×奇)
+[PASS] Test 36: unsigned: 2 * 4 (偶×偶)
+[PASS] Test 37: unsigned: 8 * 16 (偶×偶)
+[PASS] Test 38: unsigned: 3 * 4 (奇×偶)
+[PASS] Test 39: unsigned: 5 * 8 (奇×偶)
+------------------------------------------------------------
+测试组 6: 质数相乘
+------------------------------------------------------------
+[PASS] Test 40: unsigned: 2 * 3
+[PASS] Test 41: unsigned: 3 * 5
+[PASS] Test 42: unsigned: 5 * 7
+[PASS] Test 43: unsigned: 7 * 11
+[PASS] Test 44: unsigned: 11 * 13
+[PASS] Test 45: unsigned: 13 * 17
+[PASS] Test 46: unsigned: 17 * 19
+[PASS] Test 47: unsigned: 97 * 101
+------------------------------------------------------------
+测试组 7: 大质数
+------------------------------------------------------------
+[PASS] Test 48: unsigned: 65521 * 65537
+[PASS] Test 49: unsigned: 32749 * 32771
+------------------------------------------------------------
+测试组 8: 符号位边界
+------------------------------------------------------------
+[PASS] Test 50: unsigned: 0x7FFFFFFF * 2
+[PASS] Test 51: signed: 0x7FFFFFFF * 2
+[PASS] Test 52: unsigned: 0x80000000 * 2
+[PASS] Test 53: signed: 0x80000000 * 2
+============================================================
+扩展测试完成
+============================================================
+总测试数: 53
+通过数量: 53
+失败数量: 0
+通过率: 100.00%
+============================================================
+✓ 所有扩展测试通过！
+============================================================
+$finish called from file "tb_extended.v", line 262.
+$finish at simulation time               600000
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 600000 ps
+CPU Time:      0.130 seconds;       Data structure size:   0.0Mb
+Fri Feb  6 15:16:01 2026

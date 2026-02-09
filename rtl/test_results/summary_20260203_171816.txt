@@ -1,0 +1,66 @@
+========================================
+RISC-V Test Runner (Fast Mode)
+========================================
+Test pattern: rv32ui-p-*
+Start time: Tue Feb  3 05:18:16 PM CST 2026
+
+Searching for tests matching: rv32ui-p-*
+Found 42 tests
+
+[FAIL] rv32ui-p-add: tohost=4
+[FAIL] rv32ui-p-addi: tohost=4
+[FAIL] rv32ui-p-and: tohost=2
+[FAIL] rv32ui-p-andi: tohost=2
+[FAIL] rv32ui-p-auipc: tohost=2
+[FAIL] rv32ui-p-beq: tohost=5
+[FAIL] rv32ui-p-bge: tohost=8
+[FAIL] rv32ui-p-bgeu: tohost=8
+[FAIL] rv32ui-p-blt: tohost=2
+[FAIL] rv32ui-p-bltu: tohost=2
+[FAIL] rv32ui-p-bne: tohost=2
+[FAIL] rv32ui-p-fence_i: tohost=2
+[FAIL] rv32ui-p-jal: tohost=3
+[FAIL] rv32ui-p-jalr: tohost=3
+[FAIL] rv32ui-p-lb: tohost=4
+[FAIL] rv32ui-p-lbu: tohost=4
+[FAIL] rv32ui-p-ld_st: tohost=2
+[FAIL] rv32ui-p-lh: tohost=3
+[FAIL] rv32ui-p-lhu: tohost=3
+[FAIL] rv32ui-p-lui: tohost=3
+[FAIL] rv32ui-p-lw: tohost=2
+[FAIL] rv32ui-p-ma_data: tohost=1
+[FAIL] rv32ui-p-or: tohost=2
+[FAIL] rv32ui-p-ori: tohost=3
+[FAIL] rv32ui-p-sb: tohost=2
+[FAIL] rv32ui-p-sh: tohost=2
+[PASS] rv32ui-p-simple
+[FAIL] rv32ui-p-sll: tohost=12
+[FAIL] rv32ui-p-slli: tohost=12
+[FAIL] rv32ui-p-slt: tohost=11
+[FAIL] rv32ui-p-slti: tohost=10
+[FAIL] rv32ui-p-sltiu: tohost=10
+[FAIL] rv32ui-p-sltu: tohost=9
+[FAIL] rv32ui-p-sra: tohost=2147483647
+[FAIL] rv32ui-p-srai: tohost=2147483647
+[FAIL] rv32ui-p-srl: tohost=8
+[FAIL] rv32ui-p-srli: tohost=8
+[FAIL] rv32ui-p-st_ld: tohost=2
+[FAIL] rv32ui-p-sub: tohost=4
+[FAIL] rv32ui-p-sw: tohost=2
+[FAIL] rv32ui-p-xor: tohost=2
+[FAIL] rv32ui-p-xori: tohost=2
+
+========================================
+Test Summary
+========================================
+Total tests:   42
+[0;32mPassed:        1[0m
+[0;31mFailed:        41[0m
+[1;33mSkipped:       0[0m
+Pass rate:     2%
+
+End time: Tue Feb  3 05:18:26 PM CST 2026
+
+Results saved to: /home/jay/Desktop/graduation_project/rtl/test_results/summary_20260203_171816.txt
+Failed tests saved to: /home/jay/Desktop/graduation_project/rtl/test_results/failed_tests_20260203_171816.txt
+Individual test logs in: /home/jay/Desktop/graduation_project/rtl/test_results/

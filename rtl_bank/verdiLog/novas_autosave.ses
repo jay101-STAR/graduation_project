@@ -1,0 +1,91 @@
+@verdi rc file Version 1.0
+[General]
+saveDB = TRUE
+relativePath = FALSE
+saveSingleView = FALSE
+saveNWaveWinId = 
+VerdiVersion = Verdi_O-2018.09-SP2
+[KeyNote]
+Line1 = Automatic Backup 0
+Line2 = Save Open Database Information: Yes
+Line3 = Path Option: Absolute Paths
+Line4 = Windows Option: All Windows
+[TestBench]
+ConstrViewShow = 0
+InherViewShow = 0
+FSDBMsgShow = 0
+AnnotationShow = 0
+Console = TRUE
+powerDumped = 0
+[hb]
+postSimFile = /home/jay/Desktop/graduation_project/rtl/testbench.fsdb
+syncTime = 401
+viewport = 66 32 2292 1294 0 0 325 859
+activeNode = "testbench.top.openmips0.ex0"
+activeScope = "testbench.top.openmips0.ex0"
+activeFile = "./vsrc/ex.v"
+interactiveMode = False
+viewType = Source
+simulatorMode = False
+sourceBeginLine = 52
+baMode = False
+srcLineNum = True
+AutoWrap = True
+IdentifyFalseLogic = False
+syncSignal = False
+traceMode = Hierarchical
+showTraceInSchema = True
+paMode = False
+funcMode = False
+powerAwareAnnot = True
+amsAnnot = True
+traceCrossHier = True
+DnDtraceCrossHierOnly = True
+traceIncTopPort = False
+leadingZero = False
+signalPane = True
+Scope1 = "testbench.top.openmips0.ex0"
+Scope2 = "testbench.top.openmips0.registerfile0.i0"
+Scope3 = "testbench.top.openmips0.registerfile0"
+Scope4 = "testbench.top.openmips0"
+Scope5 = "testbench.top"
+Scope6 = "testbench"
+Scope7 = "std_bram"
+multipleSelection = 1 66 12 0 0
+sdfCheckUndef = FALSE
+simFlow = FALSE
+[hb.design]
+importCmd = "-dbdir" "/home/jay/Desktop/graduation_project/rtl/simv.daidir" 
+invokeDir = /home/jay/Desktop/graduation_project/rtl
+[hb.sourceTab.1]
+scope = testbench.top.openmips0.ex0
+File = /home/jay/Desktop/graduation_project/rtl/vsrc/ex.v
+Line = 53
+[nMemoryManager]
+WaveformFile = /home/jay/Desktop/graduation_project/rtl/testbench.fsdb
+UserActionNum = 0
+nMemWindowNum = 1
+[nMemoryWindow_0]
+nMemSetDispOptions = -addrRadix Hex -addrColWidth 120 -valueColWidth 100
+nMemSetRadix = -format Hex -notation Unsigned
+[wave.0]
+viewPort = 0 33 1143 617 339 255
+primaryWindow = TRUE
+SessionFile = /home/jay/Desktop/graduation_project/rtl/verdiLog/novas_autosave.ses.wave.0
+displayGrid = FALSE
+hierarchicalName = FALSE
+snap = TRUE
+displayLeadingZeros = FALSE
+fixDelta = FALSE
+displayCursorMarker = FALSE
+autoUpdate = FALSE
+highlightGlitchs = FALSE
+waveformSyncCursorMarker = FALSE
+waveformSyncHorizontalRange = FALSE
+waveformSyncVerticalscroll = FALSE
+displayErrors = TRUE
+displayMsgSymbols = TRUE
+showMsgDescriptions = TRUE
+autoFit = FALSE
+displayDeltaY = FALSE
+centerCursor = FALSE

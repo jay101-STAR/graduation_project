@@ -1,0 +1,66 @@
+========================================
+RISC-V Test Runner (Fast Mode)
+========================================
+Test pattern: rv32ui-p-*
+Start time: Sun Feb  8 04:35:57 PM CST 2026
+
+Searching for tests matching: rv32ui-p-*
+Found 42 tests
+
+[PASS] rv32ui-p-add
+[PASS] rv32ui-p-addi
+[PASS] rv32ui-p-and
+[PASS] rv32ui-p-andi
+[PASS] rv32ui-p-auipc
+[PASS] rv32ui-p-beq
+[PASS] rv32ui-p-bge
+[PASS] rv32ui-p-bgeu
+[PASS] rv32ui-p-blt
+[PASS] rv32ui-p-bltu
+[PASS] rv32ui-p-bne
+[FAIL] rv32ui-p-fence_i: tohost=2
+[PASS] rv32ui-p-jal
+[PASS] rv32ui-p-jalr
+[FAIL] rv32ui-p-lb: tohost=2
+[FAIL] rv32ui-p-lbu: tohost=2
+[PASS] rv32ui-p-ld_st
+[FAIL] rv32ui-p-lh: tohost=2
+[FAIL] rv32ui-p-lhu: tohost=2
+[PASS] rv32ui-p-lui
+[FAIL] rv32ui-p-lw: tohost=2
+[FAIL] rv32ui-p-ma_data: tohost=1
+[PASS] rv32ui-p-or
+[PASS] rv32ui-p-ori
+[FAIL] rv32ui-p-sb: tohost=4
+[FAIL] rv32ui-p-sh: tohost=4
+[PASS] rv32ui-p-simple
+[PASS] rv32ui-p-sll
+[PASS] rv32ui-p-slli
+[PASS] rv32ui-p-slt
+[PASS] rv32ui-p-slti
+[PASS] rv32ui-p-sltiu
+[PASS] rv32ui-p-sltu
+[PASS] rv32ui-p-sra
+[PASS] rv32ui-p-srai
+[PASS] rv32ui-p-srl
+[PASS] rv32ui-p-srli
+[PASS] rv32ui-p-st_ld
+[PASS] rv32ui-p-sub
+[PASS] rv32ui-p-sw
+[PASS] rv32ui-p-xor
+[PASS] rv32ui-p-xori
+
+========================================
+Test Summary
+========================================
+Total tests:   42
+[0;32mPassed:        33[0m
+[0;31mFailed:        9[0m
+[1;33mSkipped:       0[0m
+Pass rate:     78%
+
+End time: Sun Feb  8 04:36:31 PM CST 2026
+
+Results saved to: /home/jay/Desktop/graduation_project/rtl/test_results/summary_20260208_163557.txt
+Failed tests saved to: /home/jay/Desktop/graduation_project/rtl/test_results/failed_tests_20260208_163557.txt
+Individual test logs in: /home/jay/Desktop/graduation_project/rtl/test_results/

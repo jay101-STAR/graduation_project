@@ -1,0 +1,12 @@
+simSetSimulator "-vcssv" -exec "/home/jay/Desktop/graduation_project/rtl/simv" \
+           -args
+debImport "-dbdir" "/home/jay/Desktop/graduation_project/rtl/simv.daidir"
+debLoadSimResult /home/jay/Desktop/graduation_project/rtl/testbench.fsdb
+wvCreateWindow
+nMemCreateWindow
+nMemGetVariable -win $_nMem0 -var testbench.top.openmips0.dataram0.mem -delim . \
+           -from DUMPED_BY_SIMULATOR -addrRange {[0:32767]} -wordBitRange \
+           {[31:0]} -wordsInOneRow 8
+nMemNextDump -win $_nMem0
+nMemNextDump -win $_nMem0
+debExit

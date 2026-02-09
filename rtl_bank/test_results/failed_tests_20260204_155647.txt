@@ -1,0 +1,4 @@
+rv32ui-p-fence_i
+rv32ui-p-ld_st
+rv32ui-p-sb
+rv32ui-p-sh

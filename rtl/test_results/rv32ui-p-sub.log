@@ -1,6 +1,6 @@
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Jan 26 11:21 2026
+Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Feb  9 15:18 2026
 *Verdi* Loading libsscore_vcs201809.so
 FSDB Dumper for VCS, Release Verdi_O-2018.09-SP2, Linux x86_64/64bit, 02/21/2019
 (C) 1996 - 2019 by Synopsys, Inc.
@@ -9,10 +9,21 @@ FSDB Dumper for VCS, Release Verdi_O-2018.09-SP2, Linux x86_64/64bit, 02/21/2019
 *Verdi* : Begin traversing the scopes, layer (0).
 *Verdi* : Enable +all dumping.
 *Verdi* : End of traversing.
+[DBG] cycle=0 pc=0x80000000
+[DBG-T] t=2000 rst=0 pc=0x800001a8
+[DBG-T] t=3000 rst=0 pc=0x80000270
+[DBG-T] t=4000 rst=0 pc=0x80000338
+[DBG-T] t=5000 rst=0 pc=0x800003ac
+[DBG-T] t=6000 rst=0 pc=0x80000420
+[DBG-T] t=7000 rst=0 pc=0x80000474
+[DBG-T] t=8000 rst=0 pc=0x800004c0
+[DBG-T] t=9000 rst=0 pc=0x80000558
+[DBG-T] t=10000 rst=0 pc=0x800005a8
+[DBG-T] t=11000 rst=0 pc=0x8000063c
 [1;32m*** TEST PASSED ***[0m
-$finish called from file "./vsrc/testbench.v", line 60.
-$finish at simulation time                40310
+$finish called from file "./vsrc/testbench.v", line 106.
+$finish at simulation time                11650
            V C S   S i m u l a t i o n   R e p o r t 
-Time: 40310 ns
-CPU Time:      0.240 seconds;       Data structure size:   0.2Mb
-Mon Jan 26 11:21:57 2026
+Time: 11650 ns
+CPU Time:      0.180 seconds;       Data structure size:   0.4Mb
+Mon Feb  9 15:18:29 2026

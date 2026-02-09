@@ -1,0 +1,89 @@
+# ============================================================================
+# Makefile for mul module Testing
+# ============================================================================
+
+# Compiler settings
+SIMV = ./simv
+VCS = vcs -full64 -sverilog -timescale=1ns/1ns \
+      		+v2k \
+		 +define+fsdb \
+		-debug_acc+dmptf -debug_region+cell+encrypt \
+		-cpp g++-4.8 \
+		-cc gcc-4.8 \
+		-debug_access+r -kdb  \
+		-lca\
+		-LDFLAGS -Wl,--no-as-needed \
+		+lint=TFIPC-L \
+
+
+# Source files
+RTL_SRC = mul_top.v booth.v 4compress.v 32yasuo.v
+TB_SRC = tb.v
+
+# Output files
+SIMV_BIN = simv
+VCD_FILE = tb.vcd
+LOG_FILE = test.log
+
+# ============================================================================
+# Targets
+# ============================================================================
+
+.PHONY: all compile run clean help
+
+# Default target
+all: compile run
+
+# Compile the design and testbench
+compile:
+	@echo "============================================================"
+	@echo "Compiling mul module and testbench..."
+	@echo "============================================================"
+	$(VCS) $(RTL_SRC) $(TB_SRC) -o $(SIMV_BIN)
+	@echo "Compilation complete!"
+	@echo ""
+
+# Run simulation
+run:
+	@echo "============================================================"
+	@echo "Running simulation..."
+	@echo "============================================================"
+	$(SIMV) -l $(LOG_FILE)
+	@echo ""
+	@echo "Simulation complete! Check $(LOG_FILE) for details."
+	@echo ""
+
+# Compile and run in one step
+test: compile run
+
+# View waveform with GTKWave (if available)
+wave:
+	@if [ -f $(VCD_FILE) ]; then \
+		echo "Opening waveform viewer..."; \
+		gtkwave $(VCD_FILE) &; \
+	else \
+		echo "Error: $(VCD_FILE) not found. Run simulation first."; \
+	fi
+
+# Clean generated files
+clean:
+	@echo "Cleaning generated files..."
+	rm -rf $(SIMV_BIN) $(SIMV_BIN).daidir csrc ucli.key
+	rm -f $(VCD_FILE) $(LOG_FILE)
+	rm -f *.vpd *.vcd *.log
+	@echo "Clean complete!"
+
+# Show help
+help:
+	@echo "============================================================"
+	@echo "mul Module Test Makefile"
+	@echo "============================================================"
+	@echo "Available targets:"
+	@echo "  make all      - Compile and run simulation (default)"
+	@echo "  make compile  - Compile design and testbench"
+	@echo "  make run      - Run simulation"
+	@echo "  make test     - Compile and run (same as 'all')"
+	@echo "  make wave     - Open waveform viewer (GTKWave)"
+	@echo "  make clean    - Remove generated files"
+	@echo "  make help     - Show this help message"
+	@echo "============================================================"

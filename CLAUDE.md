@@ -4,53 +4,59 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a RISC-V processor (graduation project) implemented in Verilog. The design implements a subset of the RV32I instruction set with some RV32M (multiply/divide) support and Zicsr (CSR) extensions. The processor uses a classic 5-stage pipeline architecture.
+This is a RISC-V processor (graduation project) implemented in Verilog. The design implements RV32I + RV32M + Zicsr extensions using a **5-stage pipelined architecture** with data forwarding, hazard detection, and BTFNT static branch prediction.
+
+### Instruction Set Support
+
+| Extension | Instructions | Notes |
+|-----------|-------------|-------|
+| **RV32I** | All except FENCE/FENCE.I/ECALL/EBREAK | Load/store support unaligned access |
+| **RV32M** | MUL, MULH, MULHSU, MULHU | 3-cycle Booth Radix-4 multiplier (4-cycle stall) |
+| | DIV, DIVU, REM, REMU | 32-iteration divider (33-cycle stall) |
+| **Zicsr** | CSRRW, CSRRS, CSRRC + immediate variants | mtvec, mepc, mcause, mstatus |
+| | MRET | Exception return |
 
 ## Build and Simulation Commands
 
-All commands should be run from the `/rtl` directory:
+All commands run from the `rtl/` directory.
 
-### Compile and Run Simulation
+### Prerequisites
+- Synopsys VCS (with GCC 4.8)
+- Verdi waveform viewer
+- LLVM toolchain: `llvm-mc`, `llvm-objcopy` (for RV32IM)
+- GNU RISC-V toolchain: `riscv32-unknown-elf-as`, `riscv32-unknown-elf-objcopy`
+
+### Core Commands
 ```bash
-cd rtl
-make comp
+make comp              # Assemble instrom.s, compile with VCS, run simulation
+make verdi             # Open Verdi waveform viewer (testbench.fsdb)
+make clean             # Remove build artifacts
+make verdi_self_test   # Compile and open Verdi in one command
 ```
-This command:
-1. Assembles the assembly file (default: `vsrc/instrom/instrom.s`) using `llvm.sh` script
-2. Compiles all Verilog sources with Synopsys VCS
-3. Runs simulation with `simv`, outputting to `sim.log`
 
-### View Waveforms
+### Test Targets
 ```bash
-cd rtl
-make verdi
+make test-mul          # Test MUL/MULH/MULHSU/MULHU
+make test-div          # Test DIV/DIVU/REM/REMU
+make test-load-store   # Test load/store instructions
+make test-unaligned    # Test unaligned memory access
+make test-riscv        # Run single RISC-V official test
 ```
-Opens Verdi waveform viewer to inspect `testbench.fsdb` (generated during simulation).
 
-### Clean Build Artifacts
+### Custom Assembly Workflow
 ```bash
-cd rtl
-make clean
+# Option 1: Edit the Makefile comp target to use your .s file
+# Option 2: Manual workflow
+cd rtl/vsrc/instrom
+./llvm.sh your_test.s                    # Creates your_test.hex
+cp your_test.hex instrom.hex             # Set as active program
+cd ../..
+make comp                                 # Recompile and run
 ```
-Removes compilation artifacts, logs, and generated files (but preserves source code).
 
-### Assembly Workflow
-To test different assembly programs:
-1. Edit or create a `.s` file in `rtl/vsrc/instrom/` (e.g., `csrrs_test.s`)
-2. Modify the Makefile `comp` target to use your assembly file:
-   ```makefile
-   comp:
-       ./vsrc/instrom/llvm.sh ./vsrc/instrom/your_test.s
-       $(VCS)
-       ./simv -l sim.log
-   ```
-3. Run `make comp`
-
-Two assembly toolchains are available:
-- `llvm.sh`: Uses LLVM toolchain (llvm-mc, llvm-objcopy) for RV32IM
-- `asm2hex.sh`: Uses GNU RISC-V toolchain (riscv32-unknown-elf-as/objcopy)
-
-Both generate `.hex` files that are loaded by the `instrom` module at line 12 of `rtl/vsrc/instrom.v`.
+Assembly toolchains:
+- `llvm.sh`: LLVM (llvm-mc/objcopy) - supports RV32IM
+- `asm2hex.sh`: GNU (riscv32-unknown-elf-as/objcopy)
 
 ## Architecture Overview
 
@@ -58,92 +64,148 @@ Both generate `.hex` files that are loaded by the `instrom` module at line 12 of
 ```
 testbench.v
 └── top.v
-    ├── openmips.v (main processor core)
+    ├── openmips.v (main processor core - 5-stage pipeline)
     │   ├── pc.v (Program Counter)
+    │   ├── if_id_reg.v (IF/ID Pipeline Register)
     │   ├── id.v (Instruction Decode)
+    │   ├── id_ex_reg.v (ID/EX Pipeline Register)
     │   ├── ex.v (Execute)
-    │   └── chj_registerfile (Register File)
+    │   ├── ex_dataram_reg.v (EX/MEM Pipeline Register)
+    │   ├── dataram.v (Data Memory)
+    │   ├── dataram_wb_reg.v (MEM/WB Pipeline Register)
+    │   ├── wb.v (Write Back)
+    │   ├── chj_registerfile (Register File)
+    │   └── csr.v (Control and Status Registers)
     └── instrom.v (Instruction ROM)
 ```
 
-### Pipeline Stages (Classic 5-Stage)
-1. **IF (Instruction Fetch)**: `pc.v` generates addresses, `instrom.v` supplies instructions
-2. **ID (Instruction Decode)**: `id.v` decodes instructions, reads register file
-3. **EX (Execute)**: `ex.v` performs ALU operations, branch resolution, CSR operations
-4. **MEM (Memory)**: Currently not implemented as a separate stage (no data memory)
-5. **WB (Write Back)**: Register file writeback happens directly from EX stage
+### 5-Stage Pipeline Execution Flow
+
+This is a **5-stage pipelined CPU** with pipeline registers between each stage:
+
+1. **IF (Instruction Fetch)**: `pc.v` generates address → `instrom.v` supplies instruction → `if_id_reg.v` latches
+2. **ID (Instruction Decode)**: `id.v` decodes instruction → reads register file → `id_ex_reg.v` latches
+3. **EX (Execute)**: `ex.v` performs ALU operations, branch resolution, CSR operations → `ex_dataram_reg.v` latches
+4. **MEM (Memory Access)**: `dataram.v` handles load/store operations → `dataram_wb_reg.v` latches
+5. **WB (Write Back)**: `wb.v` selects result → writes to register file
+
+**Key characteristics:**
+- Pipeline registers between all stages (clocked sequential logic)
+- Data forwarding from MEM and WB stages to EX stage to resolve hazards
+- Hazard detection: load-use hazards, multiplier stalls
+- Static branch prediction: BTFNT (Backward Taken, Forward Not Taken)
+- Stall and flush control for pipeline bubbles
+- Ideal CPI = 1 (one instruction completes per cycle in steady state)
+- Branch misprediction penalty: 2 cycles
+- Load-use hazard penalty: 1 cycle stall
 
 ### Key Modules
 
-**openmips.v** (rtl/vsrc/openmips.v:1)
-- Top-level processor module connecting all pipeline stages
-- Implements inter-stage signal routing (pc→id, id→ex, ex→regfile, ex→pc)
+| Module | Description |
+|--------|-------------|
+| **openmips.v** | Top-level processor: pipeline control, hazard detection, data forwarding |
+| **pc.v** | Program counter (base: `0x8000_0000`), handles stalls and redirects |
+| **id.v** | Instruction decode, immediate extraction, BTFNT branch prediction |
+| **ex.v** | ALU, branch resolution, mul/div units, CSR interface |
+| **dataram.v** | Data memory (32KB), supports unaligned access |
+| **csr.v** | CSR registers and trap handling |
+| **instrom.v** | Instruction ROM (loads from hex file) |
+| **registerfile.v** | 32 registers (x0-x31), dual-read/single-write |
 
-**pc.v** (rtl/vsrc/pc.v:2)
-- Manages program counter with base address `0x8000_0000`
-- Handles PC updates: sequential (+4) or branch/jump targets from EX stage
-- Uses generic `Reg` module for flip-flops
+**Pipeline Registers** (all support stall/flush):
+- `if_id_reg.v` → `id_ex_reg.v` → `ex_dataram_reg.v` → `dataram_wb_reg.v`
 
-**id.v** (rtl/vsrc/id.v:3)
-- Decodes 32-bit RISC-V instructions using func3, func7, and opcode fields
-- Generates control signals: `aluc` (4-bit instruction type), `alucex` (8-bit detailed operation)
-- Performs immediate value extraction and sign extension (I, S, B, U, J types)
-- Computes branch conditions for B-type instructions
-- Reads from register file (rs1, rs2)
-
-**ex.v** (rtl/vsrc/ex.v:3)
-- Executes ALU operations based on `alucex` signals
-- Handles PC redirection: JAL, JALR, branches, CSR traps, MRET
-- Interfaces with CSR module (Control and Status Registers)
-- Priority for PC redirection: trap > mret > jal/jalr > branch
-- Writes results to register file (rd)
-
-**instrom.v** (rtl/vsrc/instrom.v:3)
-- 32-entry instruction memory (128 bytes total)
-- Loads instructions from hex file at initialization (`$readmemh`)
-- Address mapping: subtracts base address `0x8000_0000` and shifts right by 2
-
-**registerfile.v** (rtl/vsrc/registerfile.v:1)
-- 32 general-purpose registers (x0-x31)
-- x0 is hardwired to zero
-- Dual-read, single-write ports
+**RV32M Modules**:
+- `mul_3cycle.v`: Booth Radix-4 multiplier with Wallace tree
+- `div.v`: 32-iteration iterative divider
 
 ### Instruction Type Encoding (define.v)
 
-The processor uses a two-level instruction classification:
-- **aluc** (4-bit): Broad instruction category (R, I, S, B, JAL, LUI, etc.)
-- **alucex** (8-bit): Specific operation within category (ADD, SUB, XOR, BEQ, etc.)
-
-See `rtl/vsrc/define.v` for complete encoding definitions (lines 6-61).
+Two-level classification:
+- **aluc** (4-bit): Instruction category (R, I, S, B, JAL, LUI, etc.)
+- **alucex** (8-bit): Specific operation (ADD, SUB, BEQ, etc.)
 
 ### Signal Naming Conventions
-- Format: `source_dest_signal` (e.g., `pc_id_pc`, `id_ex_rs1_data`, `ex_reg_rd_data`)
-- `ren`: Read enable
-- `wen`: Write enable
-- `raddr`/`waddr`: Read/write address
-- `rdata`/`wdata`: Read/write data
+- Pattern: `source_dest_signal` (e.g., `pc_id_pc`, `id_ex_rs1_data`, `ex_reg_rd_data`)
+- Suffixes: `ren`/`wen` (enable), `raddr`/`waddr` (address), `rdata`/`wdata` (data)
+
+### Pipeline Hazards and Control
+
+**Data Hazards:**
+- **Data Forwarding**: Results from MEM and WB stages forwarded to EX stage to resolve RAW hazards
+- **Load-Use Hazard**: 1-cycle stall when instruction in EX depends on load result in MEM stage
+- **Multiplier Hazard**: 4-cycle stall for MUL/MULH/MULHSU/MULHU instructions (3 computation stages + 1 register delay)
+- **Divider Hazard**: 33-cycle stall for DIV/DIVU/REM/REMU instructions (32 iterations + 1 result cycle)
+
+**Control Hazards:**
+- **Branch Prediction**: BTFNT (Backward Taken, Forward Not Taken) static prediction in ID stage
+  - Backward branches (negative offset): predict taken (common for loops)
+  - Forward branches (positive offset): predict not taken (common for if statements)
+  - Prediction accuracy: 60-90% depending on workload
+- **Branch Misprediction**: 2-cycle penalty (flush IF and ID stages)
+- **JAL/JALR**: Unconditional jumps resolved in ID stage, 1-cycle penalty
+
+**Stall and Flush Signals:**
+- `stall_if_id`, `stall_id_ex`, `stall_ex_dataram`, `stall_dataram_wb`: Hold pipeline stage
+- `flush_if_id`, `flush_id_ex`, `flush_ex_dataram`, `flush_dataram_wb`: Insert pipeline bubble (NOP)
 
 ## Important Notes
 
 ### Simulation Environment
-- Testbench runs for 2200ns (200ns reset + 2000ns active)
-- Clock period: 20ns (50 MHz)
-- FSDB waveform dump is always enabled (see testbench.v:27-28)
-
-### VCS Compiler Flags
-The Makefile uses specific VCS options:
-- `-debug_acc+dmptf -debug_region+cell+encrypt`: Enable waveform dumping
-- `-kdb`: Generate Verdi database
-- Uses GCC 4.8 (specified via `-cpp g++-4.8 -cc gcc-4.8`)
+- Clock: 20ns (50 MHz), Reset: 200ns, Total: 2200ns
+- FSDB waveform dump always enabled
 
 ### File Paths
-Many modules use absolute paths (e.g., `/home/jay/Desktop/graduation_project/`). When modifying code, preserve these paths or update them consistently across all files.
+**CRITICAL**: Modules use absolute paths (e.g., `/home/jay/Desktop/graduation_project/`). Preserve these paths or update consistently across all files.
 
-### Current Limitations
-- No data memory (load/store instructions incomplete)
-- No CSR module implementation visible in main openmips.v (referenced in ex.v but not instantiated)
-- Limited instruction ROM size (32 instructions max)
+### Limitations
+- Instruction ROM: 32 entries max (extend `instrom.v` for longer programs)
+- Data memory: 32KB fixed
+- No caches, static branch prediction only
+- FENCE.I not implemented
 
-### Verification
-- RISC-V test suite is available in `verification/riscv-tests/` but integration is unclear
-- Test programs should be placed in `rtl/vsrc/instrom/` as `.s` files
+### Testing and Verification
+
+#### RISC-V Official Test Suite
+Tests located in `verification/riscv-tests/isa/`.
+
+```bash
+# First compile to generate simv
+make comp
+
+# Run tests (default pattern: rv32um-p-*)
+./run_tests.sh                     # Run M extension tests
+./run_tests.sh "rv32ui-p-*"        # All RV32UI tests
+./run_tests.sh "rv32ui-p-add"      # Single test
+./run_tests.sh "rv32ui-p-b*"       # All branch tests
+```
+
+**Test completion detection:**
+- Tests write to `tohost` at `0x80001000`
+- `tohost = 1`: PASS, `tohost != 1`: FAIL (value = failing test case)
+
+**Results:** `rtl/test_results/summary_*.txt`, `failed_tests_*.txt`, `<test>.log`
+
+## Debugging
+
+### Common Issues
+| Problem | Check |
+|---------|-------|
+| Compilation fails | VCS/GCC 4.8 install, absolute paths in `include` |
+| X values | `sim.log` for X propagation, uninitialized regs |
+| Test hangs | PC incrementing in waveform, `tohost_value` signal |
+
+### Key Signals for Waveform Analysis
+- `pc_id_pc`: Program counter
+- `id_ex_alucex`: Current instruction in EX
+- `ex_reg_rd_wen/data`: Register writeback
+- `stall_*`, `flush_*`: Pipeline control
+- `tohost_value`: Test completion
+- `mul_start/done/busy`: Multiplier state
+
+### Memory Layout
+| Region | Address | Size |
+|--------|---------|------|
+| Instruction memory | `0x8000_0000` | 128 bytes (32 instructions) |
+| `tohost` register | `0x8000_1000` | 4 bytes |
+| Data segment | `0x8000_2000` | ~30KB |

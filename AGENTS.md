@@ -1,57 +1,61 @@
 # AGENTS.md - RISC-V Processor Implementation Guide
 
+## Project Overview
+
+This is a RISC-V processor (graduation project) implemented in Verilog. The design implements a subset of the RV32I instruction set with some RV32M (multiply/divide) support and Zicsr (CSR) extensions. The processor uses a **single-cycle architecture** where each instruction completes in one clock cycle.
+
+### Key Directories
+- `rtl/` - Main RISC-V processor implementation
+  - `vsrc/` - Verilog source files
+  - `csrc/` - C source files for simulation
+  - `test_results/` - Test output logs
+- `verification/` - Test suites and verification infrastructure
+- `spike/` - RISC-V ISA simulator reference
+- `iic/` - I2C interface implementation (related project)
+- `practise/` - Practice exercises and testbenches
+
 ## Quick Reference
 
-### Build & Test Commands
+### Build & Test Commands (run from `rtl/` directory)
 ```bash
-cd rtl  # All commands must be run from rtl directory
-
-# Default: compile and simulate with default assembly program
-make comp
-
-# Run specific tests
-make test-load-store           # Load/store instruction tests
-make test-unaligned            # Unaligned memory access
-make test-riscv                # Official RISC-V test suite
-
-# Waveform analysis (must run after a test)
-make verdi                     # Opens Verdi with testbench.fsdb
-
-# Cleanup
-make clean                     # Remove build artifacts
+make comp                           # Compile & simulate with default assembly
+make test-load-store                # Load/store instruction tests
+make test-unaligned                 # Unaligned memory access
+make test-riscv                     # Official RISC-V test suite
+make verdi                          # View waveforms (after test run)
+make clean                          # Remove build artifacts
 ```
 
-### Running Single Assembly Test
+### Running Custom Assembly Test
 ```bash
 cd rtl/vsrc/instrom
-# 1. Edit or create your test.s file
-# 2. Run llvm.sh to assemble
-./llvm.sh your_test.s          # Generates your_test.hex
-# 3. Copy hex file to instrom.hex (if using instrom.v default)
-cp your_test.hex instrom.hex
-# 4. Compile and simulate
+./llvm.sh your_test.s              # Assemble to hex (uses llvm-mc/objcopy)
+cp your_test.hex instrom.hex        # Set as active test
 cd ../..
-make comp
+make comp                          # Compile and simulate
 ```
 
-### Assembly Toolchains
-- **LLVM** (preferred): `./vsrc/instrom/llvm.sh file.s` - Uses llvm-mc/llvm-objcopy for RV32IM
-- **GNU**: `./vsrc/instrom/asm2hex.sh file.s` - Uses riscv32-unknown-elf-as/objcopy
-
-Both generate `.hex` files loaded by `instrom.v` at initialization.
+### Test Scripts (run from `rtl/` directory)
+```bash
+./run_single_test.sh rv32ui-p-add  # Run single RISC-V test
+./quick_test.sh                    # Run all RV32UI tests
+./run_tests.sh                     # Comprehensive test suite
+./prepare_test.sh <test_name>      # Prepare test for simulation
+./debug_test.sh                    # Debug test with waveform
+```
 
 ---
 
 ## Code Style Guidelines
 
 ### Naming Conventions
-- **Modules**: lowercase with underscores (e.g., `openmips`, `chj_registerfile`, `dataram`)
-- **Signals**: `source_dest_signal` pattern (e.g., `pc_id_pc`, `id_ex_rs1_data`, `ex_reg_rd_wen`)
-- **Constants**: ALL_CAPS with underscores (e.g., `R_TYPE`, `ADD_TYPE`, `PC_BASE_ADDR`)
-- **Generic Parameters**: UPPERCASE in `#()` syntax (e.g., `.WIDTH(32)`, `.RESET_VAL(32'h8000_0000)`)
+- **Modules**: lowercase with underscores (`openmips`, `registerfile`, `dataram`)
+- **Signals**: `source_dest_signal` pattern (`pc_id_pc`, `id_ex_rs1_data`, `ex_reg_rd_wen`)
+- **Constants**: ALL_CAPS with underscores (`R_TYPE`, `ADD_TYPE`, `PC_BASE_ADDR`)
+- **Parameters**: UPPERCASE in `#()` syntax (`.WIDTH(32)`, `.RESET_VAL(32'h8000_0000)`)
 
 ### Signal Naming Patterns
-- `ren`/`wen`: Read/Write enable signals
+- `ren`/`wen`: Read/Write enable
 - `raddr`/`waddr`: Read/Write address
 - `rdata`/`wdata`: Read/Write data
 - `_aluc`: 4-bit instruction type category
@@ -59,38 +63,30 @@ Both generate `.hex` files loaded by `instrom.v` at initialization.
 
 ### File Organization
 ```
-define.v          # All macro definitions, instruction encodings (NO LOGIC)
-reg.v             # Generic parameterized register module (reusable)
+define.v          # All macros/constants (NO LOGIC)
+reg.v             # Generic parameterized register
 pc.v              # Program counter
 id.v              # Instruction decode
-ex.v              # Execute stage
-csr.v             # Control and status registers
+ex.v              # Execute stage (ALU, branch, CSR)
+csr.v             # Control/status registers
 dataram.v         # Data memory
-registerfile.v    # Register file (32 registers)
-instrom.v         # Instruction ROM (32 entries, loaded from hex file)
-openmips.v        # Top-level processor core (connects all pipeline stages)
-top.v             # Top-level wrapper
-testbench.v       # Test harness (runs for 2200ns)
+registerfile.v    # 32x32 general-purpose registers
+instrom.v         # Instruction ROM (loads .hex)
+openmips.v        # Top-level processor core
+top.v             # Wrapper
+testbench.v       # Test harness (2200ns simulation)
 ```
 
-### Include Paths
-- Use **absolute paths** consistently (e.g., `` `include "/home/jay/Desktop/graduation_project/rtl/vsrc/define.v" ``)
-- Preserve absolute paths when adding new files
-
-### Constants & Macros
-- Define all constants in `define.v` using `` `define`` directive
-- Constants grouped by category: instruction types, ALU operations, func3/func7 fields
-- Use readable hex format with underscores: `32'h8000_0000`
-- Define complex operations as macros (e.g., `PACK_ARRAY`, `UNPACK_ARRAY`)
+### Include Paths & Constants
+- Use **absolute paths**: `` `include "/home/jay/Desktop/graduation_project/rtl/vsrc/define.v" ``
+- Define all constants in `define.v` using `` `define``
+- Group by category: instruction types, ALU ops, func3/func7
+- Use readable hex format: `32'h8000_0000`
+- Declare all wires explicitly, use consistent width spec: `[31:0]`, `[4:0]`
+- Use `$signed()` for signed comparisons
 
 ### Module Instantiation
 ```verilog
-module_name instance_name (
-    .port_name(connection),
-    .port_name(connection)
-);
-
-// Parameterized modules
 Reg #(
     .WIDTH(32),
     .RESET_VAL(32'h8000_0000)
@@ -102,66 +98,50 @@ Reg #(
 );
 ```
 
-### Signal Declaration
-- Declare all wires explicitly (avoid implicit wires)
-- Use consistent width specification: `[31:0]`, `[4:0]`, `[7:0]`
-- Group related signals together with comments
-- Use `$signed()` for signed comparisons
-
-### Comment Style
-- Mixed English and Chinese comments acceptable
-- Section headers: `// Section description`
-- Inline comments: `// Explanation of logic`
-- Block comments: `/* Multi-line explanation */`
-
 ---
 
 ## Architecture Notes
 
-### Pipeline Stages (Classic 5-Stage)
-1. **IF**: `pc.v` generates addresses, `instrom.v` supplies instructions
-2. **ID**: `id.v` decodes instructions, reads register file
-3. **EX**: `ex.v` performs ALU operations, branch resolution, CSR operations
-4. **MEM**: `dataram.v` (data memory access)
-5. **WB**: Register file writeback from EX stage
-
-### PC Base Address
-All instructions execute from `0x8000_0000` (RISC-V convention). The PC register and all address calculations use this base.
+### 5-Stage Pipeline
+1. **IF**: `pc.v` + `instrom.v` (fetch)
+2. **ID**: `id.v` (decode, register read)
+3. **EX**: `ex.v` (ALU, branch, CSR)
+4. **MEM**: `dataram.v` (memory access)
+5. **WB**: Register writeback
 
 ### Signal Flow
-- **Forward**: pc→id→ex→regfile (writeback)
-- **Backward**: ex→pc (branches, jumps, traps, mret)
-- **Cross-stage**: id→regfile→id (register read)
+- Forward: pc→id→ex→regfile
+- Backward: ex→pc (branches, jumps, mret)
+- Cross-stage: id→regfile→id (register read)
 
-### Test Completion
-Tests write to `tohost` memory-mapped register at `0x80001000`:
-- `1`: Test passed
-- Other values: Test failed (value >> 1 = error code)
-- Testbench monitors `tohost_value` signal from `dataram.v`
+### PC & Test Completion
+- Base address: `0x8000_0000` (RISC-V convention)
+- Tests write to `tohost` register at `0x80001000`: `1` = pass
 
 ---
 
 ## Build System
 
-### VCS Compilation Flags
+### VCS Compilation
 ```makefile
 vcs -full64 -sverilog -timescale=1ns/1ns \
-     +v2k \
-     +define+fsdb \
+     +v2k +define+fsdb \
      -debug_acc+dmptf -debug_region+cell+encrypt \
-     -cpp g++-4.8 \
-     -cc gcc-4.8 \
-     -debug_access+r -kdb
+     -cpp g++-4.8 -cc gcc-4.8 -debug_access+r -kdb
 ```
 - Generates Verdi waveform database (`-kdb`)
-- Dumps FSDB waveforms by default (see `testbench.v:34-35`)
-- Uses GCC 4.8 for compilation
+- Dumps FSDB waveforms (see `testbench.v:34-35`)
 
 ### Simulation Parameters
-- Clock: 20ns period (50 MHz)
+- Clock: 20ns (50 MHz)
 - Reset: 200ns
 - Active simulation: 2000ns
-- Total: 2200ns
+
+### Prerequisites
+- Synopsys VCS (with GCC 4.8)
+- Verdi waveform viewer
+- RISC-V toolchain: `riscv32-unknown-elf-as`, `riscv32-unknown-elf-objcopy`
+- LLVM toolchain: `llvm-mc`, `llvm-objcopy` (for RV32IM support)
 
 ---
 
@@ -169,73 +149,117 @@ vcs -full64 -sverilog -timescale=1ns/1ns \
 
 ### RISC-V Test Suite
 Location: `verification/riscv-tests/isa/`
-
-Test categories:
 - `rv32ui-*`: Integer instructions
-- `rv32mi-*`: Machine-level tests (CSR, exceptions, misaligned access)
+- `rv32mi-*`: Machine-level (CSR, exceptions, misaligned)
 
-To run specific test:
-1. Convert ELF to hex: `elf2hex.sh path/to/test output.hex`
-2. Compile and simulate with `make test-riscv`
-3. Check `sim.log` for results
+To run: `elf2hex.sh path/to/test output.hex` → `make test-riscv`
 
 ### Custom Tests
-1. Write assembly in `rtl/vsrc/instrom/your_test.s`
-2. Assemble: `./vsrc/instrom/llvm.sh your_test.s`
-3. Either:
-   - Copy to `instrom.hex` for default loading, OR
-   - Modify `instrom.v` line 12 to use your hex file
-4. Run `make comp`
-5. Examine `sim.log` or waveforms with `make verdi`
+Write assembly in `rtl/vsrc/instrom/`, assemble with `llvm.sh`, run `make comp`
+
+### Test Script Usage
+```bash
+# Single test
+./run_single_test.sh rv32ui-p-add
+
+# Batch testing
+./quick_test.sh "rv32ui-p-*"
+
+# Prepare test for manual simulation
+./prepare_test.sh ../verification/riscv-tests/isa/rv32ui-p-lb
+```
+
+---
+
+## Agent-Specific Guidelines
+
+### For AI Coding Agents (Claude, Cursor, Copilot)
+1. **Always verify signal naming** follows `source_dest_signal` pattern
+2. **Use absolute include paths** as shown in existing files
+3. **Check `define.v` first** before adding new constants
+4. **Follow module instantiation patterns** from existing code
+5. **Run `make comp` after changes** to verify compilation
+6. **Test with `./quick_test.sh`** for regression testing
+
+### Code Modification Protocol
+1. Read existing similar modules for patterns
+2. Check `define.v` for available constants
+3. Use parameterized modules (`Reg`, `mux`) when possible
+4. Verify signal widths match RISC-V specification
+5. Run simulation test after changes
+
+### Error Handling
+- **Never** suppress synthesis warnings or use `as any`
+- Fix all compilation errors before proceeding
+- Verify test results match expected behavior
+- Check waveform (`make verdi`) for timing issues
 
 ---
 
 ## Important Constraints
 
-### Type Safety
-- Never suppress synthesis warnings
-- Explicit wire widths required
-- Use `$signed()` for signed arithmetic operations
-
-### Signal Naming
-- Follow existing `source_dest_signal` pattern for ALL new signals
-- Maintain consistency across all modules
-
-### Module Structure
-- Keep each module focused on single stage/function
+- **Never** suppress synthesis warnings or use `as any`
+- Follow `source_dest_signal` pattern for ALL new signals
 - Use `define.v` constants, not magic numbers
-- Instantiate reusable modules (e.g., `Reg`) instead of duplicating flip-flop logic
-
-### Absolute Paths
-- Preserve `/home/jay/Desktop/graduation_project/` in all `` `include`` directives
-- Update consistently if project moves
+- Instantiate reusable modules (e.g., `Reg`) instead of duplicating logic
+- Maintain absolute paths in all `` `include`` directives
+- All test code must write to `tohost` register for pass/fail indication
 
 ---
 
 ## Known Limitations
 
-- **No data memory for load/store tests**: Tests in `dataram.v` are incomplete
-- **Instruction ROM limited to 32 entries**: For longer programs, extend `instrom.v`
-- **Forwarding unit not implemented**: May need data hazard handling for multi-cycle operations
+- Data memory for load/store tests incomplete in `dataram.v`
+- Instruction ROM limited to 32 entries (extend `instrom.v` for longer programs)
+- Data hazard forwarding unit not fully implemented
+- FENCE, FENCE.I instructions not implemented
+- ECALL, EBREAK may be partially implemented
 
 ---
 
 ## Quick Debugging Checklist
 
-1. **Compilation failed**: Check `csrc/` directory for generated C wrapper, verify syntax errors
+1. **Compilation failed**: Check `csrc/` for generated C wrapper, verify syntax
 2. **Simulation failed**: Check `sim.log` for runtime errors, X propagation
-3. **Test stuck**: Check `tohost_value` signal, verify test writes completion value
-4. **Waveform analysis**: Use `make verdi` to inspect `testbench.fsdb`, check:
-   - PC progression
-   - Instruction decode (check `id_ex_alucex` signal)
-   - Branch condition calculation
-   - Register file writeback
+3. **Test stuck**: Check `tohost_value` signal, verify test writes completion
+4. **Waveform analysis**: `make verdi` → check PC, `id_ex_alucex`, branch condition, reg writeback
+5. **Test failure**: Check test assembly, verify instruction encoding matches RISC-V spec
+
+### Common Issues
+- **X propagation**: Uninitialized registers or missing resets
+- **Wrong PC value**: Check branch/jump logic in `ex.v`
+- **Memory access errors**: Verify `dataram.v` address decoding
+- **CSR issues**: Check `csr.v` register definitions and access permissions
 
 ---
 
 ## External References
 
-- [RISC-V ISA Specification](https://riscv.org/technical/specifications/)
+- [RISC-V ISA Spec](https://riscv.org/technical/specifications/)
 - [RISC-V Test Suite](https://github.com/riscv/riscv-tests)
-- VCS Documentation: Use `-help` flag
-- Verdi Documentation: Waveform viewer for debugging
+- [Verilog Style Guide](https://inst.eecs.berkeley.edu/~cs150/fa06/Labs/verilog-rtl.pdf)
+- [VCS User Guide](https://www.synopsys.com/content/dam/synopsys/verification/PDF/vcs_user_guide.pdf)
+
+---
+
+## Project-Specific Notes
+
+### Instruction Set Support
+**RV32I Base Integer Instructions (fully supported):**
+- Arithmetic: ADD, SUB, ADDI
+- Logical: AND, OR, XOR, ANDI, ORI, XORI
+- Shifts: SLL, SRL, SRA, SLLI, SRLI, SRAI
+- Comparisons: SLT, SLTU, SLTI, SLTIU
+- Branches: BEQ, BNE, BLT, BGE, BLTU, BGEU
+- Jumps: JAL, JALR
+- Upper immediates: LUI, AUIPC
+- Loads: LB, LH, LW, LBU, LHU (with unaligned access support)
+- Stores: SB, SH, SW (with unaligned access support)
+
+**RV32M Multiply/Divide Extension (partial support):**
+- Check implementation status in `ex.v`
+
+**Zicsr Extension (supported):**
+- CSR instructions: CSRRW, CSRRS, CSRRC, CSRRWI, CSRRSI, CSRRCI
+- Exception handling: MRET
+- CSR registers: mtvec, mepc, mcause, mstatus

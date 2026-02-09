@@ -1,0 +1,68 @@
+simSetSimulator "-vcssv" -exec "/home/jay/Desktop/graduation_project/rtl/simv" \
+           -args
+debImport "-dbdir" "/home/jay/Desktop/graduation_project/rtl/simv.daidir"
+debLoadSimResult /home/jay/Desktop/graduation_project/rtl/testbench.fsdb
+wvCreateWindow
+srcHBDrag -win $_nTrace1
+srcHBSelect "std_bram" -win $_nTrace1
+srcHBSelect "testbench" -win $_nTrace1
+srcSetScope -win $_nTrace1 "testbench" -delim "."
+srcHBSelect "testbench" -win $_nTrace1
+srcSetScope -win $_nTrace1 "testbench.top" -delim "."
+srcHBSelect "testbench.top" -win $_nTrace1
+srcHBSelect "testbench.top.openmips0" -win $_nTrace1
+srcSetScope -win $_nTrace1 "testbench.top.openmips0" -delim "."
+srcHBSelect "testbench.top.openmips0" -win $_nTrace1
+srcHBSelect "testbench.top.openmips0.ex0" -win $_nTrace1
+srcSetScope -win $_nTrace1 "testbench.top.openmips0.ex0" -delim "."
+srcHBSelect "testbench.top.openmips0.ex0" -win $_nTrace1
+srcHBSelect "testbench.top.openmips0.dataram_wb_reg0" -win $_nTrace1
+srcSetScope -win $_nTrace1 "testbench.top.openmips0.dataram_wb_reg0" -delim "."
+srcHBSelect "testbench.top.openmips0.dataram_wb_reg0" -win $_nTrace1
+srcHBSelect "mux" -win $_nTrace1
+srcSetScope -win $_nTrace1 "mux" -delim "."
+srcHBSelect "mux" -win $_nTrace1
+srcHBSelect "std_bram" -win $_nTrace1
+srcSetScope -win $_nTrace1 "std_bram" -delim "."
+srcHBSelect "std_bram" -win $_nTrace1
+srcHBSelect "testbench.top.openmips0.registerfile0" -win $_nTrace1
+srcSetScope -win $_nTrace1 "testbench.top.openmips0.registerfile0" -delim "."
+srcHBSelect "testbench.top.openmips0.registerfile0" -win $_nTrace1
+srcHBSelect "testbench.top.openmips0.registerfile0.i0" -win $_nTrace1
+srcSetScope -win $_nTrace1 "testbench.top.openmips0.registerfile0.i0" -delim "."
+srcHBSelect "testbench.top.openmips0.registerfile0.i0" -win $_nTrace1
+srcSignalViewSelect "testbench.top.openmips0.registerfile0.i0.rf\[31:0\]"
+srcSignalViewAddSelectedToWave -win $_nTrace1
+wvSelectSignal -win $_nWave3 {( "G1" 1 )} 
+wvExpandBus -win $_nWave3 {("G1" 1)}
+wvScrollDown -win $_nWave3 1
+wvScrollDown -win $_nWave3 0
+wvScrollDown -win $_nWave3 0
+wvScrollDown -win $_nWave3 0
+wvScrollDown -win $_nWave3 0
+wvScrollDown -win $_nWave3 0
+wvScrollDown -win $_nWave3 0
+wvScrollDown -win $_nWave3 0
+wvSelectSignal -win $_nWave3 {( "G1" 17 )} 
+srcHBSelect "testbench.top.openmips0.id0" -win $_nTrace1
+srcSetScope -win $_nTrace1 "testbench.top.openmips0.id0" -delim "."
+srcHBSelect "testbench.top.openmips0.id0" -win $_nTrace1
+srcSignalViewSelect "testbench.top.openmips0.id0.reg_id_rs1_data\[31:0\]"
+srcSignalViewSelect "testbench.top.openmips0.id0.id_inst\[31:0\]"
+srcSignalViewAddSelectedToWave -win $_nTrace1
+wvZoomIn -win $_nWave3
+wvZoomIn -win $_nWave3
+wvZoomIn -win $_nWave3
+wvZoomIn -win $_nWave3
+wvZoomIn -win $_nWave3
+wvZoomIn -win $_nWave3
+wvSetCursor -win $_nWave3 207.596269 -snap {("G1" 34)}
+srcActiveTrace "testbench.top.openmips0.id0.id_inst\[31:0\]" -win $_nTrace1 \
+           -TraceByDConWave -TraceTime 207 -TraceValue \
+           00000000000000000000000000000000
+wvScrollDown -win $_nWave3 1
+nMemCreateWindow
+nMemGetVariable -win $_nMem0 -var testbench.top.instrom0.inst_rom -delim . -from \
+           DUMPED_BY_SIMULATOR -addrRange {[0:4095]} -wordBitRange {[31:0]} \
+           -wordsInOneRow 8
+debExit

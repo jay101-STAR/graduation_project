@@ -1,0 +1,25 @@
+========================================
+RISC-V Test Runner (Fast Mode)
+========================================
+Test pattern: rv32ui-p-add
+Start time: Sun Feb  8 04:06:33 PM CST 2026
+
+Searching for tests matching: rv32ui-p-add
+Found 1 tests
+
+[TIMEOUT] rv32ui-p-add: Simulation exceeded 10s
+
+========================================
+Test Summary
+========================================
+Total tests:   1
+[0;32mPassed:        0[0m
+[0;31mFailed:        1[0m
+[1;33mSkipped:       0[0m
+Pass rate:     0%
+
+End time: Sun Feb  8 04:06:44 PM CST 2026
+
+Results saved to: /home/jay/Desktop/graduation_project/rtl/test_results/summary_20260208_160633.txt
+Failed tests saved to: /home/jay/Desktop/graduation_project/rtl/test_results/failed_tests_20260208_160633.txt
+Individual test logs in: /home/jay/Desktop/graduation_project/rtl/test_results/
