@@ -169,7 +169,7 @@ module openmips (
   wire branch_flush = ex_pc_pc_wen;
 
   // ID阶段预测taken时，需要flush IF/ID寄存器（丢弃已取的PC+4指令）
-  wire prediction_flush = id_branch_predicted;
+  wire prediction_flush = id_branch_predicted && !stall_if_id;
 
   // Control signals
   assign stall_if_id = load_use_hazard || mul_hazard || div_hazard;

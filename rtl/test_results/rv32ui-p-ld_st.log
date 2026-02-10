@@ -1,6 +1,6 @@
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Feb  9 15:18 2026
+Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Feb 10 10:43 2026
 *Verdi* Loading libsscore_vcs201809.so
 FSDB Dumper for VCS, Release Verdi_O-2018.09-SP2, Linux x86_64/64bit, 02/21/2019
 (C) 1996 - 2019 by Synopsys, Inc.
@@ -6084,7 +6084,108 @@ FSDB Dumper for VCS, Release Verdi_O-2018.09-SP2, Linux x86_64/64bit, 02/21/2019
 [DBG-T] t=6073000 rst=0 pc=0x80000048
 [DBG-T] t=6074000 rst=0 pc=0x8000004c
 [DBG-T] t=6075000 rst=0 pc=0x80000050
-           V C S   S i m u l a t i o n   R e p o r t 
-Time: 6075010 ns
-CPU Time:     14.610 seconds;       Data structure size:   0.4Mb
-Mon Feb  9 15:18:24 2026
+[DBG-T] t=6076000 rst=0 pc=0x80000054
+[DBG-T] t=6077000 rst=0 pc=0x8000003c
+[DBG-T] t=6078000 rst=0 pc=0x80000040
+[DBG-T] t=6079000 rst=0 pc=0x80000044
+[DBG-T] t=6080000 rst=0 pc=0x80000048
+[DBG-T] t=6081000 rst=0 pc=0x8000004c
+[DBG-T] t=6082000 rst=0 pc=0x80000050
+[DBG-T] t=6083000 rst=0 pc=0x80000054
+[DBG-T] t=6084000 rst=0 pc=0x8000003c
+[DBG-T] t=6085000 rst=0 pc=0x80000040
+[DBG-T] t=6086000 rst=0 pc=0x80000044
+[DBG-T] t=6087000 rst=0 pc=0x80000048
+[DBG-T] t=6088000 rst=0 pc=0x8000004c
+[DBG-T] t=6089000 rst=0 pc=0x80000050
+[DBG-T] t=6090000 rst=0 pc=0x80000054
+[DBG-T] t=6091000 rst=0 pc=0x8000003c
+[DBG-T] t=6092000 rst=0 pc=0x80000040
+[DBG-T] t=6093000 rst=0 pc=0x80000044
+[DBG-T] t=6094000 rst=0 pc=0x80000048
+[DBG-T] t=6095000 rst=0 pc=0x8000004c
+[DBG-T] t=6096000 rst=0 pc=0x80000050
+[DBG-T] t=6097000 rst=0 pc=0x80000054
+[DBG-T] t=6098000 rst=0 pc=0x8000003c
+[DBG-T] t=6099000 rst=0 pc=0x80000040
+[DBG-T] t=6100000 rst=0 pc=0x80000044
+[DBG-T] t=6101000 rst=0 pc=0x80000048
+[DBG-T] t=6102000 rst=0 pc=0x8000004c
+[DBG-T] t=6103000 rst=0 pc=0x80000050
+[DBG-T] t=6104000 rst=0 pc=0x80000054
+[DBG-T] t=6105000 rst=0 pc=0x8000003c
+[DBG-T] t=6106000 rst=0 pc=0x80000040
+[DBG-T] t=6107000 rst=0 pc=0x80000044
+[DBG-T] t=6108000 rst=0 pc=0x80000048
+[DBG-T] t=6109000 rst=0 pc=0x8000004c
+[DBG-T] t=6110000 rst=0 pc=0x80000050
+[DBG-T] t=6111000 rst=0 pc=0x80000054
+[DBG-T] t=6112000 rst=0 pc=0x8000003c
+[DBG-T] t=6113000 rst=0 pc=0x80000040
+[DBG-T] t=6114000 rst=0 pc=0x80000044
+[DBG-T] t=6115000 rst=0 pc=0x80000048
+[DBG-T] t=6116000 rst=0 pc=0x8000004c
+[DBG-T] t=6117000 rst=0 pc=0x80000050
+[DBG-T] t=6118000 rst=0 pc=0x80000054
+[DBG-T] t=6119000 rst=0 pc=0x8000003c
+[DBG-T] t=6120000 rst=0 pc=0x80000040
+[DBG-T] t=6121000 rst=0 pc=0x80000044
+[DBG-T] t=6122000 rst=0 pc=0x80000048
+[DBG-T] t=6123000 rst=0 pc=0x8000004c
+[DBG-T] t=6124000 rst=0 pc=0x80000050
+[DBG-T] t=6125000 rst=0 pc=0x80000054
+[DBG-T] t=6126000 rst=0 pc=0x8000003c
+[DBG-T] t=6127000 rst=0 pc=0x80000040
+[DBG-T] t=6128000 rst=0 pc=0x80000044
+[DBG-T] t=6129000 rst=0 pc=0x80000048
+[DBG-T] t=6130000 rst=0 pc=0x8000004c
+[DBG-T] t=6131000 rst=0 pc=0x80000050
+[DBG-T] t=6132000 rst=0 pc=0x80000054
+[DBG-T] t=6133000 rst=0 pc=0x8000003c
+[DBG-T] t=6134000 rst=0 pc=0x80000040
+[DBG-T] t=6135000 rst=0 pc=0x80000044
+[DBG-T] t=6136000 rst=0 pc=0x80000048
+[DBG-T] t=6137000 rst=0 pc=0x8000004c
+[DBG-T] t=6138000 rst=0 pc=0x80000050
+[DBG-T] t=6139000 rst=0 pc=0x80000054
+[DBG-T] t=6140000 rst=0 pc=0x8000003c
+[DBG-T] t=6141000 rst=0 pc=0x80000040
+[DBG-T] t=6142000 rst=0 pc=0x80000044
+[DBG-T] t=6143000 rst=0 pc=0x80000048
+[DBG-T] t=6144000 rst=0 pc=0x8000004c
+[DBG-T] t=6145000 rst=0 pc=0x80000050
+[DBG-T] t=6146000 rst=0 pc=0x80000054
+[DBG-T] t=6147000 rst=0 pc=0x8000003c
+[DBG-T] t=6148000 rst=0 pc=0x80000040
+[DBG-T] t=6149000 rst=0 pc=0x80000044
+[DBG-T] t=6150000 rst=0 pc=0x80000048
+[DBG-T] t=6151000 rst=0 pc=0x8000004c
+[DBG-T] t=6152000 rst=0 pc=0x80000050
+[DBG-T] t=6153000 rst=0 pc=0x80000054
+[DBG-T] t=6154000 rst=0 pc=0x8000003c
+[DBG-T] t=6155000 rst=0 pc=0x80000040
+[DBG-T] t=6156000 rst=0 pc=0x80000044
+[DBG-T] t=6157000 rst=0 pc=0x80000048
+[DBG-T] t=6158000 rst=0 pc=0x8000004c
+[DBG-T] t=6159000 rst=0 pc=0x80000050
+[DBG-T] t=6160000 rst=0 pc=0x80000054
+[DBG-T] t=6161000 rst=0 pc=0x8000003c
+[DBG-T] t=6162000 rst=0 pc=0x80000040
+[DBG-T] t=6163000 rst=0 pc=0x80000044
+[DBG-T] t=6164000 rst=0 pc=0x80000048
+[DBG-T] t=6165000 rst=0 pc=0x8000004c
+[DBG-T] t=6166000 rst=0 pc=0x80000050
+[DBG-T] t=6167000 rst=0 pc=0x80000054
+[DBG-T] t=6168000 rst=0 pc=0x8000003c
+[DBG-T] t=6169000 rst=0 pc=0x80000040
+[DBG-T] t=6170000 rst=0 pc=0x80000044
+[DBG-T] t=6171000 rst=0 pc=0x80000048
+[DBG-T] t=6172000 rst=0 pc=0x8000004c
+[DBG-T] t=6173000 rst=0 pc=0x80000050
+[DBG-T] t=6174000 rst=0 pc=0x80000054
+[DBG-T] t=6175000 rst=0 pc=0x8000003c
+[DBG-T] t=6176000 rst=0 pc=0x80000040
+[DBG-T] t=6177000 rst=0 pc=0x80000044
+[DBG-T] t=6178000 rst=0 pc=0x80000048
+[DBG-T] t=6179000 rst=0 pc=0x8000004c
+VCS terminated abruptly at time 6179570 ns
