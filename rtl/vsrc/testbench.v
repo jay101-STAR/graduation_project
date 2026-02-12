@@ -6,6 +6,9 @@ module testbench ();
   reg rst;
   reg [31:0] tohost_value_register;
   reg [31:0] tohost_value_dataram;
+  reg [31:0] bp_branch_total;
+  reg [31:0] bp_mispredict_total;
+  reg [31:0] bp_target_miss_total;
   reg test_complete;
 
 
@@ -20,14 +23,19 @@ module testbench ();
     rst           = 1'b1;  // 保持高有效复位，初始为复位状态
     test_complete = 1'b0;
     #200 rst = 1'b0;  // 释放复位
+    #50000;
+    test_complete = 1'b1;
   end
 
-  localparam integer TIMEOUT_NS = 200000000;  // 200ms for CoreMark
+  localparam integer TIMEOUT_NS = 4000000;  // 200ms for CoreMark
 
   initial begin
     // 超时保护：避免仿真卡住
     #TIMEOUT_NS;
     if (tohost_value_dataram == 0) begin
+      $display("\033[1;33m*** TIMEOUT: no tohost write ***\033[0m");
+      $finish;
+    end else begin
       $display("\033[1;33m*** TIMEOUT: no tohost write ***\033[0m");
       $finish;
     end
@@ -37,18 +45,22 @@ module testbench ();
       .clk                  (clk),
       .rst                  (rst),                    // 保持rst
       .tohost_value_register(tohost_value_register),
-      .tohost_value_dataram (tohost_value_dataram)
+      .tohost_value_dataram (tohost_value_dataram),
+      .bp_branch_total      (bp_branch_total),
+      .bp_mispredict_total  (bp_mispredict_total),
+      .bp_target_miss_total (bp_target_miss_total)
   );
 
-  initial begin
-    $fsdbDumpfile("/home/jay/Desktop/graduation_project/rtl/testbench.fsdb");
-    $fsdbDumpvars("+all");
-  end
+  // initial begin
+  //   $fsdbDumpfile("/home/jay/Desktop/graduation_project/rtl/testbench.fsdb");
+  //   $fsdbDumpvars("+all");
+  // end
 
   // Debug: Monitor PC and instructions (only first 20 cycles)
   integer cycle_count = 0;
   reg [31:0] last_pc;
   integer same_pc_count = 0;
+  real bp_accuracy;
 
   // Periodic time-based PC print (avoid reliance on counters)
   initial begin
@@ -95,11 +107,20 @@ module testbench ();
       end
     end
 
-    if (!rst && tohost_value_dataram != 0) begin
-      if (tohost_value_dataram === 32'd1) begin
+    if (!rst && tohost_value_register != 0 && test_complete) begin
+      if (bp_branch_total != 0) begin
+        bp_accuracy = (1.0 - (bp_mispredict_total * 1.0 / bp_branch_total)) * 100.0;
+        $display("[BP] branches=%0d mispredict=%0d target_miss=%0d accuracy=%0.2f%%",
+                 bp_branch_total, bp_mispredict_total, bp_target_miss_total, bp_accuracy);
+      end else begin
+        $display("[BP] branches=0 mispredict=%0d target_miss=%0d accuracy=N/A",
+                 bp_mispredict_total, bp_target_miss_total);
+      end
+
+      if (tohost_value_register === 32'd1) begin
         $display("\033[1;32m*** TEST PASSED ***\033[0m");
-      end else if (^tohost_value_dataram !== 1'bx) begin
-        $display("\033[1;31m*** TEST FAILED *** (tohost = %d)\033[0m", tohost_value_dataram >> 1);
+      end else if (tohost_value_register !== 1'bx) begin
+        $display("\033[1;31m*** TEST FAILED *** (tohost = %d)\033[0m", tohost_value_register);
       end else begin
         $display("\033[1;33m*** TOHOST UNKNOWN (X) ***\033[0m");
       end

@@ -12,7 +12,8 @@ VCS = vcs -full64 -sverilog -timescale=1ns/1ns \
 		+lint=TFIPC-L \
 		 $(SRCS)	
 comp:
-	./vsrc/instrom/llvm.sh ./vsrc/instrom/instrom.s
+	./vsrc/instrom/llvm.sh ./vsrc/instrom/bp_tests/bp_tntn.s
+	cp ./vsrc/instrom/bp_tests/bp_tntn.hex ./vsrc/instrom/instrom.hex
 	$(VCS)
 	./simv -l sim.log
 
@@ -40,8 +41,8 @@ test-div:
 	./simv -l sim.log
 
 test-riscv:
-	./prepare_test.sh ../verification/riscv-tests/isa/rv32ui-p-lw
-	./vsrc/instrom/elf2hex.sh ../verification/riscv-tests/isa/rv32ui-p-lw ./vsrc/instrom/instrom.hex
+	./prepare_test.sh ../verification/riscv-tests/isa/rv32ui-p-add
+	./vsrc/instrom/elf2hex.sh ../verification/riscv-tests/isa/rv32ui-p-bltu ./vsrc/instrom/instrom.hex
 	$(VCS)
 	./simv -l sim.log
 

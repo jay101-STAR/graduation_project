@@ -1,0 +1,26 @@
+========================================
+Branch Prediction Pattern Test Runner
+========================================
+Start time: Wed Feb 11 10:20:04 PM CST 2026
+Test dir:   /home/jay/Desktop/graduation_project/rtl/vsrc/instrom/bp_tests
+
+[01/05] bp_9t1n ... PASS branches=40000 mispredict=2003 target_miss=0 acc=94.99%
+[02/05] bp_alias_conflict ... PASS branches=11999 mispredict=8000 target_miss=0 acc=33.33%
+[03/05] bp_always_not_taken ... PASS branches=51000 mispredict=2 target_miss=0 acc=100.00%
+[04/05] bp_always_taken ... PASS branches=20000 mispredict=2 target_miss=0 acc=99.99%
+[05/05] bp_tntn ... TEST_FAIL
+
+========================================
+Summary
+========================================
+Total tests:    5
+Passed tests:   4
+Failed tests:   1
+Total branches: 122999
+Total miss:     10007
+Total tgt miss: 0
+Weighted acc:   91.86%
+Dir miss rate:  8.14%
+Tgt miss rate:  0.00%
+
+Summary file: /home/jay/Desktop/graduation_project/rtl/test_results/bp_summary_20260211_222004.txt

@@ -31,7 +31,7 @@ module ex_dataram_reg (
     output reg        dataram_ren
 );
 
-  always @(posedge clk or posedge rst) begin
+  always @(posedge clk) begin
     if (rst) begin
       // Reset: clear all outputs
       dataram_alu_result <= 32'h0;

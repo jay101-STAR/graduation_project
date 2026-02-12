@@ -61,7 +61,7 @@ module registerfile #(
   end
 
   // Synchronous write with reset
-  always @(posedge clk or posedge rst) begin
+  always @(posedge clk) begin
     if (rst) begin
       for (i = 0; i < 32; i = i + 1) begin
         rf[i] <= 0;

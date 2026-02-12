@@ -47,6 +47,17 @@ module ex (
     output        ex_pc_pc_wen,
     output [31:0] ex_pc_pc_data,
 
+    // Branch predictor update outputs (to BHT)
+    output        ex_bp_update_wen,
+    output [31:0] ex_bp_update_pc,
+    output        ex_bp_update_taken,
+    output [31:0] ex_bp_update_target,
+
+    // Branch predictor statistic events
+    output ex_bp_event_branch,
+    output ex_bp_event_mispredict,
+    output ex_bp_event_target_miss,
+
     output [31:0] ex_dataram_addr,
     output [31:0] ex_dataram_wdata,
     output        ex_dataram_wen,
@@ -152,13 +163,26 @@ module ex (
   );
   // verilog_format: on
 
-  // 分支判断有效信号：只有在B_TYPE指令时才有效
-  wire branch_taken_valid = (id_ex_aluc == `B_TYPE) ? branch_taken : 1'b0;
 
   // ========== Branch Prediction Verification ==========
-  // 检测预测是否错误
-  // 对于分支指令：比较预测结果与实际结果
-  wire branch_misprediction = id_ex_is_branch && (id_ex_branch_predicted != branch_taken);
+  // Step-1 event signals for predictor statistics (no counters here):
+  // bp_event_branch:     branch instruction reaches EX
+  // bp_event_mispredict: direction miss or target miss
+  // bp_event_target_miss: predicted taken, actual taken, but target mismatch
+  wire bp_event_branch = id_ex_is_branch;
+  wire bp_event_target_miss = bp_event_branch && id_ex_branch_predicted &&
+                              branch_taken && (id_ex_predicted_pc != result_branch_target);
+  wire bp_event_mispredict = bp_event_branch &&
+                             ((id_ex_branch_predicted != branch_taken) || bp_event_target_miss);
+
+  // Branch predictor update signals
+  assign ex_bp_update_wen = bp_event_branch;
+  assign ex_bp_update_pc = id_ex_pc;
+  assign ex_bp_update_taken = branch_taken;
+  assign ex_bp_update_target = result_branch_target;
+  assign ex_bp_event_branch = bp_event_branch;
+  assign ex_bp_event_mispredict = bp_event_mispredict;
+  assign ex_bp_event_target_miss = bp_event_target_miss;
 
   // dataram interface
   assign ex_dataram_addr = ((id_ex_aluc == `S_TYPE)||(id_ex_aluc == `L_TYPE)) ? (op1 + id_ex_imm) : 32'b0;
@@ -175,7 +199,7 @@ module ex (
 
   // 分支重定向：只有在预测错误时才需要重定向PC
   // 如果预测正确，PC已经在ID阶段正确更新，不需要再次更新
-  wire pc_redirect_branch = branch_misprediction && !ex_csr_trap_valid;
+  wire pc_redirect_branch = bp_event_mispredict && !ex_csr_trap_valid;
 
   assign ex_pc_pc_wen = pc_redirect_trap | pc_redirect_mret |
                       pc_redirect_jal | pc_redirect_jalr | pc_redirect_branch;

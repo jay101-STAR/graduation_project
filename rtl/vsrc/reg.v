@@ -8,9 +8,8 @@ module Reg #(
     input wen,
     output reg [WIDTH-1:0] dout
 );
-  always @(posedge clk or posedge rst) begin
+  always @(posedge clk) begin
     if (rst) dout <= RESET_VAL;
     else if (wen) dout <= din;
   end
 endmodule
-

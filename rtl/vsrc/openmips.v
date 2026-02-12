@@ -16,6 +16,9 @@ module openmips (
     output        openmips_dataram_ren,
     output [ 7:0] openmips_dataram_alucex,
     output        openmips_dataram_stall,
+    output reg [31:0] openmips_bp_branch_total,
+    output reg [31:0] openmips_bp_mispredict_total,
+    output reg [31:0] openmips_bp_target_miss_total,
     input  [31:0] dataram_openmips_rdata
 );
 
@@ -29,6 +32,8 @@ module openmips (
 
   // ========== IF/ID Pipeline Register Wires ==========
   wire [31:0] if_id_instruction;
+  wire if_id_predicted_taken;
+  wire [31:0] if_id_predicted_pc;
 
   // ========== ID Stage Wires ==========
   // ID to register file
@@ -36,8 +41,6 @@ module openmips (
   wire [4:0] id_reg_rs1_addr, id_reg_rs2_addr;
   wire [31:0] reg_id_rs1_data, reg_id_rs2_data;
 
-  // Forwarded data (after forwarding logic)
-  wire [31:0] forwarded_rs1_data, forwarded_rs2_data;
 
   // ID stage outputs
   wire [31:0] id_rs1_data, id_rs2_data;
@@ -54,6 +57,8 @@ module openmips (
   wire id_branch_predicted;  // 预测是否跳转
   wire [31:0] id_predicted_pc;  // 预测的目标PC
   wire id_is_branch;  // 是否是分支指令
+  wire if_bp_predict_taken;  // IF阶段预测是否跳转
+  wire [31:0] if_bp_predict_pc;  // IF阶段预测目标PC
 
   // Multiplier control signal from ID
   wire id_is_mul_instruction;  // 是否是乘法指令
@@ -101,6 +106,13 @@ module openmips (
   // EX to PC
   wire ex_pc_pc_wen;
   wire [31:0] ex_pc_pc_data;
+  wire ex_bp_update_wen;
+  wire [31:0] ex_bp_update_pc;
+  wire ex_bp_update_taken;
+  wire [31:0] ex_bp_update_target;
+  wire ex_bp_event_branch;
+  wire ex_bp_event_mispredict;
+  wire ex_bp_event_target_miss;
 
   // EX stage outputs
   wire [31:0] ex_reg_rd_data;
@@ -132,7 +144,6 @@ module openmips (
 
   // ========== MEM/WB Pipeline Register Wires ==========
   wire [31:0] dataram_wb_alu_result;
-  wire [31:0] wb_dataramrdata;
   wire [4:0] dataram_wb_rd_addr;
   wire [3:0] dataram_wb_aluc;
   wire dataram_wb_rd_wen;
@@ -168,17 +179,14 @@ module openmips (
   // ex_pc_pc_wen在预测错误时为1，此时需要flush流水线
   wire branch_flush = ex_pc_pc_wen;
 
-  // ID阶段预测taken时，需要flush IF/ID寄存器（丢弃已取的PC+4指令）
-  wire prediction_flush = id_branch_predicted && !stall_if_id;
-
   // Control signals
   assign stall_if_id = load_use_hazard || mul_hazard || div_hazard;
   assign stall_id_ex = mul_hazard || div_hazard;
   assign stall_ex_dataram = mul_hazard || div_hazard;  // Also stall EX/MEM register during multiplication/division
   assign stall_dataram_wb = 1'b0;
 
-  // flush_if_id: 预测taken时flush（丢弃PC+4指令）或预测错误时flush
-  assign flush_if_id = prediction_flush || branch_flush;
+  // IF阶段预测下，IF/ID只在EX重定向时flush
+  assign flush_if_id = branch_flush;
   assign flush_id_ex = branch_flush || load_use_hazard;
   assign flush_ex_dataram = 1'b0;
   assign flush_dataram_wb = 1'b0;
@@ -190,6 +198,25 @@ module openmips (
   assign openmips_dataram_alucex = dataram_alucex;
   assign openmips_dataram_stall = stall_ex_dataram;
 
+  // Branch prediction statistics counters
+  always @(posedge clk) begin
+    if (rst) begin
+      openmips_bp_branch_total <= 32'b0;
+      openmips_bp_mispredict_total <= 32'b0;
+      openmips_bp_target_miss_total <= 32'b0;
+    end else begin
+      if (ex_bp_event_branch) begin
+        openmips_bp_branch_total <= openmips_bp_branch_total + 32'b1;
+      end
+      if (ex_bp_event_mispredict) begin
+        openmips_bp_mispredict_total <= openmips_bp_mispredict_total + 32'b1;
+      end
+      if (ex_bp_event_target_miss) begin
+        openmips_bp_target_miss_total <= openmips_bp_target_miss_total + 32'b1;
+      end
+    end
+  end
+
   // ========== IF Stage: PC Module ==========
   assign if_instruction = instrom_openmips_data;
 
@@ -200,29 +227,48 @@ module openmips (
       .ren          (openmips_instrom_ren),
       .ex_pc_pc_wen (ex_pc_pc_wen),
       .ex_pc_pc_data(ex_pc_pc_data),
-      // Branch prediction from ID stage
-      .id_pc_wen    (id_branch_predicted),
-      .id_pc_data   (id_predicted_pc),
+      // Branch prediction from IF stage
+      .id_pc_wen    (if_bp_predict_taken),
+      .id_pc_data   (if_bp_predict_pc),
       .next_pc      (openmips_instrom_addr),
       .pc_id_pc     (pc_if_pc)
   );
 
   // ========== IF/ID Pipeline Register ==========
   if_id_reg if_id_reg0 (
-      .clk           (clk),
-      .rst           (rst),
-      .stall         (stall_if_id),
-      .flush         (flush_if_id),
-      .if_pc         (pc_if_pc),
-      .if_instruction(if_instruction),
-      .id_pc         (id_pc),
-      .id_instruction(if_id_instruction)
+      .clk               (clk),
+      .rst               (rst),
+      .stall             (stall_if_id),
+      .flush             (flush_if_id),
+      .if_pc             (pc_if_pc),
+      .if_instruction    (if_instruction),
+      .if_predicted_taken(if_bp_predict_taken),
+      .if_predicted_pc   (if_bp_predict_pc),
+      .id_pc             (id_pc),
+      .id_instruction    (if_id_instruction),
+      .id_predicted_taken(if_id_predicted_taken),
+      .id_predicted_pc   (if_id_predicted_pc)
+  );
+
+  // ========== Branch Predictor (BHT Direction) ==========
+  branch_predictor branch_predictor0 (
+      .clk                (clk),
+      .rst                (rst),
+      .if_bp_pc           (openmips_instrom_addr),
+      .if_bp_predict_taken(if_bp_predict_taken),
+      .if_bp_predict_pc   (if_bp_predict_pc),
+      .ex_bp_update_wen   (ex_bp_update_wen),
+      .ex_bp_update_pc    (ex_bp_update_pc),
+      .ex_bp_update_taken (ex_bp_update_taken),
+      .ex_bp_update_target(ex_bp_update_target)
   );
 
   // ========== ID Stage: Instruction Decode ==========
   id id0 (
       .id_inst                 (if_id_instruction),
       .pc_id_pc                (id_pc),
+      .id_if_predicted_taken   (if_id_predicted_taken),
+      .id_if_predicted_pc      (if_id_predicted_pc),
       .reg_id_rs1_data         (reg_id_rs1_data),        // Use forwarded data
       .reg_id_rs2_data         (reg_id_rs2_data),        // Use forwarded data
       .id_reg_rs1_ren          (id_reg_rs1_ren),
@@ -347,6 +393,13 @@ module openmips (
       .ex_reg_rd_addr          (ex_reg_rd_addr),
       .ex_pc_pc_wen            (ex_pc_pc_wen),
       .ex_pc_pc_data           (ex_pc_pc_data),
+      .ex_bp_update_wen        (ex_bp_update_wen),
+      .ex_bp_update_pc         (ex_bp_update_pc),
+      .ex_bp_update_taken      (ex_bp_update_taken),
+      .ex_bp_update_target     (ex_bp_update_target),
+      .ex_bp_event_branch      (ex_bp_event_branch),
+      .ex_bp_event_mispredict  (ex_bp_event_mispredict),
+      .ex_bp_event_target_miss (ex_bp_event_target_miss),
       .ex_csr_wen              (ex_csr_wen),
       .ex_csr_ren              (ex_csr_ren),
       .ex_csr_alucex           (ex_csr_alucex),

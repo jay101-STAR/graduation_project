@@ -5,6 +5,8 @@ module id (
     input  [31:0] id_inst         ,
     input  [31:0] reg_id_rs1_data ,reg_id_rs2_data ,
     input  [31:0] pc_id_pc        ,
+    input         id_if_predicted_taken,
+    input  [31:0] id_if_predicted_pc,
 
     output        id_reg_rs1_ren  ,id_reg_rs2_ren  ,
     output [ 4:0] id_reg_rs1_addr ,id_reg_rs2_addr ,
@@ -20,7 +22,7 @@ module id (
     output            id_ex_is_csr,
     output [11:0]   id_ex_csr_addr,
 
-    // Static Branch Prediction outputs
+    // Branch prediction outputs
     output            id_branch_predicted,  // 预测是否跳转
     output [31:0]     id_predicted_pc,      // 预测的目标PC
     output            id_is_branch,         // 是否是分支指令
@@ -40,7 +42,6 @@ module id (
 
   wire [2:0] func3 = id_inst[14:12];
   wire [6:0] op7 = id_inst[6:0];
-  wire [6:0] func7 = id_inst[31:25];
   wire [3:0] inst_type;
 
   // wire [31:0] id_ex_rs1_data_for_csr;
@@ -81,8 +82,6 @@ module id (
   wire [3:0] E_TYPE_MRET_TYPE_OR_CSR_TYPE;
   assign E_TYPE_MRET_TYPE_OR_CSR_TYPE = (func3 == 3'b000)? `E_TYPE_MRET_TYPE : `CSR_TYPE;
 
-  wire [31:0] btype_reg_ex_data1;
-  wire [31:0] btype_reg_ex_data2;
 
   // 移除ID阶段的比较逻辑，分支判断移到EX阶段
   // EX阶段将使用id_ex_rs1_data和id_ex_rs2_data进行比较
@@ -94,7 +93,6 @@ module id (
                                   (id_inst[21:20] == 2'b01) ? `EBREAK_TYPE :
                                   (id_inst[21:20] == 2'b10) ? `MRET_TYPE   : 8'b0) ;
 
-  assign id_ex_rs1_addr = id_inst[19:15];
   assign id_reg_rs1_addr = id_inst[19:15];
   assign id_reg_rs2_addr = id_inst[24:20];
   assign id_ex_rd_addr   = id_inst[11:7] ;
@@ -106,8 +104,6 @@ module id (
 
   // 移除btype_jump1多路选择器，分支判断移到EX阶段
   // 对于B类型指令，传递立即数和PC值到EX阶段进行判断
-  assign btype_reg_ex_data1 = sign_extended_immB;  // 分支偏移量
-  assign btype_reg_ex_data2 = pc_id_pc;           // 当前PC值
 
 
   muxwithdefault #(11, 7, 4) i1 (
@@ -332,22 +328,13 @@ module id (
   );
   assign id_ex_rd_wen = (id_ex_rd_addr == 5'b0) ? 1'b0 : id_ex_rd_wen1;  //if rd = x0,not write
 
-  // ========== Static Branch Prediction (BTFNT) ==========
-  // BTFNT: Backward Taken, Forward Not Taken
+  // ========== Branch Prediction Metadata ==========
   // 检测是否是分支指令
   assign id_is_branch = (inst_type == `B_TYPE);
 
-  // 计算分支目标地址
-  wire [31:0] branch_target = pc_id_pc + sign_extended_immB;
-
-  // BTFNT预测逻辑：根据立即数符号位判断分支方向
-  // imm[31] == 1 表示向后跳转（负偏移），通常是循环，预测taken
-  // imm[31] == 0 表示向前跳转（正偏移），通常是条件跳过，预测not taken
-  wire predict_taken = sign_extended_immB[31];  // 负偏移 -> 预测taken
-
-  // 输出预测结果
-  assign id_branch_predicted = id_is_branch && predict_taken;
-  assign id_predicted_pc = branch_target;
+  // 传递IF阶段预测信息，仅在分支指令上生效
+  assign id_branch_predicted = id_is_branch && id_if_predicted_taken;
+  assign id_predicted_pc = id_if_predicted_pc;
 
   // ========== Multiplier Instruction Detection ==========
   // 检测是否是乘法指令 (MUL, MULH, MULHSU, MULHU)
@@ -380,4 +367,3 @@ module id (
 
 
 endmodule
-

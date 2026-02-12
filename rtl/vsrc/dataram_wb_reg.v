@@ -21,7 +21,7 @@ module dataram_wb_reg (
     output reg        wb_rd_wen
 );
 
-  always @(posedge clk or posedge rst) begin
+  always @(posedge clk) begin
     if (rst) begin
       // Reset: clear all outputs
       wb_alu_result <= 32'h0;

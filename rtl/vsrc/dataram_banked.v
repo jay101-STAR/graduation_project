@@ -276,7 +276,7 @@ module dataram_banked (
   reg [1:0] byte_offset_d1;
   reg       bank_sel_d1;
 
-  always @(posedge clk or posedge rst) begin
+  always @(posedge clk) begin
     if (rst) begin
       ren_d1         <= 1'b0;
       alucex_d1      <= 8'b0;
@@ -325,7 +325,7 @@ module dataram_banked (
   // tohost ???(??????)
   //==========================================================================
   // ??????,??? RAM ??
-  always @(posedge clk or posedge rst) begin
+  always @(posedge clk) begin
     if (rst) begin
       tohost_value_dataram <= 32'b0;
     end else if (ex_dataram_wen && (ex_dataram_addr == TOHOST_ADDR)) begin

@@ -2,7 +2,10 @@ module top (
     input         clk,
     input         rst,                    // 保持高有效异步复位
     output [31:0] tohost_value_register,
-    output [31:0] tohost_value_dataram
+    output [31:0] tohost_value_dataram,
+    output [31:0] bp_branch_total,
+    output [31:0] bp_mispredict_total,
+    output [31:0] bp_target_miss_total
     // input [16383:0] inst_rom_1
 
 );
@@ -47,6 +50,9 @@ module top (
       .openmips_dataram_ren   (openmips_dataram_ren),
       .openmips_dataram_alucex(openmips_dataram_alucex),
       .openmips_dataram_stall (openmips_dataram_stall),
+      .openmips_bp_branch_total(bp_branch_total),
+      .openmips_bp_mispredict_total(bp_mispredict_total),
+      .openmips_bp_target_miss_total(bp_target_miss_total),
       .dataram_openmips_rdata (dataram_openmips_rdata)
   );
 
@@ -69,7 +75,7 @@ module top (
   end
 
   // UART 读：返回 0（与 DataRAM 同步读时序对齐）
-  always @(posedge clk or posedge sync_rst) begin
+  always @(posedge clk) begin
     if (sync_rst) begin
       uart_ren_d1 <= 1'b0;
     end else begin

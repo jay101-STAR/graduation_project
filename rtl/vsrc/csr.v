@@ -149,7 +149,7 @@ module csr (
   // =========================================================
   // Sequential CSR update
   // =========================================================
-  always @(posedge clk or posedge rst) begin
+  always @(posedge clk) begin
     if (rst) begin
       mstatus_mie  <= 1'b0;
       mstatus_mpie <= 1'b0;
@@ -213,6 +213,5 @@ module csr (
   assign csr_ex_mepc        = mepc;
 
 endmodule
-
 
 

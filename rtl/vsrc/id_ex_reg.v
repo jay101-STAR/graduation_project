@@ -61,7 +61,7 @@ module id_ex_reg (
     output reg ex_is_div_instruction  // 是否是除法指令
 );
 
-  always @(posedge clk or posedge rst) begin
+  always @(posedge clk) begin
     if (rst) begin
       // Reset: clear all outputs
       ex_pc                 <= 32'h0;

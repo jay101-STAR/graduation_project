@@ -52,7 +52,7 @@ module div (
   endfunction
 
   // 状态机
-  always @(posedge clk or posedge rst) begin
+  always @(posedge clk) begin
     if (rst) current_state <= IDLE;
     else     current_state <= next_state;
   end
@@ -67,7 +67,7 @@ module div (
     endcase
   end
 
-  always @(posedge clk or posedge rst) begin
+  always @(posedge clk) begin
     if (rst) begin
       div_done          <= 1'b0;
       div_busy          <= 1'b0;

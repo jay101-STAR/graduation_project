@@ -142,30 +142,31 @@ VCS compile option:
  option[37]: -gen_obj
  option[38]: ./vsrc/mul_3cycle.v
  option[39]: ./vsrc/registerfile.v
- option[40]: ./vsrc/reg.v
- option[41]: ./vsrc/pc.v
- option[42]: ./vsrc/std_bram.v
- option[43]: ./vsrc/id_ex_reg.v
- option[44]: ./vsrc/dataram_wb_reg.v
- option[45]: ./vsrc/id.v
- option[46]: ./vsrc/muxwithdefault.v
- option[47]: ./vsrc/async_reset.v
- option[48]: ./vsrc/dataram_banked.v
- option[49]: ./vsrc/mux.v
- option[50]: ./vsrc/top.v
- option[51]: ./vsrc/div.v
- option[52]: ./vsrc/ex_dataram_reg.v
- option[53]: ./vsrc/csr.v
- option[54]: ./vsrc/testbench.v
- option[55]: ./vsrc/instrom.v
- option[56]: ./vsrc/ex.v
- option[57]: ./vsrc/define.v
- option[58]: ./vsrc/wb.v
- option[59]: ./vsrc/if_id_reg.v
- option[60]: ./vsrc/openmips.v
- option[61]: -load
- option[62]: /home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2/share/PLI/VCS/LINUX64/libnovas.so:FSDBDumpCmd
- option[63]: timescale=1ns/1ns
+ option[40]: ./vsrc/branch_predictor.v
+ option[41]: ./vsrc/reg.v
+ option[42]: ./vsrc/pc.v
+ option[43]: ./vsrc/std_bram.v
+ option[44]: ./vsrc/id_ex_reg.v
+ option[45]: ./vsrc/dataram_wb_reg.v
+ option[46]: ./vsrc/id.v
+ option[47]: ./vsrc/muxwithdefault.v
+ option[48]: ./vsrc/async_reset.v
+ option[49]: ./vsrc/dataram_banked.v
+ option[50]: ./vsrc/mux.v
+ option[51]: ./vsrc/top.v
+ option[52]: ./vsrc/div.v
+ option[53]: ./vsrc/ex_dataram_reg.v
+ option[54]: ./vsrc/csr.v
+ option[55]: ./vsrc/testbench.v
+ option[56]: ./vsrc/instrom.v
+ option[57]: ./vsrc/ex.v
+ option[58]: ./vsrc/define.v
+ option[59]: ./vsrc/wb.v
+ option[60]: ./vsrc/if_id_reg.v
+ option[61]: ./vsrc/openmips.v
+ option[62]: -load
+ option[63]: /home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2/share/PLI/VCS/LINUX64/libnovas.so:FSDBDumpCmd
+ option[64]: timescale=1ns/1ns
 Chronologic Simulation VCS Release O-2018.09-SP2_Full64
 Linux 6.17.0-14-generic #14~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Jan 15 15:52:10 UTC 2 x86_64
 CPU cores: 12
@@ -187,7 +188,7 @@ maxproc		51349
 Runtime environment variables:
 SHELL=/bin/bash
 LSCOLORS=Gxfxcxdxdxegedabagacad
-SESSION_MANAGER=local/jay-VMware-Virtual-Platform:@/tmp/.ICE-unix/2860,unix/jay-VMware-Virtual-Platform:/tmp/.ICE-unix/2860
+SESSION_MANAGER=local/jay-VMware-Virtual-Platform:@/tmp/.ICE-unix/2497,unix/jay-VMware-Virtual-Platform:/tmp/.ICE-unix/2497
 QT_ACCESSIBILITY=1
 COLORTERM=truecolor
 VCS_ARCH_OVERRIDE=linux
@@ -215,8 +216,8 @@ XDG_SESSION_DESKTOP=ubuntu
 LOGNAME=jay
 XDG_SESSION_TYPE=wayland
 NPI_PLATFORM=LINUX64_GNU_472
-SYSTEMD_EXEC_PID=2892
-XAUTHORITY=/run/user/1000/.mutter-Xwaylandauth.WC6FK3
+SYSTEMD_EXEC_PID=2527
+XAUTHORITY=/run/user/1000/.mutter-Xwaylandauth.JACNK3
 NEMU_HOME=/home/jay/Desktop/ics2024/ysyx-workbench/nemu
 HOME=/home/jay
 USERNAME=jay
@@ -228,7 +229,7 @@ XDG_CURRENT_DESKTOP=ubuntu:GNOME
 MEMORY_PRESSURE_WATCH=/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.Shell@wayland.service/memory.pressure
 VTE_VERSION=7600
 WAYLAND_DISPLAY=wayland-0
-GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/fe69d43a_009d_4539_a2bf_347ba79ea624
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/ba113591_ddf7_46ef_afb5_4c97b621c25c
 ANTHROPIC_BASE_URL=https://hone.vvvv.ee
 NVM_DIR=/home/jay/.nvm
 GNOME_SETUP_DISPLAY=:1
@@ -281,62 +282,62 @@ DVE=/home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/gui/dve
 SPECMAN_OUTPUT_TO_TTY=1
 Runtime command line arguments:
 argv[0]=./simv
-283 profile - 100
-          CPU/Mem usage: 0.010 sys,  0.110 user,  184.36M mem
-284 Tue Feb 10 10:43:22 2026
-285 pliAppInit
-286 FSDB_GATE is set.
-287 FSDB_RTL is set.
-288 Enable Parallel Dumping.
-289 pliAppMiscSet: New Sim Round
-290 pliEntryInit
-291 LIBSSCORE=found /home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2/share/PLI/lib/LINUXAMD64/libsscore_vcs201809.so through $NOVAS_HOME setting.
-292 FSDB Dumper for VCS, Release Verdi_O-2018.09-SP2, Linux x86_64/64bit, 02/21/2019
-293 (C) 1996 - 2019 by Synopsys, Inc.
-294 sps_call_fsdbDumpfile_main at 0 : ./vsrc/testbench.v(44)
-295 argv[0]: (/home/jay/Desktop/graduation_project/rtl/testbench.fsdb)
-296 *Verdi* FSDB WARNING: The FSDB file already exists. Overwriting the FSDB file may crash the programs that are using this file.
-297 *Verdi* : Create FSDB file '/home/jay/Desktop/graduation_project/rtl/testbench.fsdb'
-298 compile option from '/home/jay/Desktop/graduation_project/rtl/simv.daidir/vcs_rebuild'.
-299   "vcs '-full64' '-sverilog' '-timescale=1ns/1ns' '+v2k' '+define+fsdb' '-debug_acc+dmptf' '-debug_region+cell+encrypt' '-cpp' 'g++-4.8' '-cc' 'gcc-4.8' '-debug_access+r' '-kdb' '-lca' '-LDFLAGS' '-Wl,--no-as-needed' '+lint=TFIPC-L' './vsrc/mul_3cycle.v' './vsrc/registerfile.v' './vsrc/reg.v' './vsrc/pc.v' './vsrc/std_bram.v' './vsrc/id_ex_reg.v' './vsrc/dataram_wb_reg.v' './vsrc/id.v' './vsrc/muxwithdefault.v' './vsrc/async_reset.v' './vsrc/dataram_banked.v' './vsrc/mux.v' './vsrc/top.v' './vsrc/div.v' './vsrc/ex_dataram_reg.v' './vsrc/csr.v' './vsrc/testbench.v' './vsrc/instrom.v' './vsrc/ex.v' './vsrc/define.v' './vsrc/wb.v' './vsrc/if_id_reg.v' './vsrc/openmips.v' 2>&1"
-300 FSDB_VCS_ENABLE_FAST_VC is enable
-301 sps_call_fsdbDumpvars_vd_main at 0 : ./vsrc/testbench.v(45)
-302 argv[0]: (+all)
-303 [spi_vcs_vd_ppi_create_root]: no upf option
-304 FSDB dumper cannot dump UPF related power signal ($power_tree): no ppiPowerNetwork.
-305 *Verdi* : Begin traversing the scopes, layer (0).
-306 *Verdi* : Enable +all dumping.
-307 *Verdi* : End of traversing.
-308 pliAppHDL_DumpVarComplete traverse var: profile - 
-          CPU/Mem usage: 0.020 sys,  0.120 user,  281.62M mem
-                   incr: 0.000 sys,  0.010 user,  9.72M mem
-                   accu: 0.000 sys,  0.010 user,  9.72M mem
-              accu incr: 0.000 sys,  0.010 user,  9.72M mem
+284 profile - 100
+          CPU/Mem usage: 0.020 sys,  0.100 user,  184.37M mem
+285 Wed Feb 11 21:11:03 2026
+286 pliAppInit
+287 FSDB_GATE is set.
+288 FSDB_RTL is set.
+289 Enable Parallel Dumping.
+290 pliAppMiscSet: New Sim Round
+291 pliEntryInit
+292 LIBSSCORE=found /home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2/share/PLI/lib/LINUXAMD64/libsscore_vcs201809.so through $NOVAS_HOME setting.
+293 FSDB Dumper for VCS, Release Verdi_O-2018.09-SP2, Linux x86_64/64bit, 02/21/2019
+294 (C) 1996 - 2019 by Synopsys, Inc.
+295 sps_call_fsdbDumpfile_main at 0 : ./vsrc/testbench.v(52)
+296 argv[0]: (/home/jay/Desktop/graduation_project/rtl/testbench.fsdb)
+297 *Verdi* FSDB WARNING: The FSDB file already exists. Overwriting the FSDB file may crash the programs that are using this file.
+298 *Verdi* : Create FSDB file '/home/jay/Desktop/graduation_project/rtl/testbench.fsdb'
+299 compile option from '/home/jay/Desktop/graduation_project/rtl/simv.daidir/vcs_rebuild'.
+300   "vcs '-full64' '-sverilog' '-timescale=1ns/1ns' '+v2k' '+define+fsdb' '-debug_acc+dmptf' '-debug_region+cell+encrypt' '-cpp' 'g++-4.8' '-cc' 'gcc-4.8' '-debug_access+r' '-kdb' '-lca' '-LDFLAGS' '-Wl,--no-as-needed' '+lint=TFIPC-L' './vsrc/mul_3cycle.v' './vsrc/registerfile.v' './vsrc/branch_predictor.v' './vsrc/reg.v' './vsrc/pc.v' './vsrc/std_bram.v' './vsrc/id_ex_reg.v' './vsrc/dataram_wb_reg.v' './vsrc/id.v' './vsrc/muxwithdefault.v' './vsrc/async_reset.v' './vsrc/dataram_banked.v' './vsrc/mux.v' './vsrc/top.v' './vsrc/div.v' './vsrc/ex_dataram_reg.v' './vsrc/csr.v' './vsrc/testbench.v' './vsrc/instrom.v' './vsrc/ex.v' './vsrc/define.v' './vsrc/wb.v' './vsrc/if_id_reg.v' './vsrc/openmips.v' 2>&1"
+301 FSDB_VCS_ENABLE_FAST_VC is enable
+302 sps_call_fsdbDumpvars_vd_main at 0 : ./vsrc/testbench.v(53)
+303 argv[0]: (+all)
+304 [spi_vcs_vd_ppi_create_root]: no upf option
+305 FSDB dumper cannot dump UPF related power signal ($power_tree): no ppiPowerNetwork.
+306 *Verdi* : Begin traversing the scopes, layer (0).
+307 *Verdi* : Enable +all dumping.
+308 *Verdi* : End of traversing.
+309 pliAppHDL_DumpVarComplete traverse var: profile - 
+          CPU/Mem usage: 0.020 sys,  0.110 user,  281.51M mem
+                   incr: 0.000 sys,  0.010 user,  9.60M mem
+                   accu: 0.000 sys,  0.010 user,  9.60M mem
+              accu incr: 0.000 sys,  0.010 user,  9.60M mem
 
-          Count usage: 34419 var,  34014 idcode,  325 callback
-                 incr: 34419 var,  34014 idcode,  325 callback
-                 accu: 34419 var,  34014 idcode,  325 callback
-            accu incr: 34419 var,  34014 idcode,  325 callback
-309 Tue Feb 10 10:43:23 2026
-310 pliAppHDL_DumpVarComplete: profile - 
-          CPU/Mem usage: 0.020 sys,  0.120 user,  283.93M mem
-                   incr: 0.000 sys,  0.000 user,  2.31M mem
-                   accu: 0.000 sys,  0.010 user,  12.03M mem
-              accu incr: 0.000 sys,  0.000 user,  2.31M mem
+          Count usage: 35105 var,  34665 idcode,  343 callback
+                 incr: 35105 var,  34665 idcode,  343 callback
+                 accu: 35105 var,  34665 idcode,  343 callback
+            accu incr: 35105 var,  34665 idcode,  343 callback
+310 Wed Feb 11 21:11:03 2026
+311 pliAppHDL_DumpVarComplete: profile - 
+          CPU/Mem usage: 0.020 sys,  0.110 user,  284.09M mem
+                   incr: 0.000 sys,  0.000 user,  2.58M mem
+                   accu: 0.000 sys,  0.010 user,  12.18M mem
+              accu incr: 0.000 sys,  0.000 user,  2.58M mem
 
-          Count usage: 34419 var,  34014 idcode,  325 callback
+          Count usage: 35105 var,  34665 idcode,  343 callback
                  incr: 0 var,  0 idcode,  0 callback
-                 accu: 34419 var,  34014 idcode,  325 callback
+                 accu: 35105 var,  34665 idcode,  343 callback
             accu incr: 0 var,  0 idcode,  0 callback
-311 Tue Feb 10 10:43:23 2026
-312 End of simulation at 7730
-313 Tue Feb 10 10:43:23 2026
-314 Begin FSDB profile info:
-315 FSDB Writer : bc1(3574) bcn(60342) mtf/stf(0/0)
-FSDB Writer elapsed time : flush(0.009074) io wait(0.000000) theadpool wait(0.000000) target functin(0.000000)
+312 Wed Feb 11 21:11:03 2026
+313 End of simulation at 19965630
+314 Wed Feb 11 21:11:23 2026
+315 Begin FSDB profile info:
+316 FSDB Writer : bc1(22962371) bcn(115329566) mtf/stf(0/26)
+FSDB Writer elapsed time : flush(6.498221) io wait(0.000000) theadpool wait(0.000000) target functin(0.000000)
 FSDB Writer cpu time : MT Compression : 0
-316 End FSDB profile info
-317 Parallel profile    -  Flush:3 Expand:0 ProduceWait:0 ConsumerWait:0 BlockUsed:0
-318                        ProduceTime:0.165506253 ConsumerTime:0.000000000 Buffer:64MB
-319 SimExit
-320 Sim process exit
+317 End FSDB profile info
+318 Parallel profile    -  Flush:3 Expand:0 ProduceWait:0 ConsumerWait:753 BlockUsed:1171
+319                        ProduceTime:19.984385722 ConsumerTime:10.109661773 Buffer:64MB
+320 SimExit
+321 Sim process exit
