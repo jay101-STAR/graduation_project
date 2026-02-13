@@ -34,6 +34,7 @@ module openmips (
   wire [31:0] if_id_instruction;
   wire if_id_predicted_taken;
   wire [31:0] if_id_predicted_pc;
+  wire [7:0] if_id_predicted_pht_index;
 
   // ========== ID Stage Wires ==========
   // ID to register file
@@ -59,6 +60,7 @@ module openmips (
   wire id_is_branch;  // 是否是分支指令
   wire if_bp_predict_taken;  // IF阶段预测是否跳转
   wire [31:0] if_bp_predict_pc;  // IF阶段预测目标PC
+  wire [7:0] if_bp_predict_pht_index;  // IF阶段gshare索引
 
   // Multiplier control signal from ID
   wire id_is_mul_instruction;  // 是否是乘法指令
@@ -83,6 +85,7 @@ module openmips (
   // Branch prediction signals from ID/EX register
   wire        ex_branch_predicted;  // 预测是否跳转
   wire [31:0] ex_predicted_pc;  // 预测的目标PC
+  wire [7:0] ex_predicted_pht_index;  // 预测时的gshare索引
   wire        ex_is_branch;  // 是否是分支指令
 
   // Multiplier control signal from ID/EX register
@@ -110,6 +113,7 @@ module openmips (
   wire [31:0] ex_bp_update_pc;
   wire ex_bp_update_taken;
   wire [31:0] ex_bp_update_target;
+  wire [7:0] ex_bp_update_pht_index;
   wire ex_bp_event_branch;
   wire ex_bp_event_mispredict;
   wire ex_bp_event_target_miss;
@@ -244,10 +248,12 @@ module openmips (
       .if_instruction    (if_instruction),
       .if_predicted_taken(if_bp_predict_taken),
       .if_predicted_pc   (if_bp_predict_pc),
+      .if_predicted_pht_index(if_bp_predict_pht_index),
       .id_pc             (id_pc),
       .id_instruction    (if_id_instruction),
       .id_predicted_taken(if_id_predicted_taken),
-      .id_predicted_pc   (if_id_predicted_pc)
+      .id_predicted_pc   (if_id_predicted_pc),
+      .id_predicted_pht_index(if_id_predicted_pht_index)
   );
 
   // ========== Branch Predictor (BHT Direction) ==========
@@ -257,10 +263,12 @@ module openmips (
       .if_bp_pc           (openmips_instrom_addr),
       .if_bp_predict_taken(if_bp_predict_taken),
       .if_bp_predict_pc   (if_bp_predict_pc),
+      .if_bp_predict_pht_index(if_bp_predict_pht_index),
       .ex_bp_update_wen   (ex_bp_update_wen),
       .ex_bp_update_pc    (ex_bp_update_pc),
       .ex_bp_update_taken (ex_bp_update_taken),
-      .ex_bp_update_target(ex_bp_update_target)
+      .ex_bp_update_target(ex_bp_update_target),
+      .ex_bp_update_pht_index(ex_bp_update_pht_index)
   );
 
   // ========== ID Stage: Instruction Decode ==========
@@ -317,6 +325,7 @@ module openmips (
       // Branch prediction inputs
       .id_branch_predicted  (id_branch_predicted),
       .id_predicted_pc      (id_predicted_pc),
+      .id_predicted_pht_index(if_id_predicted_pht_index),
       .id_is_branch         (id_is_branch),
       // Multiplier control input
       .id_is_mul_instruction(id_is_mul_instruction),
@@ -338,6 +347,7 @@ module openmips (
       // Branch prediction outputs
       .ex_branch_predicted  (ex_branch_predicted),
       .ex_predicted_pc      (ex_predicted_pc),
+      .ex_predicted_pht_index(ex_predicted_pht_index),
       .ex_is_branch         (ex_is_branch),
       // Multiplier control output
       .ex_is_mul_instruction(ex_is_mul_instruction),
@@ -381,6 +391,7 @@ module openmips (
       // Branch prediction inputs
       .id_ex_branch_predicted  (ex_branch_predicted),
       .id_ex_predicted_pc      (ex_predicted_pc),
+      .id_ex_predicted_pht_index(ex_predicted_pht_index),
       .id_ex_is_branch         (ex_is_branch),
       .id_ex_is_mul_instruction(ex_is_mul_instruction),
       .id_ex_is_div_instruction(ex_is_div_instruction),
@@ -397,6 +408,7 @@ module openmips (
       .ex_bp_update_pc         (ex_bp_update_pc),
       .ex_bp_update_taken      (ex_bp_update_taken),
       .ex_bp_update_target     (ex_bp_update_target),
+      .ex_bp_update_pht_index  (ex_bp_update_pht_index),
       .ex_bp_event_branch      (ex_bp_event_branch),
       .ex_bp_event_mispredict  (ex_bp_event_mispredict),
       .ex_bp_event_target_miss (ex_bp_event_target_miss),

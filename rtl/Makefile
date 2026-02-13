@@ -42,7 +42,7 @@ test-div:
 
 test-riscv:
 	./prepare_test.sh ../verification/riscv-tests/isa/rv32ui-p-add
-	./vsrc/instrom/elf2hex.sh ../verification/riscv-tests/isa/rv32ui-p-bltu ./vsrc/instrom/instrom.hex
+	./vsrc/instrom/elf2hex.sh ../verification/riscv-tests/isa/rv32ui-p-blt ./vsrc/instrom/instrom.hex
 	$(VCS)
 	./simv -l sim.log
 

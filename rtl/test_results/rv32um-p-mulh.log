@@ -1,21 +1,21 @@
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Feb 12 12:48 2026
+Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Feb 12 23:43 2026
 [DBG] cycle=0 pc=0x80000000
 [DBG-T] t=2000 rst=0 pc=0x800001a0
 [DBG-T] t=3000 rst=0 pc=0x80000218
 [DBG-T] t=4000 rst=0 pc=0x80000298
 [DBG-T] t=5000 rst=0 pc=0x80000310
-[DBG-T] t=6000 rst=0 pc=0x80000354
-[DBG-T] t=7000 rst=0 pc=0x800003b0
-[DBG-T] t=8000 rst=0 pc=0x800003f8
-[DBG-T] t=9000 rst=0 pc=0x8000045c
-[DBG-T] t=10000 rst=0 pc=0x80000490
-[DBG-T] t=11000 rst=0 pc=0x800004f0
-[DBG-T] t=12000 rst=0 pc=0x80000534
-[DBG-T] t=13000 rst=0 pc=0x80000578
-[DBG-T] t=14000 rst=0 pc=0x800005d8
-[DBG-T] t=15000 rst=0 pc=0x80000630
+[DBG-T] t=6000 rst=0 pc=0x8000035c
+[DBG-T] t=7000 rst=0 pc=0x800003c8
+[DBG-T] t=8000 rst=0 pc=0x8000040c
+[DBG-T] t=9000 rst=0 pc=0x80000458
+[DBG-T] t=10000 rst=0 pc=0x800004c0
+[DBG-T] t=11000 rst=0 pc=0x80000500
+[DBG-T] t=12000 rst=0 pc=0x8000054c
+[DBG-T] t=13000 rst=0 pc=0x800005b8
+[DBG-T] t=14000 rst=0 pc=0x800005f8
+[DBG-T] t=15000 rst=0 pc=0x8000001c
 [DBG-T] t=16000 rst=0 pc=0x80000050
 [DBG-T] t=17000 rst=0 pc=0x80000054
 [DBG-T] t=18000 rst=0 pc=0x8000003c
@@ -51,11 +51,11 @@ Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Fe
 [DBG-T] t=48000 rst=0 pc=0x80000044
 [DBG-T] t=49000 rst=0 pc=0x80000048
 [DBG-T] t=50000 rst=0 pc=0x8000004c
-[BP] branches=71 mispredict=34 target_miss=0 accuracy=52.11%
+[BP] branches=71 mispredict=20 target_miss=0 accuracy=71.83%
 [1;32m*** TEST PASSED ***[0m
 $finish called from file "./vsrc/testbench.v", line 127.
 $finish at simulation time                50310
            V C S   S i m u l a t i o n   R e p o r t 
 Time: 50310 ns
 CPU Time:      0.140 seconds;       Data structure size:   0.3Mb
-Thu Feb 12 12:48:18 2026
+Thu Feb 12 23:43:38 2026

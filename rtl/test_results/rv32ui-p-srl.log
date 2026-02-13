@@ -1,18 +1,18 @@
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Feb 12 12:48 2026
+Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Feb 12 23:43 2026
 [DBG] cycle=0 pc=0x80000000
 [DBG-T] t=2000 rst=0 pc=0x800001a8
 [DBG-T] t=3000 rst=0 pc=0x80000270
 [DBG-T] t=4000 rst=0 pc=0x80000338
 [DBG-T] t=5000 rst=0 pc=0x80000400
-[DBG-T] t=6000 rst=0 pc=0x8000046c
-[DBG-T] t=7000 rst=0 pc=0x800004d8
-[DBG-T] t=8000 rst=0 pc=0x80000544
-[DBG-T] t=9000 rst=0 pc=0x80000588
-[DBG-T] t=10000 rst=0 pc=0x800005f4
-[DBG-T] t=11000 rst=0 pc=0x80000660
-[DBG-T] t=12000 rst=0 pc=0x800006c8
+[DBG-T] t=6000 rst=0 pc=0x8000047c
+[DBG-T] t=7000 rst=0 pc=0x800004d4
+[DBG-T] t=8000 rst=0 pc=0x80000550
+[DBG-T] t=9000 rst=0 pc=0x800005c0
+[DBG-T] t=10000 rst=0 pc=0x8000061c
+[DBG-T] t=11000 rst=0 pc=0x80000698
+[DBG-T] t=12000 rst=0 pc=0x80000008
 [DBG-T] t=13000 rst=0 pc=0x8000003c
 [DBG-T] t=14000 rst=0 pc=0x80000040
 [DBG-T] t=15000 rst=0 pc=0x80000044
@@ -51,11 +51,11 @@ Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Fe
 [DBG-T] t=48000 rst=0 pc=0x8000003c
 [DBG-T] t=49000 rst=0 pc=0x80000040
 [DBG-T] t=50000 rst=0 pc=0x80000044
-[BP] branches=79 mispredict=34 target_miss=0 accuracy=56.96%
+[BP] branches=79 mispredict=20 target_miss=0 accuracy=74.68%
 [1;32m*** TEST PASSED ***[0m
 $finish called from file "./vsrc/testbench.v", line 127.
 $finish at simulation time                50310
            V C S   S i m u l a t i o n   R e p o r t 
 Time: 50310 ns
 CPU Time:      0.140 seconds;       Data structure size:   0.3Mb
-Thu Feb 12 12:48:16 2026
+Thu Feb 12 23:43:37 2026

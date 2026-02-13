@@ -1,16 +1,16 @@
 Command: /home/jay/Desktop/graduation_project/rtl/./simv -l sim.log
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Feb 12 15:51 2026
+Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Feb 12 23:42 2026
 [DBG] cycle=0 pc=0x80000000
 [DBG-T] t=2000 rst=0 pc=0x800001a8
 [DBG-T] t=3000 rst=0 pc=0x80000238
-[DBG-T] t=4000 rst=0 pc=0x800002a4
-[DBG-T] t=5000 rst=0 pc=0x80000300
-[DBG-T] t=6000 rst=0 pc=0x80000360
-[DBG-T] t=7000 rst=0 pc=0x800003cc
-[DBG-T] t=8000 rst=0 pc=0x80000404
-[DBG-T] t=9000 rst=0 pc=0x800004ac
+[DBG-T] t=4000 rst=0 pc=0x800002b4
+[DBG-T] t=5000 rst=0 pc=0x80000308
+[DBG-T] t=6000 rst=0 pc=0x80000364
+[DBG-T] t=7000 rst=0 pc=0x800003e0
+[DBG-T] t=8000 rst=0 pc=0x80000474
+[DBG-T] t=9000 rst=0 pc=0x80000044
 [DBG-T] t=10000 rst=0 pc=0x80000048
 [DBG-T] t=11000 rst=0 pc=0x8000004c
 [DBG-T] t=12000 rst=0 pc=0x80000050
@@ -52,11 +52,11 @@ Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Fe
 [DBG-T] t=48000 rst=0 pc=0x80000054
 [DBG-T] t=49000 rst=0 pc=0x8000003c
 [DBG-T] t=50000 rst=0 pc=0x80000040
-[BP] branches=78 mispredict=42 target_miss=0 accuracy=46.15%
+[BP] branches=78 mispredict=30 target_miss=0 accuracy=61.54%
 [1;32m*** TEST PASSED ***[0m
 $finish called from file "./vsrc/testbench.v", line 127.
 $finish at simulation time                50310
            V C S   S i m u l a t i o n   R e p o r t 
 Time: 50310 ns
-CPU Time:      0.160 seconds;       Data structure size:   0.3Mb
-Thu Feb 12 15:51:22 2026
+CPU Time:      0.150 seconds;       Data structure size:   0.3Mb
+Thu Feb 12 23:42:31 2026

@@ -1,61 +1,61 @@
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Feb 12 12:48 2026
+Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Feb 12 23:43 2026
 [DBG] cycle=0 pc=0x80000000
 [DBG-T] t=2000 rst=0 pc=0x800001a8
 [DBG-T] t=3000 rst=0 pc=0x80000270
-[DBG-T] t=4000 rst=0 pc=0x800002fc
-[DBG-T] t=5000 rst=0 pc=0x80000350
-[DBG-T] t=6000 rst=0 pc=0x800003b4
-[DBG-T] t=7000 rst=0 pc=0x80000040
-[DBG-T] t=8000 rst=0 pc=0x80000044
-[DBG-T] t=9000 rst=0 pc=0x80000048
-[DBG-T] t=10000 rst=0 pc=0x8000004c
-[DBG-T] t=11000 rst=0 pc=0x80000050
-[DBG-T] t=12000 rst=0 pc=0x80000054
-[DBG-T] t=13000 rst=0 pc=0x8000003c
-[DBG-T] t=14000 rst=0 pc=0x80000040
-[DBG-T] t=15000 rst=0 pc=0x80000044
-[DBG-T] t=16000 rst=0 pc=0x80000048
-[DBG-T] t=17000 rst=0 pc=0x8000004c
-[DBG-T] t=18000 rst=0 pc=0x80000050
-[DBG-T] t=19000 rst=0 pc=0x80000054
-[DBG-T] t=20000 rst=0 pc=0x8000003c
-[DBG-T] t=21000 rst=0 pc=0x80000040
-[DBG-T] t=22000 rst=0 pc=0x80000044
-[DBG-T] t=23000 rst=0 pc=0x80000048
-[DBG-T] t=24000 rst=0 pc=0x8000004c
-[DBG-T] t=25000 rst=0 pc=0x80000050
-[DBG-T] t=26000 rst=0 pc=0x80000054
-[DBG-T] t=27000 rst=0 pc=0x8000003c
-[DBG-T] t=28000 rst=0 pc=0x80000040
-[DBG-T] t=29000 rst=0 pc=0x80000044
-[DBG-T] t=30000 rst=0 pc=0x80000048
-[DBG-T] t=31000 rst=0 pc=0x8000004c
-[DBG-T] t=32000 rst=0 pc=0x80000050
-[DBG-T] t=33000 rst=0 pc=0x80000054
-[DBG-T] t=34000 rst=0 pc=0x8000003c
-[DBG-T] t=35000 rst=0 pc=0x80000040
-[DBG-T] t=36000 rst=0 pc=0x80000044
-[DBG-T] t=37000 rst=0 pc=0x80000048
-[DBG-T] t=38000 rst=0 pc=0x8000004c
-[DBG-T] t=39000 rst=0 pc=0x80000050
-[DBG-T] t=40000 rst=0 pc=0x80000054
-[DBG-T] t=41000 rst=0 pc=0x8000003c
-[DBG-T] t=42000 rst=0 pc=0x80000040
-[DBG-T] t=43000 rst=0 pc=0x80000044
-[DBG-T] t=44000 rst=0 pc=0x80000048
-[DBG-T] t=45000 rst=0 pc=0x8000004c
-[DBG-T] t=46000 rst=0 pc=0x80000050
-[DBG-T] t=47000 rst=0 pc=0x80000054
-[DBG-T] t=48000 rst=0 pc=0x8000003c
-[DBG-T] t=49000 rst=0 pc=0x80000040
-[DBG-T] t=50000 rst=0 pc=0x80000044
-[BP] branches=43 mispredict=16 target_miss=0 accuracy=62.79%
+[DBG-T] t=4000 rst=0 pc=0x80000304
+[DBG-T] t=5000 rst=0 pc=0x80000340
+[DBG-T] t=6000 rst=0 pc=0x800003ac
+[DBG-T] t=7000 rst=0 pc=0x80000054
+[DBG-T] t=8000 rst=0 pc=0x8000003c
+[DBG-T] t=9000 rst=0 pc=0x80000040
+[DBG-T] t=10000 rst=0 pc=0x80000044
+[DBG-T] t=11000 rst=0 pc=0x80000048
+[DBG-T] t=12000 rst=0 pc=0x8000004c
+[DBG-T] t=13000 rst=0 pc=0x80000050
+[DBG-T] t=14000 rst=0 pc=0x80000054
+[DBG-T] t=15000 rst=0 pc=0x8000003c
+[DBG-T] t=16000 rst=0 pc=0x80000040
+[DBG-T] t=17000 rst=0 pc=0x80000044
+[DBG-T] t=18000 rst=0 pc=0x80000048
+[DBG-T] t=19000 rst=0 pc=0x8000004c
+[DBG-T] t=20000 rst=0 pc=0x80000050
+[DBG-T] t=21000 rst=0 pc=0x80000054
+[DBG-T] t=22000 rst=0 pc=0x8000003c
+[DBG-T] t=23000 rst=0 pc=0x80000040
+[DBG-T] t=24000 rst=0 pc=0x80000044
+[DBG-T] t=25000 rst=0 pc=0x80000048
+[DBG-T] t=26000 rst=0 pc=0x8000004c
+[DBG-T] t=27000 rst=0 pc=0x80000050
+[DBG-T] t=28000 rst=0 pc=0x80000054
+[DBG-T] t=29000 rst=0 pc=0x8000003c
+[DBG-T] t=30000 rst=0 pc=0x80000040
+[DBG-T] t=31000 rst=0 pc=0x80000044
+[DBG-T] t=32000 rst=0 pc=0x80000048
+[DBG-T] t=33000 rst=0 pc=0x8000004c
+[DBG-T] t=34000 rst=0 pc=0x80000050
+[DBG-T] t=35000 rst=0 pc=0x80000054
+[DBG-T] t=36000 rst=0 pc=0x8000003c
+[DBG-T] t=37000 rst=0 pc=0x80000040
+[DBG-T] t=38000 rst=0 pc=0x80000044
+[DBG-T] t=39000 rst=0 pc=0x80000048
+[DBG-T] t=40000 rst=0 pc=0x8000004c
+[DBG-T] t=41000 rst=0 pc=0x80000050
+[DBG-T] t=42000 rst=0 pc=0x80000054
+[DBG-T] t=43000 rst=0 pc=0x8000003c
+[DBG-T] t=44000 rst=0 pc=0x80000040
+[DBG-T] t=45000 rst=0 pc=0x80000044
+[DBG-T] t=46000 rst=0 pc=0x80000048
+[DBG-T] t=47000 rst=0 pc=0x8000004c
+[DBG-T] t=48000 rst=0 pc=0x80000050
+[DBG-T] t=49000 rst=0 pc=0x80000054
+[DBG-T] t=50000 rst=0 pc=0x8000003c
+[BP] branches=43 mispredict=10 target_miss=0 accuracy=76.74%
 [1;32m*** TEST PASSED ***[0m
 $finish called from file "./vsrc/testbench.v", line 127.
 $finish at simulation time                50310
            V C S   S i m u l a t i o n   R e p o r t 
 Time: 50310 ns
-CPU Time:      0.150 seconds;       Data structure size:   0.3Mb
-Thu Feb 12 12:48:12 2026
+CPU Time:      0.140 seconds;       Data structure size:   0.3Mb
+Thu Feb 12 23:43:33 2026

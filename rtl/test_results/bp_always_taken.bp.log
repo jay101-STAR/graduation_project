@@ -1,6 +1,6 @@
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Feb 12 15:51 2026
+Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Feb 12 21:44 2026
 [DBG] cycle=0 pc=0x80000000
 [DBG-T] t=2000 rst=0 pc=0x80000008
 [DBG-T] t=3000 rst=0 pc=0x80000008
@@ -801,11 +801,11 @@ Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Fe
 [DBG-T] t=798000 rst=0 pc=0x80000008
 [DBG-T] t=799000 rst=0 pc=0x80000008
 [DBG-T] t=800000 rst=0 pc=0x80000008
-[BP] branches=20000 mispredict=2 target_miss=0 accuracy=99.99%
+[BP] branches=20000 mispredict=10 target_miss=0 accuracy=99.95%
 [1;32m*** TEST PASSED ***[0m
 $finish called from file "./vsrc/testbench.v", line 127.
-$finish at simulation time               800610
+$finish at simulation time               800930
            V C S   S i m u l a t i o n   R e p o r t 
-Time: 800610 ns
-CPU Time:      0.500 seconds;       Data structure size:   0.3Mb
-Thu Feb 12 15:51:39 2026
+Time: 800930 ns
+CPU Time:      0.520 seconds;       Data structure size:   0.3Mb
+Thu Feb 12 21:44:01 2026
