@@ -1,0 +1,19 @@
+
+bp_tests/bp_always_taken.o:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	000052b7          	lui	t0,0x5
+   4:	e2028293          	addi	t0,t0,-480 # 4e20 <hang+0x4e0c>
+
+00000008 <loop_taken>:
+   8:	fff28293          	addi	t0,t0,-1
+   c:	fe029ee3          	bnez	t0,8 <loop_taken>
+
+00000010 <pass>:
+  10:	00100193          	li	gp,1
+
+00000014 <hang>:
+  14:	0000006f          	j	14 <hang>

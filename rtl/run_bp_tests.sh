@@ -49,7 +49,15 @@ restore_instrom_hex() {
 }
 trap restore_instrom_hex EXIT
 
+NEED_BUILD=0
 if [[ ${FORCE_BUILD} -eq 1 || ! -x "${SCRIPT_DIR}/simv" ]]; then
+  NEED_BUILD=1
+elif find "${SCRIPT_DIR}/vsrc" -type f \( -name "*.v" -o -name "*.sv" \) -newer "${SCRIPT_DIR}/simv" | grep -q .; then
+  NEED_BUILD=1
+  echo "[INFO] RTL newer than simv, rebuilding..."
+fi
+
+if [[ ${NEED_BUILD} -eq 1 ]]; then
   echo "[INFO] Building simv..."
   if ! (cd "${SCRIPT_DIR}" && make simv_build); then
     echo "Error: simv build failed"
@@ -101,9 +109,9 @@ for test_path in "${BP_TESTS[@]}"; do
 
   sim_rc=0
   if [[ ${HAS_TIMEOUT} -eq 1 ]]; then
-    (cd "${SCRIPT_DIR}" && timeout 20s ./simv >"${test_log}" 2>&1) || sim_rc=$?
+    (cd "${SCRIPT_DIR}" && timeout 20s ./simv +bp_pattern_test >"${test_log}" 2>&1) || sim_rc=$?
   else
-    (cd "${SCRIPT_DIR}" && ./simv >"${test_log}" 2>&1) || sim_rc=$?
+    (cd "${SCRIPT_DIR}" && ./simv +bp_pattern_test >"${test_log}" 2>&1) || sim_rc=$?
   fi
 
   if [[ ${sim_rc} -ne 0 ]]; then

@@ -1,0 +1,55 @@
+
+./vsrc/instrom/uart_rx_double_read_test.o:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	100002b7          	lui	t0,0x10000
+   4:	00428293          	addi	t0,t0,4 # 10000004 <hang+0xfffff70>
+   8:	10000337          	lui	t1,0x10000
+   c:	00830313          	addi	t1,t1,8 # 10000008 <hang+0xfffff74>
+  10:	04100393          	li	t2,65
+
+00000014 <poll_status_1>:
+  14:	0002ae03          	lw	t3,0(t0)
+  18:	00000013          	nop
+  1c:	00000013          	nop
+  20:	00000013          	nop
+  24:	002e7e13          	andi	t3,t3,2
+  28:	00000013          	nop
+  2c:	00000013          	nop
+  30:	00000013          	nop
+  34:	fe0e00e3          	beqz	t3,14 <poll_status_1>
+  38:	00032e83          	lw	t4,0(t1)
+  3c:	00000013          	nop
+  40:	00000013          	nop
+  44:	00000013          	nop
+  48:	0ffefe93          	zext.b	t4,t4
+  4c:	00000013          	nop
+  50:	00000013          	nop
+  54:	00000013          	nop
+  58:	027e9863          	bne	t4,t2,88 <fail_first_data>
+  5c:	0002af03          	lw	t5,0(t0)
+  60:	00000013          	nop
+  64:	00000013          	nop
+  68:	00000013          	nop
+  6c:	002f7f13          	andi	t5,t5,2
+  70:	00000013          	nop
+  74:	00000013          	nop
+  78:	00000013          	nop
+  7c:	000f1a63          	bnez	t5,90 <fail_rxvalid_not_cleared>
+
+00000080 <pass>:
+  80:	00100193          	li	gp,1
+  84:	0100006f          	j	94 <hang>
+
+00000088 <fail_first_data>:
+  88:	00200193          	li	gp,2
+  8c:	0080006f          	j	94 <hang>
+
+00000090 <fail_rxvalid_not_cleared>:
+  90:	00300193          	li	gp,3
+
+00000094 <hang>:
+  94:	0000006f          	j	94 <hang>

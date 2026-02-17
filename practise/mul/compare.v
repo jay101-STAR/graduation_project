@@ -7,8 +7,10 @@ module compare (
 
 );
 
-  assign result = (~we) ? 1'bx : (sign ? (((r1[31])&&(!r2[31])) ||
-                    ((r1[31] == r2[31])&&(r1 < r2)) )
-                   : (r1 < r2) );
+  assign result = (~we) ? 1'bx : (sign ? (
+                                   ((r1[31])&&(!r2[31])) ||
+							   ((r1[31] == r2[31])&&(r1 < r2))
+								   )
+                                   : (r1 < r2) );
 
 endmodule

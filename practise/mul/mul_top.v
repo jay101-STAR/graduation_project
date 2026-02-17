@@ -2,9 +2,10 @@
 module mul (
     input  [31:0] mul_a_i,
     input  [31:0] mul_b_i,
-    input         mul_sign,
+    input         mul_a_sign,
+    input         mul_b_sign,
     input         mul_we,
-    output [67:0] mul_result_o
+    output [63:0] mul_result
 );
 
   wire [31:0] a_i, b_i;
@@ -15,12 +16,13 @@ module mul (
   wire [67:0]pp1,pp2,pp3,pp4,pp5,pp6,pp7,pp8,pp9,pp10,pp11,pp12,pp13,pp14,pp15,pp16,pp17;
   wire cout_0;
 
-  assign a_i          = mul_we ? mul_a_i : 32'bx;
-  assign b_i          = mul_we ? mul_b_i : 32'bx;
-  assign mul_result_o = mul_we ? mul1 : 68'bx;
+  assign a_i = mul_we ? mul_a_i : 32'bx;
+  assign b_i = mul_we ? mul_b_i : 32'bx;
+  wire [67:0] mul_result_o = mul_we ? mul1 : 68'bx;
+  assign mul_result = mul_result_o[63:0];
   booth booth1 (
-      .a_sign (mul_sign),
-      .b_sign (mul_sign),
+      .a_sign (mul_a_sign),
+      .b_sign (mul_b_sign),
       .i_multa(a_i),
       .i_multb(b_i),
       .o_pp1  (pp1),

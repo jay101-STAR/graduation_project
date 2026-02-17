@@ -1,0 +1,25 @@
+
+bp_tests/bp_tntn.o:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	000052b7          	lui	t0,0x5
+   4:	e2028293          	addi	t0,t0,-480 # 4e20 <hang+0x4dfc>
+   8:	00000313          	li	t1,0
+
+0000000c <loop_tntn>:
+   c:	00134313          	xori	t1,t1,1
+  10:	00030463          	beqz	t1,18 <taken_path>
+  14:	00000013          	nop
+
+00000018 <taken_path>:
+  18:	fff28293          	addi	t0,t0,-1
+  1c:	fe0298e3          	bnez	t0,c <loop_tntn>
+
+00000020 <pass>:
+  20:	00100193          	li	gp,1
+
+00000024 <hang>:
+  24:	0000006f          	j	24 <hang>

@@ -1,0 +1,25 @@
+========================================
+Unified Test Runner
+========================================
+Start time: Sun Feb 15 10:20:41 PM CST 2026
+ISA pattern: rv32u[i,m]-p-*
+ISA skip regex: ^rv32ui-p-fence_i$
+
+[01] simv_build               ... PASS
+[02] uart_tx_smoke            ... FAIL
+[03] uart_tx_back_to_back     ... FAIL
+[04] uart_loopback_echo       ... FAIL
+[05] uart_rx_smoke            ... FAIL
+[06] uart_rx_double           ... FAIL
+[07] uart_rx_overrun          ... FAIL
+[08] riscv_batch              ... PASS
+
+========================================
+Summary
+========================================
+Total:  8
+Pass:   2
+Fail:   6
+End:    Sun Feb 15 10:21:36 PM CST 2026
+Summary file: /home/jay/Desktop/graduation_project/rtl/test_results/all_tests_summary_20260215_222041.txt
+Detail logs:  /home/jay/Desktop/graduation_project/rtl/test_results/all_tests_20260215_222041_*.log

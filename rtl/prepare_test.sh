@@ -26,4 +26,7 @@ echo "2. Extracting data memory (bank0/bank1)..."
 
 echo ""
 echo "Test preparation complete!"
-echo "You can now run: cd rtl && make comp"
+echo "You can now run:"
+echo "  cd rtl"
+echo "  make simv_build"
+echo "  ./simv -l sim.log"

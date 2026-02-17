@@ -46,8 +46,8 @@ module booth (
     for (i = 0; i < 34; i = i + 2) begin : GEN_PP
       assign pp[i/2] = (y[i+2:i] == 3'b001 || y[i+2:i] == 3'b010) ? x     :
                      (y[i+2:i] == 3'b101 || y[i+2:i] == 3'b110) ? x_c   :
-             (y[i+2:i] == 3'b011                      ) ? xm2   :
-            (y[i+2:i] == 3'b100                      ) ? x_cm2 : 34'b0;
+        	     (y[i+2:i] == 3'b011                      ) ? xm2   :
+        	     (y[i+2:i] == 3'b100                      ) ? x_cm2 : 34'b0;
     end
   endgenerate
   assign o_pp1  = {{34{pp[0][33]}}, pp[0]};

@@ -32,6 +32,9 @@ else
   TEST_PATTERN="$1"
 fi
 
+# Optional skip regex on test basename (e.g. '^rv32ui-p-fence_i$')
+SKIP_TEST_REGEX="${SKIP_TEST_REGEX:-}"
+
 # Statistics
 TOTAL=0
 PASSED=0
@@ -174,6 +177,14 @@ echo "" | tee -a "${SUMMARY_FILE}"
 
 # Run all tests
 for test_file in ${test_files}; do
+  test_name=$(basename "${test_file}")
+  if [ -n "${SKIP_TEST_REGEX}" ] && [[ "${test_name}" =~ ${SKIP_TEST_REGEX} ]]; then
+    printf "${CYAN}%-4d${NC} ${BLUE}%-40s${NC} ${YELLOW}SKIP${NC} (filtered)\n" "$((TOTAL + 1))" "${test_name}"
+    echo "[SKIP] ${test_name}: filtered by SKIP_TEST_REGEX=${SKIP_TEST_REGEX}" >>"${SUMMARY_FILE}"
+    ((SKIPPED++))
+    ((TOTAL++))
+    continue
+  fi
   run_single_test "${test_file}"
 done
 

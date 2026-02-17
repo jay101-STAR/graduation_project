@@ -1,0 +1,26 @@
+
+bp_tests/bp_9t1n.o:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	000052b7          	lui	t0,0x5
+   4:	e2028293          	addi	t0,t0,-480 # 4e20 <hang+0x4df8>
+   8:	00000313          	li	t1,0
+   c:	00a00393          	li	t2,10
+
+00000010 <loop_9t1n>:
+  10:	00130313          	addi	t1,t1,1
+  14:	00731463          	bne	t1,t2,1c <mostly_taken>
+  18:	00000313          	li	t1,0
+
+0000001c <mostly_taken>:
+  1c:	fff28293          	addi	t0,t0,-1
+  20:	fe0298e3          	bnez	t0,10 <loop_9t1n>
+
+00000024 <pass>:
+  24:	00100193          	li	gp,1
+
+00000028 <hang>:
+  28:	0000006f          	j	28 <hang>

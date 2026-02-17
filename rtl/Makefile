@@ -28,21 +28,49 @@ test-benchmark:
 	$(VCS)
 	./simv -l sim.log
 
-test-mul:
-	./vsrc/instrom/llvm.sh ./vsrc/instrom/mul_test.s
-	cp ./vsrc/instrom/mul_test.hex ./vsrc/instrom/instrom.hex
+test-uart-rx-smoke:
+	./vsrc/instrom/llvm.sh ./vsrc/instrom/uart_rx_smoke_test.s
+	cp ./vsrc/instrom/uart_rx_smoke_test.hex ./vsrc/instrom/instrom.hex
 	$(VCS)
-	./simv -l sim.log
+	./simv +uart_rx_smoke -l sim.log
 
-test-div:
-	./vsrc/instrom/llvm.sh ./vsrc/instrom/div_test.s
-	cp ./vsrc/instrom/div_test.hex ./vsrc/instrom/instrom.hex
+test-uart-rx-double:
+	./vsrc/instrom/llvm.sh ./vsrc/instrom/uart_rx_double_read_test.s
+	cp ./vsrc/instrom/uart_rx_double_read_test.hex ./vsrc/instrom/instrom.hex
 	$(VCS)
-	./simv -l sim.log
+	./simv +uart_rx_smoke -l sim.log
+
+test-uart-rx-overrun:
+	./vsrc/instrom/llvm.sh ./vsrc/instrom/uart_rx_overrun_test.s
+	cp ./vsrc/instrom/uart_rx_overrun_test.hex ./vsrc/instrom/instrom.hex
+	$(VCS)
+	./simv +uart_rx_overrun_smoke -l sim.log
+
+test-uart-tx-smoke:
+	./vsrc/instrom/llvm.sh ./vsrc/instrom/uart_tx_smoke_test.s
+	cp ./vsrc/instrom/uart_tx_smoke_test.hex ./vsrc/instrom/instrom.hex
+	$(VCS)
+	./simv +uart_tx_smoke -l sim.log
+
+test-uart-tx-back-to-back:
+	./vsrc/instrom/llvm.sh ./vsrc/instrom/uart_tx_back_to_back_test.s
+	cp ./vsrc/instrom/uart_tx_back_to_back_test.hex ./vsrc/instrom/instrom.hex
+	$(VCS)
+	./simv +uart_tx_smoke -l sim.log
+
+test-uart-loopback-echo:
+	./vsrc/instrom/llvm.sh ./vsrc/instrom/uart_loopback_echo_test.s
+	cp ./vsrc/instrom/uart_loopback_echo_test.hex ./vsrc/instrom/instrom.hex
+	$(VCS)
+	./simv +uart_loopback_smoke -l sim.log
+
+prep-uart-echo-forever:
+	./vsrc/instrom/llvm.sh ./vsrc/instrom/uart_echo_forever.s
+	cp ./vsrc/instrom/uart_echo_forever.hex ./vsrc/instrom/instrom.hex
 
 test-riscv:
-	./prepare_test.sh ../verification/riscv-tests/isa/rv32ui-p-add
-	./vsrc/instrom/elf2hex.sh ../verification/riscv-tests/isa/rv32ui-p-blt ./vsrc/instrom/instrom.hex
+	./prepare_test.sh ../verification/riscv-tests/isa/rv32um-p-div
+	./vsrc/instrom/elf2hex.sh ../verification/riscv-tests/isa/rv32um-p-div ./vsrc/instrom/instrom.hex
 	$(VCS)
 	./simv -l sim.log
 
