@@ -38,6 +38,7 @@ riscv32-unknown-elf-gcc \
 
 echo "Generating HEX files..."
 "${PROJECT_DIR}/rtl/vsrc/instrom/elf2hex.sh" "${COREMARK_DIR}/coremark.elf" "${INSTROM_HEX}"
+"${PROJECT_DIR}/rtl/vsrc/dataram/split_instrom_to_banks.sh" "${INSTROM_HEX}" "${DATARAM_DIR}"
 "${PROJECT_DIR}/rtl/vsrc/dataram/extract_data.sh" "${COREMARK_DIR}/coremark.elf" "${DATARAM_DIR}"
 
 echo "Running simulation..."

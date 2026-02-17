@@ -97,15 +97,6 @@ module top (
   // AXI/MMIO back-pressure to CPU core.
   assign top_core_mem_stall = bridge_top_stall;
 
-  instrom instrom0 (
-      // .inst_rom_1(inst_rom_1),
-      .clk              (clk),
-      .core_instrom_ren (core_instrom_ren),
-      .core_instrom_addr(core_instrom_addr),
-      .instrom_core_data(instrom_core_data),
-      .instrom_core_pc(instrom_core_pc)
-  );
-
   // 地址译码
   assign dataram_access_uart = (core_dataram_addr[31:4] == UART_ADDR[31:4]);
   assign dataram_access_ram  = (core_dataram_addr[31:16] == 16'h8000);
@@ -205,6 +196,10 @@ module top (
       .clk                 (clk),
       .rst                 (sync_rst),
       .stall               (core_dataram_stall),
+      .core_instrom_ren    (core_instrom_ren),
+      .core_instrom_addr   (core_instrom_addr),
+      .instrom_core_data   (instrom_core_data),
+      .instrom_core_pc     (instrom_core_pc),
       .ex_dataram_addr     (core_dataram_addr),
       .ex_dataram_wdata    (core_dataram_wdata),
       .ex_dataram_wen      (core_dataram_wen && dataram_access_ram),

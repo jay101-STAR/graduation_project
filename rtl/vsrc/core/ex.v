@@ -197,6 +197,7 @@ module ex (
   // trap 优先级最高，必须单独判断
   wire pc_redirect_trap = ex_csr_trap_valid;
   wire pc_redirect_mret = (id_ex_alucex == `MRET_TYPE) && !ex_csr_trap_valid;
+  wire pc_redirect_fencei = (id_ex_alucex == `FENCEI_TYPE) && !ex_csr_trap_valid;
   wire pc_redirect_jal = (id_ex_aluc == `JAL_TYPE) && !ex_csr_trap_valid;
   wire pc_redirect_jalr = (id_ex_aluc == `JALR_TYPE) && !ex_csr_trap_valid;
 
@@ -204,10 +205,11 @@ module ex (
   // 如果预测正确，PC已经在ID阶段正确更新，不需要再次更新
   wire pc_redirect_branch = bp_event_mispredict && !ex_csr_trap_valid;
 
-  assign ex_pc_pc_wen = pc_redirect_trap | pc_redirect_mret |
+  assign ex_pc_pc_wen = pc_redirect_trap | pc_redirect_mret | pc_redirect_fencei |
                       pc_redirect_jal | pc_redirect_jalr | pc_redirect_branch;
 
   assign ex_pc_pc_data = pc_redirect_trap ? csr_ex_trap_vector : pc_redirect_mret ? csr_ex_mepc :
+      pc_redirect_fencei ? pc_plus_4 :
       // jal/jalr使用result_add，branch使用result_branch_target（jalr需要清除最低位）
       pc_redirect_jalr ? {result_add[31:1], 1'b0} :
       // 分支预测错误时的PC恢复：

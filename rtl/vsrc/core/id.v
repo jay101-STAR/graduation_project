@@ -73,6 +73,7 @@ module id (
   wire [7:0] I_TYPE_EX;
   wire [7:0] S_TYPE_EX, B_TYPE_EX;
   wire [7:0] L_TYPE_EX, CSR_TYPE_EX;
+  wire [7:0] FENCE_TYPE_EX;
   //下面这些指令其FUNC3和OP7完全一样，因此多判断一步,数字后缀表示其FUNC3是多少
   wire [7:0] R_TYPE_STD_EX_000;  //判断是SUB还是ADD
   wire [7:0] R_TYPE_STD_EX_101;  //判断是SRL还是SRA
@@ -89,6 +90,7 @@ module id (
   assign R_TYPE_STD_EX_000 = id_inst[30] ? `SUB_TYPE : `ADD_TYPE;
   assign R_TYPE_STD_EX_101 = id_inst[30] ? `SRA_TYPE : `SRL_TYPE;
   assign I_TYPE_EX_101 = id_inst[30] ? `SRA_TYPE : `SRL_TYPE;
+  assign FENCE_TYPE_EX = (func3 == `FENCEI_INST) ? `FENCEI_TYPE : `FENCEE_TYPE;
   assign E_TYPE_MRET_TYPE_EX_000 = ((id_inst[21:20] == 2'b00) ? `ECALL_TYPE  :
                                   (id_inst[21:20] == 2'b01) ? `EBREAK_TYPE :
                                   (id_inst[21:20] == 2'b10) ? `MRET_TYPE   : 8'b0) ;
@@ -304,7 +306,7 @@ module id (
         `JALR_TYPE        ,`JALRR_TYPE             ,
         `LUI_TYPE         ,`LUII_TYPE              ,
         `AUIPC_TYPE       ,`AUIPCC_TYPE            ,
-        `FENCE_TYPE       ,`FENCEE_TYPE
+        `FENCE_TYPE       ,FENCE_TYPE_EX
       }
   );
 

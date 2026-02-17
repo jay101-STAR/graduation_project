@@ -65,8 +65,12 @@ ORIGINAL_INST_HEX="${INSTROM_DIR}/instrom.hex"
 BACKUP_INST_HEX="${INSTROM_DIR}/instrom.hex.original_backup"
 ORIGINAL_BANK0_HEX="${DATARAM_DIR}/bank0.hex"
 ORIGINAL_BANK1_HEX="${DATARAM_DIR}/bank1.hex"
+ORIGINAL_INST_BANK0_HEX="${DATARAM_DIR}/inst_bank0.hex"
+ORIGINAL_INST_BANK1_HEX="${DATARAM_DIR}/inst_bank1.hex"
 BACKUP_BANK0_HEX="${DATARAM_DIR}/bank0.hex.original_backup"
 BACKUP_BANK1_HEX="${DATARAM_DIR}/bank1.hex.original_backup"
+BACKUP_INST_BANK0_HEX="${DATARAM_DIR}/inst_bank0.hex.original_backup"
+BACKUP_INST_BANK1_HEX="${DATARAM_DIR}/inst_bank1.hex.original_backup"
 
 if [ -f "${ORIGINAL_INST_HEX}" ]; then
   cp "${ORIGINAL_INST_HEX}" "${BACKUP_INST_HEX}"
@@ -78,6 +82,14 @@ fi
 
 if [ -f "${ORIGINAL_BANK1_HEX}" ]; then
   cp "${ORIGINAL_BANK1_HEX}" "${BACKUP_BANK1_HEX}"
+fi
+
+if [ -f "${ORIGINAL_INST_BANK0_HEX}" ]; then
+  cp "${ORIGINAL_INST_BANK0_HEX}" "${BACKUP_INST_BANK0_HEX}"
+fi
+
+if [ -f "${ORIGINAL_INST_BANK1_HEX}" ]; then
+  cp "${ORIGINAL_INST_BANK1_HEX}" "${BACKUP_INST_BANK1_HEX}"
 fi
 
 # Function to convert ELF to HEX (instruction memory)
@@ -105,6 +117,10 @@ extract_data_mem() {
   return $?
 }
 
+refresh_inst_banks() {
+  "${DATARAM_DIR}/split_instrom_to_banks.sh" "${ORIGINAL_INST_HEX}" "${DATARAM_DIR}" >/dev/null
+}
+
 # Function to run a single test
 run_single_test() {
   local test_file=$1
@@ -126,6 +142,7 @@ run_single_test() {
 
   # Replace instrom.hex with test hex file
   cp "${temp_inst_hex}" "${ORIGINAL_INST_HEX}"
+  refresh_inst_banks
 
   # Run simulation with timeout
   local sim_log="${RESULTS_DIR}/${test_name}.log"
@@ -199,6 +216,14 @@ fi
 
 if [ -f "${BACKUP_BANK1_HEX}" ]; then
   mv "${BACKUP_BANK1_HEX}" "${ORIGINAL_BANK1_HEX}"
+fi
+
+if [ -f "${BACKUP_INST_BANK0_HEX}" ]; then
+  mv "${BACKUP_INST_BANK0_HEX}" "${ORIGINAL_INST_BANK0_HEX}"
+fi
+
+if [ -f "${BACKUP_INST_BANK1_HEX}" ]; then
+  mv "${BACKUP_INST_BANK1_HEX}" "${ORIGINAL_INST_BANK1_HEX}"
 fi
 
 # Print summary

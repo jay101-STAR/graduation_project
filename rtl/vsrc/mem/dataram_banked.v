@@ -20,6 +20,12 @@ module dataram_banked (
     input rst,
     input stall,
 
+    // IF interface (shared physical memory)
+    input        core_instrom_ren,
+    input [31:0] core_instrom_addr,
+    output [31:0] instrom_core_data,
+    output [31:0] instrom_core_pc,
+
     // CPU interface
     input [31:0] ex_dataram_addr,
     input [31:0] ex_dataram_wdata,
@@ -51,6 +57,13 @@ module dataram_banked (
   wire [1:0] byte_offset = addr_offset[1:0];  // ????
   wire bank_sel = word_addr[0];  // 0=???(Bank0), 1=???(Bank1)
 
+  // IF port address decode on the same bank-interleaved memory.
+  wire [31:0] if_fetch_addr = core_instrom_ren ? core_instrom_addr : `PC_BASE_ADDR;
+  wire [31:0] if_addr_offset = if_fetch_addr - `PC_BASE_ADDR;
+  wire [17:0] if_word_addr = if_addr_offset[19:2];
+  wire if_bank_sel = if_word_addr[0];
+  wire [BANK_ADDR_WIDTH-1:0] if_inner_addr = if_word_addr[BANK_ADDR_WIDTH:1];
+
   // Bank ???
   wire [BANK_ADDR_WIDTH-1:0] inner_addr = word_addr[BANK_ADDR_WIDTH:1];
 
@@ -62,6 +75,9 @@ module dataram_banked (
       ((inner_addr == (BANK_DEPTH-1)) ? inner_addr : (inner_addr + 1'b1)) :
       inner_addr;
   wire [BANK_ADDR_WIDTH-1:0] addr_bank1 = inner_addr;
+
+  wire [BANK_ADDR_WIDTH-1:0] if_addr_bank0 = if_inner_addr;
+  wire [BANK_ADDR_WIDTH-1:0] if_addr_bank1 = if_inner_addr;
 
   //==========================================================================
   // ???????
@@ -243,29 +259,40 @@ module dataram_banked (
   // BRAM ???
   //==========================================================================
   wire [31:0] rdata_bank0, rdata_bank1;
+  wire [31:0] if_rdata_bank0, if_rdata_bank1;
 
-  std_bram #(
+  std_bram_tdp #(
       .ADDR_WIDTH(BANK_ADDR_WIDTH),
       .DATA_WIDTH(32),
-      .HEX_FILE  ("/home/jay/Desktop/graduation_project/rtl/vsrc/dataram/bank0.hex")
+      .HEX_FILE  ("/home/jay/Desktop/graduation_project/rtl/vsrc/dataram/inst_bank0.hex"),
+      .OVERLAY_HEX_FILE("/home/jay/Desktop/graduation_project/rtl/vsrc/dataram/bank0.hex")
   ) bank0 (
-      .clk  (clk),
-      .we   (we_bank0),
-      .addr (addr_bank0),
-      .wdata(wdata_bank0),
-      .rdata(rdata_bank0)
+      .clk    (clk),
+      .a_we   (we_bank0),
+      .a_addr (addr_bank0),
+      .a_wdata(wdata_bank0),
+      .a_rdata(rdata_bank0),
+      .b_we   (4'b0000),
+      .b_addr (if_addr_bank0),
+      .b_wdata(32'b0),
+      .b_rdata(if_rdata_bank0)
   );
 
-  std_bram #(
+  std_bram_tdp #(
       .ADDR_WIDTH(BANK_ADDR_WIDTH),
       .DATA_WIDTH(32),
-      .HEX_FILE  ("/home/jay/Desktop/graduation_project/rtl/vsrc/dataram/bank1.hex")
+      .HEX_FILE  ("/home/jay/Desktop/graduation_project/rtl/vsrc/dataram/inst_bank1.hex"),
+      .OVERLAY_HEX_FILE("/home/jay/Desktop/graduation_project/rtl/vsrc/dataram/bank1.hex")
   ) bank1 (
-      .clk  (clk),
-      .we   (we_bank1),
-      .addr (addr_bank1),
-      .wdata(wdata_bank1),
-      .rdata(rdata_bank1)
+      .clk    (clk),
+      .a_we   (we_bank1),
+      .a_addr (addr_bank1),
+      .a_wdata(wdata_bank1),
+      .a_rdata(rdata_bank1),
+      .b_we   (4'b0000),
+      .b_addr (if_addr_bank1),
+      .b_wdata(32'b0),
+      .b_rdata(if_rdata_bank1)
   );
 
   //==========================================================================
@@ -275,6 +302,8 @@ module dataram_banked (
   reg [7:0] alucex_d1;
   reg [1:0] byte_offset_d1;
   reg       bank_sel_d1;
+  reg       if_bank_sel_d1;
+  reg [31:0] instrom_core_pc_raw;
 
   always @(posedge clk) begin
     if (rst) begin
@@ -282,13 +311,22 @@ module dataram_banked (
       alucex_d1      <= 8'b0;
       byte_offset_d1 <= 2'b0;
       bank_sel_d1    <= 1'b0;
+      if_bank_sel_d1 <= 1'b0;
+      instrom_core_pc_raw <= `PC_BASE_ADDR;
     end else begin
       ren_d1         <= ex_dataram_ren;
       alucex_d1      <= ex_dataram_alucex;
       byte_offset_d1 <= byte_offset;
       bank_sel_d1    <= bank_sel;
+      if (core_instrom_ren) begin
+        if_bank_sel_d1 <= if_bank_sel;
+        instrom_core_pc_raw <= core_instrom_addr;
+      end
     end
   end
+
+  assign instrom_core_data = if_bank_sel_d1 ? if_rdata_bank1 : if_rdata_bank0;
+  assign instrom_core_pc = instrom_core_pc_raw;
 
   //==========================================================================
   // ??????????

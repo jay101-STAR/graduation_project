@@ -1,5 +1,6 @@
 # 使用原来的 dataram.v
 SRCS =  $(shell find ./vsrc/ -name "*.v")
+SPLIT_INST = ./vsrc/dataram/split_instrom_to_banks.sh ./vsrc/instrom/instrom.hex ./vsrc/dataram
 VCS = vcs -full64 -sverilog -timescale=1ns/1ns \
       		+v2k \
 		 +define+fsdb \
@@ -14,6 +15,7 @@ VCS = vcs -full64 -sverilog -timescale=1ns/1ns \
 comp:
 	./vsrc/instrom/llvm.sh ./vsrc/instrom/bp_tests/bp_tntn.s
 	cp ./vsrc/instrom/bp_tests/bp_tntn.hex ./vsrc/instrom/instrom.hex
+	$(SPLIT_INST)
 	$(VCS)
 	./simv -l sim.log
 
@@ -25,52 +27,61 @@ run_simv:
 
 test-benchmark:
 	cp ../verification/riscv-tests/benchmarks/rv32im_build/output/multiply.hex ./vsrc/instrom/instrom.hex
+	$(SPLIT_INST)
 	$(VCS)
 	./simv -l sim.log
 
 test-uart-rx-smoke:
 	./vsrc/instrom/llvm.sh ./vsrc/instrom/uart_rx_smoke_test.s
 	cp ./vsrc/instrom/uart_rx_smoke_test.hex ./vsrc/instrom/instrom.hex
+	$(SPLIT_INST)
 	$(VCS)
 	./simv +uart_rx_smoke -l sim.log
 
 test-uart-rx-double:
 	./vsrc/instrom/llvm.sh ./vsrc/instrom/uart_rx_double_read_test.s
 	cp ./vsrc/instrom/uart_rx_double_read_test.hex ./vsrc/instrom/instrom.hex
+	$(SPLIT_INST)
 	$(VCS)
 	./simv +uart_rx_smoke -l sim.log
 
 test-uart-rx-overrun:
 	./vsrc/instrom/llvm.sh ./vsrc/instrom/uart_rx_overrun_test.s
 	cp ./vsrc/instrom/uart_rx_overrun_test.hex ./vsrc/instrom/instrom.hex
+	$(SPLIT_INST)
 	$(VCS)
 	./simv +uart_rx_overrun_smoke -l sim.log
 
 test-uart-tx-smoke:
 	./vsrc/instrom/llvm.sh ./vsrc/instrom/uart_tx_smoke_test.s
 	cp ./vsrc/instrom/uart_tx_smoke_test.hex ./vsrc/instrom/instrom.hex
+	$(SPLIT_INST)
 	$(VCS)
 	./simv +uart_tx_smoke -l sim.log
 
 test-uart-tx-back-to-back:
 	./vsrc/instrom/llvm.sh ./vsrc/instrom/uart_tx_back_to_back_test.s
 	cp ./vsrc/instrom/uart_tx_back_to_back_test.hex ./vsrc/instrom/instrom.hex
+	$(SPLIT_INST)
 	$(VCS)
 	./simv +uart_tx_smoke -l sim.log
 
 test-uart-loopback-echo:
 	./vsrc/instrom/llvm.sh ./vsrc/instrom/uart_loopback_echo_test.s
 	cp ./vsrc/instrom/uart_loopback_echo_test.hex ./vsrc/instrom/instrom.hex
+	$(SPLIT_INST)
 	$(VCS)
 	./simv +uart_loopback_smoke -l sim.log
 
 prep-uart-echo-forever:
 	./vsrc/instrom/llvm.sh ./vsrc/instrom/uart_echo_forever.s
 	cp ./vsrc/instrom/uart_echo_forever.hex ./vsrc/instrom/instrom.hex
+	$(SPLIT_INST)
 
 test-riscv:
 	./prepare_test.sh ../verification/riscv-tests/isa/rv32um-p-div
 	./vsrc/instrom/elf2hex.sh ../verification/riscv-tests/isa/rv32um-p-div ./vsrc/instrom/instrom.hex
+	$(SPLIT_INST)
 	$(VCS)
 	./simv -l sim.log
 
