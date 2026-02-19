@@ -1,0 +1,34 @@
+
+./vsrc/instrom/uart_echo_forever.o:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	100002b7          	lui	t0,0x10000
+   4:	00428293          	addi	t0,t0,4 # 10000004 <echo_wait_tx+0xfffffc8>
+   8:	10000337          	lui	t1,0x10000
+   c:	100003b7          	lui	t2,0x10000
+  10:	00838393          	addi	t2,t2,8 # 10000008 <echo_wait_tx+0xfffffcc>
+
+00000014 <echo_wait_rx>:
+  14:	0002ae03          	lw	t3,0(t0)
+  18:	00000013          	nop
+  1c:	00000013          	nop
+  20:	00000013          	nop
+  24:	002e7e13          	andi	t3,t3,2
+  28:	fe0e06e3          	beqz	t3,14 <echo_wait_rx>
+  2c:	0003ae83          	lw	t4,0(t2)
+  30:	00000013          	nop
+  34:	00000013          	nop
+  38:	00000013          	nop
+
+0000003c <echo_wait_tx>:
+  3c:	0002af03          	lw	t5,0(t0)
+  40:	00000013          	nop
+  44:	00000013          	nop
+  48:	00000013          	nop
+  4c:	001f7f13          	andi	t5,t5,1
+  50:	fe0f06e3          	beqz	t5,3c <echo_wait_tx>
+  54:	01d32023          	sw	t4,0(t1) # 10000000 <echo_wait_tx+0xfffffc4>
+  58:	fbdff06f          	j	14 <echo_wait_rx>

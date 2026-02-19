@@ -1,4 +1,5 @@
 `define PC_BASE_ADDR 32'h8000_0000
+`define DATARAM_INIT_ADDR 12'd544
 
 //jal,jalr,auipc,lui,fence这几条指令较为特殊，
 //通过判断op7即可判断出来，因此其alucex的类型中多加一个字母来加以区分
@@ -35,6 +36,7 @@
 `define OR_TYPE 8'b00001100  //delegate OR,ORI
 `define AND_TYPE 8'b00001101  //delegate AND,ANDI
 `define FENCEE_TYPE 8'b00001110  //delegate  FENCE
+`define FENCEI_TYPE 8'b00100011  //delegate FENCE.I
 `define BEQ_TYPE 8'b00010000
 `define BNE_TYPE 8'b00010001
 `define BLT_TYPE 8'b00010010
@@ -127,6 +129,7 @@
 
 // 内存屏障指令
 `define FENCE_INST 3'b000
+`define FENCEI_INST 3'b001
 
 // 系统调用指令
 `define ECALL_EBREAK_INST 3'b000

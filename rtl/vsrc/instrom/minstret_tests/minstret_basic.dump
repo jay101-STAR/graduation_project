@@ -1,0 +1,39 @@
+
+minstret_tests/minstret_basic.o:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	00000013          	nop
+   4:	00000013          	nop
+   8:	00000013          	nop
+   c:	00000013          	nop
+  10:	00000013          	nop
+  14:	00000013          	nop
+  18:	00000013          	nop
+  1c:	00000013          	nop
+  20:	b02022f3          	csrr	t0,minstret
+  24:	b0202373          	csrr	t1,minstret
+  28:	405303b3          	sub	t2,t1,t0
+  2c:	00100e13          	li	t3,1
+  30:	002e0e13          	addi	t3,t3,2
+  34:	01ce0e33          	add	t3,t3,t3
+  38:	005e0e13          	addi	t3,t3,5
+  3c:	b0202ef3          	csrr	t4,minstret
+  40:	406e8f33          	sub	t5,t4,t1
+  44:	00500f93          	li	t6,5
+  48:	007f8fb3          	add	t6,t6,t2
+  4c:	01ff1a63          	bne	t5,t6,60 <fail>
+
+00000050 <pass>:
+  50:	80001f37          	lui	t5,0x80001
+  54:	00100f93          	li	t6,1
+  58:	01ff2023          	sw	t6,0(t5) # 80001000 <fail+0x80000fa0>
+  5c:	0000006f          	j	5c <pass+0xc>
+
+00000060 <fail>:
+  60:	80001f37          	lui	t5,0x80001
+  64:	00200f93          	li	t6,2
+  68:	01ff2023          	sw	t6,0(t5) # 80001000 <fail+0x80000fa0>
+  6c:	0000006f          	j	6c <fail+0xc>

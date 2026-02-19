@@ -1,0 +1,18 @@
+========================================
+Performance Baseline Runner
+========================================
+Start time: Thu Feb 19 17:11:00 CST 2026
+Tests: rv32ui-p-add
+
+NAME                           RESULT   MCYCLE       MINSTRET     CPI
+-----------------------------------------------------------------------
+rv32ui-p-add                   FAIL     -            -            N/A
+
+========================================
+Summary
+========================================
+Total:  1
+Pass:   0
+Fail:   1
+End:    Thu Feb 19 17:11:05 CST 2026
+Summary file: /home/jay/Desktop/graduation_project/rtl/test_results/perf_baseline_20260219_171100.txt

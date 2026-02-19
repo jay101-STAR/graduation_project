@@ -1,6 +1,0 @@
-@elabcom rc file Version 1.0
-[oh]
-invokeDir = /home/jay/Desktop/graduation_project/rtl/mul
-hostCommand = -lib /home/jay/Desktop/graduation_project/rtl/mul/simv_extended.daidir/work -saveLevel -elab /home/jay/Desktop/graduation_project/rtl/mul/simv_extended.daidir/kdb -simflow -simdir /home/jay/Desktop/graduation_project/rtl/mul/simv_extended.daidir/kdb_libs -\
-top tb_extended -Lf work +disable_message+C00380+C00381 +disable_message+C00388+C00389 -SNPS_ELABCOM -saveElab
-simType = VCS

@@ -1,0 +1,73 @@
+========================================
+RISC-V Test Runner (Fast Mode)
+========================================
+Test pattern: rv32u[i,m]-p-*
+Start time: Sun Feb 15 09:52:39 PM CST 2026
+
+Searching for tests matching: rv32u[i,m]-p-*
+Found 50 tests
+
+[0;36m1   [0m [0;32mrv32ui-p-add                            [0m [0;32m✓ PASS[0m
+[0;36m2   [0m [0;32mrv32ui-p-addi                           [0m [0;32m✓ PASS[0m
+[0;36m3   [0m [0;32mrv32ui-p-and                            [0m [0;32m✓ PASS[0m
+[0;36m4   [0m [0;32mrv32ui-p-andi                           [0m [0;32m✓ PASS[0m
+[0;36m5   [0m [0;32mrv32ui-p-auipc                          [0m [0;32m✓ PASS[0m
+[0;36m6   [0m [0;32mrv32ui-p-beq                            [0m [0;32m✓ PASS[0m
+[0;36m7   [0m [0;32mrv32ui-p-bge                            [0m [0;32m✓ PASS[0m
+[0;36m8   [0m [0;32mrv32ui-p-bgeu                           [0m [0;32m✓ PASS[0m
+[0;36m9   [0m [0;32mrv32ui-p-blt                            [0m [0;32m✓ PASS[0m
+[0;36m10  [0m [0;32mrv32ui-p-bltu                           [0m [0;32m✓ PASS[0m
+[0;36m11  [0m [0;32mrv32ui-p-bne                            [0m [0;32m✓ PASS[0m
+[0;36m12  [0m [0;32mrv32ui-p-fence_i                        [0m [1;33mSKIP[0m (filtered)
+[0;36m13  [0m [0;32mrv32ui-p-jal                            [0m [0;32m✓ PASS[0m
+[0;36m14  [0m [0;32mrv32ui-p-jalr                           [0m [0;32m✓ PASS[0m
+[0;36m15  [0m [0;32mrv32ui-p-lb                             [0m [0;32m✓ PASS[0m
+[0;36m16  [0m [0;32mrv32ui-p-lbu                            [0m [0;32m✓ PASS[0m
+[0;36m17  [0m [0;32mrv32ui-p-ld_st                          [0m [0;32m✓ PASS[0m
+[0;36m18  [0m [0;32mrv32ui-p-lh                             [0m [0;32m✓ PASS[0m
+[0;36m19  [0m [0;32mrv32ui-p-lhu                            [0m [0;32m✓ PASS[0m
+[0;36m20  [0m [0;32mrv32ui-p-lui                            [0m [0;32m✓ PASS[0m
+[0;36m21  [0m [0;32mrv32ui-p-lw                             [0m [0;32m✓ PASS[0m
+[0;36m22  [0m [0;32mrv32ui-p-ma_data                        [0m [0;32m✓ PASS[0m
+[0;36m23  [0m [0;32mrv32ui-p-or                             [0m [0;32m✓ PASS[0m
+[0;36m24  [0m [0;32mrv32ui-p-ori                            [0m [0;32m✓ PASS[0m
+[0;36m25  [0m [0;32mrv32ui-p-sb                             [0m [0;32m✓ PASS[0m
+[0;36m26  [0m [0;32mrv32ui-p-sh                             [0m [0;32m✓ PASS[0m
+[0;36m27  [0m [0;32mrv32ui-p-simple                         [0m [0;32m✓ PASS[0m
+[0;36m28  [0m [0;32mrv32ui-p-sll                            [0m [0;32m✓ PASS[0m
+[0;36m29  [0m [0;32mrv32ui-p-slli                           [0m [0;32m✓ PASS[0m
+[0;36m30  [0m [0;32mrv32ui-p-slt                            [0m [0;32m✓ PASS[0m
+[0;36m31  [0m [0;32mrv32ui-p-slti                           [0m [0;32m✓ PASS[0m
+[0;36m32  [0m [0;32mrv32ui-p-sltiu                          [0m [0;32m✓ PASS[0m
+[0;36m33  [0m [0;32mrv32ui-p-sltu                           [0m [0;32m✓ PASS[0m
+[0;36m34  [0m [0;32mrv32ui-p-sra                            [0m [0;32m✓ PASS[0m
+[0;36m35  [0m [0;32mrv32ui-p-srai                           [0m [0;32m✓ PASS[0m
+[0;36m36  [0m [0;32mrv32ui-p-srl                            [0m [0;32m✓ PASS[0m
+[0;36m37  [0m [0;32mrv32ui-p-srli                           [0m [0;32m✓ PASS[0m
+[0;36m38  [0m [0;32mrv32ui-p-st_ld                          [0m [0;32m✓ PASS[0m
+[0;36m39  [0m [0;32mrv32ui-p-sub                            [0m [0;32m✓ PASS[0m
+[0;36m40  [0m [0;32mrv32ui-p-sw                             [0m [0;32m✓ PASS[0m
+[0;36m41  [0m [0;32mrv32ui-p-xor                            [0m [0;32m✓ PASS[0m
+[0;36m42  [0m [0;32mrv32ui-p-xori                           [0m [0;32m✓ PASS[0m
+[0;36m43  [0m [0;32mrv32um-p-div                            [0m [0;32m✓ PASS[0m
+[0;36m44  [0m [0;32mrv32um-p-divu                           [0m [0;32m✓ PASS[0m
+[0;36m45  [0m [0;32mrv32um-p-mul                            [0m [0;32m✓ PASS[0m
+[0;36m46  [0m [0;32mrv32um-p-mulh                           [0m [0;32m✓ PASS[0m
+[0;36m47  [0m [0;32mrv32um-p-mulhsu                         [0m [0;32m✓ PASS[0m
+[0;36m48  [0m [0;32mrv32um-p-mulhu                          [0m [0;32m✓ PASS[0m
+[0;36m49  [0m [0;32mrv32um-p-rem                            [0m [0;32m✓ PASS[0m
+[0;36m50  [0m [0;32mrv32um-p-remu                           [0m [0;32m✓ PASS[0m
+
+========================================
+Test Summary
+========================================
+Total tests:   50
+[0;32mPassed:        49[0m
+[0;31mFailed:        0[0m
+[1;33mSkipped:       1[0m
+Pass rate:     98%
+
+End time: Sun Feb 15 09:52:51 PM CST 2026
+
+Results saved to: /home/jay/Desktop/graduation_project/rtl/test_results/summary_20260215_215239.txt
+Individual test logs in: /home/jay/Desktop/graduation_project/rtl/test_results/

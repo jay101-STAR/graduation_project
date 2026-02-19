@@ -9,6 +9,7 @@ module if_id_reg (
     // Inputs from IF stage
     input [31:0] if_pc,
     input [31:0] if_instruction,
+    input        if_valid,
     input        if_predicted_taken,
     input [31:0] if_predicted_pc,
     input [ 7:0] if_predicted_pht_index,
@@ -16,6 +17,7 @@ module if_id_reg (
     // Outputs to ID stage
     output reg [31:0] id_pc,
     output reg [31:0] id_instruction,
+    output reg        id_valid,
     output reg        id_predicted_taken,
     output reg [31:0] id_predicted_pc,
     output reg [ 7:0] id_predicted_pht_index
@@ -26,6 +28,7 @@ module if_id_reg (
       // Reset: clear all outputs
       id_pc          <= 32'h0;
       id_instruction <= 32'h0000_0013;  // NOP (addi x0, x0, 0)
+      id_valid       <= 1'b0;
       id_predicted_taken <= 1'b0;
       id_predicted_pc <= 32'h0;
       id_predicted_pht_index <= 8'h0;
@@ -33,6 +36,7 @@ module if_id_reg (
       // Flush: insert bubble (NOP)
       id_pc          <= 32'h0;
       id_instruction <= 32'h0000_0013;  // NOP
+      id_valid       <= 1'b0;
       id_predicted_taken <= 1'b0;
       id_predicted_pc <= 32'h0;
       id_predicted_pht_index <= 8'h0;
@@ -40,6 +44,7 @@ module if_id_reg (
       // Stall: hold current values (do nothing)
       id_pc          <= id_pc;
       id_instruction <= id_instruction;
+      id_valid       <= id_valid;
       id_predicted_taken <= id_predicted_taken;
       id_predicted_pc <= id_predicted_pc;
       id_predicted_pht_index <= id_predicted_pht_index;
@@ -47,6 +52,7 @@ module if_id_reg (
       // Normal operation: latch inputs
       id_pc          <= if_pc;
       id_instruction <= if_instruction;
+      id_valid       <= if_valid;
       id_predicted_taken <= if_predicted_taken;
       id_predicted_pc <= if_predicted_pc;
       id_predicted_pht_index <= if_predicted_pht_index;

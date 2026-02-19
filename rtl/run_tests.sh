@@ -40,6 +40,10 @@ TOTAL=0
 PASSED=0
 FAILED=0
 SKIPPED=0
+PERF_SAMPLES=0
+PERF_TOTAL_MCYCLE=0
+PERF_TOTAL_MINSTRET=0
+PERF_CPI_SUM=0
 
 # Result file
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
@@ -151,8 +155,30 @@ run_single_test() {
   if timeout 10s ./simv >"${sim_log}" 2>&1; then
     # Parse result
     if grep -q "TEST PASSED" "${sim_log}"; then
-      echo -e "${GREEN}✓ PASS${NC}"
-      echo "[PASS] ${test_name}" >>"${SUMMARY_FILE}"
+      local perf_line
+      perf_line=$(grep '\[PERF\]' "${sim_log}" | tail -1 || true)
+      if [ -n "${perf_line}" ]; then
+        local mcycle minstret cpi
+        mcycle=$(echo "${perf_line}" | sed -n 's/.*mcycle=\([0-9]*\).*/\1/p')
+        minstret=$(echo "${perf_line}" | sed -n 's/.*minstret=\([0-9]*\).*/\1/p')
+        cpi=$(echo "${perf_line}" | sed -n 's/.*cpi=\([0-9.]*\).*/\1/p')
+        if [ -n "${mcycle}" ] && [ -n "${minstret}" ] && [ -n "${cpi}" ]; then
+          echo -e "${GREEN}✓ PASS${NC} (mcycle=${mcycle} minstret=${minstret} cpi=${cpi})"
+          echo "[PASS] ${test_name}" >>"${SUMMARY_FILE}"
+          echo "[PERF] ${test_name}: mcycle=${mcycle} minstret=${minstret} cpi=${cpi}" >>"${SUMMARY_FILE}"
+          PERF_SAMPLES=$((PERF_SAMPLES + 1))
+          PERF_TOTAL_MCYCLE=$((PERF_TOTAL_MCYCLE + mcycle))
+          PERF_TOTAL_MINSTRET=$((PERF_TOTAL_MINSTRET + minstret))
+          PERF_CPI_SUM=$(awk -v a="${PERF_CPI_SUM}" -v b="${cpi}" 'BEGIN {printf "%.8f", a + b}')
+        else
+          echo -e "${GREEN}✓ PASS${NC} (perf=unparsed)"
+          echo "[PASS] ${test_name}" >>"${SUMMARY_FILE}"
+          echo "[PERF] ${test_name}: line='${perf_line}' (parse failed)" >>"${SUMMARY_FILE}"
+        fi
+      else
+        echo -e "${GREEN}✓ PASS${NC} (perf=N/A)"
+        echo "[PASS] ${test_name}" >>"${SUMMARY_FILE}"
+      fi
       ((PASSED++))
     elif grep -q "TEST FAILED" "${sim_log}"; then
       local tohost=$(grep "TEST FAILED" "${sim_log}" | sed -n 's/.*tohost = *\([0-9]*\).*/\1/p')
@@ -239,6 +265,22 @@ echo -e "${YELLOW}Skipped:       ${SKIPPED}${NC}" | tee -a "${SUMMARY_FILE}"
 if [ ${TOTAL} -gt 0 ]; then
   PASS_RATE=$((PASSED * 100 / TOTAL))
   echo "Pass rate:     ${PASS_RATE}%" | tee -a "${SUMMARY_FILE}"
+fi
+
+if [ ${PERF_SAMPLES} -gt 0 ]; then
+  PERF_AVG_CPI=$(awk -v s="${PERF_CPI_SUM}" -v n="${PERF_SAMPLES}" 'BEGIN {printf "%.4f", s / n}')
+  if [ ${PERF_TOTAL_MINSTRET} -gt 0 ]; then
+    PERF_WEIGHTED_CPI=$(awk -v c="${PERF_TOTAL_MCYCLE}" -v i="${PERF_TOTAL_MINSTRET}" 'BEGIN {printf "%.4f", c / i}')
+  else
+    PERF_WEIGHTED_CPI="N/A"
+  fi
+  echo "Perf samples:  ${PERF_SAMPLES}" | tee -a "${SUMMARY_FILE}"
+  echo "Total mcycle:  ${PERF_TOTAL_MCYCLE}" | tee -a "${SUMMARY_FILE}"
+  echo "Total minstret:${PERF_TOTAL_MINSTRET}" | tee -a "${SUMMARY_FILE}"
+  echo "Avg CPI:       ${PERF_AVG_CPI}" | tee -a "${SUMMARY_FILE}"
+  echo "Weighted CPI:  ${PERF_WEIGHTED_CPI}" | tee -a "${SUMMARY_FILE}"
+else
+  echo "Perf samples:  0 (no [PERF] lines found in logs)" | tee -a "${SUMMARY_FILE}"
 fi
 
 echo "" | tee -a "${SUMMARY_FILE}"

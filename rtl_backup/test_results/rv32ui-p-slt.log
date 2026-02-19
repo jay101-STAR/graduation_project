@@ -1,14 +1,6 @@
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Feb  9 11:36 2026
-
-Warning-[STASKW_RMIEAFL] Illegal entry
-./vsrc/instrom.v, 12
-  Illegal entry found at file 
-  /home/jay/Desktop/graduation_project/rtl/vsrc/instrom/instrom.hex line 4097 
-  while executing $readmem.
-  Please ensure that the file has proper entries.
-
+Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Feb 17 22:28 2026
 *Verdi* Loading libsscore_vcs201809.so
 FSDB Dumper for VCS, Release Verdi_O-2018.09-SP2, Linux x86_64/64bit, 02/21/2019
 (C) 1996 - 2019 by Synopsys, Inc.
@@ -17,10 +9,12 @@ FSDB Dumper for VCS, Release Verdi_O-2018.09-SP2, Linux x86_64/64bit, 02/21/2019
 *Verdi* : Begin traversing the scopes, layer (0).
 *Verdi* : Enable +all dumping.
 *Verdi* : End of traversing.
-[1;31m*** TEST FAILED *** (tohost =          0)[0m
-$finish called from file "./vsrc/testbench.v", line 65.
-$finish at simulation time              1000301
+[DBG] cycle=0 pc=0x80000000
+[BP] branches=74 mispredict=19 target_miss=0 accuracy=74.32%
+[1;32m*** TEST PASSED ***[0m
+$finish called from file "./vsrc/testbench.v", line 255.
+$finish at simulation time                12170
            V C S   S i m u l a t i o n   R e p o r t 
-Time: 1000301 ns
-CPU Time:      0.340 seconds;       Data structure size:   0.4Mb
-Mon Feb  9 11:36:47 2026
+Time: 12170 ns
+CPU Time:      0.190 seconds;       Data structure size:   0.4Mb
+Tue Feb 17 22:28:30 2026

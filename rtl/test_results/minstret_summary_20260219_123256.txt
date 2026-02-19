@@ -1,0 +1,18 @@
+========================================
+minstret Regression Runner
+========================================
+Start time: Thu Feb 19 12:32:58 PM CST 2026
+Test dir:   /home/jay/Desktop/graduation_project/rtl/vsrc/instrom/minstret_tests
+
+[01/03] minstret_basic ... FAIL
+[02/03] minstret_flush ... FAIL
+[03/03] minstret_load_stall ... PASS
+
+========================================
+Summary
+========================================
+Total:  3
+Pass:   1
+Fail:   2
+End:    Thu Feb 19 12:32:58 PM CST 2026
+Summary file: /home/jay/Desktop/graduation_project/rtl/test_results/minstret_summary_20260219_123256.txt

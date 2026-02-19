@@ -12,13 +12,17 @@ RESULTS_DIR="${SCRIPT_DIR}/test_results"
 TIMESTAMP="$(date +%Y%m%d_%H%M%S)"
 
 PATTERN="rv32u[i,m]-p-*"
-RISCV_SKIP_REGEX="^rv32ui-p-fence_i$"
+RISCV_SKIP_REGEX=""
 NO_BUILD=0
 
 while [ $# -gt 0 ]; do
   case "$1" in
     --no-build)
       NO_BUILD=1
+      shift
+      ;;
+    --skip-fencei)
+      RISCV_SKIP_REGEX="^rv32ui-p-fence_i$"
       shift
       ;;
     --no-skip-fencei)

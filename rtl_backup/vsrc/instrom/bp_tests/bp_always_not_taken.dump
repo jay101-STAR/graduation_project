@@ -1,0 +1,67 @@
+
+bp_tests/bp_always_not_taken.o:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	000012b7          	lui	t0,0x1
+   4:	bb828293          	addi	t0,t0,-1096 # bb8 <hang+0xb64>
+
+00000008 <loop_nt>:
+   8:	00001263          	bnez	zero,c <nt1>
+
+0000000c <nt1>:
+   c:	00001263          	bnez	zero,10 <nt2>
+
+00000010 <nt2>:
+  10:	00001263          	bnez	zero,14 <nt3>
+
+00000014 <nt3>:
+  14:	00001263          	bnez	zero,18 <nt4>
+
+00000018 <nt4>:
+  18:	00001263          	bnez	zero,1c <nt5>
+
+0000001c <nt5>:
+  1c:	00001263          	bnez	zero,20 <nt6>
+
+00000020 <nt6>:
+  20:	00001263          	bnez	zero,24 <nt7>
+
+00000024 <nt7>:
+  24:	00001263          	bnez	zero,28 <nt8>
+
+00000028 <nt8>:
+  28:	00001263          	bnez	zero,2c <nt9>
+
+0000002c <nt9>:
+  2c:	00001263          	bnez	zero,30 <nt10>
+
+00000030 <nt10>:
+  30:	00001263          	bnez	zero,34 <nt11>
+
+00000034 <nt11>:
+  34:	00001263          	bnez	zero,38 <nt12>
+
+00000038 <nt12>:
+  38:	00001263          	bnez	zero,3c <nt13>
+
+0000003c <nt13>:
+  3c:	00001263          	bnez	zero,40 <nt14>
+
+00000040 <nt14>:
+  40:	00001263          	bnez	zero,44 <nt15>
+
+00000044 <nt15>:
+  44:	00001263          	bnez	zero,48 <nt16>
+
+00000048 <nt16>:
+  48:	fff28293          	addi	t0,t0,-1
+  4c:	fa029ee3          	bnez	t0,8 <loop_nt>
+
+00000050 <pass>:
+  50:	00100193          	li	gp,1
+
+00000054 <hang>:
+  54:	0000006f          	j	54 <hang>

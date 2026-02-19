@@ -1,12 +1,74 @@
 simSetSimulator "-vcssv" -exec "/home/jay/Desktop/graduation_project/rtl/simv" \
-           -args
+           -args "+uart_rx_smoke"
 debImport "-dbdir" "/home/jay/Desktop/graduation_project/rtl/simv.daidir"
 debLoadSimResult /home/jay/Desktop/graduation_project/rtl/testbench.fsdb
 wvCreateWindow
-nMemCreateWindow
-nMemGetVariable -win $_nMem0 -var testbench.top.openmips0.dataram0.mem -delim . \
-           -from DUMPED_BY_SIMULATOR -addrRange {[0:32767]} -wordBitRange \
-           {[31:0]} -wordsInOneRow 8
-nMemNextDump -win $_nMem0
-nMemNextDump -win $_nMem0
+srcHBSelect "testbench" -win $_nTrace1
+srcSetScope -win $_nTrace1 "testbench" -delim "."
+srcHBSelect "testbench" -win $_nTrace1
+srcHBSelect "testbench.top" -win $_nTrace1
+srcSetScope -win $_nTrace1 "testbench.top" -delim "."
+srcHBSelect "testbench.top" -win $_nTrace1
+srcHBSelect "testbench.top.u_core" -win $_nTrace1
+srcHBSelect "testbench.top.u_core" -win $_nTrace1
+srcHBSelect "testbench.top.u_core" -win $_nTrace1
+srcSetScope -win $_nTrace1 "testbench.top.u_core" -delim "."
+srcHBSelect "testbench.top.u_core" -win $_nTrace1
+srcHBSelect "testbench.top.u_core.registerfile0" -win $_nTrace1
+srcSetScope -win $_nTrace1 "testbench.top.u_core.registerfile0" -delim "."
+srcHBSelect "testbench.top.u_core.registerfile0" -win $_nTrace1
+srcHBSelect "testbench.top.u_core.registerfile0.i0" -win $_nTrace1
+srcSetScope -win $_nTrace1 "testbench.top.u_core.registerfile0.i0" -delim "."
+srcHBSelect "testbench.top.u_core.registerfile0.i0" -win $_nTrace1
+srcSignalViewSelect "testbench.top.u_core.registerfile0.i0.rf\[31:0\]"
+srcSignalViewAddSelectedToWave -win $_nTrace1
+wvSelectSignal -win $_nWave3 {( "G1" 1 )} 
+wvExpandBus -win $_nWave3 {("G1" 1)}
+wvSelectSignal -win $_nWave3 {( "G1" 30 )} 
+wvScrollUp -win $_nWave3 1
+wvScrollUp -win $_nWave3 1
+wvScrollUp -win $_nWave3 1
+wvScrollUp -win $_nWave3 1
+wvScrollUp -win $_nWave3 1
+wvScrollUp -win $_nWave3 1
+wvScrollUp -win $_nWave3 1
+wvScrollUp -win $_nWave3 1
+wvScrollUp -win $_nWave3 1
+wvScrollUp -win $_nWave3 1
+wvScrollUp -win $_nWave3 1
+wvScrollUp -win $_nWave3 1
+wvScrollUp -win $_nWave3 1
+wvScrollUp -win $_nWave3 1
+wvScrollUp -win $_nWave3 1
+wvScrollUp -win $_nWave3 1
+wvSelectSignal -win $_nWave3 {( "G1" 4 )} 
+wvSelectSignal -win $_nWave3 {( "G1" 5 )} 
+wvSelectSignal -win $_nWave3 {( "G1" 4 )} 
+wvScrollDown -win $_nWave3 1
+wvScrollDown -win $_nWave3 1
+wvScrollDown -win $_nWave3 1
+wvScrollDown -win $_nWave3 1
+wvScrollDown -win $_nWave3 1
+wvScrollDown -win $_nWave3 1
+wvScrollDown -win $_nWave3 1
+wvScrollDown -win $_nWave3 1
+wvScrollDown -win $_nWave3 1
+wvScrollDown -win $_nWave3 1
+wvScrollDown -win $_nWave3 1
+wvScrollDown -win $_nWave3 1
+wvScrollDown -win $_nWave3 1
+wvScrollDown -win $_nWave3 1
+wvScrollDown -win $_nWave3 1
+wvScrollDown -win $_nWave3 1
+wvScrollDown -win $_nWave3 1
+wvScrollDown -win $_nWave3 1
+wvScrollDown -win $_nWave3 0
+wvScrollDown -win $_nWave3 0
+wvScrollDown -win $_nWave3 0
+wvScrollDown -win $_nWave3 0
+wvScrollDown -win $_nWave3 0
+wvScrollDown -win $_nWave3 0
+wvScrollDown -win $_nWave3 0
+wvScrollDown -win $_nWave3 0
+wvSelectSignal -win $_nWave3 {( "G1" 30 )} 
 debExit

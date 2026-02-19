@@ -25,11 +25,15 @@ RESULTS_DIR="${SCRIPT_DIR}/test_results"
 mkdir -p "${RESULTS_DIR}"
 
 # Test pattern (can be overridden by command line)
+# Default: run both rv32ui and rv32um tests
 if [ $# -eq 0 ]; then
-  TEST_PATTERN="rv32ui-p-*"
+  TEST_PATTERN="rv32u[i,m]-p-*"
 else
   TEST_PATTERN="$1"
 fi
+
+# Optional skip regex on test basename (e.g. '^rv32ui-p-fence_i$')
+SKIP_TEST_REGEX="${SKIP_TEST_REGEX:-}"
 
 # Statistics
 TOTAL=0
@@ -56,18 +60,24 @@ if [ ! -f "${SCRIPT_DIR}/simv" ]; then
   exit 1
 fi
 
-# Backup original instrom.hex and dataram.hex
+# Backup original instrom.hex and bank hex files
 ORIGINAL_INST_HEX="${INSTROM_DIR}/instrom.hex"
 BACKUP_INST_HEX="${INSTROM_DIR}/instrom.hex.original_backup"
-ORIGINAL_DATA_HEX="${DATARAM_DIR}/dataram.hex"
-BACKUP_DATA_HEX="${DATARAM_DIR}/dataram.hex.original_backup"
+ORIGINAL_BANK0_HEX="${DATARAM_DIR}/bank0.hex"
+ORIGINAL_BANK1_HEX="${DATARAM_DIR}/bank1.hex"
+BACKUP_BANK0_HEX="${DATARAM_DIR}/bank0.hex.original_backup"
+BACKUP_BANK1_HEX="${DATARAM_DIR}/bank1.hex.original_backup"
 
 if [ -f "${ORIGINAL_INST_HEX}" ]; then
   cp "${ORIGINAL_INST_HEX}" "${BACKUP_INST_HEX}"
 fi
 
-if [ -f "${ORIGINAL_DATA_HEX}" ]; then
-  cp "${ORIGINAL_DATA_HEX}" "${BACKUP_DATA_HEX}"
+if [ -f "${ORIGINAL_BANK0_HEX}" ]; then
+  cp "${ORIGINAL_BANK0_HEX}" "${BACKUP_BANK0_HEX}"
+fi
+
+if [ -f "${ORIGINAL_BANK1_HEX}" ]; then
+  cp "${ORIGINAL_BANK1_HEX}" "${BACKUP_BANK1_HEX}"
 fi
 
 # Function to convert ELF to HEX (instruction memory)
@@ -88,29 +98,11 @@ elf_to_hex() {
   return 0
 }
 
-# Function to extract data memory from ELF
+# Function to extract data memory from ELF into bank0/bank1
 extract_data_mem() {
   local elf_file=$1
-  local hex_file=$2
-
-  # Extract .data section to binary file
-  local data_bin="${hex_file}.bin"
-  riscv32-unknown-elf-objcopy -O binary -j .data "${elf_file}" "${data_bin}" 2>/dev/null
-
-  # Check if .data section exists
-  if [ ! -f "${data_bin}" ] || [ ! -s "${data_bin}" ]; then
-    # No data section, create empty hex file
-    echo "" >"${hex_file}"
-    rm -f "${data_bin}"
-    return 0
-  fi
-
-  # Convert binary to hex format (32-bit words, little-endian)
-  hexdump -v -e '1/4 "%08x\n"' "${data_bin}" >"${hex_file}"
-
-  # Clean up
-  rm -f "${data_bin}"
-  return 0
+  "${DATARAM_DIR}/extract_data.sh" "${elf_file}" "${DATARAM_DIR}" >/dev/null
+  return $?
 }
 
 # Function to run a single test
@@ -129,13 +121,11 @@ run_single_test() {
     return
   fi
 
-  # Extract data memory
-  local temp_data_hex="${DATARAM_DIR}/test_temp_data.hex"
-  extract_data_mem "${test_file}" "${temp_data_hex}"
+  # Extract data memory (bank0/bank1)
+  extract_data_mem "${test_file}"
 
-  # Replace instrom.hex and dataram.hex with test hex files
+  # Replace instrom.hex with test hex file
   cp "${temp_inst_hex}" "${ORIGINAL_INST_HEX}"
-  cp "${temp_data_hex}" "${ORIGINAL_DATA_HEX}"
 
   # Run simulation with timeout
   local sim_log="${RESULTS_DIR}/${test_name}.log"
@@ -167,7 +157,7 @@ run_single_test() {
   fi
 
   # Clean up
-  rm -f "${temp_inst_hex}" "${temp_data_hex}"
+  rm -f "${temp_inst_hex}"
 
   ((TOTAL++))
 }
@@ -187,16 +177,28 @@ echo "" | tee -a "${SUMMARY_FILE}"
 
 # Run all tests
 for test_file in ${test_files}; do
+  test_name=$(basename "${test_file}")
+  if [ -n "${SKIP_TEST_REGEX}" ] && [[ "${test_name}" =~ ${SKIP_TEST_REGEX} ]]; then
+    printf "${CYAN}%-4d${NC} ${BLUE}%-40s${NC} ${YELLOW}SKIP${NC} (filtered)\n" "$((TOTAL + 1))" "${test_name}"
+    echo "[SKIP] ${test_name}: filtered by SKIP_TEST_REGEX=${SKIP_TEST_REGEX}" >>"${SUMMARY_FILE}"
+    ((SKIPPED++))
+    ((TOTAL++))
+    continue
+  fi
   run_single_test "${test_file}"
 done
 
-# Restore original instrom.hex and dataram.hex
+# Restore original instrom.hex and bank hex files
 if [ -f "${BACKUP_INST_HEX}" ]; then
   mv "${BACKUP_INST_HEX}" "${ORIGINAL_INST_HEX}"
 fi
 
-if [ -f "${BACKUP_DATA_HEX}" ]; then
-  mv "${BACKUP_DATA_HEX}" "${ORIGINAL_DATA_HEX}"
+if [ -f "${BACKUP_BANK0_HEX}" ]; then
+  mv "${BACKUP_BANK0_HEX}" "${ORIGINAL_BANK0_HEX}"
+fi
+
+if [ -f "${BACKUP_BANK1_HEX}" ]; then
+  mv "${BACKUP_BANK1_HEX}" "${ORIGINAL_BANK1_HEX}"
 fi
 
 # Print summary

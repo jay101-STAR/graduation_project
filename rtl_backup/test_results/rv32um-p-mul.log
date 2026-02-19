@@ -1,6 +1,6 @@
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Feb  7 22:00 2026
+Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Feb 17 22:28 2026
 *Verdi* Loading libsscore_vcs201809.so
 FSDB Dumper for VCS, Release Verdi_O-2018.09-SP2, Linux x86_64/64bit, 02/21/2019
 (C) 1996 - 2019 by Synopsys, Inc.
@@ -9,10 +9,12 @@ FSDB Dumper for VCS, Release Verdi_O-2018.09-SP2, Linux x86_64/64bit, 02/21/2019
 *Verdi* : Begin traversing the scopes, layer (0).
 *Verdi* : Enable +all dumping.
 *Verdi* : End of traversing.
+[DBG] cycle=0 pc=0x80000000
+[BP] branches=73 mispredict=19 target_miss=0 accuracy=73.97%
 [1;32m*** TEST PASSED ***[0m
-$finish called from file "./vsrc/testbench.v", line 65.
-$finish at simulation time                30301
+$finish called from file "./vsrc/testbench.v", line 255.
+$finish at simulation time                17270
            V C S   S i m u l a t i o n   R e p o r t 
-Time: 30301 ns
-CPU Time:      0.850 seconds;       Data structure size:   0.4Mb
-Sat Feb  7 22:00:45 2026
+Time: 17270 ns
+CPU Time:      0.250 seconds;       Data structure size:   0.4Mb
+Tue Feb 17 22:28:34 2026

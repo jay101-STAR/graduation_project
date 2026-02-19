@@ -1,6 +1,6 @@
 psSimBaseName                      	simv
 psLogFileName                      	NULL
-pDaiDir                            	/home/jay/Desktop/graduation_project/rtl_backup/simv.daidir
+pDaiDir                            	/home/jay/Desktop/graduation_project/rtl/simv.daidir
 destPath                           	csrc/
 fSharedMaster                      	0
 fHsimPCSharedLibSpecified          	0

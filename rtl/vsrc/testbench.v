@@ -126,6 +126,9 @@ module testbench ();
   reg [31:0] last_pc;
   integer same_pc_count = 0;
   real bp_accuracy;
+  real perf_cpi;
+  reg [63:0] perf_mcycle;
+  reg [63:0] perf_minstret;
   wire in_tohost_loop = (top.u_core.pc_if_pc >= 32'h8000_003c) &&
                         (top.u_core.pc_if_pc <= 32'h8000_004c);
   wire [31:0] observed_tohost_value = (tohost_value_dataram != 32'b0) ?
@@ -236,6 +239,14 @@ module testbench ();
     // Prefer architectural tohost write when address decoder hits.
     // For some tests, tohost symbol address is not fixed; fallback to gp in write_tohost loop.
     if (!rst && observed_tohost_value != 0) begin
+      perf_mcycle = top.u_core.csr0.cycle_int;
+      perf_minstret = top.u_core.csr0.instret_int;
+      if (perf_minstret != 0) begin
+        perf_cpi = perf_mcycle * 1.0 / perf_minstret;
+      end else begin
+        perf_cpi = 0.0;
+      end
+
       if (bp_branch_total != 0) begin
         bp_accuracy = (1.0 - (bp_mispredict_total * 1.0 / bp_branch_total)) * 100.0;
         $display("[BP] branches=%0d mispredict=%0d target_miss=%0d accuracy=%0.2f%%",
@@ -251,6 +262,11 @@ module testbench ();
         $display("\033[1;31m*** TEST FAILED *** (tohost = %d)\033[0m", observed_tohost_value);
       end else begin
         $display("\033[1;33m*** TOHOST UNKNOWN (X) ***\033[0m");
+      end
+      if (perf_minstret != 0) begin
+        $display("[PERF] mcycle=%0d minstret=%0d cpi=%0.4f", perf_mcycle, perf_minstret, perf_cpi);
+      end else begin
+        $display("[PERF] mcycle=%0d minstret=%0d cpi=N/A", perf_mcycle, perf_minstret);
       end
       #100 $finish;
     end

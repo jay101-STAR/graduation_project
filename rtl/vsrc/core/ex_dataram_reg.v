@@ -10,6 +10,7 @@ module ex_dataram_reg (
     input [31:0] ex_alu_result,
     input [31:0] ex_dataram_addr,
     input [31:0] ex_dataram_wdata,
+    input        ex_valid,
     input [ 4:0] ex_rd_addr,
 
     // Control from EX
@@ -23,6 +24,7 @@ module ex_dataram_reg (
     output reg [31:0] dataram_alu_result,
     output reg [31:0] dataram_addr,
     output reg [31:0] dataram_wdata,
+    output reg        dataram_valid,
     output reg [ 4:0] dataram_rd_addr,
     output reg [ 3:0] dataram_aluc,
     output reg [ 7:0] dataram_alucex,
@@ -37,6 +39,7 @@ module ex_dataram_reg (
       dataram_alu_result <= 32'h0;
       dataram_addr       <= 32'h0;
       dataram_wdata      <= 32'h0;
+      dataram_valid      <= 1'b0;
       dataram_rd_addr    <= 5'h0;
       dataram_aluc       <= 4'h0;
       dataram_alucex     <= 8'h0;
@@ -48,6 +51,7 @@ module ex_dataram_reg (
       dataram_alu_result <= 32'h0;
       dataram_addr       <= 32'h0;
       dataram_wdata      <= 32'h0;
+      dataram_valid      <= 1'b0;
       dataram_rd_addr    <= 5'h0;
       dataram_aluc       <= 4'h0;
       dataram_alucex     <= 8'h0;
@@ -59,6 +63,7 @@ module ex_dataram_reg (
       dataram_alu_result <= dataram_alu_result;
       dataram_addr       <= dataram_addr;
       dataram_wdata      <= dataram_wdata;
+      dataram_valid      <= dataram_valid;
       dataram_rd_addr    <= dataram_rd_addr;
       dataram_aluc       <= dataram_aluc;
       dataram_alucex     <= dataram_alucex;
@@ -70,6 +75,7 @@ module ex_dataram_reg (
       dataram_alu_result <= ex_alu_result;
       dataram_addr       <= ex_dataram_addr;
       dataram_wdata      <= ex_dataram_wdata;
+      dataram_valid      <= ex_valid;
       dataram_rd_addr    <= ex_rd_addr;
       dataram_aluc       <= ex_aluc;
       dataram_alucex     <= ex_alucex;

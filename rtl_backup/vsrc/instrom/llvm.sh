@@ -32,3 +32,11 @@ hexdump -ve '1/4 "%08x\n"' \
   >"${base_name}.hex"
 
 echo "✅ 成功生成：${base_name}.hex"
+
+# object -> dump（反汇编）
+if command -v llvm-objdump >/dev/null 2>&1; then
+  riscv32-unknown-elf-objdump -d "${base_name}.o" >"${base_name}.dump"
+  echo "✅ 成功生成：${base_name}.dump"
+else
+  echo "⚠️ 未找到 llvm-objdump，已跳过 dump 生成"
+fi

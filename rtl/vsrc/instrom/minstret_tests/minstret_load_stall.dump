@@ -1,0 +1,42 @@
+
+minstret_tests/minstret_load_stall.o:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	00000013          	nop
+   4:	00000013          	nop
+   8:	00000013          	nop
+   c:	00000013          	nop
+  10:	00000013          	nop
+  14:	00000013          	nop
+  18:	00000013          	nop
+  1c:	00000013          	nop
+  20:	80002fb7          	lui	t6,0x80002
+  24:	12345537          	lui	a0,0x12345
+  28:	67850513          	addi	a0,a0,1656 # 12345678 <fail+0x1234560c>
+  2c:	00afa023          	sw	a0,0(t6) # 80002000 <fail+0x80001f94>
+  30:	b02022f3          	csrr	t0,minstret
+  34:	b0202373          	csrr	t1,minstret
+  38:	405303b3          	sub	t2,t1,t0
+  3c:	000fae03          	lw	t3,0(t6)
+  40:	001e0e93          	addi	t4,t3,1
+  44:	001e8e93          	addi	t4,t4,1
+  48:	b0202f73          	csrr	t5,minstret
+  4c:	406f0fb3          	sub	t6,t5,t1
+  50:	00400513          	li	a0,4
+  54:	00750533          	add	a0,a0,t2
+  58:	00af9a63          	bne	t6,a0,6c <fail>
+
+0000005c <pass>:
+  5c:	80001fb7          	lui	t6,0x80001
+  60:	00100513          	li	a0,1
+  64:	00afa023          	sw	a0,0(t6) # 80001000 <fail+0x80000f94>
+  68:	0000006f          	j	68 <pass+0xc>
+
+0000006c <fail>:
+  6c:	80001fb7          	lui	t6,0x80001
+  70:	00200513          	li	a0,2
+  74:	00afa023          	sw	a0,0(t6) # 80001000 <fail+0x80000f94>
+  78:	0000006f          	j	78 <fail+0xc>

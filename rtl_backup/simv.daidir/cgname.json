@@ -1,55 +1,49 @@
 {
-    "instrom": [
-        "instrom",
-        "ju8uQ",
-        "module",
-        15
-    ],
-    "dataram_wb_reg": [
-        "dataram_wb_reg",
-        "SQ0Bk",
-        "module",
-        5
-    ],
     "std": [
         "std",
         "reYIK",
         "module",
         1
     ],
-    "testbench": [
-        "testbench",
-        "iAVhC",
+    "std_bram": [
+        "std_bram",
+        "utRIt",
         "module",
-        14
+        3
+    ],
+    "muxwithdefault_0009": [
+        "muxwithdefault_0009",
+        "vyzbB",
+        "module",
+        8
+    ],
+    "axi_lite_uart_slave": [
+        "axi_lite_uart_slave",
+        "AqSSF",
+        "module",
+        2
+    ],
+    "muxwithdefault_0002": [
+        "muxwithdefault_0002",
+        "YU6qy",
+        "module",
+        5
     ],
     "compress": [
         "compress",
         "NIRPT",
         "module",
-        2
+        14
+    ],
+    "wb": [
+        "wb",
+        "DgZ94",
+        "module",
+        20
     ],
     "mux": [
         "mux",
         "RZvU4",
-        "module",
-        11
-    ],
-    "...MASTER...": [
-        "SIM",
-        "amcQw",
-        "module",
-        17
-    ],
-    "muxwithdefault_0003": [
-        "muxwithdefault_0003",
-        "cU2rR",
-        "module",
-        8
-    ],
-    "muxwithdefault_0009": [
-        "muxwithdefault_0009",
-        "vyzbB",
         "module",
         10
     ],
@@ -57,48 +51,84 @@
         "muxwithdefault_0001",
         "x93J4",
         "module",
-        6
+        4
     ],
-    "dataram": [
-        "dataram",
-        "GAMq1",
+    "dataram_banked": [
+        "dataram_banked",
+        "Rtm4m",
         "module",
-        3
+        11
+    ],
+    "muxwithdefault_0003": [
+        "muxwithdefault_0003",
+        "cU2rR",
+        "module",
+        6
     ],
     "muxwithdefault_0005": [
         "muxwithdefault_0005",
         "t197S",
         "module",
+        7
+    ],
+    "async_reset": [
+        "async_reset",
+        "GFraM",
+        "module",
         9
+    ],
+    "...MASTER...": [
+        "SIM",
+        "amcQw",
+        "module",
+        22
+    ],
+    "instrom": [
+        "instrom",
+        "ju8uQ",
+        "module",
+        12
+    ],
+    "testbench": [
+        "testbench",
+        "iAVhC",
+        "module",
+        21
+    ],
+    "mem_to_axi_lite_bridge": [
+        "mem_to_axi_lite_bridge",
+        "YPGmh",
+        "module",
+        13
     ],
     "chj_registerfile": [
         "chj_registerfile",
         "IJPkw",
         "module",
-        4
+        15
     ],
-    "muxwithdefault_0002": [
-        "muxwithdefault_0002",
-        "YU6qy",
+    "dataram_wb_reg": [
+        "dataram_wb_reg",
+        "SQ0Bk",
         "module",
-        7
+        16
     ],
     "ex_dataram_reg": [
         "ex_dataram_reg",
         "BEZKx",
         "module",
-        12
+        17
     ],
     "csr": [
         "csr",
         "cNThd",
         "module",
-        13
+        18
     ],
-    "wb": [
-        "wb",
-        "DgZ94",
+    "ex": [
+        "ex",
+        "r2dgF",
         "module",
-        16
+        19
     ]
 }

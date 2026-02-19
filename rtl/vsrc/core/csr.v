@@ -3,6 +3,7 @@
 module csr (
     input wire clk,
     input wire rst,
+    input wire retire_pulse,
 
     // ===== CSR instruction interface (from EX) =====
     input wire        ex_csr_wen,      // CSR write enable
@@ -32,6 +33,8 @@ module csr (
   localparam reg [11:0] CSR_MCAUSE = 12'h342;
   localparam reg [11:0] CSR_MCYCLE = 12'hB00;
   localparam reg [11:0] CSR_MCYCLEH = 12'hB80;
+  localparam reg [11:0] CSR_MINSTRET = 12'hB02;
+  localparam reg [11:0] CSR_MINSTRETH = 12'hB82;
   localparam reg [11:0] CSR_MVENDORID = 12'hF11;
   localparam reg [11:0] CSR_MARCHID = 12'hF12;
 
@@ -57,6 +60,8 @@ module csr (
 
   // cycle counter
   reg [63:0] cycle_int;
+  // retired instruction counter
+  reg [63:0] instret_int;
 
   // =========================================================
   // CSR read (combinational, gated by ren)
@@ -82,6 +87,8 @@ module csr (
         CSR_MCAUSE:    csr_read_val = mcause;
         CSR_MCYCLE:    csr_read_val = cycle_int[31:0];
         CSR_MCYCLEH:   csr_read_val = cycle_int[63:32];
+        CSR_MINSTRET:  csr_read_val = instret_int[31:0];
+        CSR_MINSTRETH: csr_read_val = instret_int[63:32];
         CSR_MVENDORID: csr_read_val = mvendorid;
         CSR_MARCHID:   csr_read_val = marchid;
         default:       csr_read_val = 32'b0;
@@ -167,9 +174,14 @@ module csr (
       marchid      <= 32'h16f9_59d;
 
       cycle_int    <= 64'b0;
+      instret_int  <= 64'b0;
     end else begin
       // cycle counter
       cycle_int <= cycle_int + 1;
+      // retired instruction counter
+      if (retire_pulse) begin
+        instret_int <= instret_int + 1'b1;
+      end
 
       // ---------- trap ----------
       if (ex_csr_trap_valid) begin
@@ -213,5 +225,4 @@ module csr (
   assign csr_ex_mepc        = mepc;
 
 endmodule
-
 

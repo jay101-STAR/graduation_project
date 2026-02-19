@@ -1,0 +1,41 @@
+
+minstret_tests/minstret_flush.o:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	00000013          	nop
+   4:	00000013          	nop
+   8:	00000013          	nop
+   c:	00000013          	nop
+  10:	00000013          	nop
+  14:	00000013          	nop
+  18:	00000013          	nop
+  1c:	00000013          	nop
+  20:	b02022f3          	csrr	t0,minstret
+  24:	b0202373          	csrr	t1,minstret
+  28:	405303b3          	sub	t2,t1,t0
+  2c:	0080006f          	j	34 <after_jump>
+  30:	05500e13          	li	t3,85
+
+00000034 <after_jump>:
+  34:	00700e93          	li	t4,7
+  38:	001e8e93          	addi	t4,t4,1
+  3c:	b0202f73          	csrr	t5,minstret
+  40:	406f0fb3          	sub	t6,t5,t1
+  44:	00400513          	li	a0,4
+  48:	00750533          	add	a0,a0,t2
+  4c:	00af9a63          	bne	t6,a0,60 <fail>
+
+00000050 <pass>:
+  50:	80001fb7          	lui	t6,0x80001
+  54:	00100513          	li	a0,1
+  58:	00afa023          	sw	a0,0(t6) # 80001000 <fail+0x80000fa0>
+  5c:	0000006f          	j	5c <pass+0xc>
+
+00000060 <fail>:
+  60:	80001fb7          	lui	t6,0x80001
+  64:	00200513          	li	a0,2
+  68:	00afa023          	sw	a0,0(t6) # 80001000 <fail+0x80000fa0>
+  6c:	0000006f          	j	6c <fail+0xc>

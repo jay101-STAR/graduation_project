@@ -1,0 +1,74 @@
+========================================
+RISC-V Test Runner (Fast Mode)
+========================================
+Test pattern: rv32u[i,m]-p-*
+Start time: Sun Feb 15 22:24:17 CST 2026
+
+Searching for tests matching: rv32u[i,m]-p-*
+Found 50 tests
+
+[TIMEOUT] rv32ui-p-add: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-addi: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-and: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-andi: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-auipc: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-beq: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-bge: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-bgeu: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-blt: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-bltu: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-bne: Simulation exceeded 10s
+[SKIP] rv32ui-p-fence_i: filtered by SKIP_TEST_REGEX=^rv32ui-p-fence_i$
+[TIMEOUT] rv32ui-p-jal: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-jalr: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-lb: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-lbu: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-ld_st: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-lh: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-lhu: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-lui: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-lw: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-ma_data: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-or: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-ori: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-sb: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-sh: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-simple: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-sll: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-slli: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-slt: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-slti: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-sltiu: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-sltu: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-sra: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-srai: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-srl: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-srli: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-st_ld: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-sub: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-sw: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-xor: Simulation exceeded 10s
+[TIMEOUT] rv32ui-p-xori: Simulation exceeded 10s
+[TIMEOUT] rv32um-p-div: Simulation exceeded 10s
+[TIMEOUT] rv32um-p-divu: Simulation exceeded 10s
+[TIMEOUT] rv32um-p-mul: Simulation exceeded 10s
+[TIMEOUT] rv32um-p-mulh: Simulation exceeded 10s
+[TIMEOUT] rv32um-p-mulhsu: Simulation exceeded 10s
+[TIMEOUT] rv32um-p-mulhu: Simulation exceeded 10s
+[TIMEOUT] rv32um-p-rem: Simulation exceeded 10s
+[TIMEOUT] rv32um-p-remu: Simulation exceeded 10s
+
+========================================
+Test Summary
+========================================
+Total tests:   50
+[0;32mPassed:        0[0m
+[0;31mFailed:        49[0m
+[1;33mSkipped:       1[0m
+Pass rate:     0%
+
+End time: Sun Feb 15 22:24:25 CST 2026
+
+Results saved to: /home/jay/Desktop/graduation_project/rtl/test_results/summary_20260215_222417.txt
+Failed tests saved to: /home/jay/Desktop/graduation_project/rtl/test_results/failed_tests_20260215_222417.txt
+Individual test logs in: /home/jay/Desktop/graduation_project/rtl/test_results/

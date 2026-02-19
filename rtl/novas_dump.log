@@ -146,11 +146,11 @@ VCS compile option:
  option[41]: ./vsrc/periph/uart/uart_tx.v
  option[42]: ./vsrc/common/reg.v
  option[43]: ./vsrc/common/std_bram.v
- option[44]: ./vsrc/common/muxwithdefault.v
- option[45]: ./vsrc/common/async_reset.v
- option[46]: ./vsrc/common/mux.v
- option[47]: ./vsrc/mem/dataram_banked.v
- option[48]: ./vsrc/mem/instrom.v
+ option[44]: ./vsrc/common/std_bram_tdp.v
+ option[45]: ./vsrc/common/muxwithdefault.v
+ option[46]: ./vsrc/common/async_reset.v
+ option[47]: ./vsrc/common/mux.v
+ option[48]: ./vsrc/mem/dataram_banked.v
  option[49]: ./vsrc/bus/mem_to_axi_lite_bridge.v
  option[50]: ./vsrc/top.v
  option[51]: ./vsrc/core/mul_3cycle.v
@@ -160,13 +160,13 @@ VCS compile option:
  option[55]: ./vsrc/core/id_ex_reg.v
  option[56]: ./vsrc/core/dataram_wb_reg.v
  option[57]: ./vsrc/core/id.v
- option[58]: ./vsrc/core/div.v
- option[59]: ./vsrc/core/ex_dataram_reg.v
- option[60]: ./vsrc/core/csr.v
- option[61]: ./vsrc/core/ex.v
- option[62]: ./vsrc/core/wb.v
- option[63]: ./vsrc/core/if_id_reg.v
- option[64]: ./vsrc/core/openmips.v
+ option[58]: ./vsrc/core/riscv_core.v
+ option[59]: ./vsrc/core/div.v
+ option[60]: ./vsrc/core/ex_dataram_reg.v
+ option[61]: ./vsrc/core/csr.v
+ option[62]: ./vsrc/core/ex.v
+ option[63]: ./vsrc/core/wb.v
+ option[64]: ./vsrc/core/if_id_reg.v
  option[65]: ./vsrc/testbench.v
  option[66]: ./vsrc/define.v
  option[67]: -load
@@ -180,12 +180,12 @@ Limit information:
 cputime		unlimited
 filesize		unlimited
 datasize		unlimited
-stacksize		unlimited
+stacksize		8192 kbytes
 coredumpsize		unlimited
 memoryuse		unlimited
 vmemoryuse		unlimited
 descriptors		1048576
-memorylocked		1653480 kbytes
+memorylocked		1653484 kbytes
 maxproc		51349
 ======================================
 (Special)Runtime environment variables:
@@ -193,7 +193,7 @@ maxproc		51349
 Runtime environment variables:
 SHELL=/bin/bash
 LSCOLORS=Gxfxcxdxdxegedabagacad
-SESSION_MANAGER=local/jay-VMware-Virtual-Platform:@/tmp/.ICE-unix/2723,unix/jay-VMware-Virtual-Platform:/tmp/.ICE-unix/2723
+SESSION_MANAGER=local/jay-VMware-Virtual-Platform:@/tmp/.ICE-unix/2897,unix/jay-VMware-Virtual-Platform:/tmp/.ICE-unix/2897
 QT_ACCESSIBILITY=1
 COLORTERM=truecolor
 VCS_ARCH_OVERRIDE=linux
@@ -206,7 +206,7 @@ TERM_PROGRAM_VERSION=3.4
 GNOME_DESKTOP_SESSION_ID=this-is-deprecated
 CONDA_EXE=/home/jay/anaconda3/bin/conda
 _CE_M=
-TMUX=/tmp/tmux-1000/default,6840,0
+TMUX=/tmp/tmux-1000/default,5021,0
 HISTSIZE=2147450879
 VCS_HOME=/home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2
 GNOME_SHELL_SESSION_MODE=ubuntu
@@ -224,8 +224,8 @@ LOGNAME=jay
 XDG_SESSION_DESKTOP=ubuntu
 XDG_SESSION_TYPE=wayland
 NPI_PLATFORM=LINUX64_GNU_472
-SYSTEMD_EXEC_PID=2756
-XAUTHORITY=/run/user/1000/.mutter-Xwaylandauth.M4CCL3
+SYSTEMD_EXEC_PID=2932
+XAUTHORITY=/run/user/1000/.mutter-Xwaylandauth.H77RK3
 IM_CONFIG_CHECK_ENV=1
 NEMU_HOME=/home/jay/Desktop/ics2024/ysyx-workbench/nemu
 HOME=/home/jay
@@ -238,7 +238,7 @@ XDG_CURRENT_DESKTOP=ubuntu:GNOME
 MEMORY_PRESSURE_WATCH=/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.Shell@wayland.service/memory.pressure
 VTE_VERSION=7600
 WAYLAND_DISPLAY=wayland-0
-GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/979a4952_f66d_43ad_8eca_fbc7e7f13020
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/0723bb7f_7d8f_495d_ac48_9424e7947e1f
 ANTHROPIC_BASE_URL=https://hone.vvvv.ee
 NVM_DIR=/home/jay/.nvm
 GNOME_SETUP_DISPLAY=:1
@@ -251,14 +251,14 @@ _CE_CONDA=
 LESSOPEN=| /usr/bin/lesspipe %s
 NVBOARD_HOME=/home/jay/Desktop/ics2024/ysyx-workbench/nvboard
 USER=jay
-TMUX_PANE=%0
+TMUX_PANE=%1
 VERDI_DIR=/home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2
 GNOME_TERMINAL_SERVICE=:1.110
 CONDA_SHLVL=0
 CLUTTER_DISABLE_MIPMAPPED_TEXT=1
 DISPLAY=:0
 NOVAS_INST_DIR=/home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2
-SHLVL=4
+SHLVL=3
 NVM_CD_FLAGS=
 GSM_SKIP_SSH_AGENT_WORKAROUND=true
 PAGER=less
@@ -271,11 +271,10 @@ LC_CTYPE=en_US.UTF-8
 XDG_RUNTIME_DIR=/run/user/1000
 ANTHROPIC_AUTH_TOKEN=sk-WLtk6r1mUmqrZp5Gjsa7x2MDo1u3MHC2V6knjTWWdAv1xcLk
 DEBUGINFOD_URLS=https://debuginfod.ubuntu.com 
-SKIP_TEST_REGEX=^rv32ui-p-fence_i$
 BUN_INSTALL=/home/jay/.bun
 DVE_HOME=/home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/gui/dve
 XDG_DATA_DIRS=/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
-PATH=/home/jay/.local/bin:/home/jay/bin:/home/jay/.local/bin:/home/jay/bin:/home/jay/.bun/bin:/home/jay/.opencode/bin:/home/jay/bin:/opt/riscv32-elf/riscv32-unknown-elf/bin/pk:/opt/riscv32-elf/bin:/opt/riscv32/bin:/home/jay/.local/share/nvim/mason/bin/:/home/jay/EDA/Synopsys/scl/scl/2018.06/linux64/bin:/home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2/bin:/home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/bin:/home/jay/EDA/Synopsys/vcs/vcs/O-2018.09-SP2/bin:/home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/gui/dve/bin:/home/jay/EDA/Synopsys/vcs/vcs/O-2018.09-SP2/gui/dve/bin:/home/jay/.config/coc/extensions/coc-clangd-data/install/clangd/bin/clangd/:/usr/lib/ccache:/home/jay/.bun/bin:/home/jay/.opencode/bin:/home/jay/bin:/opt/riscv32-elf/riscv32-unknown-elf/bin/pk:/opt/riscv32-elf/bin:/opt/riscv32/bin:/home/jay/.local/share/nvim/mason/bin/:/home/jay/EDA/Synopsys/scl/scl/2018.06/linux64/bin:/home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2/bin:/home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/bin:/home/jay/EDA/Synopsys/vcs/vcs/O-2018.09-SP2/bin:/home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/gui/dve/bin:/home/jay/EDA/Synopsys/vcs/vcs/O-2018.09-SP2/gui/dve/bin:/home/jay/anaconda3/condabin:/home/jay/.nvm/versions/node/v20.18.3/bin:/home/jay/.config/coc/extensions/coc-clangd-data/install/clangd/bin/clangd/:/usr/lib/ccache:/home/jay/.local/bin:/home/jay/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/usr/bin/python3:/home/jay/.local/bin:/home/jay/perl5/bin:/opt/riscv32-elf/bin:/usr/bin/python3:/home/jay/perl5/bin:/opt/riscv32-elf/bin:/home/jay/.local/bin:/usr/bin/python3:/home/jay/.local/bin
+PATH=/home/jay/.local/bin:/home/jay/bin:/home/jay/.bun/bin:/home/jay/.opencode/bin:/home/jay/bin:/opt/riscv32-elf/riscv32-unknown-elf/bin/pk:/opt/riscv32-elf/bin:/opt/riscv32/bin:/home/jay/.local/share/nvim/mason/bin/:/home/jay/EDA/Synopsys/scl/scl/2018.06/linux64/bin:/home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2/bin:/home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/bin:/home/jay/EDA/Synopsys/vcs/vcs/O-2018.09-SP2/bin:/home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/gui/dve/bin:/home/jay/EDA/Synopsys/vcs/vcs/O-2018.09-SP2/gui/dve/bin:/home/jay/.config/coc/extensions/coc-clangd-data/install/clangd/bin/clangd/:/usr/lib/ccache:/home/jay/.bun/bin:/home/jay/.opencode/bin:/home/jay/bin:/opt/riscv32-elf/riscv32-unknown-elf/bin/pk:/opt/riscv32-elf/bin:/opt/riscv32/bin:/home/jay/.local/share/nvim/mason/bin/:/home/jay/EDA/Synopsys/scl/scl/2018.06/linux64/bin:/home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2/bin:/home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/bin:/home/jay/EDA/Synopsys/vcs/vcs/O-2018.09-SP2/bin:/home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/gui/dve/bin:/home/jay/EDA/Synopsys/vcs/vcs/O-2018.09-SP2/gui/dve/bin:/home/jay/anaconda3/condabin:/home/jay/.nvm/versions/node/v20.18.3/bin:/home/jay/.config/coc/extensions/coc-clangd-data/install/clangd/bin/clangd/:/usr/lib/ccache:/home/jay/.local/bin:/home/jay/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/usr/bin/python3:/home/jay/.local/bin:/home/jay/perl5/bin:/opt/riscv32-elf/bin:/usr/bin/python3:/home/jay/perl5/bin:/opt/riscv32-elf/bin:/home/jay/.local/bin
 GDMSESSION=ubuntu
 HISTFILESIZE=2147450879
 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
@@ -294,62 +293,62 @@ DVE=/home/jay/EDA/Synopsys/vcs-mx/vcs-mx/O-2018.09-SP2/gui/dve
 SPECMAN_OUTPUT_TO_TTY=1
 Runtime command line arguments:
 argv[0]=./simv
-296 profile - 100
-          CPU/Mem usage: 0.030 sys,  0.120 user,  184.40M mem
-297 Mon Feb 16 11:46:16 2026
-298 pliAppInit
-299 FSDB_GATE is set.
-300 FSDB_RTL is set.
-301 Enable Parallel Dumping.
-302 pliAppMiscSet: New Sim Round
-303 pliEntryInit
-304 LIBSSCORE=found /home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2/share/PLI/lib/LINUXAMD64/libsscore_vcs201809.so through $NOVAS_HOME setting.
-305 FSDB Dumper for VCS, Release Verdi_O-2018.09-SP2, Linux x86_64/64bit, 02/21/2019
-306 (C) 1996 - 2019 by Synopsys, Inc.
-307 sps_call_fsdbDumpfile_main at 0 : ./vsrc/testbench.v(120)
-308 argv[0]: (/home/jay/Desktop/graduation_project/rtl/testbench.fsdb)
-309 *Verdi* FSDB WARNING: The FSDB file already exists. Overwriting the FSDB file may crash the programs that are using this file.
-310 *Verdi* : Create FSDB file '/home/jay/Desktop/graduation_project/rtl/testbench.fsdb'
-311 compile option from '/home/jay/Desktop/graduation_project/rtl/simv.daidir/vcs_rebuild'.
-312   "vcs '-full64' '-sverilog' '-timescale=1ns/1ns' '+v2k' '+define+fsdb' '-debug_acc+dmptf' '-debug_region+cell+encrypt' '-cpp' 'g++-4.8' '-cc' 'gcc-4.8' '-debug_access+r' '-kdb' '-lca' '-LDFLAGS' '-Wl,--no-as-needed' '+lint=TFIPC-L' './vsrc/periph/uart/axi_lite_uart_slave.v' './vsrc/periph/uart/uart_rx_fifo.v' './vsrc/periph/uart/uart_rx.v' './vsrc/periph/uart/uart_tx.v' './vsrc/common/reg.v' './vsrc/common/std_bram.v' './vsrc/common/muxwithdefault.v' './vsrc/common/async_reset.v' './vsrc/common/mux.v' './vsrc/mem/dataram_banked.v' './vsrc/mem/instrom.v' './vsrc/bus/mem_to_axi_lite_bridge.v' './vsrc/top.v' './vsrc/core/mul_3cycle.v' './vsrc/core/registerfile.v' './vsrc/core/branch_predictor.v' './vsrc/core/pc.v' './vsrc/core/id_ex_reg.v' './vsrc/core/dataram_wb_reg.v' './vsrc/core/id.v' './vsrc/core/div.v' './vsrc/core/ex_dataram_reg.v' './vsrc/core/csr.v' './vsrc/core/ex.v' './vsrc/core/wb.v' './vsrc/core/if_id_reg.v' './vsrc/core/openmips.v' './vsrc/testbench.v' './vsrc/define.v' 2>&1"
-313 FSDB_VCS_ENABLE_FAST_VC is enable
-314 sps_call_fsdbDumpvars_vd_main at 0 : ./vsrc/testbench.v(121)
-315 argv[0]: (+all)
-316 [spi_vcs_vd_ppi_create_root]: no upf option
-317 FSDB dumper cannot dump UPF related power signal ($power_tree): no ppiPowerNetwork.
-318 *Verdi* : Begin traversing the scopes, layer (0).
-319 *Verdi* : Enable +all dumping.
-320 *Verdi* : End of traversing.
-321 pliAppHDL_DumpVarComplete traverse var: profile - 
-          CPU/Mem usage: 0.040 sys,  0.130 user,  281.82M mem
-                   incr: 0.010 sys,  0.000 user,  9.75M mem
-                   accu: 0.010 sys,  0.000 user,  9.75M mem
-              accu incr: 0.010 sys,  0.000 user,  9.75M mem
+295 profile - 100
+          CPU/Mem usage: 0.050 sys,  0.250 user,  184.43M mem
+296 Thu Feb 19 17:42:21 2026
+297 pliAppInit
+298 FSDB_GATE is set.
+299 FSDB_RTL is set.
+300 Enable Parallel Dumping.
+301 pliAppMiscSet: New Sim Round
+302 pliEntryInit
+303 LIBSSCORE=found /home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2/share/PLI/lib/LINUXAMD64/libsscore_vcs201809.so through $NOVAS_HOME setting.
+304 FSDB Dumper for VCS, Release Verdi_O-2018.09-SP2, Linux x86_64/64bit, 02/21/2019
+305 (C) 1996 - 2019 by Synopsys, Inc.
+306 sps_call_fsdbDumpfile_main at 0 : ./vsrc/testbench.v(120)
+307 argv[0]: (/home/jay/Desktop/graduation_project/rtl/testbench.fsdb)
+308 *Verdi* FSDB WARNING: The FSDB file already exists. Overwriting the FSDB file may crash the programs that are using this file.
+309 *Verdi* : Create FSDB file '/home/jay/Desktop/graduation_project/rtl/testbench.fsdb'
+310 compile option from '/home/jay/Desktop/graduation_project/rtl/simv.daidir/vcs_rebuild'.
+311   "vcs '-full64' '-sverilog' '-timescale=1ns/1ns' '+v2k' '+define+fsdb' '-debug_acc+dmptf' '-debug_region+cell+encrypt' '-cpp' 'g++-4.8' '-cc' 'gcc-4.8' '-debug_access+r' '-kdb' '-lca' '-LDFLAGS' '-Wl,--no-as-needed' '+lint=TFIPC-L' './vsrc/periph/uart/axi_lite_uart_slave.v' './vsrc/periph/uart/uart_rx_fifo.v' './vsrc/periph/uart/uart_rx.v' './vsrc/periph/uart/uart_tx.v' './vsrc/common/reg.v' './vsrc/common/std_bram.v' './vsrc/common/std_bram_tdp.v' './vsrc/common/muxwithdefault.v' './vsrc/common/async_reset.v' './vsrc/common/mux.v' './vsrc/mem/dataram_banked.v' './vsrc/bus/mem_to_axi_lite_bridge.v' './vsrc/top.v' './vsrc/core/mul_3cycle.v' './vsrc/core/registerfile.v' './vsrc/core/branch_predictor.v' './vsrc/core/pc.v' './vsrc/core/id_ex_reg.v' './vsrc/core/dataram_wb_reg.v' './vsrc/core/id.v' './vsrc/core/riscv_core.v' './vsrc/core/div.v' './vsrc/core/ex_dataram_reg.v' './vsrc/core/csr.v' './vsrc/core/ex.v' './vsrc/core/wb.v' './vsrc/core/if_id_reg.v' './vsrc/testbench.v' './vsrc/define.v' 2>&1"
+312 FSDB_VCS_ENABLE_FAST_VC is enable
+313 sps_call_fsdbDumpvars_vd_main at 0 : ./vsrc/testbench.v(121)
+314 argv[0]: (+all)
+315 [spi_vcs_vd_ppi_create_root]: no upf option
+316 FSDB dumper cannot dump UPF related power signal ($power_tree): no ppiPowerNetwork.
+317 *Verdi* : Begin traversing the scopes, layer (0).
+318 *Verdi* : Enable +all dumping.
+319 *Verdi* : End of traversing.
+320 pliAppHDL_DumpVarComplete traverse var: profile - 
+          CPU/Mem usage: 0.070 sys,  0.290 user,  281.62M mem
+                   incr: 0.010 sys,  0.040 user,  9.52M mem
+                   accu: 0.010 sys,  0.040 user,  9.52M mem
+              accu incr: 0.010 sys,  0.040 user,  9.52M mem
 
-          Count usage: 35523 var,  35038 idcode,  441 callback
-                 incr: 35523 var,  35038 idcode,  441 callback
-                 accu: 35523 var,  35038 idcode,  441 callback
-            accu incr: 35523 var,  35038 idcode,  441 callback
-322 Mon Feb 16 11:46:16 2026
-323 pliAppHDL_DumpVarComplete: profile - 
-          CPU/Mem usage: 0.040 sys,  0.140 user,  284.26M mem
-                   incr: 0.000 sys,  0.010 user,  2.45M mem
-                   accu: 0.010 sys,  0.010 user,  12.20M mem
-              accu incr: 0.000 sys,  0.010 user,  2.45M mem
+          Count usage: 27365 var,  26875 idcode,  459 callback
+                 incr: 27365 var,  26875 idcode,  459 callback
+                 accu: 27365 var,  26875 idcode,  459 callback
+            accu incr: 27365 var,  26875 idcode,  459 callback
+321 Thu Feb 19 17:42:21 2026
+322 pliAppHDL_DumpVarComplete: profile - 
+          CPU/Mem usage: 0.070 sys,  0.290 user,  283.64M mem
+                   incr: 0.000 sys,  0.000 user,  2.02M mem
+                   accu: 0.010 sys,  0.040 user,  11.55M mem
+              accu incr: 0.000 sys,  0.000 user,  2.02M mem
 
-          Count usage: 35523 var,  35038 idcode,  441 callback
+          Count usage: 27365 var,  26875 idcode,  459 callback
                  incr: 0 var,  0 idcode,  0 callback
-                 accu: 35523 var,  35038 idcode,  441 callback
+                 accu: 27365 var,  26875 idcode,  459 callback
             accu incr: 0 var,  0 idcode,  0 callback
-324 Mon Feb 16 11:46:16 2026
-325 End of simulation at 8090
-326 Mon Feb 16 11:46:16 2026
-327 Begin FSDB profile info:
-328 FSDB Writer : bc1(4148) bcn(61649) mtf/stf(0/0)
-FSDB Writer elapsed time : flush(0.010035) io wait(0.000000) theadpool wait(0.000000) target functin(0.000000)
+323 Thu Feb 19 17:42:21 2026
+324 End of simulation at 8090
+325 Thu Feb 19 17:42:21 2026
+326 Begin FSDB profile info:
+327 FSDB Writer : bc1(4409) bcn(53469) mtf/stf(0/0)
+FSDB Writer elapsed time : flush(0.009075) io wait(0.000000) theadpool wait(0.000000) target functin(0.000000)
 FSDB Writer cpu time : MT Compression : 0
-329 End FSDB profile info
-330 Parallel profile    -  Flush:3 Expand:0 ProduceWait:0 ConsumerWait:0 BlockUsed:0
-331                        ProduceTime:0.206894336 ConsumerTime:0.000000000 Buffer:64MB
-332 SimExit
-333 Sim process exit
+328 End FSDB profile info
+329 Parallel profile    -  Flush:3 Expand:0 ProduceWait:0 ConsumerWait:0 BlockUsed:0
+330                        ProduceTime:0.390544472 ConsumerTime:0.000000000 Buffer:64MB
+331 SimExit
+332 Sim process exit

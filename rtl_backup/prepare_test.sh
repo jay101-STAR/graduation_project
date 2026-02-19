@@ -21,9 +21,12 @@ fi
 echo "Preparing test: $TEST_FILE"
 echo "================================"
 
-echo "2. Extracting data memory..."
+echo "2. Extracting data memory (bank0/bank1)..."
 "${DATAROM_DIR}/extract_data.sh" "$TEST_FILE" "${DATAROM_DIR}/dataram.hex"
 
 echo ""
 echo "Test preparation complete!"
-echo "You can now run: cd rtl && make comp"
+echo "You can now run:"
+echo "  cd rtl"
+echo "  make simv_build"
+echo "  ./simv -l sim.log"
