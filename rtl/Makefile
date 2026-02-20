@@ -12,6 +12,8 @@ VCS = vcs -full64 -sverilog -timescale=1ns/1ns \
 		-LDFLAGS -Wl,--no-as-needed \
 		+lint=TFIPC-L \
 		 $(SRCS)	
+
+.PHONY: clean
 comp:
 	./vsrc/instrom/llvm.sh ./vsrc/instrom/bp_tests/bp_tntn.s
 	cp ./vsrc/instrom/bp_tests/bp_tntn.hex ./vsrc/instrom/instrom.hex
@@ -104,6 +106,12 @@ verdi_official_test: test-riscv
 
 
 clean:
-	rm -rf csrc simv* *.lib *.lib++ nLint*
-	rm -rf *.log *.vpd *.key *log *.fsdb
-	rm -rf ./vsrc/instrom/*.o ./vsrc/instrom/*.bin 
+	rm -rf csrc simv simv.daidir DVEfiles verdiLog stack.info.*
+	rm -f vc_hdrs.h ucli.key
+	rm -f *.log *.vpd *.fsdb *.key *.lib *.lib++ nLint* novas.conf novas.rc novas_dump.log AN.DB
+	rm -rf test_results
+	rm -f ./vsrc/instrom/*.o ./vsrc/instrom/*.bin ./vsrc/instrom/*.dump
+	rm -f ./vsrc/instrom/test_temp.hex ./vsrc/instrom/test_temp.hex.bin
+	rm -f ./vsrc/instrom/perf_temp.hex ./vsrc/instrom/perf_temp.hex.bin
+	rm -f ./vsrc/instrom/*.backup ./vsrc/instrom/*.hex.*_backup
+	rm -f ./vsrc/dataram/*.backup ./vsrc/dataram/*.hex.*_backup

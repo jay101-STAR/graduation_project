@@ -15,6 +15,7 @@ module testbench ();
   reg         uart_rx_smoke_en;
   reg         uart_rx_overrun_smoke_en;
   reg         uart_tx_smoke_en;
+  reg         uart_tx_print_en;
   reg         uart_loopback_smoke_en = 1'b0;
   reg         debug_m_ext_en;
   reg         bp_pattern_test_en;
@@ -68,17 +69,21 @@ module testbench ();
 
   localparam integer TIMEOUT_NS_DEFAULT = 4000000;
   localparam integer TIMEOUT_NS_UART_SMOKE = 4000000;
+  localparam [31:0] UART_TXDATA_ADDR = 32'h1000_0000;
   localparam [31:0] UART_STATUS_ADDR = 32'h1000_0004;
   localparam [31:0] UART_RXDATA_ADDR = 32'h1000_0008;
   integer timeout_ns_cfg;
+  integer timeout_ns_plusarg;
 
   // Optional RX smoke stimulus:
   // +uart_rx_smoke         : serial inject one byte 0x41
   // +uart_rx_overrun_smoke : serial inject a burst (0x41..0x45) before first byte is consumed
+  // +uart_tx_print         : print UART TX stream to sim.log
   initial begin
     uart_rx_smoke_en         = $test$plusargs("uart_rx_smoke");
     uart_rx_overrun_smoke_en = $test$plusargs("uart_rx_overrun_smoke");
     uart_tx_smoke_en         = $test$plusargs("uart_tx_smoke");
+    uart_tx_print_en         = $test$plusargs("uart_tx_print");
     uart_loopback_smoke_en   = $test$plusargs("uart_loopback_smoke");
     debug_m_ext_en           = $test$plusargs("debug_m_ext");
     bp_pattern_test_en       = $test$plusargs("bp_pattern_test");
@@ -142,6 +147,11 @@ module testbench ();
     timeout_ns_cfg = ($test$plusargs("uart_rx_smoke") || $test$plusargs("uart_rx_overrun_smoke") ||
                       $test$plusargs("uart_tx_smoke") || $test$plusargs("uart_loopback_smoke")) ?
         TIMEOUT_NS_UART_SMOKE : TIMEOUT_NS_DEFAULT;
+    // 可选覆盖：+timeout_ns=<N>
+    if ($value$plusargs("timeout_ns=%d", timeout_ns_plusarg) && (timeout_ns_plusarg > 0)) begin
+      timeout_ns_cfg = timeout_ns_plusarg;
+    end
+    $display("[TB] timeout_ns=%0d", timeout_ns_cfg);
     // 超时保护：避免仿真卡住
     #timeout_ns_cfg;
     if (observed_tohost_value == 0) begin
@@ -176,6 +186,21 @@ module testbench ();
   //   end
   // end
   always @(posedge clk) begin
+    if (!rst && uart_tx_print_en &&
+        top.bridge_axi_awvalid && top.axi_bridge_awready &&
+        top.bridge_axi_wvalid && top.axi_bridge_wready &&
+        (top.bridge_axi_awaddr == UART_TXDATA_ADDR)) begin
+      if (top.bridge_axi_wstrb[0]) begin
+        $write("%c", top.bridge_axi_wdata[7:0]);
+      end else if (top.bridge_axi_wstrb[1]) begin
+        $write("%c", top.bridge_axi_wdata[15:8]);
+      end else if (top.bridge_axi_wstrb[2]) begin
+        $write("%c", top.bridge_axi_wdata[23:16]);
+      end else if (top.bridge_axi_wstrb[3]) begin
+        $write("%c", top.bridge_axi_wdata[31:24]);
+      end
+    end
+
     if (!rst && (uart_rx_smoke_en || uart_rx_overrun_smoke_en)) begin
       if (top.bridge_axi_arvalid && top.axi_bridge_arready &&
           ((top.bridge_axi_araddr == UART_STATUS_ADDR) ||

@@ -7,13 +7,8 @@ _start:
     li   t1, 0x10000008      # UART_RXDATA
     li   t2, 0x41            # expected first byte 'A'
 
-    # Wait for testbench serial burst (0x41..0x45) to arrive.
-    # At 50MHz/115200, 5 bytes need about 0.5ms.
-    li   s1, 40000
-wait_burst:
-    addi s1, s1, -1
-    bne  s1, x0, wait_burst
-
+    # Board-interactive mode:
+    # wait forever until at least one RX byte arrives (bit1=rx_valid).
 poll_status_valid:
     lw   t3, 0(t0)           # read status
     addi x0, x0, 0
@@ -25,7 +20,9 @@ poll_status_valid:
     addi x0, x0, 0
     beq  t3, x0, poll_status_valid
 
-    # STATUS must indicate overrun (bit2=1) after second injected byte
+    # Board-friendly overrun detection:
+    # keep polling until bit2 sets, instead of checking exactly once.
+wait_overrun_set:
     lw   t4, 0(t0)
     addi x0, x0, 0
     addi x0, x0, 0
@@ -34,8 +31,9 @@ poll_status_valid:
     addi x0, x0, 0
     addi x0, x0, 0
     addi x0, x0, 0
-    beq  t4, x0, fail_overrun_not_set
+    beq  t4, x0, wait_overrun_set
 
+check_first_rx_byte:
     # RXDATA should still return first unread byte in this minimal model.
     lw   t5, 0(t1)
     addi x0, x0, 0

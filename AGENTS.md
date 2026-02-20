@@ -18,7 +18,7 @@ Run from `rtl/` unless noted:
 - `./run_tests.sh 'rv32u[i,m]-p-*'`: fast batch ISA regression.
 - `./run_all_tests.sh [--no-build]`: unified UART smoke + ISA regression.
 - `./run_bp_tests.sh [--build]`: branch predictor pattern suite.
-- From repo root: `./run_coremark.sh`: build CoreMark ELF, generate HEX/data images, run sim.
+- `./run_coremark.sh`: build CoreMark ELF, generate HEX/data images, run sim.
 
 ## Coding Style & Naming Conventions
 - Module names: lowercase with underscores (example: `branch_predictor`).
@@ -40,3 +40,9 @@ Run from `rtl/` unless noted:
 - Suggested format: `<scope>: <action>` (example: `core/ex: fix BLTU compare path`).
 - Keep one logical change per commit.
 - PRs should include: what changed, why, affected files, commands run, and key results (`TEST PASSED`/summary logs). Include waveform context for control-path changes.
+
+## Agent Collaboration Rule
+- Before running any command/script/test or modifying any file, the AI agent must ask for and obtain explicit user approval.
+- No actions should be executed based on inferred consent from context; approval must be clear in the current conversation.
+- If the user asks to pause/stop, the agent must halt immediately and wait for the next explicit approval before continuing.
+- The AI agent must always answer in Chinese unless the user explicitly requests another language.
