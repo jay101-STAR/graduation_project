@@ -4,11 +4,11 @@ module testbench ();
 
   reg         clk;
   reg         rst;
-  reg  [31:0] tohost_value_register;
-  reg  [31:0] tohost_value_dataram;
-  reg  [31:0] bp_branch_total;
-  reg  [31:0] bp_mispredict_total;
-  reg  [31:0] bp_target_miss_total;
+  wire [31:0] tohost_value_register;
+  wire [31:0] tohost_value_dataram;
+  wire [31:0] bp_branch_total;
+  wire [31:0] bp_mispredict_total;
+  wire [31:0] bp_target_miss_total;
   reg         tb_uart_rxd_stim;
   wire        tb_uart_txd;
   wire        tb_uart_rxd;
@@ -224,10 +224,6 @@ module testbench ();
 
       last_pc <= top.u_core.pc_if_pc;
 
-      if (cycle_count % 1000000 == 0) begin
-        $display("[DBG] cycle=%0d pc=0x%08h", cycle_count, top.u_core.pc_if_pc);
-      end
-
       if (same_pc_count == 50000000) begin  // Increased for CoreMark
         $display("\033[1;33m*** STUCK PC: 0x%08h ***\033[0m", top.u_core.pc_if_pc);
         $finish;
@@ -264,7 +260,7 @@ module testbench ();
     // Prefer architectural tohost write when address decoder hits.
     // For some tests, tohost symbol address is not fixed; fallback to gp in write_tohost loop.
     if (!rst && observed_tohost_value != 0) begin
-      perf_mcycle = top.u_core.csr0.cycle_int;
+      perf_mcycle   = top.u_core.csr0.cycle_int;
       perf_minstret = top.u_core.csr0.instret_int;
       if (perf_minstret != 0) begin
         perf_cpi = perf_mcycle * 1.0 / perf_minstret;

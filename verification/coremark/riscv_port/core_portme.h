@@ -48,7 +48,7 @@ Original Author: Shay Gal-on
 #endif
 
 #ifndef CLOCKS_PER_SEC
-#define CLOCKS_PER_SEC 500000000
+#define CLOCKS_PER_SEC 50000000
 #endif
 /* Configuration : HAS_STDIO
         Define to 1 if the platform has stdio.h.

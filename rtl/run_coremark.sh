@@ -10,6 +10,7 @@ BENCH_DIR="${PROJECT_DIR}/verification/riscv-tests/benchmarks/rv32im_build"
 RTL_DIR="${PROJECT_DIR}/rtl"
 INSTROM_HEX="${RTL_DIR}/vsrc/instrom/instrom.hex"
 DATARAM_DIR="${RTL_DIR}/vsrc/dataram"
+COE_GEN_SCRIPT="${DATARAM_DIR}/gen_banked_coe.py"
 COREMARK_ELF="${COREMARK_DIR}/coremark.elf"
 
 usage() {
@@ -120,6 +121,7 @@ echo "[CoreMark] Generating memory images..."
 "${RTL_DIR}/vsrc/instrom/elf2hex.sh" "${COREMARK_ELF}" "${INSTROM_HEX}"
 "${DATARAM_DIR}/split_instrom_to_banks.sh" "${INSTROM_HEX}" "${DATARAM_DIR}"
 "${DATARAM_DIR}/extract_data.sh" "${COREMARK_ELF}" "${DATARAM_DIR}"
+python3 "${COE_GEN_SCRIPT}"
 
 cd "${RTL_DIR}"
 if [[ "${SKIP_BUILD}" != "1" ]]; then
@@ -141,7 +143,7 @@ else
 fi
 
 echo "[CoreMark] Result summary:"
-grep -E "TEST PASSED|TEST FAILED|TIMEOUT|\\[PERF\\]|\\[BP\\]|CoreMark|Iterations|Total ticks|Total time|Correct operation validated|Errors detected" sim.log || true
+grep -E "TIMEOUT|\\[PERF\\]|\\[BP\\]|CoreMark|Iterations|Total ticks|Total time|Correct operation validated|Errors detected" sim.log || true
 
 perf_mcycle="$(sed -n 's/.*\[PERF\] mcycle=\([0-9][0-9]*\).*/\1/p' sim.log | tail -n 1)"
 if [[ -n "${perf_mcycle}" ]] && [[ "${perf_mcycle}" -gt 0 ]]; then

@@ -92,6 +92,7 @@ run_uart_test() {
       ./vsrc/instrom/llvm.sh '${asm_file}' && \
       cp '${asm_file%.s}.hex' ./vsrc/instrom/instrom.hex && \
       ./vsrc/dataram/split_instrom_to_banks.sh ./vsrc/instrom/instrom.hex ./vsrc/dataram && \
+      python3 ./vsrc/dataram/gen_banked_coe.py && \
       ./simv ${plusarg} +bp_pattern_test -l sim.log" >"${log_file}" 2>&1; then
     if rg -q "TEST PASSED" "${log_file}"; then
       echo "PASS" | tee -a "${SUMMARY_FILE}"

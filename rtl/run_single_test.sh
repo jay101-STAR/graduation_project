@@ -13,6 +13,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 RISCV_TESTS_DIR="${SCRIPT_DIR}/../verification/riscv-tests/isa"
 INSTROM_DIR="${SCRIPT_DIR}/vsrc/instrom"
 DATARAM_DIR="${SCRIPT_DIR}/vsrc/dataram"
+COE_GEN_SCRIPT="${DATARAM_DIR}/gen_banked_coe.py"
 
 # Find test file
 TEST_FILE=$(find "${RISCV_TESTS_DIR}" -name "${TEST_NAME}" -type f ! -name "*.dump" | head -1)
@@ -64,6 +65,9 @@ cp "${TEMP_HEX}" "${INSTROM_DIR}/instrom.hex"
 
 # Initialize data memory from ELF (required by tests with .data usage, e.g. fence_i)
 "${DATARAM_DIR}/extract_data.sh" "${TEST_FILE}" "${DATARAM_DIR}" >/dev/null
+
+# Generate merged bank COE files for Vivado BRAM/IP init (inst + data overlay)
+python3 "${COE_GEN_SCRIPT}" >/dev/null
 
 echo "Running simulation..."
 cd "${SCRIPT_DIR}"
