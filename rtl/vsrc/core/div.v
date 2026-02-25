@@ -24,6 +24,7 @@ module div (
 
   reg sign_q;
   reg sign_r;
+  reg div_sign_reg;
   reg is_div_by_zero;
   reg is_overflow;
 
@@ -48,6 +49,29 @@ module div (
     input        sign;
     begin
       recover_val = sign ? (~abs_val + 1'b1) : abs_val;
+    end
+  endfunction
+
+  // Unsigned helper: power-of-two test.
+  function is_pow2_32;
+    input [31:0] val;
+    begin
+      is_pow2_32 = (val != 32'b0) && ((val & (val - 1'b1)) == 32'b0);
+    end
+  endfunction
+
+  // Unsigned helper: count trailing zeros for power-of-two divisors.
+  function [4:0] ctz32;
+    input [31:0] val;
+    integer i;
+    begin : ctz32_loop
+      ctz32 = 5'd0;
+      for (i = 0; i < 32; i = i + 1) begin
+        if (val[i]) begin
+          ctz32 = i[4:0];
+          disable ctz32_loop;
+        end
+      end
     end
   endfunction
 
@@ -78,6 +102,7 @@ module div (
       divisor_reg       <= 32'b0;
       sign_q            <= 1'b0;
       sign_r            <= 1'b0;
+      div_sign_reg      <= 1'b0;
       is_div_by_zero    <= 1'b0;
       is_overflow       <= 1'b0;
     end else begin
@@ -92,6 +117,7 @@ module div (
             divisor_reg       <= op2_abs_divisor;
             sign_q            <= op1_is_neg ^ op2_is_neg;
             sign_r            <= op1_is_neg;
+            div_sign_reg      <= div_sign;
             // dividend_reg   <= dividend; // 删除
 
             // 异常判断
@@ -131,7 +157,26 @@ module div (
             div_done     <= 1'b1;
           end
           // ----------------------------------------------------
-          // 情况 3: 正常计算完成
+          // 情况 3: Early-out (无需完整 32 次迭代)
+          // ----------------------------------------------------
+          else if ((cnt == 6'd0) && (divisor_reg == 32'd1)) begin
+            // q = dividend, r = 0 (signed/unsigned 都成立；INT_MIN/-1 已由 overflow 处理)
+            div_result_q <= recover_val(dividend_extended[31:0], sign_q);
+            div_result_r <= 32'b0;
+            div_done     <= 1'b1;
+          end else if ((cnt == 6'd0) && (dividend_extended[31:0] < divisor_reg)) begin
+            // |dividend| < |divisor| => q = 0, r = dividend
+            div_result_q <= 32'b0;
+            div_result_r <= recover_val(dividend_extended[31:0], sign_r);
+            div_done     <= 1'b1;
+          end else if ((cnt == 6'd0) && !div_sign_reg && is_pow2_32(divisor_reg)) begin
+            // DIVU/REMU 且除数为 2 的幂：移位与掩码快速返回
+            div_result_q <= dividend_extended[31:0] >> ctz32(divisor_reg);
+            div_result_r <= dividend_extended[31:0] & (divisor_reg - 32'd1);
+            div_done     <= 1'b1;
+          end
+          // ----------------------------------------------------
+          // 情况 4: 正常计算完成
           // ----------------------------------------------------
           else if (cnt == 6'd32) begin
             div_done     <= 1'b1;
@@ -140,7 +185,7 @@ module div (
             div_result_r <= recover_val(dividend_extended[63:32], sign_r);
           end
           // ----------------------------------------------------
-          // 情况 4: 计算中
+          // 情况 5: 计算中
           // ----------------------------------------------------
           else begin
             cnt <= cnt + 1;

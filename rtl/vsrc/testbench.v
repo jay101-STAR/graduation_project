@@ -67,13 +67,13 @@ module testbench ();
     #200 rst = 1'b0;  // 释放复位
   end
 
-  localparam integer TIMEOUT_NS_DEFAULT = 4000000;
-  localparam integer TIMEOUT_NS_UART_SMOKE = 4000000;
+  localparam longint unsigned TIMEOUT_NS_DEFAULT = 64'd4000000;
+  localparam longint unsigned TIMEOUT_NS_UART_SMOKE = 64'd4000000;
   localparam [31:0] UART_TXDATA_ADDR = 32'h1000_0000;
   localparam [31:0] UART_STATUS_ADDR = 32'h1000_0004;
   localparam [31:0] UART_RXDATA_ADDR = 32'h1000_0008;
-  integer timeout_ns_cfg;
-  integer timeout_ns_plusarg;
+  longint unsigned timeout_ns_cfg;
+  longint unsigned timeout_ns_plusarg;
 
   // Optional RX smoke stimulus:
   // +uart_rx_smoke         : serial inject one byte 0x41
@@ -121,10 +121,10 @@ module testbench ();
       .ext_top_uart_txd     (tb_uart_txd)
   );
 
-  initial begin
-    $fsdbDumpfile("/home/jay/Desktop/graduation_project/rtl/testbench.fsdb");
-    $fsdbDumpvars("+all");
-  end
+  // initial begin
+  //   $fsdbDumpfile("/home/jay/Desktop/graduation_project/rtl/testbench.fsdb");
+  //   $fsdbDumpvars("+all");
+  // end
 
   // Debug: Monitor PC and instructions (only first 20 cycles)
   integer cycle_count = 0;
