@@ -108,7 +108,7 @@ verdi_official_test: test-riscv
 clean:
 	rm -rf csrc simv simv.daidir DVEfiles verdiLog stack.info.*
 	rm -f vc_hdrs.h ucli.key
-	rm -f *.log *.vpd *.fsdb *.key *.lib *.lib++ nLint* novas.conf novas.rc novas_dump.log AN.DB
+	rm -f *.vpd *.fsdb *.key *.lib *.lib++ nLint* novas.conf novas.rc novas_dump.log AN.DB
 	rm -rf test_results
 	rm -f ./vsrc/instrom/*.o ./vsrc/instrom/*.bin ./vsrc/instrom/*.dump
 	rm -f ./vsrc/instrom/test_temp.hex ./vsrc/instrom/test_temp.hex.bin

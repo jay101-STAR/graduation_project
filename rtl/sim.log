@@ -1,0 +1,29 @@
+Command: /home/jay/Desktop/graduation_project/rtl/./simv +timeout_ns=100000000000 +uart_tx_print -l sim.log
+Chronologic VCS simulator copyright 1991-2018
+Contains Synopsys proprietary information.
+Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Feb 25 15:42 2026
+[TB] timeout_ns=100000000000
+2K performance run parameters for coremark.
+CoreMark Size    : 666
+Total ticks      : 40756622
+Total time (secs): 0
+ERROR! Must execute for at least 10 secs for a valid result!
+Iterations       : 100
+Compiler version : GCC15.1.0
+Compiler flags   : -O2 -ffreestanding -nostdlib
+Memory location  : STACK
+seedcrc          : 0xe9f5
+[0]crclist       : 0xe714
+[0]crcmatrix     : 0x1fd7
+[0]crcstate      : 0x8e3a
+[0]crcfinal      : 0x988c
+Errors detected
+[BP] branches=5324884 mispredict=519541 target_miss=0 accuracy=90.24%
+[1;32m*** TEST PASSED ***[0m
+[PERF] mcycle=42714728 minstret=28748172 cpi=1.4858
+$finish called from file "./vsrc/testbench.v", line 292.
+$finish at simulation time            854294930
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 854294930 ns
+CPU Time:    820.240 seconds;       Data structure size:   0.3Mb
+Wed Feb 25 15:56:25 2026

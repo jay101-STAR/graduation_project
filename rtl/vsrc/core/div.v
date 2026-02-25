@@ -17,6 +17,7 @@ module div (
   localparam DONE = 2'b10;
 
   reg [63:0] dividend_extended;
+  reg [31:0] dividend_abs_reg;
   reg [31:0] divisor_reg;
   // reg [31:0] dividend_reg; // 【优化】删除此寄存器，节省资源
   reg [ 5:0] cnt;
@@ -75,6 +76,29 @@ module div (
     end
   endfunction
 
+  // Unsigned helper: highest '1' bit index (0..31), returns 0 for val==0.
+  function [5:0] msb_pos32;
+    input [31:0] val;
+    integer i;
+    begin : msb_pos32_loop
+      msb_pos32 = 6'd0;
+      for (i = 31; i >= 0; i = i - 1) begin
+        if (val[i]) begin
+          msb_pos32 = i[5:0];
+          disable msb_pos32_loop;
+        end
+      end
+    end
+  endfunction
+
+  // Skip guaranteed-zero quotient prefix iterations:
+  // 1) leading zeros of dividend, and 2) (bitwidth(divisor)-1).
+  wire [5:0] dividend_msb_idx = msb_pos32(op1_abs_dividend);
+  wire [5:0] divisor_msb_idx  = msb_pos32(op2_abs_divisor);
+  wire [5:0] dividend_lz_cnt  = 6'd31 - dividend_msb_idx;
+  wire [5:0] div_skip_count   = (dividend_lz_cnt > divisor_msb_idx) ? dividend_lz_cnt :
+                                divisor_msb_idx;
+
   // 状态机
   always @(posedge clk) begin
     if (rst) current_state <= IDLE;
@@ -99,6 +123,7 @@ module div (
       div_result_r      <= 32'b0;
       cnt               <= 6'b0;
       dividend_extended <= 64'b0;
+      dividend_abs_reg  <= 32'b0;
       divisor_reg       <= 32'b0;
       sign_q            <= 1'b0;
       sign_r            <= 1'b0;
@@ -111,9 +136,11 @@ module div (
           div_done <= 1'b0;
           if (div_start) begin
             div_busy          <= 1'b1;
-            cnt               <= 6'b0;
-            // 锁存绝对值
-            dividend_extended <= {32'b0, op1_abs_dividend};
+            // 预跳过 guaranteed-zero 商前缀迭代，减少平均延迟
+            cnt               <= div_skip_count;
+            // 锁存绝对值（dividend_abs_reg 供 early-out 使用）
+            dividend_abs_reg  <= op1_abs_dividend;
+            dividend_extended <= ({32'b0, op1_abs_dividend} << div_skip_count);
             divisor_reg       <= op2_abs_divisor;
             sign_q            <= op1_is_neg ^ op2_is_neg;
             sign_r            <= op1_is_neg;
@@ -145,7 +172,7 @@ module div (
             // 【修复Bug并优化】
             // 此时 dividend_extended[31:0] 存的是 abs(dividend)
             // 利用 recover_val 函数和 sign_r 恢复出原始被除数
-            div_result_r <= recover_val(dividend_extended[31:0], sign_r);
+            div_result_r <= recover_val(dividend_abs_reg, sign_r);
             div_done <= 1'b1;
           end
           // ----------------------------------------------------
@@ -159,20 +186,20 @@ module div (
           // ----------------------------------------------------
           // 情况 3: Early-out (无需完整 32 次迭代)
           // ----------------------------------------------------
-          else if ((cnt == 6'd0) && (divisor_reg == 32'd1)) begin
+          else if (divisor_reg == 32'd1) begin
             // q = dividend, r = 0 (signed/unsigned 都成立；INT_MIN/-1 已由 overflow 处理)
-            div_result_q <= recover_val(dividend_extended[31:0], sign_q);
+            div_result_q <= recover_val(dividend_abs_reg, sign_q);
             div_result_r <= 32'b0;
             div_done     <= 1'b1;
-          end else if ((cnt == 6'd0) && (dividend_extended[31:0] < divisor_reg)) begin
+          end else if (dividend_abs_reg < divisor_reg) begin
             // |dividend| < |divisor| => q = 0, r = dividend
             div_result_q <= 32'b0;
-            div_result_r <= recover_val(dividend_extended[31:0], sign_r);
+            div_result_r <= recover_val(dividend_abs_reg, sign_r);
             div_done     <= 1'b1;
-          end else if ((cnt == 6'd0) && !div_sign_reg && is_pow2_32(divisor_reg)) begin
+          end else if (!div_sign_reg && is_pow2_32(divisor_reg)) begin
             // DIVU/REMU 且除数为 2 的幂：移位与掩码快速返回
-            div_result_q <= dividend_extended[31:0] >> ctz32(divisor_reg);
-            div_result_r <= dividend_extended[31:0] & (divisor_reg - 32'd1);
+            div_result_q <= dividend_abs_reg >> ctz32(divisor_reg);
+            div_result_r <= dividend_abs_reg & (divisor_reg - 32'd1);
             div_done     <= 1'b1;
           end
           // ----------------------------------------------------
