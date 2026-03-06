@@ -8,11 +8,11 @@ module mem_to_axi_lite_bridge (
     input rst,
 
     // ---------------- CPU-side local request interface ----------------
-    input  [31:0] cpu_axi_addr,
-    input  [31:0] cpu_axi_wdata,
-    input  [ 3:0] cpu_axi_wstrb,
-    input         cpu_axi_wen,
-    input         cpu_axi_ren,
+    input      [31:0] cpu_axi_addr,
+    input      [31:0] cpu_axi_wdata,
+    input      [ 3:0] cpu_axi_wstrb,
+    input             cpu_axi_wen,
+    input             cpu_axi_ren,
     output reg [31:0] axi_cpu_rdata,
     output            axi_cpu_stall,
     output reg        axi_cpu_error,
@@ -31,9 +31,9 @@ module mem_to_axi_lite_bridge (
     input             m_axi_wready,
 
     // Write response channel
-    input      [ 1:0] m_axi_bresp,
-    input             m_axi_bvalid,
-    output reg        m_axi_bready,
+    input      [1:0] m_axi_bresp,
+    input            m_axi_bvalid,
+    output reg       m_axi_bready,
 
     // Read address channel
     output reg [31:0] m_axi_araddr,
@@ -74,34 +74,34 @@ module mem_to_axi_lite_bridge (
 
   always @(posedge clk) begin
     if (rst) begin
-      bridge_state <= ST_IDLE;
-      write_aw_done <= 1'b0;
-      write_w_done <= 1'b0;
+      bridge_state     <= ST_IDLE;
+      write_aw_done    <= 1'b0;
+      write_w_done     <= 1'b0;
       wait_req_release <= 1'b0;
 
-      axi_cpu_rdata <= 32'h0;
-      axi_cpu_error <= 1'b0;
+      axi_cpu_rdata    <= 32'h0;
+      axi_cpu_error    <= 1'b0;
 
-      m_axi_awaddr <= 32'h0;
-      m_axi_awprot <= 3'b000;
-      m_axi_awvalid <= 1'b0;
+      m_axi_awaddr     <= 32'h0;
+      m_axi_awprot     <= 3'b000;
+      m_axi_awvalid    <= 1'b0;
 
-      m_axi_wdata <= 32'h0;
-      m_axi_wstrb <= 4'h0;
-      m_axi_wvalid <= 1'b0;
+      m_axi_wdata      <= 32'h0;
+      m_axi_wstrb      <= 4'h0;
+      m_axi_wvalid     <= 1'b0;
 
-      m_axi_bready <= 1'b0;
+      m_axi_bready     <= 1'b0;
 
-      m_axi_araddr <= 32'h0;
-      m_axi_arprot <= 3'b000;
-      m_axi_arvalid <= 1'b0;
+      m_axi_araddr     <= 32'h0;
+      m_axi_arprot     <= 3'b000;
+      m_axi_arvalid    <= 1'b0;
 
-      m_axi_rready <= 1'b0;
+      m_axi_rready     <= 1'b0;
     end else begin
       case (bridge_state)
         ST_IDLE: begin
           write_aw_done <= 1'b0;
-          write_w_done <= 1'b0;
+          write_w_done  <= 1'b0;
 
           // Wait until request level drops before accepting next transaction.
           if (wait_req_release) begin
@@ -111,24 +111,24 @@ module mem_to_axi_lite_bridge (
           end else begin
             // Write has priority if both are asserted unexpectedly.
             if (cpu_axi_wen) begin
-              axi_cpu_error <= 1'b0;
-              m_axi_awaddr <= cpu_axi_addr;
-              m_axi_awprot <= 3'b000;
-              m_axi_awvalid <= 1'b1;
+              axi_cpu_error    <= 1'b0;
+              m_axi_awaddr     <= cpu_axi_addr;
+              m_axi_awprot     <= 3'b000;
+              m_axi_awvalid    <= 1'b1;
 
-              m_axi_wdata <= cpu_axi_wdata;
-              m_axi_wstrb <= cpu_axi_wstrb;
-              m_axi_wvalid <= 1'b1;
+              m_axi_wdata      <= cpu_axi_wdata;
+              m_axi_wstrb      <= cpu_axi_wstrb;
+              m_axi_wvalid     <= 1'b1;
 
-              bridge_state <= ST_W_ADDR_DATA;
+              bridge_state     <= ST_W_ADDR_DATA;
               wait_req_release <= 1'b1;
             end else if (cpu_axi_ren) begin
-              axi_cpu_error <= 1'b0;
-              m_axi_araddr <= cpu_axi_addr;
-              m_axi_arprot <= 3'b000;
-              m_axi_arvalid <= 1'b1;
+              axi_cpu_error    <= 1'b0;
+              m_axi_araddr     <= cpu_axi_addr;
+              m_axi_arprot     <= 3'b000;
+              m_axi_arvalid    <= 1'b1;
 
-              bridge_state <= ST_R_ADDR;
+              bridge_state     <= ST_R_ADDR;
               wait_req_release <= 1'b1;
             end
           end
@@ -153,17 +153,17 @@ module mem_to_axi_lite_bridge (
 
         ST_W_RESP: begin
           if (b_handshake) begin
-            m_axi_bready <= 1'b0;
+            m_axi_bready  <= 1'b0;
             axi_cpu_error <= (m_axi_bresp != AXI_RESP_OKAY);
-            bridge_state <= ST_IDLE;
+            bridge_state  <= ST_IDLE;
           end
         end
 
         ST_R_ADDR: begin
           if (ar_handshake) begin
             m_axi_arvalid <= 1'b0;
-            m_axi_rready <= 1'b1;
-            bridge_state <= ST_R_DATA;
+            m_axi_rready  <= 1'b1;
+            bridge_state  <= ST_R_DATA;
           end
         end
 
@@ -171,8 +171,8 @@ module mem_to_axi_lite_bridge (
           if (r_handshake) begin
             axi_cpu_rdata <= m_axi_rdata;
             axi_cpu_error <= (m_axi_rresp != AXI_RESP_OKAY);
-            m_axi_rready <= 1'b0;
-            bridge_state <= ST_IDLE;
+            m_axi_rready  <= 1'b0;
+            bridge_state  <= ST_IDLE;
           end
         end
 

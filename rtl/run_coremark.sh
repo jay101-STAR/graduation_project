@@ -10,7 +10,7 @@ BENCH_DIR="${PROJECT_DIR}/verification/riscv-tests/benchmarks/rv32im_build"
 RTL_DIR="${PROJECT_DIR}/rtl"
 INSTROM_HEX="${RTL_DIR}/vsrc/instrom/instrom.hex"
 DATARAM_DIR="${RTL_DIR}/vsrc/dataram"
-COE_GEN_SCRIPT="${DATARAM_DIR}/gen_banked_coe.py"
+MEM_TOOL="${DATARAM_DIR}/mem_image_tool.py"
 COREMARK_ELF="${COREMARK_DIR}/coremark.elf"
 
 usage() {
@@ -95,8 +95,7 @@ for f in \
   "${BENCH_DIR}/crt_rv32im.S" \
   "${BENCH_DIR}/link_rv32im.ld" \
   "${RTL_DIR}/vsrc/instrom/elf2hex.sh" \
-  "${DATARAM_DIR}/split_instrom_to_banks.sh" \
-  "${DATARAM_DIR}/extract_data.sh"; do
+  "${MEM_TOOL}"; do
   if [[ ! -f "${f}" ]]; then
     echo "Error: required file not found: ${f}"
     exit 1
@@ -119,9 +118,9 @@ riscv32-unknown-elf-gcc \
 
 echo "[CoreMark] Generating memory images..."
 "${RTL_DIR}/vsrc/instrom/elf2hex.sh" "${COREMARK_ELF}" "${INSTROM_HEX}"
-"${DATARAM_DIR}/split_instrom_to_banks.sh" "${INSTROM_HEX}" "${DATARAM_DIR}"
-"${DATARAM_DIR}/extract_data.sh" "${COREMARK_ELF}" "${DATARAM_DIR}"
-python3 "${COE_GEN_SCRIPT}"
+python3 "${MEM_TOOL}" init-instrom --instrom "${INSTROM_HEX}" --out-dir "${DATARAM_DIR}"
+python3 "${MEM_TOOL}" overlay-data --elf "${COREMARK_ELF}" --out-dir "${DATARAM_DIR}"
+python3 "${MEM_TOOL}" emit --dir "${DATARAM_DIR}"
 
 cd "${RTL_DIR}"
 if [[ "${SKIP_BUILD}" != "1" ]]; then

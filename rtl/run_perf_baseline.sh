@@ -12,6 +12,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 RISCV_TESTS_DIR="${SCRIPT_DIR}/../verification/riscv-tests/isa"
 INSTROM_DIR="${SCRIPT_DIR}/vsrc/instrom"
 DATARAM_DIR="${SCRIPT_DIR}/vsrc/dataram"
+MEM_TOOL="${DATARAM_DIR}/mem_image_tool.py"
 RESULTS_DIR="${SCRIPT_DIR}/test_results"
 TIMESTAMP="$(date +%Y%m%d_%H%M%S)"
 SUMMARY_FILE="${RESULTS_DIR}/perf_baseline_${TIMESTAMP}.txt"
@@ -109,12 +110,8 @@ ORIGINAL_INST_HEX="${INSTROM_DIR}/instrom.hex"
 BACKUP_INST_HEX="${INSTROM_DIR}/instrom.hex.perf_backup"
 ORIGINAL_BANK0_HEX="${DATARAM_DIR}/bank0.hex"
 ORIGINAL_BANK1_HEX="${DATARAM_DIR}/bank1.hex"
-ORIGINAL_INST_BANK0_HEX="${DATARAM_DIR}/inst_bank0.hex"
-ORIGINAL_INST_BANK1_HEX="${DATARAM_DIR}/inst_bank1.hex"
 BACKUP_BANK0_HEX="${DATARAM_DIR}/bank0.hex.perf_backup"
 BACKUP_BANK1_HEX="${DATARAM_DIR}/bank1.hex.perf_backup"
-BACKUP_INST_BANK0_HEX="${DATARAM_DIR}/inst_bank0.hex.perf_backup"
-BACKUP_INST_BANK1_HEX="${DATARAM_DIR}/inst_bank1.hex.perf_backup"
 
 if [[ -f "${ORIGINAL_INST_HEX}" ]]; then
   cp "${ORIGINAL_INST_HEX}" "${BACKUP_INST_HEX}"
@@ -125,13 +122,6 @@ fi
 if [[ -f "${ORIGINAL_BANK1_HEX}" ]]; then
   cp "${ORIGINAL_BANK1_HEX}" "${BACKUP_BANK1_HEX}"
 fi
-if [[ -f "${ORIGINAL_INST_BANK0_HEX}" ]]; then
-  cp "${ORIGINAL_INST_BANK0_HEX}" "${BACKUP_INST_BANK0_HEX}"
-fi
-if [[ -f "${ORIGINAL_INST_BANK1_HEX}" ]]; then
-  cp "${ORIGINAL_INST_BANK1_HEX}" "${BACKUP_INST_BANK1_HEX}"
-fi
-
 restore_images() {
   if [[ -f "${BACKUP_INST_HEX}" ]]; then
     mv "${BACKUP_INST_HEX}" "${ORIGINAL_INST_HEX}"
@@ -141,12 +131,6 @@ restore_images() {
   fi
   if [[ -f "${BACKUP_BANK1_HEX}" ]]; then
     mv "${BACKUP_BANK1_HEX}" "${ORIGINAL_BANK1_HEX}"
-  fi
-  if [[ -f "${BACKUP_INST_BANK0_HEX}" ]]; then
-    mv "${BACKUP_INST_BANK0_HEX}" "${ORIGINAL_INST_BANK0_HEX}"
-  fi
-  if [[ -f "${BACKUP_INST_BANK1_HEX}" ]]; then
-    mv "${BACKUP_INST_BANK1_HEX}" "${ORIGINAL_INST_BANK1_HEX}"
   fi
 }
 trap restore_images EXIT
@@ -183,8 +167,8 @@ for test_name in "${TESTS[@]}"; do
   fi
 
   cp "${temp_hex}" "${ORIGINAL_INST_HEX}"
-  "${DATARAM_DIR}/split_instrom_to_banks.sh" "${ORIGINAL_INST_HEX}" "${DATARAM_DIR}" >/dev/null
-  "${DATARAM_DIR}/extract_data.sh" "${test_file}" "${DATARAM_DIR}" >/dev/null
+  python3 "${MEM_TOOL}" init-instrom --instrom "${ORIGINAL_INST_HEX}" --out-dir "${DATARAM_DIR}" >/dev/null
+  python3 "${MEM_TOOL}" overlay-data --elf "${test_file}" --out-dir "${DATARAM_DIR}" >/dev/null
   rm -f "${temp_hex}"
 
   sim_rc=0

@@ -38,30 +38,31 @@ SUMMARY_FILE="${RESULTS_DIR}/bp_summary_${TIMESTAMP}.txt"
 ORIGINAL_INSTROM_HEX="${INSTROM_DIR}/instrom.hex"
 BACKUP_INSTROM_HEX="${INSTROM_DIR}/instrom.hex.bp_backup"
 DATARAM_DIR="${SCRIPT_DIR}/vsrc/dataram"
-ORIGINAL_INST_BANK0_HEX="${DATARAM_DIR}/inst_bank0.hex"
-ORIGINAL_INST_BANK1_HEX="${DATARAM_DIR}/inst_bank1.hex"
-BACKUP_INST_BANK0_HEX="${DATARAM_DIR}/inst_bank0.hex.bp_backup"
-BACKUP_INST_BANK1_HEX="${DATARAM_DIR}/inst_bank1.hex.bp_backup"
+MEM_TOOL="${DATARAM_DIR}/mem_image_tool.py"
+ORIGINAL_BANK0_HEX="${DATARAM_DIR}/bank0.hex"
+ORIGINAL_BANK1_HEX="${DATARAM_DIR}/bank1.hex"
+BACKUP_BANK0_HEX="${DATARAM_DIR}/bank0.hex.bp_backup"
+BACKUP_BANK1_HEX="${DATARAM_DIR}/bank1.hex.bp_backup"
 
 if [[ -f "${ORIGINAL_INSTROM_HEX}" ]]; then
   cp "${ORIGINAL_INSTROM_HEX}" "${BACKUP_INSTROM_HEX}"
 fi
-if [[ -f "${ORIGINAL_INST_BANK0_HEX}" ]]; then
-  cp "${ORIGINAL_INST_BANK0_HEX}" "${BACKUP_INST_BANK0_HEX}"
+if [[ -f "${ORIGINAL_BANK0_HEX}" ]]; then
+  cp "${ORIGINAL_BANK0_HEX}" "${BACKUP_BANK0_HEX}"
 fi
-if [[ -f "${ORIGINAL_INST_BANK1_HEX}" ]]; then
-  cp "${ORIGINAL_INST_BANK1_HEX}" "${BACKUP_INST_BANK1_HEX}"
+if [[ -f "${ORIGINAL_BANK1_HEX}" ]]; then
+  cp "${ORIGINAL_BANK1_HEX}" "${BACKUP_BANK1_HEX}"
 fi
 
 restore_instrom_hex() {
   if [[ -f "${BACKUP_INSTROM_HEX}" ]]; then
     mv "${BACKUP_INSTROM_HEX}" "${ORIGINAL_INSTROM_HEX}"
   fi
-  if [[ -f "${BACKUP_INST_BANK0_HEX}" ]]; then
-    mv "${BACKUP_INST_BANK0_HEX}" "${ORIGINAL_INST_BANK0_HEX}"
+  if [[ -f "${BACKUP_BANK0_HEX}" ]]; then
+    mv "${BACKUP_BANK0_HEX}" "${ORIGINAL_BANK0_HEX}"
   fi
-  if [[ -f "${BACKUP_INST_BANK1_HEX}" ]]; then
-    mv "${BACKUP_INST_BANK1_HEX}" "${ORIGINAL_INST_BANK1_HEX}"
+  if [[ -f "${BACKUP_BANK1_HEX}" ]]; then
+    mv "${BACKUP_BANK1_HEX}" "${ORIGINAL_BANK1_HEX}"
   fi
 }
 trap restore_instrom_hex EXIT
@@ -123,7 +124,7 @@ for test_path in "${BP_TESTS[@]}"; do
   fi
 
   cp "${test_hex}" "${ORIGINAL_INSTROM_HEX}"
-  "${DATARAM_DIR}/split_instrom_to_banks.sh" "${ORIGINAL_INSTROM_HEX}" "${DATARAM_DIR}" >/dev/null
+  python3 "${MEM_TOOL}" init-instrom --instrom "${ORIGINAL_INSTROM_HEX}" --out-dir "${DATARAM_DIR}" >/dev/null
 
   sim_rc=0
   if [[ ${HAS_TIMEOUT} -eq 1 ]]; then

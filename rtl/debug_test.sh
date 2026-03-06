@@ -8,6 +8,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 RISCV_TESTS_DIR="${SCRIPT_DIR}/../verification/riscv-tests/isa"
 INSTROM_DIR="${SCRIPT_DIR}/vsrc/instrom"
 DATARAM_DIR="${SCRIPT_DIR}/vsrc/dataram"
+MEM_TOOL="${DATARAM_DIR}/mem_image_tool.py"
 RESULTS_DIR="${SCRIPT_DIR}/test_results"
 
 mkdir -p "${RESULTS_DIR}"
@@ -37,8 +38,6 @@ PASSED=0
 BACKUP_HEX="${INSTROM_DIR}/instrom.hex.debug_backup"
 BACKUP_BANK0="${DATARAM_DIR}/bank0.hex.debug_backup"
 BACKUP_BANK1="${DATARAM_DIR}/bank1.hex.debug_backup"
-BACKUP_INST_BANK0="${DATARAM_DIR}/inst_bank0.hex.debug_backup"
-BACKUP_INST_BANK1="${DATARAM_DIR}/inst_bank1.hex.debug_backup"
 if [ -f "${INSTROM_DIR}/instrom.hex" ]; then
     cp "${INSTROM_DIR}/instrom.hex" "${BACKUP_HEX}"
 fi
@@ -48,13 +47,6 @@ fi
 if [ -f "${DATARAM_DIR}/bank1.hex" ]; then
     cp "${DATARAM_DIR}/bank1.hex" "${BACKUP_BANK1}"
 fi
-if [ -f "${DATARAM_DIR}/inst_bank0.hex" ]; then
-    cp "${DATARAM_DIR}/inst_bank0.hex" "${BACKUP_INST_BANK0}"
-fi
-if [ -f "${DATARAM_DIR}/inst_bank1.hex" ]; then
-    cp "${DATARAM_DIR}/inst_bank1.hex" "${BACKUP_INST_BANK1}"
-fi
-
 for test_file in ${test_files}; do
     test_name=$(basename "${test_file}")
     echo "Running: ${test_name}"
@@ -67,8 +59,8 @@ for test_file in ${test_files}; do
 
     # Run
     cp "${temp_hex}" "${INSTROM_DIR}/instrom.hex"
-    "${DATARAM_DIR}/split_instrom_to_banks.sh" "${INSTROM_DIR}/instrom.hex" "${DATARAM_DIR}" >/dev/null
-    "${DATARAM_DIR}/extract_data.sh" "${test_file}" "${DATARAM_DIR}" >/dev/null
+    python3 "${MEM_TOOL}" init-instrom --instrom "${INSTROM_DIR}/instrom.hex" --out-dir "${DATARAM_DIR}" >/dev/null
+    python3 "${MEM_TOOL}" overlay-data --elf "${test_file}" --out-dir "${DATARAM_DIR}" >/dev/null
     log="${RESULTS_DIR}/${test_name}_debug.log"
 
     if timeout 10s ./simv > "${log}" 2>&1; then
@@ -95,12 +87,6 @@ if [ -f "${BACKUP_BANK0}" ]; then
 fi
 if [ -f "${BACKUP_BANK1}" ]; then
     mv "${BACKUP_BANK1}" "${DATARAM_DIR}/bank1.hex"
-fi
-if [ -f "${BACKUP_INST_BANK0}" ]; then
-    mv "${BACKUP_INST_BANK0}" "${DATARAM_DIR}/inst_bank0.hex"
-fi
-if [ -f "${BACKUP_INST_BANK1}" ]; then
-    mv "${BACKUP_INST_BANK1}" "${DATARAM_DIR}/inst_bank1.hex"
 fi
 
 echo ""

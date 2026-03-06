@@ -18,7 +18,7 @@ module ex (
     // Branch prediction inputs from ID/EX register
     input        id_ex_branch_predicted,  // 预测是否跳转
     input [31:0] id_ex_predicted_pc,      // 预测的目标PC
-    input [ 7:0] id_ex_predicted_pht_index,  // 预测时的gshare索引
+    input [ 9:0] id_ex_predicted_pht_index,  // 预测时的gshare索引
     input        id_ex_is_branch,         // 是否是分支指令
 
     // Multiplier control signal
@@ -53,7 +53,7 @@ module ex (
     output [31:0] ex_bp_update_pc,
     output        ex_bp_update_taken,
     output [31:0] ex_bp_update_target,
-    output [ 7:0] ex_bp_update_pht_index,
+    output [ 9:0] ex_bp_update_pht_index,
 
     // Branch predictor statistic events
     output ex_bp_event_branch,

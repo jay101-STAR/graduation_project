@@ -12,8 +12,7 @@ module std_bram_tdp #(
     parameter ADDR_WIDTH = 13,
     parameter DATA_WIDTH = 32,
     parameter DEPTH      = (1 << ADDR_WIDTH),
-    parameter HEX_FILE   = "",
-    parameter OVERLAY_HEX_FILE = ""
+    parameter HEX_FILE   = ""
 ) (
     input                       clk,
     input      [           3:0] a_we,
@@ -35,9 +34,6 @@ module std_bram_tdp #(
     end
     if (HEX_FILE != "") begin
       $readmemh(HEX_FILE, mem);
-    end
-    if (OVERLAY_HEX_FILE != "") begin
-      $readmemh(OVERLAY_HEX_FILE, mem);
     end
   end
 

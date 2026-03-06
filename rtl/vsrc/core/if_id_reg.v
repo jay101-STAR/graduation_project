@@ -12,7 +12,7 @@ module if_id_reg (
     input        if_valid,
     input        if_predicted_taken,
     input [31:0] if_predicted_pc,
-    input [ 7:0] if_predicted_pht_index,
+    input [ 9:0] if_predicted_pht_index,
 
     // Outputs to ID stage
     output reg [31:0] id_pc,
@@ -20,7 +20,7 @@ module if_id_reg (
     output reg        id_valid,
     output reg        id_predicted_taken,
     output reg [31:0] id_predicted_pc,
-    output reg [ 7:0] id_predicted_pht_index
+    output reg [ 9:0] id_predicted_pht_index
 );
 
   always @(posedge clk) begin
@@ -31,7 +31,7 @@ module if_id_reg (
       id_valid       <= 1'b0;
       id_predicted_taken <= 1'b0;
       id_predicted_pc <= 32'h0;
-      id_predicted_pht_index <= 8'h0;
+      id_predicted_pht_index <= 10'h0;
     end else if (flush) begin
       // Flush: insert bubble (NOP)
       id_pc          <= 32'h0;
@@ -39,7 +39,7 @@ module if_id_reg (
       id_valid       <= 1'b0;
       id_predicted_taken <= 1'b0;
       id_predicted_pc <= 32'h0;
-      id_predicted_pht_index <= 8'h0;
+      id_predicted_pht_index <= 10'h0;
     end else if (stall) begin
       // Stall: hold current values (do nothing)
       id_pc          <= id_pc;

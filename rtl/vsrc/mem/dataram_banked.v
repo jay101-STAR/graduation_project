@@ -264,8 +264,7 @@ module dataram_banked (
   std_bram_tdp #(
       .ADDR_WIDTH(BANK_ADDR_WIDTH),
       .DATA_WIDTH(32),
-      .HEX_FILE  ("/home/jay/Desktop/graduation_project/rtl/vsrc/dataram/inst_bank0.hex"),
-      .OVERLAY_HEX_FILE("/home/jay/Desktop/graduation_project/rtl/vsrc/dataram/bank0.hex")
+      .HEX_FILE  ("/home/jay/Desktop/graduation_project/rtl/vsrc/dataram/bank0.hex")
   ) bank0 (
       .clk    (clk),
       .a_we   (we_bank0),
@@ -281,8 +280,7 @@ module dataram_banked (
   std_bram_tdp #(
       .ADDR_WIDTH(BANK_ADDR_WIDTH),
       .DATA_WIDTH(32),
-      .HEX_FILE  ("/home/jay/Desktop/graduation_project/rtl/vsrc/dataram/inst_bank1.hex"),
-      .OVERLAY_HEX_FILE("/home/jay/Desktop/graduation_project/rtl/vsrc/dataram/bank1.hex")
+      .HEX_FILE  ("/home/jay/Desktop/graduation_project/rtl/vsrc/dataram/bank1.hex")
   ) bank1 (
       .clk    (clk),
       .a_we   (we_bank1),

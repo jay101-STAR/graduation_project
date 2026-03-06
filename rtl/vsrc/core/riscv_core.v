@@ -35,31 +35,31 @@ module riscv_core (
   reg         if1_valid;
   reg         if1_predicted_taken;
   reg  [31:0] if1_predicted_pc;
-  reg  [ 7:0] if1_predicted_pht_index;
+  reg  [ 9:0] if1_predicted_pht_index;
 
   reg  [31:0] if2_pc;
   reg  [31:0] if2_instruction;
   reg         if2_valid;
   reg         if2_predicted_taken;
   reg  [31:0] if2_predicted_pc;
-  reg  [ 7:0] if2_predicted_pht_index;
+  reg  [ 9:0] if2_predicted_pht_index;
   reg  [31:0] if_stall_pending_pc;
   reg  [31:0] if_stall_pending_instruction;
   reg         if_stall_pending_valid;
   reg         if_stall_pending_predicted_taken;
   reg  [31:0] if_stall_pending_predicted_pc;
-  reg  [ 7:0] if_stall_pending_predicted_pht_index;
+  reg  [ 9:0] if_stall_pending_predicted_pht_index;
   wire [31:0] if2_instruction_aligned;
   wire        if2_predicted_taken_aligned;
   wire [31:0] if2_predicted_pc_aligned;
-  wire [ 7:0] if2_predicted_pht_index_aligned;
+  wire [ 9:0] if2_predicted_pht_index_aligned;
 
   // ========== IF/ID Pipeline Register Wires ==========
   wire [31:0] if_id_instruction;
   wire if_id_valid;
   wire if_id_predicted_taken;
   wire [31:0] if_id_predicted_pc;
-  wire [7:0] if_id_predicted_pht_index;
+  wire [9:0] if_id_predicted_pht_index;
 
   // ========== ID Stage Wires ==========
   // ID to register file
@@ -85,7 +85,7 @@ module riscv_core (
   wire id_is_branch;  // 是否是分支指令
   wire if_bp_predict_taken;  // IF阶段预测是否跳转
   wire [31:0] if_bp_predict_pc;  // IF阶段预测目标PC
-  wire [7:0] if_bp_predict_pht_index;  // IF阶段gshare索引
+  wire [9:0] if_bp_predict_pht_index;  // IF阶段gshare索引
 
   // Multiplier control signal from ID
   wire id_is_mul_instruction;  // 是否是乘法指令
@@ -111,7 +111,7 @@ module riscv_core (
   // Branch prediction signals from ID/EX register
   wire        ex_branch_predicted;  // 预测是否跳转
   wire [31:0] ex_predicted_pc;  // 预测的目标PC
-  wire [7:0] ex_predicted_pht_index;  // 预测时的gshare索引
+  wire [9:0] ex_predicted_pht_index;  // 预测时的gshare索引
   wire        ex_is_branch;  // 是否是分支指令
 
   // Multiplier control signal from ID/EX register
@@ -139,7 +139,7 @@ module riscv_core (
   wire [31:0] ex_bp_update_pc;
   wire ex_bp_update_taken;
   wire [31:0] ex_bp_update_target;
-  wire [7:0] ex_bp_update_pht_index;
+  wire [9:0] ex_bp_update_pht_index;
   wire ex_bp_event_branch;
   wire ex_bp_event_mispredict;
   wire ex_bp_event_target_miss;
@@ -275,37 +275,37 @@ module riscv_core (
       if1_valid               <= 1'b0;
       if1_predicted_taken     <= 1'b0;
       if1_predicted_pc        <= (`PC_BASE_ADDR + 32'd4);
-      if1_predicted_pht_index <= 8'b0;
+      if1_predicted_pht_index <= 10'b0;
       if2_pc                  <= `PC_BASE_ADDR;
       if2_instruction         <= 32'h0000_0013;
       if2_valid               <= 1'b0;
       if2_predicted_taken     <= 1'b0;
       if2_predicted_pc        <= (`PC_BASE_ADDR + 32'd4);
-      if2_predicted_pht_index <= 8'b0;
+      if2_predicted_pht_index <= 10'b0;
       if_stall_pending_pc          <= `PC_BASE_ADDR;
       if_stall_pending_instruction <= 32'h0000_0013;
       if_stall_pending_valid       <= 1'b0;
       if_stall_pending_predicted_taken <= 1'b0;
       if_stall_pending_predicted_pc    <= (`PC_BASE_ADDR + 32'd4);
-      if_stall_pending_predicted_pht_index <= 8'b0;
+      if_stall_pending_predicted_pht_index <= 10'b0;
     end else if (branch_flush) begin
       if1_pc                  <= `PC_BASE_ADDR;
       if1_valid               <= 1'b0;
       if1_predicted_taken     <= 1'b0;
       if1_predicted_pc        <= (`PC_BASE_ADDR + 32'd4);
-      if1_predicted_pht_index <= 8'b0;
+      if1_predicted_pht_index <= 10'b0;
       if2_pc                  <= 32'b0;
       if2_instruction         <= 32'h0000_0013;
       if2_valid               <= 1'b0;
       if2_predicted_taken     <= 1'b0;
       if2_predicted_pc        <= 32'b0;
-      if2_predicted_pht_index <= 8'b0;
+      if2_predicted_pht_index <= 10'b0;
       if_stall_pending_pc          <= `PC_BASE_ADDR;
       if_stall_pending_instruction <= 32'h0000_0013;
       if_stall_pending_valid       <= 1'b0;
       if_stall_pending_predicted_taken <= 1'b0;
       if_stall_pending_predicted_pc    <= (`PC_BASE_ADDR + 32'd4);
-      if_stall_pending_predicted_pht_index <= 8'b0;
+      if_stall_pending_predicted_pht_index <= 10'b0;
     end else if (stall_if_id) begin
       // Hold IF1/IF2 while ID is stalled, but remember the BRAM return beat.
       // This avoids dropping one instruction after load-use stalls.
@@ -361,7 +361,7 @@ module riscv_core (
   assign if2_instruction_aligned = if2_valid ? if2_instruction : 32'h0000_0013;
   assign if2_predicted_taken_aligned = if2_valid ? if2_predicted_taken : 1'b0;
   assign if2_predicted_pc_aligned = if2_valid ? if2_predicted_pc : 32'b0;
-  assign if2_predicted_pht_index_aligned = if2_valid ? if2_predicted_pht_index : 8'b0;
+  assign if2_predicted_pht_index_aligned = if2_valid ? if2_predicted_pht_index : 10'b0;
 
   // ========== IF/ID Pipeline Register ==========
   if_id_reg if_id_reg0 (

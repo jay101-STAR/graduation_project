@@ -19,6 +19,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 RISCV_TESTS_DIR="${SCRIPT_DIR}/../verification/riscv-tests/isa"
 INSTROM_DIR="${SCRIPT_DIR}/vsrc/instrom"
 DATARAM_DIR="${SCRIPT_DIR}/vsrc/dataram"
+MEM_TOOL="${DATARAM_DIR}/mem_image_tool.py"
 RESULTS_DIR="${SCRIPT_DIR}/test_results"
 
 # Create results directory
@@ -44,6 +45,10 @@ PERF_SAMPLES=0
 PERF_TOTAL_MCYCLE=0
 PERF_TOTAL_MINSTRET=0
 PERF_CPI_SUM=0
+BP_SAMPLES=0
+BP_TOTAL_BRANCHES=0
+BP_TOTAL_MISPREDICT=0
+BP_TOTAL_TARGET_MISS=0
 
 # Result file
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
@@ -69,12 +74,8 @@ ORIGINAL_INST_HEX="${INSTROM_DIR}/instrom.hex"
 BACKUP_INST_HEX="${INSTROM_DIR}/instrom.hex.original_backup"
 ORIGINAL_BANK0_HEX="${DATARAM_DIR}/bank0.hex"
 ORIGINAL_BANK1_HEX="${DATARAM_DIR}/bank1.hex"
-ORIGINAL_INST_BANK0_HEX="${DATARAM_DIR}/inst_bank0.hex"
-ORIGINAL_INST_BANK1_HEX="${DATARAM_DIR}/inst_bank1.hex"
 BACKUP_BANK0_HEX="${DATARAM_DIR}/bank0.hex.original_backup"
 BACKUP_BANK1_HEX="${DATARAM_DIR}/bank1.hex.original_backup"
-BACKUP_INST_BANK0_HEX="${DATARAM_DIR}/inst_bank0.hex.original_backup"
-BACKUP_INST_BANK1_HEX="${DATARAM_DIR}/inst_bank1.hex.original_backup"
 
 if [ -f "${ORIGINAL_INST_HEX}" ]; then
   cp "${ORIGINAL_INST_HEX}" "${BACKUP_INST_HEX}"
@@ -86,14 +87,6 @@ fi
 
 if [ -f "${ORIGINAL_BANK1_HEX}" ]; then
   cp "${ORIGINAL_BANK1_HEX}" "${BACKUP_BANK1_HEX}"
-fi
-
-if [ -f "${ORIGINAL_INST_BANK0_HEX}" ]; then
-  cp "${ORIGINAL_INST_BANK0_HEX}" "${BACKUP_INST_BANK0_HEX}"
-fi
-
-if [ -f "${ORIGINAL_INST_BANK1_HEX}" ]; then
-  cp "${ORIGINAL_INST_BANK1_HEX}" "${BACKUP_INST_BANK1_HEX}"
 fi
 
 # Function to convert ELF to HEX (instruction memory)
@@ -117,20 +110,22 @@ elf_to_hex() {
 # Function to extract data memory from ELF into bank0/bank1
 extract_data_mem() {
   local elf_file=$1
-  "${DATARAM_DIR}/extract_data.sh" "${elf_file}" "${DATARAM_DIR}" >/dev/null
+  python3 "${MEM_TOOL}" overlay-data --elf "${elf_file}" --out-dir "${DATARAM_DIR}" >/dev/null
   return $?
 }
 
-refresh_inst_banks() {
-  "${DATARAM_DIR}/split_instrom_to_banks.sh" "${ORIGINAL_INST_HEX}" "${DATARAM_DIR}" >/dev/null
+refresh_bank_hex() {
+  python3 "${MEM_TOOL}" init-instrom --instrom "${ORIGINAL_INST_HEX}" --out-dir "${DATARAM_DIR}" >/dev/null
 }
 
 # Function to run a single test
 run_single_test() {
   local test_file=$1
   local test_name=$(basename "${test_file}")
+  local bp_report=""
+  local bp_summary_line=""
 
-  printf "${CYAN}%-4d${NC} ${BLUE}%-40s${NC} " "$((TOTAL + 1))" "${test_name}"
+  printf "${CYAN}%-4d${NC} ${BLUE}%-24s${NC} " "$((TOTAL + 1))" "${test_name}"
 
   # Convert ELF to HEX (instruction memory)
   local temp_inst_hex="${INSTROM_DIR}/test_temp.hex"
@@ -141,18 +136,44 @@ run_single_test() {
     return
   fi
 
-  # Extract data memory (bank0/bank1)
-  extract_data_mem "${test_file}"
-
   # Replace instrom.hex with test hex file
   cp "${temp_inst_hex}" "${ORIGINAL_INST_HEX}"
-  refresh_inst_banks
+  refresh_bank_hex
+  extract_data_mem "${test_file}"
 
   # Run simulation with timeout
   local sim_log="${RESULTS_DIR}/${test_name}.log"
   cd "${SCRIPT_DIR}"
 
   if timeout 10s ./simv >"${sim_log}" 2>&1; then
+    local bp_line bp_branches bp_mispredict bp_target_miss
+    bp_line=$(grep '\[BP\]' "${sim_log}" | tail -1 || true)
+    if [ -n "${bp_line}" ]; then
+      local bp_accuracy
+      bp_branches=$(echo "${bp_line}" | sed -n 's/.*branches=\([0-9]*\).*/\1/p')
+      bp_mispredict=$(echo "${bp_line}" | sed -n 's/.*mispredict=\([0-9]*\).*/\1/p')
+      bp_target_miss=$(echo "${bp_line}" | sed -n 's/.*target_miss=\([0-9]*\).*/\1/p')
+      if [ -n "${bp_branches}" ] && [ -n "${bp_mispredict}" ] && [ -n "${bp_target_miss}" ]; then
+        if [ "${bp_branches}" -gt 0 ]; then
+          bp_accuracy=$(awk -v b="${bp_branches}" -v m="${bp_mispredict}" 'BEGIN {printf "%.2f", (b - m) * 100 / b}')
+        else
+          bp_accuracy="N/A"
+        fi
+        bp_report="branches=${bp_branches} mispredict=${bp_mispredict} target_miss=${bp_target_miss} accuracy=${bp_accuracy}%"
+        bp_summary_line="${test_name}: branches=${bp_branches} mispredict=${bp_mispredict} target_miss=${bp_target_miss} accuracy=${bp_accuracy}%"
+        BP_SAMPLES=$((BP_SAMPLES + 1))
+        BP_TOTAL_BRANCHES=$((BP_TOTAL_BRANCHES + bp_branches))
+        BP_TOTAL_MISPREDICT=$((BP_TOTAL_MISPREDICT + bp_mispredict))
+        BP_TOTAL_TARGET_MISS=$((BP_TOTAL_TARGET_MISS + bp_target_miss))
+      else
+        bp_report="pred_parse_failed"
+        bp_summary_line="${test_name}: pred_parse_failed"
+      fi
+    else
+      bp_report="pred=N/A"
+      bp_summary_line="${test_name}: pred=N/A"
+    fi
+
     # Parse result
     if grep -q "TEST PASSED" "${sim_log}"; then
       local perf_line
@@ -163,7 +184,7 @@ run_single_test() {
         minstret=$(echo "${perf_line}" | sed -n 's/.*minstret=\([0-9]*\).*/\1/p')
         cpi=$(echo "${perf_line}" | sed -n 's/.*cpi=\([0-9.]*\).*/\1/p')
         if [ -n "${mcycle}" ] && [ -n "${minstret}" ] && [ -n "${cpi}" ]; then
-          echo -e "${GREEN}✓ PASS${NC} (mcycle=${mcycle} minstret=${minstret} cpi=${cpi})"
+          echo -e "${GREEN}✓ PASS${NC} (mcycle=${mcycle} minstret=${minstret} cpi=${cpi}) ${bp_report}"
           echo "[PASS] ${test_name}" >>"${SUMMARY_FILE}"
           echo "[PERF] ${test_name}: mcycle=${mcycle} minstret=${minstret} cpi=${cpi}" >>"${SUMMARY_FILE}"
           PERF_SAMPLES=$((PERF_SAMPLES + 1))
@@ -171,30 +192,32 @@ run_single_test() {
           PERF_TOTAL_MINSTRET=$((PERF_TOTAL_MINSTRET + minstret))
           PERF_CPI_SUM=$(awk -v a="${PERF_CPI_SUM}" -v b="${cpi}" 'BEGIN {printf "%.8f", a + b}')
         else
-          echo -e "${GREEN}✓ PASS${NC} (perf=unparsed)"
+          echo -e "${GREEN}✓ PASS${NC} (perf=unparsed) ${bp_report}"
           echo "[PASS] ${test_name}" >>"${SUMMARY_FILE}"
           echo "[PERF] ${test_name}: line='${perf_line}' (parse failed)" >>"${SUMMARY_FILE}"
         fi
       else
-        echo -e "${GREEN}✓ PASS${NC} (perf=N/A)"
+        echo -e "${GREEN}✓ PASS${NC} (perf=N/A) ${bp_report}"
         echo "[PASS] ${test_name}" >>"${SUMMARY_FILE}"
       fi
       ((PASSED++))
     elif grep -q "TEST FAILED" "${sim_log}"; then
       local tohost=$(grep "TEST FAILED" "${sim_log}" | sed -n 's/.*tohost = *\([0-9]*\).*/\1/p')
-      echo -e "${RED}✗ FAIL${NC} (tohost=${tohost})"
+      echo -e "${RED}✗ FAIL${NC} (tohost=${tohost}) ${bp_report}"
       echo "[FAIL] ${test_name}: tohost=${tohost}" >>"${SUMMARY_FILE}"
       echo "${test_name}" >>"${FAILED_TESTS_FILE}"
       ((FAILED++))
     else
-      echo -e "${YELLOW}? UNKNOWN${NC}"
+      echo -e "${YELLOW}? UNKNOWN${NC} ${bp_report}"
       echo "[UNKNOWN] ${test_name}: No clear result" >>"${SUMMARY_FILE}"
       echo "${test_name}" >>"${FAILED_TESTS_FILE}"
       ((FAILED++))
     fi
+    echo "${bp_summary_line}" >>"${SUMMARY_FILE}"
   else
-    echo -e "${RED}⏱ TIMEOUT${NC}"
+    echo -e "${RED}⏱ TIMEOUT${NC} pred=N/A (timeout)"
     echo "[TIMEOUT] ${test_name}: Simulation exceeded 10s" >>"${SUMMARY_FILE}"
+    echo "${test_name}: pred=N/A (timeout)" >>"${SUMMARY_FILE}"
     echo "${test_name}" >>"${FAILED_TESTS_FILE}"
     ((FAILED++))
   fi
@@ -222,7 +245,7 @@ echo "" | tee -a "${SUMMARY_FILE}"
 for test_file in ${test_files}; do
   test_name=$(basename "${test_file}")
   if [ -n "${SKIP_TEST_REGEX}" ] && [[ "${test_name}" =~ ${SKIP_TEST_REGEX} ]]; then
-    printf "${CYAN}%-4d${NC} ${BLUE}%-40s${NC} ${YELLOW}SKIP${NC} (filtered)\n" "$((TOTAL + 1))" "${test_name}"
+    printf "${CYAN}%-4d${NC} ${BLUE}%-24s${NC} ${YELLOW}SKIP${NC} (filtered)\n" "$((TOTAL + 1))" "${test_name}"
     echo "[SKIP] ${test_name}: filtered by SKIP_TEST_REGEX=${SKIP_TEST_REGEX}" >>"${SUMMARY_FILE}"
     ((SKIPPED++))
     ((TOTAL++))
@@ -242,14 +265,6 @@ fi
 
 if [ -f "${BACKUP_BANK1_HEX}" ]; then
   mv "${BACKUP_BANK1_HEX}" "${ORIGINAL_BANK1_HEX}"
-fi
-
-if [ -f "${BACKUP_INST_BANK0_HEX}" ]; then
-  mv "${BACKUP_INST_BANK0_HEX}" "${ORIGINAL_INST_BANK0_HEX}"
-fi
-
-if [ -f "${BACKUP_INST_BANK1_HEX}" ]; then
-  mv "${BACKUP_INST_BANK1_HEX}" "${ORIGINAL_INST_BANK1_HEX}"
 fi
 
 # Print summary
@@ -281,6 +296,17 @@ if [ ${PERF_SAMPLES} -gt 0 ]; then
   echo "Weighted CPI:  ${PERF_WEIGHTED_CPI}" | tee -a "${SUMMARY_FILE}"
 else
   echo "Perf samples:  0 (no [PERF] lines found in logs)" | tee -a "${SUMMARY_FILE}"
+fi
+
+if [ ${BP_TOTAL_BRANCHES} -gt 0 ]; then
+  BP_ACCURACY=$(awk -v b="${BP_TOTAL_BRANCHES}" -v m="${BP_TOTAL_MISPREDICT}" 'BEGIN {printf "%.2f", (b - m) * 100 / b}')
+  echo "Pred samples:  ${BP_SAMPLES}" | tee -a "${SUMMARY_FILE}"
+  echo "Pred branches: ${BP_TOTAL_BRANCHES}" | tee -a "${SUMMARY_FILE}"
+  echo "Pred mispred:  ${BP_TOTAL_MISPREDICT}" | tee -a "${SUMMARY_FILE}"
+  echo "Pred tgt_miss: ${BP_TOTAL_TARGET_MISS}" | tee -a "${SUMMARY_FILE}"
+  echo "Pred accuracy: ${BP_ACCURACY}%" | tee -a "${SUMMARY_FILE}"
+else
+  echo "Pred samples:  0 (no parsable predictor lines found in logs)" | tee -a "${SUMMARY_FILE}"
 fi
 
 echo "" | tee -a "${SUMMARY_FILE}"

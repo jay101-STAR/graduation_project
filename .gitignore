@@ -1,0 +1,11 @@
+obj_dir/
+practise/div/obj_dir/
+*.gch
+*.a
+*.so
+obj_dir/
+practise/div/obj_dir/
+spike/
+*.gch
+*.a
+*.so

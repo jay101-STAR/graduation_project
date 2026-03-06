@@ -8,18 +8,18 @@ module branch_predictor (
     input  [31:0] if_bp_pc,
     output        if_bp_predict_taken,
     output [31:0] if_bp_predict_pc,
-    output [ 7:0] if_bp_predict_pht_index,
+    output [ 9:0] if_bp_predict_pht_index,
 
     // Update from EX stage
     input        ex_bp_update_wen,
     input [31:0] ex_bp_update_pc,
     input        ex_bp_update_taken,
     input [31:0] ex_bp_update_target,
-    input [ 7:0] ex_bp_update_pht_index
+    input [ 9:0] ex_bp_update_pht_index
 );
 
-  parameter ENTRY_NUM = 128;
-  parameter GHR_WIDTH = 8;
+  parameter ENTRY_NUM = 256;
+  parameter GHR_WIDTH = 10;
   localparam WAY_NUM = 2;
   localparam SET_NUM = ENTRY_NUM / WAY_NUM;
   localparam SET_INDEX_WIDTH = $clog2(SET_NUM);

@@ -1,6 +1,6 @@
 # 使用原来的 dataram.v
 SRCS =  $(shell find ./vsrc/ -name "*.v")
-SPLIT_INST = ./vsrc/dataram/split_instrom_to_banks.sh ./vsrc/instrom/instrom.hex ./vsrc/dataram
+SPLIT_INST = python3 ./vsrc/dataram/mem_image_tool.py init-instrom --instrom ./vsrc/instrom/instrom.hex --out-dir ./vsrc/dataram
 VCS = vcs -full64 -sverilog -timescale=1ns/1ns \
       		+v2k \
 		 +define+fsdb \

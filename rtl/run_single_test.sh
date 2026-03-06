@@ -13,7 +13,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 RISCV_TESTS_DIR="${SCRIPT_DIR}/../verification/riscv-tests/isa"
 INSTROM_DIR="${SCRIPT_DIR}/vsrc/instrom"
 DATARAM_DIR="${SCRIPT_DIR}/vsrc/dataram"
-COE_GEN_SCRIPT="${DATARAM_DIR}/gen_banked_coe.py"
+MEM_TOOL="${DATARAM_DIR}/mem_image_tool.py"
 
 # Find test file
 TEST_FILE=$(find "${RISCV_TESTS_DIR}" -name "${TEST_NAME}" -type f ! -name "*.dump" | head -1)
@@ -37,19 +37,11 @@ fi
 # Backup data memory bank files
 BACKUP_BANK0="${DATARAM_DIR}/bank0.hex.backup"
 BACKUP_BANK1="${DATARAM_DIR}/bank1.hex.backup"
-BACKUP_INST_BANK0="${DATARAM_DIR}/inst_bank0.hex.backup"
-BACKUP_INST_BANK1="${DATARAM_DIR}/inst_bank1.hex.backup"
 if [ -f "${DATARAM_DIR}/bank0.hex" ]; then
     cp "${DATARAM_DIR}/bank0.hex" "${BACKUP_BANK0}"
 fi
 if [ -f "${DATARAM_DIR}/bank1.hex" ]; then
     cp "${DATARAM_DIR}/bank1.hex" "${BACKUP_BANK1}"
-fi
-if [ -f "${DATARAM_DIR}/inst_bank0.hex" ]; then
-    cp "${DATARAM_DIR}/inst_bank0.hex" "${BACKUP_INST_BANK0}"
-fi
-if [ -f "${DATARAM_DIR}/inst_bank1.hex" ]; then
-    cp "${DATARAM_DIR}/inst_bank1.hex" "${BACKUP_INST_BANK1}"
 fi
 
 # Convert ELF to HEX
@@ -61,13 +53,13 @@ rm -f "${TEMP_HEX}.bin"
 
 # Copy to instrom.hex
 cp "${TEMP_HEX}" "${INSTROM_DIR}/instrom.hex"
-"${DATARAM_DIR}/split_instrom_to_banks.sh" "${INSTROM_DIR}/instrom.hex" "${DATARAM_DIR}" >/dev/null
+python3 "${MEM_TOOL}" init-instrom --instrom "${INSTROM_DIR}/instrom.hex" --out-dir "${DATARAM_DIR}" >/dev/null
 
 # Initialize data memory from ELF (required by tests with .data usage, e.g. fence_i)
-"${DATARAM_DIR}/extract_data.sh" "${TEST_FILE}" "${DATARAM_DIR}" >/dev/null
+python3 "${MEM_TOOL}" overlay-data --elf "${TEST_FILE}" --out-dir "${DATARAM_DIR}" >/dev/null
 
-# Generate merged bank COE files for Vivado BRAM/IP init (inst + data overlay)
-python3 "${COE_GEN_SCRIPT}" >/dev/null
+# Generate bank COE/MEM files from final bank HEX files
+python3 "${MEM_TOOL}" emit --dir "${DATARAM_DIR}" >/dev/null
 
 echo "Running simulation..."
 cd "${SCRIPT_DIR}"
@@ -84,12 +76,6 @@ if [ -f "${BACKUP_BANK0}" ]; then
 fi
 if [ -f "${BACKUP_BANK1}" ]; then
     mv "${BACKUP_BANK1}" "${DATARAM_DIR}/bank1.hex"
-fi
-if [ -f "${BACKUP_INST_BANK0}" ]; then
-    mv "${BACKUP_INST_BANK0}" "${DATARAM_DIR}/inst_bank0.hex"
-fi
-if [ -f "${BACKUP_INST_BANK1}" ]; then
-    mv "${BACKUP_INST_BANK1}" "${DATARAM_DIR}/inst_bank1.hex"
 fi
 
 # Clean up

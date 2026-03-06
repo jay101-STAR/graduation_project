@@ -91,8 +91,8 @@ run_uart_test() {
   if bash -lc "cd '${SCRIPT_DIR}' && \
       ./vsrc/instrom/llvm.sh '${asm_file}' && \
       cp '${asm_file%.s}.hex' ./vsrc/instrom/instrom.hex && \
-      ./vsrc/dataram/split_instrom_to_banks.sh ./vsrc/instrom/instrom.hex ./vsrc/dataram && \
-      python3 ./vsrc/dataram/gen_banked_coe.py && \
+      python3 ./vsrc/dataram/mem_image_tool.py init-instrom --instrom ./vsrc/instrom/instrom.hex --out-dir ./vsrc/dataram && \
+      python3 ./vsrc/dataram/mem_image_tool.py emit --dir ./vsrc/dataram && \
       ./simv ${plusarg} +bp_pattern_test -l sim.log" >"${log_file}" 2>&1; then
     if rg -q "TEST PASSED" "${log_file}"; then
       echo "PASS" | tee -a "${SUMMARY_FILE}"
@@ -116,18 +116,18 @@ fi
 # Backup and restore instrom.hex around all UART tests.
 ORIGINAL_INST_HEX="${SCRIPT_DIR}/vsrc/instrom/instrom.hex"
 BACKUP_INST_HEX="${SCRIPT_DIR}/vsrc/instrom/instrom.hex.all_tests_backup"
-ORIGINAL_INST_BANK0_HEX="${SCRIPT_DIR}/vsrc/dataram/inst_bank0.hex"
-ORIGINAL_INST_BANK1_HEX="${SCRIPT_DIR}/vsrc/dataram/inst_bank1.hex"
-BACKUP_INST_BANK0_HEX="${SCRIPT_DIR}/vsrc/dataram/inst_bank0.hex.all_tests_backup"
-BACKUP_INST_BANK1_HEX="${SCRIPT_DIR}/vsrc/dataram/inst_bank1.hex.all_tests_backup"
+ORIGINAL_BANK0_HEX="${SCRIPT_DIR}/vsrc/dataram/bank0.hex"
+ORIGINAL_BANK1_HEX="${SCRIPT_DIR}/vsrc/dataram/bank1.hex"
+BACKUP_BANK0_HEX="${SCRIPT_DIR}/vsrc/dataram/bank0.hex.all_tests_backup"
+BACKUP_BANK1_HEX="${SCRIPT_DIR}/vsrc/dataram/bank1.hex.all_tests_backup"
 if [ -f "${ORIGINAL_INST_HEX}" ]; then
   cp "${ORIGINAL_INST_HEX}" "${BACKUP_INST_HEX}"
 fi
-if [ -f "${ORIGINAL_INST_BANK0_HEX}" ]; then
-  cp "${ORIGINAL_INST_BANK0_HEX}" "${BACKUP_INST_BANK0_HEX}"
+if [ -f "${ORIGINAL_BANK0_HEX}" ]; then
+  cp "${ORIGINAL_BANK0_HEX}" "${BACKUP_BANK0_HEX}"
 fi
-if [ -f "${ORIGINAL_INST_BANK1_HEX}" ]; then
-  cp "${ORIGINAL_INST_BANK1_HEX}" "${BACKUP_INST_BANK1_HEX}"
+if [ -f "${ORIGINAL_BANK1_HEX}" ]; then
+  cp "${ORIGINAL_BANK1_HEX}" "${BACKUP_BANK1_HEX}"
 fi
 
 run_uart_test "uart_tx_smoke" "./vsrc/instrom/uart_tx_smoke_test.s" "+uart_tx_smoke"
@@ -140,11 +140,11 @@ run_uart_test "uart_rx_overrun" "./vsrc/instrom/uart_rx_overrun_test.s" "+uart_r
 if [ -f "${BACKUP_INST_HEX}" ]; then
   mv "${BACKUP_INST_HEX}" "${ORIGINAL_INST_HEX}"
 fi
-if [ -f "${BACKUP_INST_BANK0_HEX}" ]; then
-  mv "${BACKUP_INST_BANK0_HEX}" "${ORIGINAL_INST_BANK0_HEX}"
+if [ -f "${BACKUP_BANK0_HEX}" ]; then
+  mv "${BACKUP_BANK0_HEX}" "${ORIGINAL_BANK0_HEX}"
 fi
-if [ -f "${BACKUP_INST_BANK1_HEX}" ]; then
-  mv "${BACKUP_INST_BANK1_HEX}" "${ORIGINAL_INST_BANK1_HEX}"
+if [ -f "${BACKUP_BANK1_HEX}" ]; then
+  mv "${BACKUP_BANK1_HEX}" "${ORIGINAL_BANK1_HEX}"
 fi
 
 if [ -n "${RISCV_SKIP_REGEX}" ]; then

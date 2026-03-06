@@ -27,7 +27,7 @@ module id_ex_reg (
     // Branch prediction signals from ID
     input        id_branch_predicted,  // 预测是否跳转
     input [31:0] id_predicted_pc,      // 预测的目标PC
-    input [ 7:0] id_predicted_pht_index,  // 预测时的gshare索引
+    input [ 9:0] id_predicted_pht_index,  // 预测时的gshare索引
     input        id_is_branch,         // 是否是分支指令
 
     // Multiplier control signal from ID
@@ -55,7 +55,7 @@ module id_ex_reg (
     // Branch prediction outputs to EX
     output reg        ex_branch_predicted,  // 预测是否跳转
     output reg [31:0] ex_predicted_pc,      // 预测的目标PC
-    output reg [ 7:0] ex_predicted_pht_index,  // 预测时的gshare索引
+    output reg [ 9:0] ex_predicted_pht_index,  // 预测时的gshare索引
     output reg        ex_is_branch,         // 是否是分支指令
 
     // Multiplier control output to EX
@@ -84,7 +84,7 @@ module id_ex_reg (
       // Branch prediction signals
       ex_branch_predicted   <= 1'b0;
       ex_predicted_pc       <= 32'h0;
-      ex_predicted_pht_index <= 8'h0;
+      ex_predicted_pht_index <= 10'h0;
       ex_is_branch          <= 1'b0;
       // Multiplier control signal
       ex_is_mul_instruction <= 1'b0;
@@ -108,7 +108,7 @@ module id_ex_reg (
       // Branch prediction signals (clear on flush)
       ex_branch_predicted   <= 1'b0;
       ex_predicted_pc       <= 32'h0;
-      ex_predicted_pht_index <= 8'h0;
+      ex_predicted_pht_index <= 10'h0;
       ex_is_branch          <= 1'b0;
       // Multiplier control signal (clear on flush)
       ex_is_mul_instruction <= 1'b0;
