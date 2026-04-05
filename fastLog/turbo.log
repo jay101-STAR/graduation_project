@@ -1,0 +1,3 @@
+Command Line: /home/jay/EDA/Synopsys/verdi/verdi/Verdi_O-2018.09-SP2/platform/LINUXAMD64/bin/vfast
+uname(Linux jay-VMware-Virtual-Platform 6.17.0-14-generic #14~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Jan 15 15:52:10 UTC 2 x86_64)
+au time 0.003971 0.001074 0.002047 delta 8601600 8601600 total 37588992 37588992

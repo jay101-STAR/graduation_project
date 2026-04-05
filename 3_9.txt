@@ -1,0 +1,42 @@
+  基础题
+
+  1. 你的 5 级流水里，分支最终在第几级决策？错分支后冲刷哪些级？
+  在if进行预测，在ex进行判断分支预测是否正确，需要冲刷第一和第二级
+  2. top_core_mem_stall 的源头信号链路是什么（从哪个模块到哪个模块）？
+  源头链路是axi_cpu_stall,从mem_to_axi_lite模块到top 模块
+  3. 为什么 axi_cpu_stall 不能只写成 (bridge_state != ST_IDLE)，还要加 || req_fire？
+  防止流水线多跑一拍，时序对不齐
+  4. wait_req_release 置位/清零条件分别是什么？它防住了哪类重复受理 bug？
+  wait_req_release 为1 的条件是，cpu_axi_wen or cpu_axi_ren =1，
+  为0的条件是state=st_idle and req_fire =为0 
+  它防住了当axi处理完一次读或写事务回到st_idle状态时，由于流水线停顿导致wen和ren仍然为1 ，导致流水线继续停顿的bug
+
+  总线与 UART
+  5. 解释 AXI-Lite 读事务中，为什么 RXDATA 要在 RVALID && RREADY 才 pop，而不是 AR 握手时就 pop。
+  因为如果AR握手就pop，那在R握手阶段会有新的rxdata，导致两个rxdata相互冲突
+  6. uart_rx_overrun_reg 在什么条件下置位、什么条件下清零？
+  当full信号已经为1 ，pop=0，而push信号又为1时，会置1,不满足上述条件时，会为0
+  7. STATUS 的 bit0/bit1/bit2 分别表示什么，为什么没有直接暴露 full 给软件？
+  overrun,empty,tx_valid
+  因为软件只需要知道当前可不可以往里送入数据即可，不用知道该软件是不是full的
+  8. 写通道里 AW 和 W 分拍到达时，bridge 如何保证事务不丢？为什么必须等 B 响应完成才放行下一笔？
+  以AW信号先到达为例子，会产生AW_DONE信号来记录AW信号已经到达，然后一直等待W信号到达，才进入到下一状态
+  如果不等B响应就放行下一笔，会有新的写入数据，导致新数据和旧数据冲突
+
+
+  存储与跨界访问
+  9. 你的 dataram_banked 里，word_addr[0] 如何决定 bank 选择？
+  if word_addr[0] = 0,choose bank0 
+  if word_addr[0] = 1,choose bank1 
+  10. 以 SH @ byte_offset=3 为例，说明 we_bank0/we_bank1 和写数据如何拆分。
+  for sh ,wstrb = 0011, we_bank0 = 1000 ,we_bank1 = 0001
+  11. 以 LW @ byte_offset=1 为例，解释为什么用 {word_hi, word_lo} 后再右移，比写大量 case 更稳。
+  因为用case涉及大量选择器，直接用{word_hi , word_lo} 更加方便
+
+  分支预测
+  12. BTB 里 valid 和 epoch 各解决什么问题？如果删掉其中一个，请给一个会出错的具体场景。
+  valid用来解决BTB数据更新前后的数据有效性问题
+  
+  epoch用来解决复位前后的数据有效性问题
+
+

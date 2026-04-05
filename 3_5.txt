@@ -1,5 +1,0 @@
-1.UART根据地址译码，如果是地址匹配就是UART
-top_core_mem_stall 信号从top到core，说明core需要暂停处理
-dataram_core_rdata主要通过地址来选择是UART or RAM 
-
-2.
