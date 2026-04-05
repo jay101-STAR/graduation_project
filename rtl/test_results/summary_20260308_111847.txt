@@ -1,0 +1,36 @@
+========================================
+RISC-V Test Runner (Fast Mode)
+========================================
+Test pattern: rv32mi-p-ma_addr
+Start time: Sun Mar  8 11:18:47 AM CST 2026
+
+Searching for tests matching: rv32mi-p-ma_addr
+Found 1 tests
+
+[PASS] rv32mi-p-ma_addr
+[PERF] rv32mi-p-ma_addr: mcycle=230 minstret=184 cpi=1.2500
+rv32mi-p-ma_addr: branches=28 mispredict=4 target_miss=0 accuracy=85.71%
+
+========================================
+Test Summary
+========================================
+Total tests:   1
+[0;32mPassed:        1[0m
+[0;31mFailed:        0[0m
+[1;33mSkipped:       0[0m
+Pass rate:     100%
+Perf samples:  1
+Total mcycle:  230
+Total minstret:184
+Avg CPI:       1.2500
+Weighted CPI:  1.2500
+Pred samples:  1
+Pred branches: 28
+Pred mispred:  4
+Pred tgt_miss: 0
+Pred accuracy: 85.71%
+
+End time: Sun Mar  8 11:18:47 AM CST 2026
+
+Results saved to: /home/jay/Desktop/graduation_project/rtl/test_results/summary_20260308_111847.txt
+Individual test logs in: /home/jay/Desktop/graduation_project/rtl/test_results/

@@ -5,14 +5,14 @@
 // - STATUS @ UART_STATUS_ADDR     (read) : bit0=tx_ready, bit1=rx_valid(!empty), bit2=rx_overrun
 // - RXDATA @ UART_RXDATA_ADDR     (read) : low8=rx_data, read handshake pops one FIFO entry
 module axi_lite_uart_slave #(
-    parameter integer UART_CLK_HZ = 50000000,
-    parameter integer UART_BAUD = 115200,
+    parameter integer UART_CLK_HZ   = 50000000,
+    parameter integer UART_BAUD     = 115200,
     parameter integer RX_FIFO_DEPTH = 4
 ) (
-    input clk,
-    input rst,
-    input       uart_rxd,
-    output      uart_txd,
+    input  clk,
+    input  rst,
+    input  uart_rxd,
+    output uart_txd,
 
     // AXI-Lite write address channel
     input  [31:0] s_axi_awaddr,
@@ -27,9 +27,9 @@ module axi_lite_uart_slave #(
     output        s_axi_wready,
 
     // AXI-Lite write response channel
-    output [ 1:0] s_axi_bresp,
-    output        s_axi_bvalid,
-    input         s_axi_bready,
+    output [1:0] s_axi_bresp,
+    output       s_axi_bvalid,
+    input        s_axi_bready,
 
     // AXI-Lite read address channel
     input  [31:0] s_axi_araddr,
@@ -50,17 +50,17 @@ module axi_lite_uart_slave #(
 
   reg [31:0] uart_awaddr_latch;
   reg [31:0] uart_wdata_latch;
-  reg [ 3:0] uart_wstrb_latch;
+  reg [3:0] uart_wstrb_latch;
   reg [31:0] uart_araddr_latch;
-  reg        uart_aw_seen;
-  reg        uart_w_seen;
-  reg        uart_bvalid;
-  reg        uart_rvalid;
+  reg uart_aw_seen;
+  reg uart_w_seen;
+  reg uart_bvalid;
+  reg uart_rvalid;
   reg [31:0] uart_rdata;
-  reg        uart_rx_pop_pending;
-  reg        uart_rx_overrun_reg;
-  reg        uart_tx_valid;
-  reg [ 7:0] uart_tx_data;
+  reg uart_rx_pop_pending;
+  reg uart_rx_overrun_reg;
+  reg uart_tx_valid;
+  reg [7:0] uart_tx_data;
 
   wire uart_aw_hs = s_axi_awvalid && s_axi_awready;
   wire uart_w_hs = s_axi_wvalid && s_axi_wready;
@@ -96,17 +96,17 @@ module axi_lite_uart_slave #(
   wire uart_write_can_commit = !uart_write_is_tx || uart_tx_ready;
 
   assign s_axi_awready = 1'b1;
-  assign s_axi_wready = 1'b1;
+  assign s_axi_wready  = 1'b1;
   assign s_axi_arready = 1'b1;
-  assign s_axi_bresp = 2'b00;  // OKAY
-  assign s_axi_bvalid = uart_bvalid;
-  assign s_axi_rresp = 2'b00;  // OKAY
-  assign s_axi_rvalid = uart_rvalid;
-  assign s_axi_rdata = uart_rdata;
+  assign s_axi_bresp   = 2'b00;  // OKAY
+  assign s_axi_bvalid  = uart_bvalid;
+  assign s_axi_rresp   = 2'b00;  // OKAY
+  assign s_axi_rvalid  = uart_rvalid;
+  assign s_axi_rdata   = uart_rdata;
 
   uart_tx #(
       .CLK_FREQ_HZ(UART_CLK_HZ),
-      .BAUD_RATE(UART_BAUD)
+      .BAUD_RATE  (UART_BAUD)
   ) uart_tx0 (
       .clk     (clk),
       .rst     (rst),
@@ -118,7 +118,7 @@ module axi_lite_uart_slave #(
 
   uart_rx #(
       .CLK_FREQ_HZ(UART_CLK_HZ),
-      .BAUD_RATE(UART_BAUD)
+      .BAUD_RATE  (UART_BAUD)
   ) uart_rx0 (
       .clk           (clk),
       .rst           (rst),
@@ -130,7 +130,7 @@ module axi_lite_uart_slave #(
 
   uart_rx_fifo #(
       .DATA_WIDTH(8),
-      .DEPTH(RX_FIFO_DEPTH)
+      .DEPTH     (RX_FIFO_DEPTH)
   ) uart_rx_fifo0 (
       .clk      (clk),
       .rst      (rst),
@@ -144,41 +144,41 @@ module axi_lite_uart_slave #(
 
   always @(posedge clk) begin
     if (rst) begin
-      uart_awaddr_latch <= 32'b0;
-      uart_wdata_latch <= 32'b0;
-      uart_wstrb_latch <= 4'b0;
-      uart_araddr_latch <= 32'b0;
-      uart_aw_seen <= 1'b0;
-      uart_w_seen <= 1'b0;
-      uart_bvalid <= 1'b0;
-      uart_rvalid <= 1'b0;
-      uart_rdata <= 32'b0;
+      uart_awaddr_latch   <= 32'b0;
+      uart_wdata_latch    <= 32'b0;
+      uart_wstrb_latch    <= 4'b0;
+      uart_araddr_latch   <= 32'b0;
+      uart_aw_seen        <= 1'b0;
+      uart_w_seen         <= 1'b0;
+      uart_bvalid         <= 1'b0;
+      uart_rvalid         <= 1'b0;
+      uart_rdata          <= 32'b0;
       uart_rx_pop_pending <= 1'b0;
       uart_rx_overrun_reg <= 1'b0;
-      uart_tx_valid <= 1'b0;
-      uart_tx_data <= 8'b0;
+      uart_tx_valid       <= 1'b0;
+      uart_tx_data        <= 8'b0;
     end else begin
       uart_tx_valid <= 1'b0;
 
       if (uart_aw_hs) begin
         uart_awaddr_latch <= s_axi_awaddr;
-        uart_aw_seen <= 1'b1;
+        uart_aw_seen      <= 1'b1;
       end
 
       if (uart_w_hs) begin
         uart_wdata_latch <= s_axi_wdata;
         uart_wstrb_latch <= s_axi_wstrb;
-        uart_w_seen <= 1'b1;
+        uart_w_seen      <= 1'b1;
       end
 
       if (!uart_bvalid && (uart_aw_seen || uart_aw_hs) && (uart_w_seen || uart_w_hs) &&
           uart_write_can_commit) begin
-        uart_bvalid <= 1'b1;
+        uart_bvalid  <= 1'b1;
         uart_aw_seen <= 1'b0;
-        uart_w_seen <= 1'b0;
+        uart_w_seen  <= 1'b0;
         if (uart_write_is_tx) begin
           uart_tx_valid <= 1'b1;
-          uart_tx_data <= uart_write_tx_byte;
+          uart_tx_data  <= uart_write_tx_byte;
         end
       end else if (uart_b_hs) begin
         uart_bvalid <= 1'b0;
@@ -186,19 +186,21 @@ module axi_lite_uart_slave #(
 
       if (!uart_rvalid && uart_ar_hs) begin
         uart_araddr_latch <= s_axi_araddr;
-        uart_rvalid <= 1'b1;
+        uart_rvalid       <= 1'b1;
         if (s_axi_araddr == UART_STATUS_ADDR) begin
-          uart_rdata <= {29'b0, uart_rx_overrun_reg, !uart_rx_fifo_empty, uart_tx_ready};  // bit2=rx_overrun, bit1=rx_valid, bit0=tx_ready
+          uart_rdata <= {
+            29'b0, uart_rx_overrun_reg, !uart_rx_fifo_empty, uart_tx_ready
+          };  // bit2=rx_overrun, bit1=rx_valid, bit0=tx_ready
           uart_rx_pop_pending <= 1'b0;
         end else if (s_axi_araddr == UART_RXDATA_ADDR) begin
-          uart_rdata <= uart_rx_fifo_empty ? 32'h0 : {24'b0, uart_rx_fifo_rdata};
+          uart_rdata          <= uart_rx_fifo_empty ? 32'h0 : {24'b0, uart_rx_fifo_rdata};
           uart_rx_pop_pending <= !uart_rx_fifo_empty;
         end else begin
-          uart_rdata <= 32'h0;
+          uart_rdata          <= 32'h0;
           uart_rx_pop_pending <= 1'b0;
         end
       end else if (uart_r_hs) begin
-        uart_rvalid <= 1'b0;
+        uart_rvalid         <= 1'b0;
         uart_rx_pop_pending <= 1'b0;
       end
 
@@ -207,7 +209,7 @@ module axi_lite_uart_slave #(
         uart_rx_overrun_reg <= 1'b1;
       end
 
-      // RX FIFO pop path (on completed RXDATA read response)
+      // RX FIFO pop path (on completed vXDATA read response)
       if (uart_rx_pop) begin
         uart_rx_overrun_reg <= 1'b0;
       end
@@ -215,3 +217,5 @@ module axi_lite_uart_slave #(
   end
 
 endmodule
+
+

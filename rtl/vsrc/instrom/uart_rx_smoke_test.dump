@@ -1,0 +1,42 @@
+
+./vsrc/instrom/uart_rx_smoke_test.o:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	100002b7          	lui	t0,0x10000
+   4:	00428293          	addi	t0,t0,4 # 10000004 <hang+0xfffff9c>
+   8:	10000337          	lui	t1,0x10000
+   c:	00830313          	addi	t1,t1,8 # 10000008 <hang+0xfffffa0>
+  10:	04100393          	li	t2,65
+
+00000014 <poll_status>:
+  14:	0002ae03          	lw	t3,0(t0)
+  18:	00000013          	nop
+  1c:	00000013          	nop
+  20:	00000013          	nop
+  24:	002e7e13          	andi	t3,t3,2
+  28:	00000013          	nop
+  2c:	00000013          	nop
+  30:	00000013          	nop
+  34:	fe0e00e3          	beqz	t3,14 <poll_status>
+  38:	00032e83          	lw	t4,0(t1)
+  3c:	00000013          	nop
+  40:	00000013          	nop
+  44:	00000013          	nop
+  48:	0ffefe93          	zext.b	t4,t4
+  4c:	00000013          	nop
+  50:	00000013          	nop
+  54:	00000013          	nop
+  58:	007e9663          	bne	t4,t2,64 <fail>
+
+0000005c <pass>:
+  5c:	00100193          	li	gp,1
+  60:	0080006f          	j	68 <hang>
+
+00000064 <fail>:
+  64:	00200193          	li	gp,2
+
+00000068 <hang>:
+  68:	0000006f          	j	68 <hang>

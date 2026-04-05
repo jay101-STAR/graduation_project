@@ -72,30 +72,30 @@ module top (
   );
 
   riscv_core u_core (
-      .clk(clk),
-      .rst(sync_rst), // 使用同步复位信号
+      .clk               (clk),
+      .rst               (sync_rst),           // 使用同步复位信号
       .top_core_mem_stall(top_core_mem_stall),
 
-      .instrom_core_data(instrom_core_data),
-      .instrom_core_pc(instrom_core_pc),
-      .core_instrom_addr(core_instrom_addr),
-      .core_instrom_ren (core_instrom_ren),
+      .instrom_core_data    (instrom_core_data),
+      .instrom_core_pc      (instrom_core_pc),
+      .core_instrom_addr    (core_instrom_addr),
+      .core_instrom_ren     (core_instrom_ren),
       .tohost_value_register(tohost_value_register),
 
-      .core_dataram_addr  (core_dataram_addr),
-      .core_dataram_wdata (core_dataram_wdata),
-      .core_dataram_wen   (core_dataram_wen),
-      .core_dataram_ren   (core_dataram_ren),
-      .core_dataram_alucex(core_dataram_alucex),
-      .core_dataram_stall (core_dataram_stall),
-      .core_bp_branch_total(bp_branch_total),
-      .core_bp_mispredict_total(bp_mispredict_total),
+      .core_dataram_addr        (core_dataram_addr),
+      .core_dataram_wdata       (core_dataram_wdata),
+      .core_dataram_wen         (core_dataram_wen),
+      .core_dataram_ren         (core_dataram_ren),
+      .core_dataram_alucex      (core_dataram_alucex),
+      .core_dataram_stall       (core_dataram_stall),
+      .core_bp_branch_total     (bp_branch_total),
+      .core_bp_mispredict_total (bp_mispredict_total),
       .core_bp_target_miss_total(bp_target_miss_total),
-      .dataram_core_rdata (dataram_core_rdata)
+      .dataram_core_rdata       (dataram_core_rdata)
   );
 
   // AXI/MMIO back-pressure to CPU core.
-  assign top_core_mem_stall = bridge_top_stall;
+  assign top_core_mem_stall  = bridge_top_stall;
 
   // 地址译码
   assign dataram_access_uart = (core_dataram_addr[31:4] == UART_ADDR[31:4]);
@@ -131,40 +131,40 @@ module top (
   end
 
   mem_to_axi_lite_bridge mem_to_axi_lite_bridge0 (
-      .clk         (clk),
-      .rst         (sync_rst),
-      .cpu_axi_addr(core_dataram_addr),
+      .clk          (clk),
+      .rst          (sync_rst),
+      .cpu_axi_addr (core_dataram_addr),
       .cpu_axi_wdata(core_dataram_wdata),
       .cpu_axi_wstrb(core_bridge_wstrb),
-      .cpu_axi_wen (core_dataram_wen && dataram_access_uart),
-      .cpu_axi_ren (core_dataram_ren && dataram_access_uart),
+      .cpu_axi_wen  (core_dataram_wen && dataram_access_uart),
+      .cpu_axi_ren  (core_dataram_ren && dataram_access_uart),
       .axi_cpu_rdata(bridge_top_rdata),
       .axi_cpu_stall(bridge_top_stall),
       .axi_cpu_error(bridge_top_error),
-      .m_axi_awaddr(bridge_axi_awaddr),
-      .m_axi_awprot(bridge_axi_awprot),
+      .m_axi_awaddr (bridge_axi_awaddr),
+      .m_axi_awprot (bridge_axi_awprot),
       .m_axi_awvalid(bridge_axi_awvalid),
       .m_axi_awready(axi_bridge_awready),
-      .m_axi_wdata (bridge_axi_wdata),
-      .m_axi_wstrb (bridge_axi_wstrb),
-      .m_axi_wvalid(bridge_axi_wvalid),
-      .m_axi_wready(axi_bridge_wready),
-      .m_axi_bresp (axi_bridge_bresp),
-      .m_axi_bvalid(axi_bridge_bvalid),
-      .m_axi_bready(bridge_axi_bready),
-      .m_axi_araddr(bridge_axi_araddr),
-      .m_axi_arprot(bridge_axi_arprot),
+      .m_axi_wdata  (bridge_axi_wdata),
+      .m_axi_wstrb  (bridge_axi_wstrb),
+      .m_axi_wvalid (bridge_axi_wvalid),
+      .m_axi_wready (axi_bridge_wready),
+      .m_axi_bresp  (axi_bridge_bresp),
+      .m_axi_bvalid (axi_bridge_bvalid),
+      .m_axi_bready (bridge_axi_bready),
+      .m_axi_araddr (bridge_axi_araddr),
+      .m_axi_arprot (bridge_axi_arprot),
       .m_axi_arvalid(bridge_axi_arvalid),
       .m_axi_arready(axi_bridge_arready),
-      .m_axi_rdata (axi_bridge_rdata),
-      .m_axi_rresp (axi_bridge_rresp),
-      .m_axi_rvalid(axi_bridge_rvalid),
-      .m_axi_rready(bridge_axi_rready)
+      .m_axi_rdata  (axi_bridge_rdata),
+      .m_axi_rresp  (axi_bridge_rresp),
+      .m_axi_rvalid (axi_bridge_rvalid),
+      .m_axi_rready (bridge_axi_rready)
   );
 
   axi_lite_uart_slave #(
-      .UART_CLK_HZ(UART_CLK_HZ),
-      .UART_BAUD(UART_BAUD),
+      .UART_CLK_HZ  (UART_CLK_HZ),
+      .UART_BAUD    (UART_BAUD),
       .RX_FIFO_DEPTH(UART_RX_FIFO_DEPTH)
   ) axi_lite_uart_slave0 (
       .clk          (clk),

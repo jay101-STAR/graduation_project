@@ -81,8 +81,8 @@ prep-uart-echo-forever:
 	$(SPLIT_INST)
 
 test-riscv:
-	./prepare_test.sh ../verification/riscv-tests/isa/rv32ui-p-lb
-	./vsrc/instrom/elf2hex.sh ../verification/riscv-tests/isa/rv32ui-p-lb ./vsrc/instrom/instrom.hex
+	./prepare_test.sh ../verification/riscv-tests/isa/rv32ui-p-sw
+	./vsrc/instrom/elf2hex.sh ../verification/riscv-tests/isa/rv32ui-p-sw ./vsrc/instrom/instrom.hex
 	$(SPLIT_INST)
 	$(VCS)
 	./simv -l sim.log

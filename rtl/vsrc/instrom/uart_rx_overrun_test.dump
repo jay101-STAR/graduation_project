@@ -1,0 +1,76 @@
+
+./vsrc/instrom/uart_rx_overrun_test.o:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	100002b7          	lui	t0,0x10000
+   4:	00428293          	addi	t0,t0,4 # 10000004 <hang+0xfffff34>
+   8:	10000337          	lui	t1,0x10000
+   c:	00830313          	addi	t1,t1,8 # 10000008 <hang+0xfffff38>
+  10:	04100393          	li	t2,65
+
+00000014 <poll_status_valid>:
+  14:	0002ae03          	lw	t3,0(t0)
+  18:	00000013          	nop
+  1c:	00000013          	nop
+  20:	00000013          	nop
+  24:	002e7e13          	andi	t3,t3,2
+  28:	00000013          	nop
+  2c:	00000013          	nop
+  30:	00000013          	nop
+  34:	fe0e00e3          	beqz	t3,14 <poll_status_valid>
+
+00000038 <wait_overrun_set>:
+  38:	0002ae83          	lw	t4,0(t0)
+  3c:	00000013          	nop
+  40:	00000013          	nop
+  44:	00000013          	nop
+  48:	004efe93          	andi	t4,t4,4
+  4c:	00000013          	nop
+  50:	00000013          	nop
+  54:	00000013          	nop
+  58:	fe0e80e3          	beqz	t4,38 <wait_overrun_set>
+
+0000005c <check_first_rx_byte>:
+  5c:	00032f03          	lw	t5,0(t1)
+  60:	00000013          	nop
+  64:	00000013          	nop
+  68:	00000013          	nop
+  6c:	0fff7f13          	zext.b	t5,t5
+  70:	00000013          	nop
+  74:	00000013          	nop
+  78:	00000013          	nop
+  7c:	047f1463          	bne	t5,t2,c4 <fail_data_mismatch>
+  80:	0002af83          	lw	t6,0(t0)
+  84:	00000013          	nop
+  88:	00000013          	nop
+  8c:	00000013          	nop
+  90:	006fff93          	andi	t6,t6,6
+  94:	00000013          	nop
+  98:	00000013          	nop
+  9c:	00000013          	nop
+  a0:	00200413          	li	s0,2
+  a4:	00000013          	nop
+  a8:	00000013          	nop
+  ac:	00000013          	nop
+  b0:	008f9e63          	bne	t6,s0,cc <fail_status_after_pop>
+
+000000b4 <pass>:
+  b4:	00100193          	li	gp,1
+  b8:	0180006f          	j	d0 <hang>
+
+000000bc <fail_overrun_not_set>:
+  bc:	00200193          	li	gp,2
+  c0:	0100006f          	j	d0 <hang>
+
+000000c4 <fail_data_mismatch>:
+  c4:	00300193          	li	gp,3
+  c8:	0080006f          	j	d0 <hang>
+
+000000cc <fail_status_after_pop>:
+  cc:	00400193          	li	gp,4
+
+000000d0 <hang>:
+  d0:	0000006f          	j	d0 <hang>

@@ -1,0 +1,18 @@
+========================================
+UART Test Runner
+========================================
+Start time: Sat Mar  7 08:35:18 PM CST 2026
+Run mode: single test (uart_tx_smoke)
+
+[INFO] Skip build (--no-build).
+[01/01] uart_tx_smoke          ... PASS
+
+========================================
+Summary
+========================================
+Total:  1
+Pass:   1
+Fail:   0
+End:    Sat Mar  7 08:35:18 PM CST 2026
+Summary file: /home/jay/Desktop/graduation_project/rtl/test_results/uart_summary_20260307_203518.txt
+Detail logs:  /home/jay/Desktop/graduation_project/rtl/test_results/uart_20260307_203518_*.log
