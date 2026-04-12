@@ -1,9 +1,334 @@
 <mxfile host="app.diagrams.net">
-  <diagram name="第 1 页" id="lWSCX_on7Y64sehMHVIY">
-    <mxGraphModel>
+  <diagram name="Five-Stage Pipeline Datapath" id="lWSCX_on7Y64sehMHVIY">
+    <mxGraphModel dx="2206" dy="1494" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="nvhke_NViNs17DrglBER-1" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=26;fontStyle=1;fontColor=#173F73;" value="Five-Stage Pipeline Datapath of the RISC-V CPU" vertex="1">
+          <mxGeometry height="40" width="860" x="390" y="-40" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;strokeColor=#2F5D9A;strokeWidth=2;fillColor=#FFFFFF;fontSize=18;fontStyle=1;verticalAlign=top;align=left;spacingTop=10;spacingLeft=12;fontColor=#173F73;" value="&lt;font style=&quot;font-size: 30px;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; RISC-V CPU 数据通路&lt;/font&gt;" vertex="1">
+          <mxGeometry height="1490" width="1870" x="-170" y="-140" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;strokeColor=#6C8EBF;strokeWidth=2;fillColor=#EEF3FA;fontSize=18;fontStyle=1;verticalAlign=top;align=center;spacingTop=8;fontColor=#173F73;" value="IF Stage" vertex="1">
+          <mxGeometry height="650" width="340" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;strokeColor=#6C8EBF;strokeWidth=2;fillColor=#F4F7FC;fontSize=18;fontStyle=1;verticalAlign=top;align=center;spacingTop=8;fontColor=#173F73;" value="ID Stage" vertex="1">
+          <mxGeometry height="660" width="300" x="390" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;strokeColor=#6C8EBF;strokeWidth=2;fillColor=#EEF3FA;fontSize=18;fontStyle=1;verticalAlign=top;align=center;spacingTop=8;fontColor=#173F73;" value="EX Stage" vertex="1">
+          <mxGeometry height="660" width="360" x="730" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;strokeColor=#6C8EBF;strokeWidth=2;fillColor=#F4F7FC;fontSize=18;fontStyle=1;verticalAlign=top;align=center;spacingTop=8;fontColor=#173F73;" value="MEM Stage" vertex="1">
+          <mxGeometry height="660" width="300" x="1130" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;strokeColor=#6C8EBF;strokeWidth=2;fillColor=#EEF3FA;fontSize=18;fontStyle=1;verticalAlign=top;align=center;spacingTop=8;fontColor=#173F73;" value="WB Stage" vertex="1">
+          <mxGeometry height="660" width="110" x="1515" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;strokeColor=#2F5D9A;strokeWidth=2;fillColor=#DCE8F8;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="IF/ID" vertex="1">
+          <mxGeometry height="180" width="25" x="355" y="355" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;strokeColor=#2F5D9A;strokeWidth=2;fillColor=#DCE8F8;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="ID/EX" vertex="1">
+          <mxGeometry height="180" width="25" x="695" y="345" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;strokeColor=#2F5D9A;strokeWidth=2;fillColor=#DCE8F8;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="EX/MEM" vertex="1">
+          <mxGeometry height="180" width="25" x="1095" y="355" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;strokeColor=#2F5D9A;strokeWidth=2;fillColor=#DCE8F8;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="MEM/WB" vertex="1">
+          <mxGeometry height="180" width="25" x="1460" y="355" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#2F5D9A;strokeWidth=2;fillColor=#DCE8F8;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="Branch Predictor" vertex="1">
+          <mxGeometry height="60" width="160" x="81" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#2F5D9A;strokeWidth=2;fillColor=#E8F0FB;fontSize=18;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="PC" vertex="1">
+          <mxGeometry height="70" width="80" x="125" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#2F5D9A;strokeWidth=2;fillColor=#F6FAFF;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="IF1 Buffer" vertex="1">
+          <mxGeometry height="55" width="95" x="210" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-15" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#2F5D9A;strokeWidth=2;fillColor=#F6FAFF;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="IF2 Buffer" vertex="1">
+          <mxGeometry height="55" width="95" x="210" y="395" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#2F5D9A;strokeWidth=2;fillColor=#EEF3FA;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="Instruction Fetch Interface" vertex="1">
+          <mxGeometry height="70" width="210" x="95" y="515" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-17" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#2F5D9A;strokeWidth=2;fillColor=#E8F0FB;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="Instruction Decode" vertex="1">
+          <mxGeometry height="60" width="140" x="400" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-18" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#2F5D9A;strokeWidth=2;fillColor=#F6FAFF;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="Immediate Generator" vertex="1">
+          <mxGeometry height="60" width="140" x="510" y="405" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-19" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#2F5D9A;strokeWidth=2;fillColor=#E8F0FB;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;Register File&lt;/font&gt;" vertex="1">
+          <mxGeometry height="110" width="160" x="430" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-20" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#A05A2C;strokeWidth=2;fillColor=#FFF3E8;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;fontColor=#8A4B08;" value="Hazard Detection" vertex="1">
+          <mxGeometry height="70" width="160" x="470" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-21" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#2F5D9A;strokeWidth=2;fillColor=#F6FAFF;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="Operand Select Mux" vertex="1">
+          <mxGeometry height="60" width="140" x="760" y="225" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-22" parent="1" style="shape=mxgraph.basic.triangle;whiteSpace=wrap;html=1;direction=east;strokeColor=#2F5D9A;strokeWidth=2;fillColor=#DCE8F8;fontSize=18;fontStyle=1;fontColor=#173F73;" value="ALU" vertex="1">
+          <mxGeometry height="80" width="105" x="935" y="215" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-23" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#2F5D9A;strokeWidth=2;fillColor=#F6FAFF;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="Branch Compare /&#xa;Target Logic" vertex="1">
+          <mxGeometry height="70" width="170" x="760" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-24" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#2F5D9A;strokeWidth=2;fillColor=#F6FAFF;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="CSR" vertex="1">
+          <mxGeometry height="70" width="110" x="920" y="827" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-25" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#2F5D9A;strokeWidth=2;fillColor=#E8F0FB;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="mul_3cycle" vertex="1">
+          <mxGeometry height="70" width="120" x="900" y="455" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-26" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#2F5D9A;strokeWidth=2;fillColor=#E8F0FB;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="div" vertex="1">
+          <mxGeometry height="70" width="120" x="900" y="555" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-27" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#2F5D9A;strokeWidth=2;fillColor=#EEF3FA;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="Data Access Interface" vertex="1">
+          <mxGeometry height="70" width="190" x="1155" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-28" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#2F5D9A;strokeWidth=2;fillColor=#E8F0FB;fontSize=17;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="Unified Banked Memory" vertex="1">
+          <mxGeometry height="90" width="180" x="1165" y="345" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-29" parent="1" style="shape=hexagon;whiteSpace=wrap;html=1;strokeColor=#A05A2C;strokeWidth=2;fillColor=#FFF3E8;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;fontColor=#8A4B08;" value="MMIO Split Path" vertex="1">
+          <mxGeometry height="70" width="120" x="1165" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-30" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#7A5CA7;strokeWidth=2;fillColor=#F2ECFA;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;fontColor=#4F3C73;" value="AXI4-Lite Bridge" vertex="1">
+          <mxGeometry height="70" width="115" x="1300" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-31" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#3D8B7D;strokeWidth=2;fillColor=#EAF6F3;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;fontColor=#2C665D;" value="UART Peripheral" vertex="1">
+          <mxGeometry height="70" width="160" x="1180" y="635" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-101" edge="1" parent="1" source="nvhke_NViNs17DrglBER-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;strokeWidth=3;strokeColor=#2F5D9A;" target="nvhke_NViNs17DrglBER-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-102" connectable="0" parent="nvhke_NViNs17DrglBER-101" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;寄存器写回&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.0858" y="-5" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-32" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#2F5D9A;strokeWidth=2;fillColor=#E8F0FB;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="WB Mux" vertex="1">
+          <mxGeometry height="70" width="80" x="1530" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-33" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;fontColor=#333333;" value="UART RXD" vertex="1">
+          <mxGeometry height="24" width="90" x="1175" y="725" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-34" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;fontColor=#333333;" value="UART TXD" vertex="1">
+          <mxGeometry height="24" width="90" x="1280" y="725" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-35" edge="1" parent="1" source="nvhke_NViNs17DrglBER-13" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#245EC7;strokeWidth=4;endArrow=block;endFill=1;fontSize=13;fontColor=#173F73;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-16" value="instruction fetch path">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="160" y="475" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-36" edge="1" parent="1" source="nvhke_NViNs17DrglBER-16" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#245EC7;strokeWidth=4;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-14" value="instr">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-37" edge="1" parent="1" source="nvhke_NViNs17DrglBER-14" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#245EC7;strokeWidth=4;endArrow=block;endFill=1;" target="nvhke_NViNs17DrglBER-15" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-38" edge="1" parent="1" source="nvhke_NViNs17DrglBER-15" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#245EC7;strokeWidth=4;endArrow=block;endFill=1;" target="nvhke_NViNs17DrglBER-8" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-39" edge="1" parent="1" source="nvhke_NViNs17DrglBER-8" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#245EC7;strokeWidth=4;endArrow=block;endFill=1;" target="nvhke_NViNs17DrglBER-17" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-40" edge="1" parent="1" source="nvhke_NViNs17DrglBER-17" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#245EC7;strokeWidth=4;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-19" value="read addr">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-41" edge="1" parent="1" source="nvhke_NViNs17DrglBER-18" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#245EC7;strokeWidth=4;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-9" value="imm">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-42" edge="1" parent="1" source="nvhke_NViNs17DrglBER-19" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#245EC7;strokeWidth=4;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-9" value="rs1 / rs2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-43" edge="1" parent="1" source="nvhke_NViNs17DrglBER-9" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#245EC7;strokeWidth=4;endArrow=block;endFill=1;" target="nvhke_NViNs17DrglBER-21" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-44" edge="1" parent="1" source="nvhke_NViNs17DrglBER-21" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#245EC7;strokeWidth=4;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-22" value="operands">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-45" edge="1" parent="1" source="nvhke_NViNs17DrglBER-21" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#245EC7;strokeWidth=4;endArrow=block;endFill=1;" target="nvhke_NViNs17DrglBER-23" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-46" edge="1" parent="1" source="nvhke_NViNs17DrglBER-22" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#245EC7;strokeWidth=4;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-10" value="ALU result">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-47" edge="1" parent="1" source="nvhke_NViNs17DrglBER-10" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#245EC7;strokeWidth=4;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-27" value="addr / wdata">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-48" edge="1" parent="1" source="nvhke_NViNs17DrglBER-27" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#245EC7;strokeWidth=4;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-28" value="RAM path">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-49" edge="1" parent="1" source="nvhke_NViNs17DrglBER-28" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#245EC7;strokeWidth=4;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-11" value="rdata">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1380" y="390" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-50" edge="1" parent="1" source="nvhke_NViNs17DrglBER-11" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#245EC7;strokeWidth=4;endArrow=block;endFill=1;" target="nvhke_NViNs17DrglBER-32" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-52" edge="1" parent="1" source="nvhke_NViNs17DrglBER-16" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#245EC7;strokeWidth=4;endArrow=block;endFill=1;fontSize=12;fontColor=#173F73;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-28" value="Unified physical memory / instruction fetch interface">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="250" y="610" />
+              <mxPoint x="1255" y="610" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-53" edge="1" parent="1" source="nvhke_NViNs17DrglBER-10" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#4C7BD9;strokeWidth=3;dashed=1;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-21" value="MEM -&gt; EX forwarding">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1105" y="175" />
+              <mxPoint x="830" y="175" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-54" edge="1" parent="1" source="nvhke_NViNs17DrglBER-11" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#4C7BD9;strokeWidth=3;dashed=1;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-21" value="WB -&gt; EX forwarding">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1445" y="155" />
+              <mxPoint x="830" y="155" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-55" edge="1" parent="1" source="nvhke_NViNs17DrglBER-20" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#C06014;strokeWidth=2;dashed=1;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-13" value="stall">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="140" y="705" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-56" edge="1" parent="1" source="nvhke_NViNs17DrglBER-20" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#C06014;strokeWidth=2;dashed=1;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-8" value="stall / flush">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-57" edge="1" parent="1" source="nvhke_NViNs17DrglBER-20" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#C06014;strokeWidth=2;dashed=1;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-9" value="stall / flush">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-58" edge="1" parent="1" source="nvhke_NViNs17DrglBER-20" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#C06014;strokeWidth=2;dashed=1;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-10" value="stall">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-59" edge="1" parent="1" source="nvhke_NViNs17DrglBER-20" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#C06014;strokeWidth=2;dashed=1;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-11" value="stall">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-60" edge="1" parent="1" source="nvhke_NViNs17DrglBER-13" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#2E8B57;strokeWidth=2;dashed=1;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-12" value="query">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-61" edge="1" parent="1" source="nvhke_NViNs17DrglBER-23" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#2E8B57;strokeWidth=2;dashed=1;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-12" value="predictor update">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="845" y="160" />
+              <mxPoint x="175" y="160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-62" edge="1" parent="1" source="nvhke_NViNs17DrglBER-23" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#2E8B57;strokeWidth=2;dashed=1;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-13" value="redirect">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="845" y="120" />
+              <mxPoint x="160" y="120" />
+              <mxPoint x="160" y="350" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-63" edge="1" parent="1" source="nvhke_NViNs17DrglBER-24" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#2E8B57;strokeWidth=2;dashed=1;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-21" value="EX &lt;-&gt; CSR">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-64" edge="1" parent="1" source="nvhke_NViNs17DrglBER-24" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#2E8B57;strokeWidth=2;dashed=1;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-23" value="trap / mret">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-65" edge="1" parent="1" source="nvhke_NViNs17DrglBER-25" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#2F5D9A;strokeWidth=3;dashed=1;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-22" value="multicycle result">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-66" edge="1" parent="1" source="nvhke_NViNs17DrglBER-26" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#2F5D9A;strokeWidth=3;dashed=1;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-22" value="multicycle result">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-67" edge="1" parent="1" source="nvhke_NViNs17DrglBER-27" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#E67E22;strokeWidth=3;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-29" value="MMIO access">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-68" edge="1" parent="1" source="nvhke_NViNs17DrglBER-29" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#D35400;strokeWidth=3;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-30" value="AXI4-Lite">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-69" edge="1" parent="1" source="nvhke_NViNs17DrglBER-30" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#D35400;strokeWidth=3;endArrow=block;endFill=1;fontSize=12;labelBackgroundColor=#FFFFFF;" target="nvhke_NViNs17DrglBER-31" value="AXI4-Lite">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-70" edge="1" parent="1" source="nvhke_NViNs17DrglBER-31" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#6B6F76;strokeWidth=2;endArrow=block;endFill=1;" target="nvhke_NViNs17DrglBER-33">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-71" edge="1" parent="1" source="nvhke_NViNs17DrglBER-31" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;strokeColor=#6B6F76;strokeWidth=2;endArrow=block;endFill=1;" target="nvhke_NViNs17DrglBER-34">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-72" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=14;fontStyle=1;fontColor=#173F73;align=center;" value="unified physical memory&#xa;with separate instruction and data interfaces" vertex="1">
+          <mxGeometry height="40" width="270" x="1110" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-73" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=14;fontStyle=1;fontColor=#173F73;align=center;" value="branch prediction / forwarding / hazard detection / CSR / multicycle mul-div / MMIO to UART" vertex="1">
+          <mxGeometry height="24" width="690" x="475" y="1260" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-74" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;dashed=1;strokeColor=#7F8C9A;strokeWidth=2;fillColor=#FFFFFF;fontSize=16;fontStyle=1;verticalAlign=top;spacingTop=8;align=left;spacingLeft=10;fontColor=#173F73;" value="Legend" vertex="1">
+          <mxGeometry height="125" width="495" x="15" y="1090" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-75" parent="1" style="ellipse;strokeColor=none;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="1" width="1" x="90" y="870" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-76" parent="1" style="ellipse;strokeColor=none;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="1" width="1" x="145" y="870" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-77" parent="1" style="ellipse;strokeColor=none;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="1" width="1" x="90" y="905" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-78" parent="1" style="ellipse;strokeColor=none;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="1" width="1" x="145" y="905" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-79" parent="1" style="ellipse;strokeColor=none;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="1" width="1" x="240" y="870" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-80" parent="1" style="ellipse;strokeColor=none;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="1" width="1" x="295" y="870" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-81" parent="1" style="ellipse;strokeColor=none;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="1" width="1" x="240" y="905" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-82" parent="1" style="ellipse;strokeColor=none;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="1" width="1" x="295" y="905" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-87" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=14;fontColor=#173F73;" value="Main datapath" vertex="1">
+          <mxGeometry height="20" width="90" x="115" y="1120" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-89" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=14;fontColor=#173F73;" value="stall / flush / redirect / update" vertex="1">
+          <mxGeometry height="20" width="130" x="320" y="1120" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-90" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=14;fontColor=#173F73;" value="AXI4-Lite / MMIO path" vertex="1">
+          <mxGeometry height="20" width="120" x="350" y="1180" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-93" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#245EC7;strokeWidth=4;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="41" y="1138.82" as="sourcePoint" />
+            <mxPoint x="95" y="1138.82" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-95" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#C06014;strokeWidth=2;dashed=1;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="255" y="1138.82" as="sourcePoint" />
+            <mxPoint x="309" y="1138.82" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-98" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=14;fontColor=#173F73;" value="Forwarding" vertex="1">
+          <mxGeometry height="20" width="80" x="125" y="1180" as="geometry" />
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-99" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#4C7BD9;strokeWidth=3;dashed=1;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="41" y="1198.82" as="sourcePoint" />
+            <mxPoint x="95" y="1198.82" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="nvhke_NViNs17DrglBER-100" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#D35400;strokeWidth=3;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="266" y="1193.41" as="sourcePoint" />
+            <mxPoint x="320" y="1193.41" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
