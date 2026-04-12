@@ -214,10 +214,10 @@
           <mxGeometry height="920" width="1530" x="900" y="1330" as="geometry" />
         </mxCell>
         <mxCell id="ih8kE3jDkMXyOHKE4nik-149" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5F0FF;" value="" vertex="1">
-          <mxGeometry height="810" width="850" x="940" y="1360" as="geometry" />
+          <mxGeometry height="840" width="890" x="920" y="1350" as="geometry" />
         </mxCell>
         <mxCell id="ih8kE3jDkMXyOHKE4nik-150" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;strokeColor=#7A5CA7;strokeWidth=2;fillColor=#F2ECFA;fontSize=20;fontStyle=1;align=center;verticalAlign=middle;fontColor=#4F3C73;" value="AXI4-Lite Bridge&#xa;&lt;font style=&quot;font-size:14px;&quot;&gt;AXI4-Lite 总线桥接&lt;/font&gt;" vertex="1">
-          <mxGeometry height="110" width="180" x="1804" y="1921" as="geometry" />
+          <mxGeometry height="110" width="180" x="1820" y="1921" as="geometry" />
         </mxCell>
         <mxCell id="ih8kE3jDkMXyOHKE4nik-151" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;strokeColor=#3D8B7D;strokeWidth=2;fillColor=#EAF6F3;fontSize=20;fontStyle=1;align=center;verticalAlign=middle;fontColor=#2C665D;" value="UART Peripheral&#xa;&lt;font style=&quot;font-size:14px;&quot;&gt;UART 外设&lt;/font&gt;" vertex="1">
           <mxGeometry height="90" width="170" x="2074" y="1931" as="geometry" />
@@ -416,8 +416,8 @@
         <mxCell id="ih8kE3jDkMXyOHKE4nik-200" parent="1" style="shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;fixedSize=1;direction=north;" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;选择器&lt;/font&gt;" vertex="1">
           <mxGeometry height="110" width="70" x="1499" y="1991" as="geometry" />
         </mxCell>
-        <mxCell id="ih8kE3jDkMXyOHKE4nik-201" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;五级流水线cpu&lt;/font&gt;" vertex="1">
-          <mxGeometry height="30" width="170" x="1024" y="1371" as="geometry" />
+        <mxCell id="ih8kE3jDkMXyOHKE4nik-201" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;font-size: 30px;&quot;&gt;&lt;b&gt;五级流水线cpu&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="226" x="1024" y="1371" as="geometry" />
         </mxCell>
         <mxCell id="ih8kE3jDkMXyOHKE4nik-202" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=28;fontStyle=1;fontColor=#173F73;" value="SOC(system on chip),片上系统" vertex="1">
           <mxGeometry height="40" width="520" x="1440" y="1260" as="geometry" />
