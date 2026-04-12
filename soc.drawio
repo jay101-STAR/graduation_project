@@ -345,7 +345,12 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="ih8kE3jDkMXyOHKE4nik-182" edge="1" parent="1" source="ih8kE3jDkMXyOHKE4nik-184" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;strokeWidth=3;strokeColor=#177BFF;" target="ih8kE3jDkMXyOHKE4nik-176">
-          <mxGeometry relative="1" as="geometry" />
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1840" y="1831" />
+              <mxPoint x="1840" y="1614" />
+            </Array>
+          </mxGeometry>
         </mxCell>
         <mxCell id="ih8kE3jDkMXyOHKE4nik-183" connectable="0" parent="ih8kE3jDkMXyOHKE4nik-182" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;写数据地址和写数据&lt;/span&gt;" vertex="1">
           <mxGeometry relative="1" x="-0.1688" y="3" as="geometry">
