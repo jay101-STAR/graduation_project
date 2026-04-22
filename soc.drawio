@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram name="Overall Processor Architecture" id="YrTUT7KW-CjpL0RSCFAY">
-    <mxGraphModel dx="1491" dy="959" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1835" dy="1180" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -217,16 +217,19 @@
           <mxGeometry height="840" width="920" x="920" y="1350" as="geometry" />
         </mxCell>
         <mxCell id="ih8kE3jDkMXyOHKE4nik-150" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;strokeColor=#7A5CA7;strokeWidth=2;fillColor=#F2ECFA;fontSize=20;fontStyle=1;align=center;verticalAlign=middle;fontColor=#4F3C73;" value="AXI4-Lite Bridge&#xa;&lt;font style=&quot;font-size:14px;&quot;&gt;AXI4-Lite 总线桥接&lt;/font&gt;" vertex="1">
-          <mxGeometry height="110" width="180" x="1850" y="1921" as="geometry" />
+          <mxGeometry height="110" width="180" x="1860" y="1921" as="geometry" />
         </mxCell>
         <mxCell id="ih8kE3jDkMXyOHKE4nik-151" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;strokeColor=#3D8B7D;strokeWidth=2;fillColor=#EAF6F3;fontSize=20;fontStyle=1;align=center;verticalAlign=middle;fontColor=#2C665D;" value="UART Peripheral&#xa;&lt;font style=&quot;font-size:14px;&quot;&gt;UART 外设&lt;/font&gt;" vertex="1">
           <mxGeometry height="90" width="170" x="2074" y="1931" as="geometry" />
         </mxCell>
-        <mxCell id="ih8kE3jDkMXyOHKE4nik-152" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;fontColor=#333333;" value="UART RXD" vertex="1">
-          <mxGeometry height="24" width="100" x="2059" y="2051" as="geometry" />
+        <mxCell id="ih8kE3jDkMXyOHKE4nik-152" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;fontColor=#333333;" value="UART TXD" vertex="1">
+          <mxGeometry height="24" width="100" x="2050" y="2075" as="geometry" />
         </mxCell>
-        <mxCell id="ih8kE3jDkMXyOHKE4nik-153" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;fontColor=#333333;" value="UART TXD" vertex="1">
-          <mxGeometry height="24" width="100" x="2169" y="2051" as="geometry" />
+        <mxCell id="iRhKuSbPRxI4Lv2MQJlr-13" edge="1" parent="1" source="ih8kE3jDkMXyOHKE4nik-153" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" target="iRhKuSbPRxI4Lv2MQJlr-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ih8kE3jDkMXyOHKE4nik-153" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;fontColor=#333333;" value="UART RXD" vertex="1">
+          <mxGeometry height="24" width="100" x="2169" y="2075" as="geometry" />
         </mxCell>
         <mxCell id="ih8kE3jDkMXyOHKE4nik-154" edge="1" parent="1" source="ih8kE3jDkMXyOHKE4nik-156" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#009900;dashed=1;strokeWidth=3;" target="ih8kE3jDkMXyOHKE4nik-160">
           <mxGeometry relative="1" as="geometry" />
@@ -403,8 +406,8 @@
         <mxCell id="ih8kE3jDkMXyOHKE4nik-198" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#D0D0D0;" value="" vertex="1">
           <mxGeometry height="100" width="10" x="1511.5" y="1616" as="geometry" />
         </mxCell>
-        <mxCell id="ih8kE3jDkMXyOHKE4nik-201" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;font-size: 30px;&quot;&gt;&lt;b&gt;五级流水线cpu&lt;/b&gt;&lt;/font&gt;" vertex="1">
-          <mxGeometry height="30" width="226" x="1024" y="1371" as="geometry" />
+        <mxCell id="ih8kE3jDkMXyOHKE4nik-201" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;&lt;b style=&quot;&quot;&gt;五级流水线cpu&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="226" x="978" y="1360" as="geometry" />
         </mxCell>
         <mxCell id="ih8kE3jDkMXyOHKE4nik-202" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=28;fontStyle=1;fontColor=#173F73;" value="SOC(system on chip),片上系统" vertex="1">
           <mxGeometry height="40" width="520" x="1440" y="1260" as="geometry" />
@@ -432,6 +435,15 @@
         </mxCell>
         <mxCell id="iRhKuSbPRxI4Lv2MQJlr-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;strokeColor=#2F5D9A;strokeWidth=2;fillColor=#E8F0FB;fontSize=20;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="WB&amp;nbsp;&lt;br&gt;&lt;font style=&quot;font-size:12px;&quot;&gt;写回&amp;nbsp;&lt;/font&gt;" vertex="1">
           <mxGeometry height="100" width="100" x="1720" y="1615" as="geometry" />
+        </mxCell>
+        <mxCell id="iRhKuSbPRxI4Lv2MQJlr-16" edge="1" parent="1" source="iRhKuSbPRxI4Lv2MQJlr-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="iRhKuSbPRxI4Lv2MQJlr-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="iRhKuSbPRxI4Lv2MQJlr-12" parent="1" style="shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;选择器&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="2260" y="1430" as="geometry" />
+        </mxCell>
+        <mxCell id="iRhKuSbPRxI4Lv2MQJlr-15" edge="1" parent="1" source="ih8kE3jDkMXyOHKE4nik-176" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.332;entryY=1.003;entryDx=0;entryDy=0;entryPerimeter=0;" target="iRhKuSbPRxI4Lv2MQJlr-12">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
