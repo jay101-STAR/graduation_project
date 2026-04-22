@@ -211,10 +211,10 @@
           <mxGeometry height="30" width="170" x="270" y="140" as="geometry" />
         </mxCell>
         <mxCell id="ih8kE3jDkMXyOHKE4nik-44" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;dashed=1;dashPattern=8 8;" value="" vertex="1">
-          <mxGeometry height="920" width="1530" x="900" y="1330" as="geometry" />
+          <mxGeometry height="820" width="1530" x="900" y="1330" as="geometry" />
         </mxCell>
         <mxCell id="ih8kE3jDkMXyOHKE4nik-149" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5F0FF;" value="" vertex="1">
-          <mxGeometry height="840" width="920" x="920" y="1350" as="geometry" />
+          <mxGeometry height="720" width="920" x="920" y="1350" as="geometry" />
         </mxCell>
         <mxCell id="ih8kE3jDkMXyOHKE4nik-150" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;strokeColor=#7A5CA7;strokeWidth=2;fillColor=#F2ECFA;fontSize=20;fontStyle=1;align=center;verticalAlign=middle;fontColor=#4F3C73;" value="AXI4-Lite Bridge&#xa;&lt;font style=&quot;font-size:14px;&quot;&gt;AXI4-Lite 总线桥接&lt;/font&gt;" vertex="1">
           <mxGeometry height="110" width="180" x="1860" y="1921" as="geometry" />
