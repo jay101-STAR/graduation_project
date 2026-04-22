@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram name="Overall Processor Architecture" id="YrTUT7KW-CjpL0RSCFAY">
-    <mxGraphModel dx="1704" dy="1096" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1491" dy="959" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -324,17 +324,17 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ih8kE3jDkMXyOHKE4nik-176" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;dashed=1;strokeColor=#6C8EBF;strokeWidth=2;fillColor=#FFFFFF;fontSize=18;fontStyle=1;verticalAlign=top;align=center;spacingTop=10;fontColor=#173F73;" value="Banked BRAM Organization&#xa;&lt;font style=&quot;font-size:12px;&quot;&gt;banked BRAM organization / 分组 BRAM 组织&lt;/font&gt;" vertex="1">
-          <mxGeometry height="200" width="340" x="1894" y="1463.5" as="geometry" />
+        <mxCell id="ih8kE3jDkMXyOHKE4nik-176" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;dashed=1;strokeColor=#6C8EBF;strokeWidth=2;fillColor=#FFFFFF;fontSize=18;fontStyle=1;verticalAlign=top;align=center;spacingTop=10;fontColor=#173F73;" value="" vertex="1">
+          <mxGeometry height="200" width="326" x="1894" y="1463.5" as="geometry" />
         </mxCell>
-        <mxCell id="ih8kE3jDkMXyOHKE4nik-177" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#6C8EBF;strokeWidth=2;fillColor=#EAF1FB;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="Bank 0&#xa;BRAM" vertex="1">
-          <mxGeometry height="70" width="80" x="1943" y="1528.5" as="geometry" />
+        <mxCell id="ih8kE3jDkMXyOHKE4nik-177" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#6C8EBF;strokeWidth=2;fillColor=#EAF1FB;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="Bank 0&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="59" width="80" x="1943" y="1541" as="geometry" />
         </mxCell>
-        <mxCell id="ih8kE3jDkMXyOHKE4nik-178" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#6C8EBF;strokeWidth=2;fillColor=#EAF1FB;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="Bank 1&#xa;BRAM" vertex="1">
-          <mxGeometry height="70" width="80" x="2079" y="1528.5" as="geometry" />
+        <mxCell id="ih8kE3jDkMXyOHKE4nik-178" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#6C8EBF;strokeWidth=2;fillColor=#EAF1FB;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="Bank 1&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="59" width="80" x="2079" y="1541" as="geometry" />
         </mxCell>
-        <mxCell id="ih8kE3jDkMXyOHKE4nik-179" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#6C8EBF;strokeWidth=2;fillColor=#EEF3FA;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="Shared Physical Memory Space&#xa;&lt;font style=&quot;font-size:12px;&quot;&gt;shared physical memory / 统一物理地址空间&lt;/font&gt;" vertex="1">
-          <mxGeometry height="35" width="260" x="1934" y="1613.5" as="geometry" />
+        <mxCell id="ih8kE3jDkMXyOHKE4nik-179" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeColor=#6C8EBF;strokeWidth=2;fillColor=#EEF3FA;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;fontColor=#173F73;" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;统一物理地址空间&lt;/font&gt;" vertex="1">
+          <mxGeometry height="35" width="260" x="1934" y="1480" as="geometry" />
         </mxCell>
         <mxCell id="ih8kE3jDkMXyOHKE4nik-180" edge="1" parent="1" source="ih8kE3jDkMXyOHKE4nik-184" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.625;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=3;strokeColor=#CC6600;" target="ih8kE3jDkMXyOHKE4nik-150">
           <mxGeometry relative="1" as="geometry" />
