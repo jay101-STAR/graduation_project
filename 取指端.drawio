@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram name="Fetch Frontend Architecture" id="FrpxA0a8HnBT2pCg706m">
-    <mxGraphModel dx="2386" dy="1534" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="2169" dy="1395" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -138,7 +138,7 @@
         <mxCell id="-Y6Ck9xvyRiHn1pDt7g0-136" edge="1" parent="1" source="-Y6Ck9xvyRiHn1pDt7g0-99" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeWidth=2;arcSize=12;" target="-Y6Ck9xvyRiHn1pDt7g0-46">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="-Y6Ck9xvyRiHn1pDt7g0-137" connectable="0" parent="-Y6Ck9xvyRiHn1pDt7g0-136" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];arcSize=12;" value="&lt;span style=&quot;font-size: 14px;&quot;&gt;stall&lt;/span&gt;" vertex="1">
+        <mxCell id="-Y6Ck9xvyRiHn1pDt7g0-137" connectable="0" parent="-Y6Ck9xvyRiHn1pDt7g0-136" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];arcSize=12;" value="&lt;font style=&quot;font-size: 30px;&quot;&gt;stall&lt;/font&gt;" vertex="1">
           <mxGeometry relative="1" x="-0.6914" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
@@ -146,7 +146,7 @@
         <mxCell id="-Y6Ck9xvyRiHn1pDt7g0-139" edge="1" parent="1" source="-Y6Ck9xvyRiHn1pDt7g0-99" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeWidth=2;" target="-Y6Ck9xvyRiHn1pDt7g0-42">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="-Y6Ck9xvyRiHn1pDt7g0-140" connectable="0" parent="-Y6Ck9xvyRiHn1pDt7g0-139" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="stall" vertex="1">
+        <mxCell id="-Y6Ck9xvyRiHn1pDt7g0-140" connectable="0" parent="-Y6Ck9xvyRiHn1pDt7g0-139" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;font style=&quot;font-size: 30px;&quot;&gt;stall&lt;/font&gt;" vertex="1">
           <mxGeometry relative="1" x="0.0621" y="-5" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
@@ -183,21 +183,22 @@
         <mxCell id="-Y6Ck9xvyRiHn1pDt7g0-113" edge="1" parent="1" source="-Y6Ck9xvyRiHn1pDt7g0-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=14;labelBackgroundColor=#ffffff;arcSize=12;" target="-Y6Ck9xvyRiHn1pDt7g0-47" value="返回拍 / 缓存后送入">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="-Y6Ck9xvyRiHn1pDt7g0-115" edge="1" parent="1" source="-Y6Ck9xvyRiHn1pDt7g0-47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=14;labelBackgroundColor=#ffffff;arcSize=12;" target="-Y6Ck9xvyRiHn1pDt7g0-48" value="if2_pc&lt;br&gt;if2_instruction&lt;br&gt;if2_valid&lt;br&gt;预测信息">
+        <mxCell id="-Y6Ck9xvyRiHn1pDt7g0-115" edge="1" parent="1" source="-Y6Ck9xvyRiHn1pDt7g0-47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=14;labelBackgroundColor=#ffffff;arcSize=12;" target="-Y6Ck9xvyRiHn1pDt7g0-48" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="-Y6Ck9xvyRiHn1pDt7g0-116" edge="1" parent="1" source="-Y6Ck9xvyRiHn1pDt7g0-48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=14;labelBackgroundColor=#ffffff;arcSize=12;" target="-Y6Ck9xvyRiHn1pDt7g0-49" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="-Y6Ck9xvyRiHn1pDt7g0-121" edge="1" parent="1" source="-Y6Ck9xvyRiHn1pDt7g0-99" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=14;labelBackgroundColor=#ffffff;arcSize=12;" target="-Y6Ck9xvyRiHn1pDt7g0-48" value="stall_if_id">
+        <mxCell id="-Y6Ck9xvyRiHn1pDt7g0-121" edge="1" parent="1" source="-Y6Ck9xvyRiHn1pDt7g0-99" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=14;labelBackgroundColor=#ffffff;arcSize=12;" target="-Y6Ck9xvyRiHn1pDt7g0-48" value="&lt;font style=&quot;font-size: 30px;&quot;&gt;stall&lt;/font&gt;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1820" y="1060" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="-Y6Ck9xvyRiHn1pDt7g0-122" edge="1" parent="1" source="-Y6Ck9xvyRiHn1pDt7g0-99" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=14;labelBackgroundColor=#ffffff;arcSize=10;" target="-Y6Ck9xvyRiHn1pDt7g0-48" value="flush_if_id">
-          <mxGeometry relative="1" as="geometry">
+        <mxCell id="-Y6Ck9xvyRiHn1pDt7g0-122" edge="1" parent="1" source="-Y6Ck9xvyRiHn1pDt7g0-99" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=14;labelBackgroundColor=#ffffff;arcSize=10;" target="-Y6Ck9xvyRiHn1pDt7g0-48" value="&lt;font style=&quot;font-size: 30px;&quot;&gt;flush&lt;/font&gt;">
+          <mxGeometry relative="1" x="0.0002" as="geometry">
+            <mxPoint as="offset" />
             <Array as="points">
               <mxPoint x="1870" y="1089" />
             </Array>
