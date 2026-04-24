@@ -60,7 +60,7 @@
           <mxGeometry height="80" width="170" x="520" y="800" as="geometry" />
         </mxCell>
         <mxCell id="Pq-iKNzd7S5ASTJ_DDax-15" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eaf6ff;strokeColor=#1a4dc4;dashed=1;dashPattern=8 8;fontSize=18;fontStyle=1;arcSize=8;" value="分支预测器&lt;br&gt;&lt;font style=&quot;font-size: 14px&quot;&gt;预测方向 / 目标&lt;/font&gt;" vertex="1">
-          <mxGeometry height="90" width="170" x="1120" y="760" as="geometry" />
+          <mxGeometry height="90" width="170" x="1120" y="795" as="geometry" />
         </mxCell>
         <mxCell id="Pq-iKNzd7S5ASTJ_DDax-16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#d11a1a;dashed=1;dashPattern=8 8;fontSize=18;fontStyle=1;arcSize=8;" value="执行级&lt;br&gt;暂停控制&lt;br&gt;&lt;font style=&quot;font-size: 14px&quot;&gt;多周期忙碌时暂停流水推进&lt;/font&gt;" vertex="1">
           <mxGeometry height="120" width="170" x="260" y="640" as="geometry" />
