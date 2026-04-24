@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram name="EX阶段结构图" id="29ASEMVNiPvTTmQk9WXC">
-    <mxGraphModel dx="1835" dy="1180" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1491" dy="959" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -120,7 +120,11 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Pq-iKNzd7S5ASTJ_DDax-34" edge="1" parent="1" source="Pq-iKNzd7S5ASTJ_DDax-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;dashed=1;dashPattern=8 8;strokeColor=#1a4dc4;" target="Pq-iKNzd7S5ASTJ_DDax-12" value="">
-          <mxGeometry relative="1" as="geometry" />
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="605" y="250" />
+            </Array>
+          </mxGeometry>
         </mxCell>
         <mxCell id="Pq-iKNzd7S5ASTJ_DDax-35" edge="1" parent="1" source="Pq-iKNzd7S5ASTJ_DDax-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;dashed=1;dashPattern=8 8;strokeColor=#1a4dc4;" target="Pq-iKNzd7S5ASTJ_DDax-12" value="">
           <mxGeometry relative="1" as="geometry" />
