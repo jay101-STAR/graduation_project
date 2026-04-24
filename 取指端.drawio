@@ -1,0 +1,100 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Fetch Frontend Architecture" id="FrpxA0a8HnBT2pCg706m">
+    <mxGraphModel dx="1491" dy="959" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-1" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;" value="RISC-V CPU 取值端模块架构图&#xa;Frontend Fetch Architecture Based on Current RTL" vertex="1">
+          <mxGeometry height="50" width="620" x="420" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" value="PC 更新模块&#xa;rtl/vsrc/core/pc.v&#xa;&#xa;输入: stall / ex_pc_pc_wen / ex_pc_pc_data / if_bp_predict_taken / if_bp_predict_pc&#xa;输出: core_instrom_addr / core_instrom_ren / pc_if_pc&#xa;&#xa;优先级: stall &gt; EX重定向 &gt; 预测跳转 &gt; PC+4" vertex="1">
+          <mxGeometry height="170" width="260" x="90" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;" value="分支预测器&#xa;rtl/vsrc/core/branch_predictor.v&#xa;&#xa;结构: 2-way BTB + gshare(PHT+GHR)&#xa;查询输入: if_bp_pc = core_instrom_addr&#xa;预测输出: predict_taken / predict_pc / pht_index&#xa;更新输入: EX阶段 branch result" vertex="1">
+          <mxGeometry height="170" width="280" x="420" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" value="指令存储返回路径&#xa;rtl/vsrc/mem/dataram_banked.v&#xa;&#xa;共享 banked BRAM&#xa;IF端口输入: core_instrom_ren / core_instrom_addr&#xa;返回: instrom_core_data / instrom_core_pc&#xa;实现: 双Bank交错, 同步读, 1拍返回" vertex="1">
+          <mxGeometry height="190" width="300" x="760" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eaf4e8;strokeColor=#82b366;fontSize=12;" value="Bank0&#xa;std_bram_tdp" vertex="1">
+          <mxGeometry height="52" width="110" x="790" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eaf4e8;strokeColor=#82b366;fontSize=12;" value="Bank1&#xa;std_bram_tdp" vertex="1">
+          <mxGeometry height="52" width="110" x="920" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;" value="IF1 请求元数据寄存&#xa;位于 rtl/vsrc/core/riscv_core.v&#xa;&#xa;锁存:&#xa;if1_pc&#xa;if1_valid&#xa;if1_predicted_taken&#xa;if1_predicted_pc&#xa;if1_predicted_pht_index" vertex="1">
+          <mxGeometry height="180" width="240" x="1110" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=13;" value="stall pending buffer&#xa;位于 rtl/vsrc/core/riscv_core.v&#xa;&#xa;用途: ID暂停时缓存一拍 BRAM 返回&#xa;避免 load-use stall 丢取值结果" vertex="1">
+          <mxGeometry height="120" width="240" x="1110" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;" value="IF2 返回对齐/选择级&#xa;位于 rtl/vsrc/core/riscv_core.v&#xa;&#xa;选择: pending 或 BRAM返回&#xa;输出:&#xa;if2_pc / if2_instruction / if2_valid&#xa;if2_predicted_taken / if2_predicted_pc / if2_predicted_pht_index&#xa;无效时插入NOP/清零预测信息" vertex="1">
+          <mxGeometry height="210" width="260" x="1410" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" value="IF/ID 流水寄存器&#xa;rtl/vsrc/core/if_id_reg.v&#xa;&#xa;支持: rst / stall / flush&#xa;锁存: PC / 指令 / valid / 预测是否跳转 / 预测目标 / PHT索引" vertex="1">
+          <mxGeometry height="150" width="260" x="1410" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9ead3;strokeColor=#6aa84f;fontSize=13;" value="ID 译码级输入&#xa;rtl/vsrc/core/id.v&#xa;&#xa;输入: if_id_instruction / id_pc / if_id_predicted_taken / if_id_predicted_pc&#xa;用途: 指令译码 + 与预测信息匹配" vertex="1">
+          <mxGeometry height="130" width="260" x="1410" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;" value="EX 反馈路径&#xa;rtl/vsrc/core/ex.v&#xa;&#xa;输出到前端:&#xa;ex_pc_pc_wen / ex_pc_pc_data&#xa;ex_bp_update_wen / pc / taken / target / pht_index&#xa;&#xa;触发: 预测失败、JAL/JALR、trap、mret、fence.i" vertex="1">
+          <mxGeometry height="170" width="280" x="420" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=13;" value="前端控制/冒险控制&#xa;rtl/vsrc/core/riscv_core.v&#xa;&#xa;stall_if_id = load_use | mul | div | mem_stall&#xa;flush_if_id = branch_flush = ex_pc_pc_wen" vertex="1">
+          <mxGeometry height="130" width="260" x="90" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#999999;dashed=1;fontSize=13;" value="说明: 该项目当前没有单独启用独立的 if.v 取值模块，&#xa;前端 IF1/IF2 流水与 stall pending 逻辑直接写在 riscv_core.v 内。" vertex="1">
+          <mxGeometry height="90" width="300" x="760" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-15" edge="1" parent="1" source="kbx7K92wx68Wf4PZg1CS-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" target="kbx7K92wx68Wf4PZg1CS-4" value="core_instrom_addr&#xa;core_instrom_ren">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-16" edge="1" parent="1" source="kbx7K92wx68Wf4PZg1CS-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" target="kbx7K92wx68Wf4PZg1CS-3" value="if_bp_pc = core_instrom_addr">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-17" edge="1" parent="1" source="kbx7K92wx68Wf4PZg1CS-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" target="kbx7K92wx68Wf4PZg1CS-2" value="if_bp_predict_taken / if_bp_predict_pc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-18" edge="1" parent="1" source="kbx7K92wx68Wf4PZg1CS-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" target="kbx7K92wx68Wf4PZg1CS-7" value="预测元数据">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-19" edge="1" parent="1" source="kbx7K92wx68Wf4PZg1CS-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" target="kbx7K92wx68Wf4PZg1CS-7" value="请求PC/valid">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-20" edge="1" parent="1" source="kbx7K92wx68Wf4PZg1CS-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" target="kbx7K92wx68Wf4PZg1CS-9" value="instrom_core_data / instrom_core_pc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-21" edge="1" parent="1" source="kbx7K92wx68Wf4PZg1CS-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" target="kbx7K92wx68Wf4PZg1CS-9" value="IF1 -&gt; IF2 元数据">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-22" edge="1" parent="1" source="kbx7K92wx68Wf4PZg1CS-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;dashed=1;fontSize=12;" target="kbx7K92wx68Wf4PZg1CS-8" value="stall期间缓存返回拍">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-23" edge="1" parent="1" source="kbx7K92wx68Wf4PZg1CS-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;dashed=1;fontSize=12;" target="kbx7K92wx68Wf4PZg1CS-9" value="pending优先送IF2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-24" edge="1" parent="1" source="kbx7K92wx68Wf4PZg1CS-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" target="kbx7K92wx68Wf4PZg1CS-10" value="if2_*">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-25" edge="1" parent="1" source="kbx7K92wx68Wf4PZg1CS-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" target="kbx7K92wx68Wf4PZg1CS-11" value="if_id_*">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-26" edge="1" parent="1" source="kbx7K92wx68Wf4PZg1CS-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#d79b00;fontSize=12;" target="kbx7K92wx68Wf4PZg1CS-2" value="ex_pc_pc_wen / ex_pc_pc_data">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-27" edge="1" parent="1" source="kbx7K92wx68Wf4PZg1CS-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#d79b00;fontSize=12;" target="kbx7K92wx68Wf4PZg1CS-3" value="ex_bp_update_*">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-28" edge="1" parent="1" source="kbx7K92wx68Wf4PZg1CS-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#666666;fontSize=12;" target="kbx7K92wx68Wf4PZg1CS-2" value="stall">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-29" edge="1" parent="1" source="kbx7K92wx68Wf4PZg1CS-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#666666;fontSize=12;" target="kbx7K92wx68Wf4PZg1CS-10" value="stall_if_id / flush_if_id">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kbx7K92wx68Wf4PZg1CS-30" edge="1" parent="1" source="kbx7K92wx68Wf4PZg1CS-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#666666;dashed=1;fontSize=12;" target="kbx7K92wx68Wf4PZg1CS-8" value="stall时保持IF1/IF2并启用pending buffer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
