@@ -1,48 +1,9 @@
 <mxfile host="app.diagrams.net">
   <diagram name="RISC-V分支预测器内部结构图" id="sQCfduU0cxfXzCxBoUk6">
-    <mxGraphModel dx="1484" dy="974" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1484" dy="974" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="SdJ3E_gAIBSupMFZ2q0n-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#003A8C;strokeWidth=3;fontSize=28;fontStyle=1;align=center;verticalAlign=middle;" value="分支预测器包含目标预测和方向预测" vertex="1">
-          <mxGeometry height="58" width="640" x="392" y="18" as="geometry" />
-        </mxCell>
-        <mxCell id="SdJ3E_gAIBSupMFZ2q0n-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;dashed=1;dashPattern=6 6;strokeWidth=1.5;" value="" vertex="1">
-          <mxGeometry height="170" width="300" x="22" y="16" as="geometry" />
-        </mxCell>
-        <mxCell id="SdJ3E_gAIBSupMFZ2q0n-3" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=17;fontColor=#111111;" value="查询路径（来自IF阶段）" vertex="1">
-          <mxGeometry height="26" width="180" x="116" y="32" as="geometry" />
-        </mxCell>
-        <mxCell id="SdJ3E_gAIBSupMFZ2q0n-4" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=17;fontColor=#111111;" value="表结构（存储与索引）" vertex="1">
-          <mxGeometry height="26" width="190" x="116" y="72" as="geometry" />
-        </mxCell>
-        <mxCell id="SdJ3E_gAIBSupMFZ2q0n-5" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=17;fontColor=#111111;" value="预测输出（至PC更新）" vertex="1">
-          <mxGeometry height="26" width="190" x="116" y="112" as="geometry" />
-        </mxCell>
-        <mxCell id="SdJ3E_gAIBSupMFZ2q0n-6" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=17;fontColor=#111111;" value="更新反馈（来自EX阶段）" vertex="1">
-          <mxGeometry height="26" width="190" x="116" y="148" as="geometry" />
-        </mxCell>
-        <mxCell id="SdJ3E_gAIBSupMFZ2q0n-7" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeWidth=4;strokeColor=#0052CC;" value="">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="48" y="46" as="sourcePoint" />
-            <mxPoint x="100" y="46" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="SdJ3E_gAIBSupMFZ2q0n-8" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F6FFF4;strokeColor=#1B7F2A;strokeWidth=3;" value="" vertex="1">
-          <mxGeometry height="22" width="58" x="46" y="74" as="geometry" />
-        </mxCell>
-        <mxCell id="SdJ3E_gAIBSupMFZ2q0n-9" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeWidth=4;strokeColor=#FF6A00;" value="">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="48" y="126" as="sourcePoint" />
-            <mxPoint x="100" y="126" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="SdJ3E_gAIBSupMFZ2q0n-10" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeWidth=4;strokeColor=#777777;" value="">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="48" y="162" as="sourcePoint" />
-            <mxPoint x="100" y="162" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
         <mxCell id="SdJ3E_gAIBSupMFZ2q0n-11" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#0052CC;strokeWidth=3;fontSize=20;fontStyle=1;align=center;verticalAlign=middle;" value="IF阶段&lt;br&gt;查询输入PC" vertex="1">
           <mxGeometry height="82" width="165" x="58" y="270" as="geometry" />
         </mxCell>
