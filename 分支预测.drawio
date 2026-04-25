@@ -53,10 +53,7 @@
           <mxGeometry height="68" width="200" x="270" y="600" as="geometry" />
         </mxCell>
         <mxCell id="SdJ3E_gAIBSupMFZ2q0n-26" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F6FFF4;strokeColor=#1B7F2A;strokeWidth=3;fontSize=19;fontStyle=1;align=center;verticalAlign=middle;" value="PHT两位&lt;br&gt;饱和计数器表&lt;br&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;（gshare + PHT负责&lt;br&gt;预测跳转方向）&lt;/font&gt;" vertex="1">
-          <mxGeometry height="118" width="194" x="642" y="606" as="geometry" />
-        </mxCell>
-        <mxCell id="SdJ3E_gAIBSupMFZ2q0n-27" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=16;fontColor=#111111;" value="gshare索引" vertex="1">
-          <mxGeometry height="30" width="110" x="500" y="658" as="geometry" />
+          <mxGeometry height="118" width="194" x="617" y="575" as="geometry" />
         </mxCell>
         <mxCell id="SdJ3E_gAIBSupMFZ2q0n-29" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F6FFF4;strokeColor=#1B7F2A;strokeWidth=3;fontSize=18;fontStyle=1;align=center;verticalAlign=middle;" value="LRU替换逻辑&lt;br&gt;&lt;font style=&quot;font-size: 15px;&quot;&gt;（2路替换策略）&lt;/font&gt;" vertex="1">
           <mxGeometry height="70" width="146" x="270" y="352" as="geometry" />
@@ -68,7 +65,7 @@
           <mxGeometry height="70" width="168" x="264" y="506" as="geometry" />
         </mxCell>
         <mxCell id="SdJ3E_gAIBSupMFZ2q0n-31" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#0052CC;strokeWidth=3;fontSize=20;fontStyle=1;align=center;verticalAlign=middle;" value="预测结果生成&lt;br&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;（综合目标与方向预测）&lt;/font&gt;" vertex="1">
-          <mxGeometry height="104" width="205" x="962" y="613" as="geometry" />
+          <mxGeometry height="104" width="205" x="960" y="582" as="geometry" />
         </mxCell>
         <mxCell id="SdJ3E_gAIBSupMFZ2q0n-32" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#FF6A00;strokeWidth=3;fontSize=20;fontStyle=1;align=center;verticalAlign=middle;" value="预测是否跳转" vertex="1">
           <mxGeometry height="50" width="164" x="1262" y="570" as="geometry" />
