@@ -41,7 +41,7 @@
           <mxGeometry height="80" width="110" x="850" y="400" as="geometry" />
         </mxCell>
         <mxCell id="SdJ3E_gAIBSupMFZ2q0n-23" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=16;fontColor=#111111;" value="BTB命中信息&lt;br&gt;（命中时提供&lt;br&gt;预测目标地址）" vertex="1">
-          <mxGeometry height="86" width="145" x="1100" y="430" as="geometry" />
+          <mxGeometry height="86" width="145" x="1090" y="431" as="geometry" />
         </mxCell>
         <mxCell id="SdJ3E_gAIBSupMFZ2q0n-24" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F6FFF4;strokeColor=#1B7F2A;strokeWidth=3;fontSize=18;fontStyle=1;align=center;verticalAlign=middle;" value="GHR全局历史寄存器&lt;br&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;（记录分支历史）&lt;/font&gt;" vertex="1">
           <mxGeometry height="68" width="260" x="240" y="710" as="geometry" />
