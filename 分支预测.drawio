@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram name="RISC-V分支预测器内部结构图" id="sQCfduU0cxfXzCxBoUk6">
-    <mxGraphModel dx="1889" dy="1240" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1484" dy="974" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -50,7 +50,7 @@
           <mxGeometry height="70" width="120" x="48" y="385" as="geometry" />
         </mxCell>
         <mxCell id="SdJ3E_gAIBSupMFZ2q0n-13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#0052CC;strokeWidth=3;fontSize=20;fontStyle=1;align=center;verticalAlign=middle;" value="PC索引与Tag提取" vertex="1">
-          <mxGeometry height="64" width="250" x="480" y="132" as="geometry" />
+          <mxGeometry height="64" width="250" x="520" y="129" as="geometry" />
         </mxCell>
         <mxCell id="SdJ3E_gAIBSupMFZ2q0n-14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F6FFF4;strokeColor=#1B7F2A;strokeWidth=3;fontSize=23;fontStyle=1;align=center;verticalAlign=top;spacingTop=14;" value="2-way BTB&lt;br&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;（BTB负责预测目标地址）&lt;/font&gt;" vertex="1">
           <mxGeometry height="238" width="374" x="462" y="268" as="geometry" />
@@ -97,9 +97,6 @@
         <mxCell id="SdJ3E_gAIBSupMFZ2q0n-27" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=16;fontColor=#111111;" value="gshare索引" vertex="1">
           <mxGeometry height="30" width="110" x="500" y="658" as="geometry" />
         </mxCell>
-        <mxCell id="SdJ3E_gAIBSupMFZ2q0n-28" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=16;fontColor=#111111;" value="方向预测&lt;br&gt;（最高位）" vertex="1">
-          <mxGeometry height="48" width="90" x="850" y="650" as="geometry" />
-        </mxCell>
         <mxCell id="SdJ3E_gAIBSupMFZ2q0n-29" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F6FFF4;strokeColor=#1B7F2A;strokeWidth=3;fontSize=18;fontStyle=1;align=center;verticalAlign=middle;" value="LRU替换逻辑&lt;br&gt;&lt;font style=&quot;font-size: 15px;&quot;&gt;（2路替换策略）&lt;/font&gt;" vertex="1">
           <mxGeometry height="70" width="146" x="270" y="352" as="geometry" />
         </mxCell>
@@ -110,7 +107,7 @@
           <mxGeometry height="70" width="168" x="264" y="506" as="geometry" />
         </mxCell>
         <mxCell id="SdJ3E_gAIBSupMFZ2q0n-31" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#0052CC;strokeWidth=3;fontSize=20;fontStyle=1;align=center;verticalAlign=middle;" value="预测结果生成&lt;br&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;（综合目标与方向预测）&lt;/font&gt;" vertex="1">
-          <mxGeometry height="104" width="205" x="976" y="582" as="geometry" />
+          <mxGeometry height="104" width="205" x="962" y="613" as="geometry" />
         </mxCell>
         <mxCell id="SdJ3E_gAIBSupMFZ2q0n-32" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#FF6A00;strokeWidth=3;fontSize=20;fontStyle=1;align=center;verticalAlign=middle;" value="预测是否跳转" vertex="1">
           <mxGeometry height="50" width="164" x="1262" y="570" as="geometry" />
@@ -119,10 +116,10 @@
           <mxGeometry height="50" width="164" x="1262" y="648" as="geometry" />
         </mxCell>
         <mxCell id="SdJ3E_gAIBSupMFZ2q0n-34" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#FF6A00;strokeWidth=3;fontSize=20;fontStyle=1;align=center;verticalAlign=middle;" value="PC更新模块&lt;br&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;（下一PC选择）&lt;/font&gt;" vertex="1">
-          <mxGeometry height="70" width="166" x="1098" y="820" as="geometry" />
+          <mxGeometry height="70" width="166" x="985" y="840" as="geometry" />
         </mxCell>
         <mxCell id="SdJ3E_gAIBSupMFZ2q0n-35" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#FF6A00;" value="反馈至&lt;br&gt;PC更新模块" vertex="1">
-          <mxGeometry height="62" width="120" x="1196" y="740" as="geometry" />
+          <mxGeometry height="62" width="120" x="1112.5" y="740" as="geometry" />
         </mxCell>
         <mxCell id="SdJ3E_gAIBSupMFZ2q0n-36" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#777777;strokeWidth=2.5;fontSize=20;fontStyle=1;align=center;verticalAlign=middle;" value="EX阶段更新通路&lt;br&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;（根据实际执行结果更新各预测结构）&lt;/font&gt;" vertex="1">
           <mxGeometry height="72" width="620" x="220" y="878" as="geometry" />
@@ -180,9 +177,11 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="SdJ3E_gAIBSupMFZ2q0n-53" edge="1" parent="1" source="SdJ3E_gAIBSupMFZ2q0n-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=3;strokeColor=#0052CC;fontSize=16;fontColor=#111111;" target="SdJ3E_gAIBSupMFZ2q0n-31" value="方向预测（最高位）">
-          <mxGeometry relative="1" as="geometry" />
+          <mxGeometry relative="1" x="0.1811" y="15" as="geometry">
+            <mxPoint x="-6" y="1" as="offset" />
+          </mxGeometry>
         </mxCell>
-        <mxCell id="SdJ3E_gAIBSupMFZ2q0n-54" edge="1" parent="1" source="SdJ3E_gAIBSupMFZ2q0n-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=3;strokeColor=#0052CC;fontSize=16;fontColor=#111111;" target="SdJ3E_gAIBSupMFZ2q0n-31" value="BTB命中信息">
+        <mxCell id="SdJ3E_gAIBSupMFZ2q0n-54" edge="1" parent="1" source="SdJ3E_gAIBSupMFZ2q0n-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=3;strokeColor=#0052CC;fontSize=16;fontColor=#111111;" target="SdJ3E_gAIBSupMFZ2q0n-31" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="SdJ3E_gAIBSupMFZ2q0n-55" edge="1" parent="1" source="SdJ3E_gAIBSupMFZ2q0n-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=3;strokeColor=#1B7F2A;" target="SdJ3E_gAIBSupMFZ2q0n-21" value="">
@@ -216,10 +215,13 @@
         <mxCell id="SdJ3E_gAIBSupMFZ2q0n-60" edge="1" parent="1" source="SdJ3E_gAIBSupMFZ2q0n-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=3;strokeColor=#FF6A00;" target="SdJ3E_gAIBSupMFZ2q0n-33" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="SdJ3E_gAIBSupMFZ2q0n-61" edge="1" parent="1" source="SdJ3E_gAIBSupMFZ2q0n-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=3;strokeColor=#FF6A00;" target="SdJ3E_gAIBSupMFZ2q0n-34" value="">
+        <mxCell id="SdJ3E_gAIBSupMFZ2q0n-61" edge="1" parent="1" source="SdJ3E_gAIBSupMFZ2q0n-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=3;strokeColor=#FF6A00;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="SdJ3E_gAIBSupMFZ2q0n-34" value="">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="1181" y="740" />
+              <mxPoint x="1067" y="740" />
+              <mxPoint x="1067" y="740" />
+              <mxPoint x="1067" y="827" />
+              <mxPoint x="1068" y="827" />
             </Array>
           </mxGeometry>
         </mxCell>
