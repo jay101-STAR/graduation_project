@@ -31,7 +31,7 @@
           <mxGeometry height="190" width="85" x="550" y="260" as="geometry" />
         </mxCell>
         <mxCell id="dPhlgI1ftqGeranspE2G-126" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#2e7d32;fontSize=24;fontStyle=0;strokeWidth=2;" value="&lt;b&gt;前递控制逻辑&lt;/b&gt;&lt;br&gt;&lt;font&gt;比较当前EX级源寄存器与&lt;br&gt;EX/MEM与WB阶段目的寄存器&lt;br&gt;产生前递选择控制信号&lt;/font&gt;" vertex="1">
-          <mxGeometry height="140" width="280" x="550" y="110" as="geometry" />
+          <mxGeometry height="148" width="280" x="550" y="102" as="geometry" />
         </mxCell>
         <mxCell id="dPhlgI1ftqGeranspE2G-127" parent="1" style="shape=mxgraph.electrical.logic_gates.mux;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#f26c0a;fontSize=24;fontStyle=1;strokeWidth=2;direction=east;" value="源操作数&lt;br&gt;选择器1" vertex="1">
           <mxGeometry height="90" width="120" x="880" y="245" as="geometry" />
