@@ -69,6 +69,7 @@ module testbench ();
 
   localparam longint unsigned TIMEOUT_NS_DEFAULT = 64'd400000;
   localparam longint unsigned TIMEOUT_NS_UART_SMOKE = 64'd400000;
+  localparam longint unsigned TIMEOUT_NS_UART_OVERRUN = 64'd1000000;
   localparam [31:0] UART_TXDATA_ADDR = 32'h1000_0000;
   localparam [31:0] UART_STATUS_ADDR = 32'h1000_0004;
   localparam [31:0] UART_RXDATA_ADDR = 32'h1000_0008;
@@ -121,6 +122,57 @@ module testbench ();
       .ext_top_uart_txd     (tb_uart_txd)
   );
 
+  // Optional function-entry measurement window. Sample at the falling edge
+  // after pipeline/CSR updates settle; no counters are added to synthesizable RTL.
+  reg [31:0] perf_start_pc, perf_stop_pc;
+  reg perf_region_en, perf_region_active = 1'b0, perf_region_done = 1'b0;
+  longint unsigned region_cycle_start, region_instret_start;
+  longint unsigned region_mem = 0, region_mul = 0, region_div = 0;
+  longint unsigned region_load = 0, region_unstalled = 0, region_redirect = 0;
+  longint unsigned region_cycles, region_instructions;
+  initial begin
+    perf_region_en = $value$plusargs("perf_start_pc=%h", perf_start_pc);
+    perf_region_en = $value$plusargs("perf_stop_pc=%h", perf_stop_pc) && perf_region_en;
+  end
+
+  always @(negedge clk) begin
+    if (!rst && perf_region_en && !perf_region_done) begin
+      if (!perf_region_active && top.u_core.ex_valid &&
+          !top.u_core.stall_id_ex && top.u_core.id_ex_pc == perf_start_pc) begin
+        region_cycle_start = top.u_core.csr0.cycle_int;
+        region_instret_start = top.u_core.csr0.instret_int;
+        perf_region_active = 1'b1;
+        $display("[PERF-REGION] start_pc=0x%08h stop_pc=0x%08h",
+                 perf_start_pc, perf_stop_pc);
+      end
+      if (perf_region_active) begin
+        if (top.u_core.ex_valid && !top.u_core.stall_id_ex &&
+            top.u_core.id_ex_pc == perf_stop_pc) begin
+          region_cycles = top.u_core.csr0.cycle_int - region_cycle_start;
+          region_instructions = top.u_core.csr0.instret_int - region_instret_start;
+          $display("[PERF-REGION] mcycle=%0d minstret=%0d cpi=%0.4f",
+                   region_cycles, region_instructions,
+                   region_instructions ? region_cycles * 1.0 / region_instructions : 0.0);
+          // Exclusive priority buckets sum to region_cycles. Unstalled includes
+          // bubbles; redirects are events and may overlap these cycle buckets.
+          $display("[STALL-REGION] mem=%0d mul=%0d div=%0d load_use=%0d unstalled=%0d redirects=%0d",
+                   region_mem, region_mul, region_div, region_load,
+                   region_unstalled, region_redirect);
+          perf_region_active = 1'b0;
+          perf_region_done = 1'b1;
+        end else begin
+          if (top.u_core.top_core_mem_stall) region_mem = region_mem + 1;
+          else if (top.u_core.mul_hazard) region_mul = region_mul + 1;
+          else if (top.u_core.div_hazard) region_div = region_div + 1;
+          else if (top.u_core.load_use_hazard) region_load = region_load + 1;
+          else region_unstalled = region_unstalled + 1;
+          if (top.u_core.branch_flush && !top.u_core.stall_id_ex)
+            region_redirect = region_redirect + 1;
+        end
+      end
+    end
+  end
+
   initial begin
     $fsdbDumpfile("/home/jay/Desktop/graduation_project/rtl/testbench.fsdb");
     $fsdbDumpvars("+all");
@@ -144,9 +196,9 @@ module testbench ();
                                        tohost_value_register : 32'b0));
 
   initial begin
-    timeout_ns_cfg = ($test$plusargs("uart_rx_smoke") || $test$plusargs("uart_rx_overrun_smoke") ||
-                      $test$plusargs("uart_tx_smoke") || $test$plusargs("uart_loopback_smoke")) ?
-        TIMEOUT_NS_UART_SMOKE : TIMEOUT_NS_DEFAULT;
+    timeout_ns_cfg = $test$plusargs("uart_rx_overrun_smoke") ? TIMEOUT_NS_UART_OVERRUN :
+        (($test$plusargs("uart_rx_smoke") || $test$plusargs("uart_tx_smoke") ||
+          $test$plusargs("uart_loopback_smoke")) ? TIMEOUT_NS_UART_SMOKE : TIMEOUT_NS_DEFAULT);
     // 可选覆盖：+timeout_ns=<N>
     if ($value$plusargs("timeout_ns=%d", timeout_ns_plusarg) && (timeout_ns_plusarg > 0)) begin
       timeout_ns_cfg = timeout_ns_plusarg;

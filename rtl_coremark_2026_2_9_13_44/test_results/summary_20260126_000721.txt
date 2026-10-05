@@ -1,7 +1,0 @@
-========================================
-RISC-V Test Runner (Fast Mode)
-========================================
-Test pattern: ../verification/riscv-tests/isa/rv32ui-p-ma_data
-Start time: Mon Jan 26 12:07:21 AM CST 2026
-
-Searching for tests matching: ../verification/riscv-tests/isa/rv32ui-p-ma_data

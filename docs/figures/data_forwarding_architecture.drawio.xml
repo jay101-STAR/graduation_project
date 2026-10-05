@@ -1,0 +1,100 @@
+<mxfile host="app.diagrams.net" modified="2026-04-24T00:00:00.000Z" agent="Codex" version="24.7.17">
+  <diagram id="data-forwarding" name="Data Forwarding Architecture">
+    <mxGraphModel dx="1800" dy="980" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="980" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="title" value="RISC-V CPU 数据前递架构图&#xa;Data Forwarding Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="20" width="760" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="id" value="ID译码级&#xa;产生源寄存器地址与读使能" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="80" y="180" width="220" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="rf" value="寄存器堆&#xa;双读单写&#xa;内部支持同拍写回旁路" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9ead3;strokeColor=#6aa84f;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="360" y="150" width="240" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="hazard" value="Load-Use 冒险检测&#xa;若加载结果尚未可用则暂停前端并冲刷 ID/EX" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="360" y="320" width="240" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="idex" value="ID/EX流水寄存器&#xa;保存原始源操作数与目标寄存器信息" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="680" y="180" width="240" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="sel" value="前递控制比较逻辑&#xa;比较 EX 源寄存器号与 EX/MEM、WB 目标寄存器号&#xa;生成 rs1 / rs2 选择信号" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="680" y="330" width="300" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="mux1" value="EX源操作数 MUX 1&#xa;优先级: EX/MEM 前递 > WB 前递 > 原始 rs1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="140" width="270" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="mux2" value="EX源操作数 MUX 2&#xa;优先级: EX/MEM 前递 > WB 前递 > 原始 rs2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="290" width="270" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="ex" value="EX执行级&#xa;使用前递后的两个源操作数进行 ALU / 分支 / 访存地址计算" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1410" y="210" width="270" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="exmem" value="EX/MEM阶段结果&#xa;可前递来源 1&#xa;Load 时前递读数&#xa;其他指令前递 ALU 结果" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1410" y="430" width="270" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="wb" value="WB阶段写回结果&#xa;可前递来源 2&#xa;同时回写寄存器堆" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1410" y="620" width="270" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="note" value="实现特征&#xa;1. 项目中没有 EX-&gt;EX 直接组合前递，主前递源来自 EX/MEM 和 WB&#xa;2. Load-Use 冒险先暂停一拍，再由 EX/MEM -&gt; EX 前递加载结果&#xa;3. 寄存器堆内部实现 WB -&gt; ID 同拍写读旁路" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;dashed=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="80" y="560" width="560" height="160" as="geometry"/>
+        </mxCell>
+        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;" edge="1" parent="1" source="id" target="rf">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" value="原始源操作数" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="rf" target="idex">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" value="源寄存器地址/使能" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="id" target="hazard">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4" value="源/目标寄存器号" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="idex" target="sel">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" value="原始 rs1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="idex" target="mux1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6" value="原始 rs2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="idex" target="mux2">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e7" value="选择控制" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#666666;fontSize=12;" edge="1" parent="1" source="sel" target="mux1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e8" value="选择控制" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#666666;fontSize=12;" edge="1" parent="1" source="sel" target="mux2">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e9" value="前递后的 rs1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="mux1" target="ex">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e10" value="前递后的 rs2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="mux2" target="ex">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e11" value="EX/MEM 前递源" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="exmem" target="mux1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e12" value="EX/MEM 前递源" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="exmem" target="mux2">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e13" value="WB 前递源" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="wb" target="mux1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e14" value="WB 前递源" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="wb" target="mux2">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e15" value="目标寄存器号/写使能" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#666666;fontSize=12;" edge="1" parent="1" source="exmem" target="sel">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e16" value="目标寄存器号/写使能" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#666666;fontSize=12;" edge="1" parent="1" source="wb" target="sel">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e17" value="写回闭环 + ID旁路" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="wb" target="rf">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e18" value="暂停/冲刷控制" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#666666;fontSize=12;" edge="1" parent="1" source="hazard" target="idex">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,102 @@
+digraph processor_overall_architecture {
+  graph [
+    rankdir=LR,
+    splines=polyline,
+    nodesep=0.45,
+    ranksep=0.9,
+    pad=0.2,
+    bgcolor="white",
+    labelloc=t,
+    label="处理器总体架构图 / Overall Processor Architecture",
+    fontsize=22,
+    fontname="Noto Sans CJK SC"
+  ];
+
+  node [
+    shape=box,
+    style="rounded,filled",
+    fillcolor="#ffffff",
+    color="#1f2937",
+    fontname="Noto Sans CJK SC",
+    fontsize=12,
+    penwidth=1.2,
+    margin="0.08,0.06"
+  ];
+
+  edge [
+    color="#4b5563",
+    fontname="Noto Sans CJK SC",
+    fontsize=11,
+    penwidth=1.2,
+    arrowsize=0.8
+  ];
+
+  inst_mem [label="Instruction Memory\n指令存储模块\n同步 BRAM 取指", fillcolor="#f8fafc"];
+  data_mem [label="Data Memory\n数据存储模块\nBanked BRAM", fillcolor="#f8fafc"];
+  bridge [label="AXI4-Lite Bridge\n总线桥接模块\nMMIO 握手与停顿控制", fillcolor="#f8fafc"];
+  uart [label="UART Peripheral\nUART 外设模块\nAXI-Lite Slave", fillcolor="#f8fafc"];
+  pins [label="External UART Pins\n外部串口引脚\nRXD / TXD", style="rounded,dashed", fillcolor="#ffffff"];
+
+  subgraph cluster_core {
+    label="CPU Core / 处理器核心";
+    style="rounded,filled";
+    color="#2563eb";
+    fillcolor="#eff6ff";
+    penwidth=1.5;
+
+    pc [label="PC\n取指地址生成", fillcolor="#dbeafe"];
+    ifu [label="IF\nInstruction Fetch", fillcolor="#dbeafe"];
+    idu [label="ID\n译码与冒险检测", fillcolor="#dbeafe"];
+    rf [label="Register File\n寄存器堆", fillcolor="#dbeafe"];
+    exu [label="EX\n执行控制", fillcolor="#dbeafe"];
+    alu [label="ALU\n整数运算", fillcolor="#dbeafe"];
+    muldiv [label="Mul/Div Unit\n多周期乘除法单元", fillcolor="#dbeafe"];
+    csr [label="CSR\n异常处理与性能计数器", fillcolor="#dbeafe"];
+    bp [label="Branch Predictor\nBTB + GShare", fillcolor="#dbeafe"];
+    memwb [label="MEM / WB\n访存与回写接口", fillcolor="#dbeafe"];
+
+    { rank=same; bp; rf; }
+    { rank=same; pc; ifu; idu; exu; memwb; }
+    { rank=same; csr; alu; muldiv; }
+  }
+
+  { rank=same; inst_mem; bridge; }
+  { rank=same; data_mem; uart; }
+
+  pc -> ifu [label="PC"];
+  ifu -> idu [label="指令"];
+  idu -> exu [label="控制信号 / 操作数"];
+  idu -> rf [label="rs1 / rs2 地址", constraint=false];
+  rf -> idu [label="寄存器数据", constraint=false];
+  exu -> alu [label="整数运算", constraint=false];
+  exu -> muldiv [label="M 扩展运算", constraint=false];
+  exu -> csr [label="CSR / Trap 访问", constraint=false];
+  alu -> memwb [label="ALU 结果"];
+  muldiv -> memwb [label="Mul/Div 结果"];
+  csr -> exu [label="CSR 数据 / Trap 向量", constraint=false];
+  memwb -> rf [label="rd 写回"];
+
+  pc -> bp [label="当前 PC 查询", constraint=false];
+  bp -> pc [label="预测下一 PC", constraint=false];
+  exu -> bp [label="分支结果更新", constraint=false];
+  exu -> pc [label="跳转 / 异常重定向"];
+
+  pc -> inst_mem [label="取指地址 / addr"];
+  inst_mem -> ifu [label="指令数据 / inst"];
+
+  memwb -> data_mem [label="RAM 访问\naddr / wdata / wen / ren"];
+  data_mem -> memwb [label="Load 数据 / rdata"];
+
+  memwb -> bridge [label="MMIO 访问\naddr / wdata / wstrb / rd-wr"];
+  bridge -> memwb [label="rdata / stall"];
+
+  bridge -> uart [label="AXI4-Lite"];
+  uart -> bridge [label="AXI 响应"];
+  uart -> pins [label="串口收发"];
+
+  inst_mem -> data_mem [style=invis, weight=10];
+  bp -> rf [style=invis, weight=6];
+  csr -> alu [style=invis, weight=6];
+  alu -> muldiv [style=invis, weight=6];
+  bridge -> uart [style=invis, weight=2];
+}

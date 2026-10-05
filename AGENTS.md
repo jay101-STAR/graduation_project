@@ -1,36 +1,40 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-- `rtl/`: active CPU RTL, simulation scripts, and regression entry points.
-- `rtl/vsrc/core`: 5-stage core modules (`riscv_core.v`, stage registers, `branch_predictor.v`, `mul_3cycle.v`, `div.v`).
-- `rtl/vsrc/mem`, `rtl/vsrc/dataram`, `rtl/vsrc/bus`, `rtl/vsrc/periph/uart`: memory model/tooling, AXI-Lite bridge, and UART peripherals.
-- `rtl/vsrc/instrom`: assembly tests and ELF/HEX conversion scripts.
-- `verification/riscv-tests` and `verification/coremark`: ISA and benchmark inputs.
-- Historical/sandbox directories (`rtl_backup/`, `rtl_bank/`, `rtl_coremark_*`, `practise/`) should not receive active CPU changes unless explicitly requested.
+
+This project implements a five-stage RISC-V CPU in Verilog/SystemVerilog with branch prediction, multiplication, division, and UART peripherals.
+
+- `rtl/vsrc/core/`: pipeline stages, forwarding, predictor, arithmetic units, and CSRs.
+- `rtl/vsrc/{mem,dataram,bus,periph}/`: memory, AXI-Lite bridge, and peripherals.
+- `rtl/vsrc/instrom/`: assembly tests and ELF/HEX conversion scripts; memory tooling lives in `rtl/vsrc/dataram/`.
+- `verification/`: official RISC-V ISA tests and CoreMark sources.
+- `rtl/test_results/`: regression logs and summaries; `docs/`: experiment documentation and figures.
+
+Keep active CPU changes under `rtl/`. Do not modify historical directories such as `rtl_backup/`, `rtl_bank/`, `rtl_coremark_*`, or `practise/` unless explicitly requested.
 
 ## Build, Test, and Development Commands
-Run from `rtl/` unless noted.
-- `make simv_build`: compile RTL with VCS only.
-- `make comp`: build and run the default asm flow.
-- `make run_simv`: run an existing `simv` binary.
-- `./run_single_test.sh rv32ui-p-add`: run one ISA test.
-- `./run_tests.sh 'rv32u[i,m]-p-*'`: batch ISA regression.
-- `./run_all_tests.sh [--no-build] [--skip-fencei]`: unified UART smoke + ISA suite.
-- `./run_bp_tests.sh [--build]`, `./run_minstret_tests.sh`, `./run_perf_baseline.sh`, `./run_coremark.sh [ITERATIONS]`: subsystem, CSR, performance, and benchmark flows.
+
+Run commands from `rtl/`. Install VCS, Python 3, and the `riscv32-unknown-elf` toolchain; assembly helpers also require LLVM tools. Check compiler and simulator paths in `Makefile` for your environment.
+
+- `make simv_build`: compile RTL without running tests.
+- `make comp`: build and run the default `bp_tntn.s` assembly test.
+- `make run_simv`: run the existing simulation binary.
+- `./run.sh single rv32ui-p-add`: prepare memory and run one ISA test.
+- `./run.sh all`: build and run UART smoke tests plus ISA regression.
+- `./run.sh bp --build`: run branch predictor tests.
+- `./run.sh coremark 1`: measure CoreMark performance.
+- `make verdi`: inspect existing waveforms.
+
+`make clean` deletes simulation artifacts and `test_results`; preserve needed evidence first.
 
 ## Coding Style & Naming Conventions
-- Use lowercase underscore module names (for example, `branch_predictor`).
-- Keep stage-prefixed signal naming (`id_ex_*`, `ex_*`, `core_dataram_*`).
-- Keep instruction/type macros in `rtl/vsrc/define.v` with uppercase names.
-- Use explicit widths (for example, `[31:0]`, `[4:0]`) and preserve existing absolute `` `include `` style.
-- No auto-formatter is configured; preserve current alignment and style.
+
+Use two-space indentation and preserve surrounding alignment; no automatic formatter is prescribed. Use lowercase underscore module names, stage-prefixed signals (`id_ex_*`), explicit widths (`[31:0]`), and named port connections. Define uppercase instruction macros in `rtl/vsrc/define.v`. Follow existing include conventions and document complex control logic. VCS enables lint warnings with `+lint=TFIPC-L`.
 
 ## Testing Guidelines
-- Pass/fail follows `tohost`: `1` means pass; other non-zero values mean fail.
-- For RTL changes, run at least: focused test (`run_single_test.sh`), relevant subsystem regression, then broader ISA/unified regression.
-- Store evidence under `rtl/test_results/` and include `[PERF]` (`mcycle`, `minstret`, `cpi`) when performance-sensitive.
+
+For RTL changes, run a focused test, the relevant subsystem suite, then broad regression. Add assembly cases alongside existing tests, using patterns such as `uart_*.s`. ISA success requires `tohost = 1`; zero is incomplete, and other nonzero values indicate failure. Save timestamped evidence under `rtl/test_results/`. Document any `--skip-fencei` exclusion. Performance changes require CoreMark and `mcycle`, `minstret`, and CPI comparisons.
 
 ## Commit & Pull Request Guidelines
-- Prefer short, action-focused commit subjects in the style `<scope>: <action>` (example: `core/ex: fix BLTU compare path`).
-- Keep one logical change per commit.
-- PRs should include what changed, why, affected files, commands run, and key pass/fail summaries; add waveform context for control-path changes.
+
+History mixes descriptive Chinese messages and prefixed commits. Prefer atomic `<scope>: <action>` messages, such as `core/ex: fix BLTU compare path`. PRs should explain the problem, changes, affected files, test commands/results, and relevant issues. Include performance comparisons for optimizations and waveform evidence for control-path changes.

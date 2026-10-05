@@ -1,0 +1,121 @@
+<mxfile host="app.diagrams.net" modified="2026-04-24T00:00:00.000Z" agent="Codex" version="24.7.17">
+  <diagram id="execution-flow" name="Execution Stage Flow">
+    <mxGraphModel dx="1800" dy="980" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="980" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="title" value="RISC-V CPU 执行阶段架构图&#xa;Execution Stage Architecture and Flow" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="20" width="760" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="idex" value="ID/EX流水寄存器输入&#xa;接收来自译码级的源操作数、立即数、PC、控制信息、分支预测元数据" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="80" y="160" width="270" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="forward" value="前递/旁路选择&#xa;来自 MEM/WB 的结果优先前递到执行级源操作数" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="430" y="160" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="operand" value="操作数选择&#xa;根据指令类型形成 op1 / op2&#xa;支持寄存器、立即数、PC、CSR立即数扩展" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="770" y="150" width="300" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="alu" value="ALU运算单元&#xa;完成加减、移位、逻辑、比较、LUI/AUIPC、跳转返回值生成" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="90" width="280" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="branch" value="分支判断与预测校验&#xa;在 EX 阶段完成分支条件判断&#xa;比较预测结果与实际结果" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="230" width="280" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="muldiv" value="乘除法执行单元&#xa;3周期乘法器 + 迭代除法器&#xa;完成后释放流水暂停" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="370" width="280" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="csr" value="CSR/异常处理通路&#xa;处理 CSR 读写、ECALL、EBREAK、MRET、Trap 信息" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="510" width="280" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="memaddr" value="访存地址与写数据生成&#xa;为 Load/Store 计算地址并输出写数据" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9ead3;strokeColor=#6aa84f;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="650" width="280" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="resmux" value="结果选择与写回信息形成&#xa;在 ALU / CSR / MUL / DIV 等结果中选出最终执行结果&#xa;并形成目的寄存器写回控制" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6e6;strokeColor=#cc0000;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1520" y="230" width="290" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="redirect" value="PC重定向通路&#xa;处理分支失误恢复、JAL/JALR、Trap、MRET、Fence.i" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1520" y="430" width="290" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="bpupdate" value="分支预测器更新通路&#xa;将实际分支结果和目标地址反馈给预测器" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1520" y="570" width="290" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="pc" value="PC更新模块" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1870" y="440" width="170" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="predictor" value="分支预测器" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1870" y="580" width="170" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="hazard" value="执行级暂停控制&#xa;乘法/除法进行中时保持 EX 流水状态并阻塞前后级推进" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="430" y="340" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="exmem" value="EX/MEM流水寄存器输出&#xa;输出执行结果、访存地址、写数据和写回控制到下一阶段" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1520" y="730" width="290" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="note" value="实现特征&#xa;1. 分支比较在 EX 阶段完成，不在 ID 阶段完成&#xa;2. EX 前有 MEM/WB 前递选择&#xa;3. 乘法与除法为多周期单元，会触发流水暂停&#xa;4. EX 同时承担结果生成、访存地址生成、PC重定向和分支预测反馈" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;dashed=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="80" y="640" width="610" height="170" as="geometry"/>
+        </mxCell>
+        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;" edge="1" parent="1" source="idex" target="forward">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;" edge="1" parent="1" source="forward" target="operand">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" value="并行送入" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="operand" target="alu">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4" value="并行送入" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="operand" target="branch">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" value="并行送入" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="operand" target="muldiv">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6" value="并行送入" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="operand" target="csr">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e7" value="并行送入" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="operand" target="memaddr">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e8" value="执行结果" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="alu" target="resmux">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e9" value="乘除法结果" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="muldiv" target="resmux">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e10" value="CSR结果" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="csr" target="resmux">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e11" value="写回控制" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="resmux" target="exmem">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e12" value="地址/写数据" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="memaddr" target="exmem">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e13" value="重定向目标" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="branch" target="redirect">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e14" value="异常/返回重定向" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="csr" target="redirect">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e15" value="预测校验结果" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="branch" target="bpupdate">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e16" value="忙碌/完成状态" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#666666;fontSize=12;" edge="1" parent="1" source="muldiv" target="hazard">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e17" value="暂停控制" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#666666;fontSize=12;" edge="1" parent="1" source="hazard" target="idex">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e18" value="前递来源" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;dashed=1;fontSize=12;" edge="1" parent="1" source="exmem" target="forward">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e19" value="重定向反馈" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="redirect" target="pc">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e20" value="更新反馈" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="bpupdate" target="predictor">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

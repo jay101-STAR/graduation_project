@@ -28,10 +28,10 @@ All commands run from the `rtl/` directory.
 
 ### Core Commands
 ```bash
-make comp              # Assemble instrom.s, compile with VCS, run simulation
+make comp              # Assemble bp_tntn.s, compile with VCS, run simulation
 make simv_build        # Compile RTL with VCS only
 make run_simv          # Run existing simv
-make coremark          # Run CoreMark flow (rtl/run_coremark.sh)
+make coremark          # Run CoreMark flow (rtl/run.sh coremark)
 make verdi             # Open Verdi waveform viewer (testbench.fsdb)
 make clean             # Remove build artifacts
 make verdi_self_test   # Compile and open Verdi in one command
@@ -39,12 +39,12 @@ make verdi_self_test   # Compile and open Verdi in one command
 
 ### Test Targets
 ```bash
-./run_single_test.sh rv32ui-p-add         # Run one ISA test
-./run_tests.sh 'rv32u[i,m]-p-*'           # Batch ISA regression
-./run_bp_tests.sh [--build]               # Branch predictor pattern suite
-./run_all_tests.sh [--no-build]           # UART smoke + ISA regression
-./run_minstret_tests.sh                    # CSR minstret regression
-./run_coremark.sh [ITERATIONS]            # CoreMark compile + sim flow
+./run.sh single rv32ui-p-add         # Run one ISA test
+./run.sh isa 'rv32u[im]-p-*'           # Batch ISA regression
+./run.sh bp [--build]               # Branch predictor pattern suite
+./run.sh all [--no-build]           # UART smoke + ISA regression
+./run.sh minstret                    # CSR minstret regression
+./run.sh coremark [ITERATIONS]            # CoreMark compile + sim flow
 ```
 
 ### Custom Assembly Workflow
@@ -175,18 +175,18 @@ Tests located in `verification/riscv-tests/isa/`.
 # First compile to generate simv
 make comp
 
-# Run tests (default pattern: rv32um-p-*)
-./run_tests.sh                     # Run M extension tests
-./run_tests.sh "rv32ui-p-*"        # All RV32UI tests
-./run_tests.sh "rv32ui-p-add"      # Single test
-./run_tests.sh "rv32ui-p-b*"       # All branch tests
+# Run tests (default pattern: RV32UI + RV32UM)
+./run.sh isa                     # Run I and M extension tests
+./run.sh isa "rv32ui-p-*"        # All RV32UI tests
+./run.sh isa "rv32ui-p-add"      # Single test
+./run.sh isa "rv32ui-p-b*"       # All branch tests
 ```
 
 **Test completion detection:**
 - Tests write to `tohost` at `0x80001000`
 - `tohost = 1`: PASS, `tohost != 1`: FAIL (value = failing test case)
 
-**Results:** `rtl/test_results/summary_*.txt`, `failed_tests_*.txt`, `<test>.log`
+**Results:** `rtl/test_results/<mode>_summary_*.txt`, `failed_tests_*.txt`, `<timestamp>_<suite>_<test>.sim.log`
 
 ## Debugging
 

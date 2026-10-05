@@ -1,6 +1,0 @@
-rv32ui-p-beq
-rv32ui-p-bge
-rv32ui-p-bgeu
-rv32ui-p-blt
-rv32ui-p-bltu
-rv32ui-p-bne

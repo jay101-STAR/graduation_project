@@ -1,0 +1,113 @@
+digraph core_pipeline_architecture {
+  graph [
+    rankdir=LR,
+    splines=polyline,
+    nodesep=0.4,
+    ranksep=0.8,
+    pad=0.2,
+    bgcolor="white",
+    labelloc=t,
+    label="CPU 五级流水内部结构图 / Core Pipeline Architecture",
+    fontsize=22,
+    fontname="Noto Sans CJK SC"
+  ];
+
+  node [
+    shape=box,
+    style="rounded,filled",
+    fillcolor="#ffffff",
+    color="#1f2937",
+    fontname="Noto Sans CJK SC",
+    fontsize=12,
+    penwidth=1.2,
+    margin="0.08,0.06"
+  ];
+
+  edge [
+    color="#4b5563",
+    fontname="Noto Sans CJK SC",
+    fontsize=10,
+    penwidth=1.15,
+    arrowsize=0.75
+  ];
+
+  inst_mem [label="Instruction Memory\n指令存储", fillcolor="#f8fafc"];
+  data_mem [label="Data Memory\n数据存储", fillcolor="#f8fafc"];
+  mmio [label="AXI4-Lite Bridge / UART\nMMIO 通路", fillcolor="#f8fafc"];
+
+  subgraph cluster_pipeline {
+    label="riscv_core 内部结构";
+    style="rounded,filled";
+    color="#059669";
+    fillcolor="#ecfdf5";
+    penwidth=1.5;
+
+    pc [label="PC", fillcolor="#d1fae5"];
+    bp [label="Branch Predictor\nBTB + GShare", fillcolor="#d1fae5"];
+    ifbuf [label="IF1 / IF2\n同步 BRAM 前端缓冲", fillcolor="#d1fae5"];
+    ifid [label="IF/ID", fillcolor="#d1fae5"];
+    idu [label="ID\n译码", fillcolor="#d1fae5"];
+    rf [label="Register File\n寄存器堆", fillcolor="#d1fae5"];
+    hazard [label="Hazard Control\nstall / flush", fillcolor="#d1fae5"];
+    idex [label="ID/EX", fillcolor="#d1fae5"];
+    exu [label="EX", fillcolor="#d1fae5"];
+    alu [label="ALU", fillcolor="#d1fae5"];
+    mul3 [label="mul_3cycle", fillcolor="#d1fae5"];
+    div32 [label="div", fillcolor="#d1fae5"];
+    csr [label="CSR", fillcolor="#d1fae5"];
+    exmem [label="EX/MEM", fillcolor="#d1fae5"];
+    memwb [label="MEM/WB", fillcolor="#d1fae5"];
+    wb [label="WB", fillcolor="#d1fae5"];
+
+    { rank=same; bp; rf; csr; }
+    { rank=same; pc; ifbuf; ifid; idu; idex; exu; exmem; memwb; wb; }
+    { rank=same; alu; mul3; div32; }
+  }
+
+  pc -> inst_mem [label="取指地址"];
+  inst_mem -> ifbuf [label="inst / return pc"];
+  pc -> bp [label="PC 查询"];
+  bp -> pc [label="预测 PC"];
+
+  ifbuf -> ifid [label="指令进入流水"];
+  ifid -> idu [label="IF/ID 数据"];
+  idu -> rf [label="读寄存器地址"];
+  rf -> idu [label="rs1 / rs2 数据"];
+  idu -> idex [label="立即数 / 控制 / 源操作数"];
+
+  hazard -> pc [style=dashed, label="stall", constraint=false];
+  hazard -> ifid [style=dashed, label="stall / flush", constraint=false];
+  hazard -> idex [style=dashed, label="stall / flush", constraint=false];
+  hazard -> exmem [style=dashed, label="stall", constraint=false];
+  hazard -> memwb [style=dashed, label="stall", constraint=false];
+
+  idex -> exu [label="ID/EX 数据"];
+  exu -> alu [label="整数运算", constraint=false];
+  exu -> mul3 [label="乘法", constraint=false];
+  exu -> div32 [label="除法", constraint=false];
+  exu -> csr [label="CSR / Trap", constraint=false];
+  csr -> exu [label="csr data / mtvec / mepc", constraint=false];
+  exu -> bp [label="分支更新", constraint=false];
+  exu -> pc [label="mispredict / jal / trap 重定向"];
+
+  alu -> exmem [label="ALU 结果"];
+  mul3 -> exmem [label="乘法结果"];
+  div32 -> exmem [label="除法结果"];
+
+  exmem -> data_mem [label="本地 RAM 访问"];
+  exmem -> mmio [label="UART/MMIO 请求"];
+  data_mem -> memwb [label="load rdata"];
+  mmio -> memwb [label="rdata / stall"];
+  exmem -> memwb [label="结果与控制"];
+
+  memwb -> wb [label="回写选择"];
+  wb -> rf [label="rd 写回"];
+
+  exmem -> exu [style=dashed, color="#2563eb", label="MEM -> EX 前递", constraint=false];
+  wb -> exu [style=dashed, color="#2563eb", label="WB -> EX 前递", constraint=false];
+
+  bp -> rf [style=invis, weight=5];
+  rf -> csr [style=invis, weight=5];
+  alu -> mul3 [style=invis, weight=5];
+  mul3 -> div32 [style=invis, weight=5];
+}

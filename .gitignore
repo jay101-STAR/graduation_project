@@ -13,3 +13,7 @@ ucli.key
 *.gch
 *.so
 *.fsdb
+
+# Python bytecode caches
+__pycache__/
+*.pyc

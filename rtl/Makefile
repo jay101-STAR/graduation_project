@@ -1,6 +1,5 @@
-# 使用原来的 dataram.v
+# Active RTL and unified test entry point
 SRCS =  $(shell find ./vsrc/ -name "*.v")
-SPLIT_INST = python3 ./vsrc/dataram/mem_image_tool.py init-instrom --instrom ./vsrc/instrom/instrom.hex --out-dir ./vsrc/dataram
 VCS = vcs -full64 -sverilog -timescale=1ns/1ns \
       		+v2k \
 		 +define+fsdb \
@@ -13,13 +12,25 @@ VCS = vcs -full64 -sverilog -timescale=1ns/1ns \
 		+lint=TFIPC-L \
 		 $(SRCS)	
 
-.PHONY: clean
+.PHONY: clean comp simv_build run_simv test-add test-uart-sw test-benchmark \
+        test-uart-rx-smoke test-uart-rx-double test-uart-rx-overrun \
+        test-uart-tx-smoke test-uart-tx-back-to-back test-uart-loopback-echo \
+        prep-uart-echo-forever test-riscv coremark verdi verdi_self_test \
+        verdi_benchmark verdi_official_test
 comp:
-	./vsrc/instrom/llvm.sh ./vsrc/instrom/bp_tests/bp_tntn.s
-	cp ./vsrc/instrom/bp_tests/bp_tntn.hex ./vsrc/instrom/instrom.hex
-	$(SPLIT_INST)
+	./run.sh prepare ./vsrc/instrom/bp_tests/bp_tntn.s
 	$(VCS)
 	./simv -l sim.log
+
+test-add:
+	./run.sh prepare ./vsrc/instrom/instrom.s
+	$(VCS)
+	./simv -l sim.log
+
+test-uart-sw:
+	./run.sh prepare ./vsrc/instrom/uart_sw_test.s
+	$(VCS)
+	./simv +uart_tx_smoke +uart_tx_print -l sim.log
 
 simv_build:
 	$(VCS)
@@ -28,67 +39,35 @@ run_simv:
 	./simv -l sim.log
 
 test-benchmark:
-	cp ../verification/riscv-tests/benchmarks/rv32im_build/output/multiply.hex ./vsrc/instrom/instrom.hex
-	$(SPLIT_INST)
-	$(VCS)
-	./simv -l sim.log
+	./run.sh benchmark multiply --build
 
 test-uart-rx-smoke:
-	./vsrc/instrom/llvm.sh ./vsrc/instrom/uart_rx_smoke_test.s
-	cp ./vsrc/instrom/uart_rx_smoke_test.hex ./vsrc/instrom/instrom.hex
-	$(SPLIT_INST)
-	$(VCS)
-	./simv +uart_rx_smoke -l sim.log
+	./run.sh uart --test uart_rx_smoke --build
 
 test-uart-rx-double:
-	./vsrc/instrom/llvm.sh ./vsrc/instrom/uart_rx_double_read_test.s
-	cp ./vsrc/instrom/uart_rx_double_read_test.hex ./vsrc/instrom/instrom.hex
-	$(SPLIT_INST)
-	$(VCS)
-	./simv +uart_rx_smoke -l sim.log
+	./run.sh uart --test uart_rx_double --build
 
 test-uart-rx-overrun:
-	./vsrc/instrom/llvm.sh ./vsrc/instrom/uart_rx_overrun_test.s
-	cp ./vsrc/instrom/uart_rx_overrun_test.hex ./vsrc/instrom/instrom.hex
-	$(SPLIT_INST)
-	$(VCS)
-	./simv +uart_rx_overrun_smoke -l sim.log
+	./run.sh uart --test uart_rx_overrun --build
 
 test-uart-tx-smoke:
-	./vsrc/instrom/llvm.sh ./vsrc/instrom/uart_tx_smoke_test.s
-	cp ./vsrc/instrom/uart_tx_smoke_test.hex ./vsrc/instrom/instrom.hex
-	$(SPLIT_INST)
-	$(VCS)
-	./simv +uart_tx_smoke -l sim.log
+	./run.sh uart --test uart_tx_smoke --build
 
 test-uart-tx-back-to-back:
-	./vsrc/instrom/llvm.sh ./vsrc/instrom/uart_tx_back_to_back_test.s
-	cp ./vsrc/instrom/uart_tx_back_to_back_test.hex ./vsrc/instrom/instrom.hex
-	$(SPLIT_INST)
-	$(VCS)
-	./simv +uart_tx_smoke -l sim.log
+	./run.sh uart --test uart_tx_back_to_back --build
 
 test-uart-loopback-echo:
-	./vsrc/instrom/llvm.sh ./vsrc/instrom/uart_loopback_echo_test.s
-	cp ./vsrc/instrom/uart_loopback_echo_test.hex ./vsrc/instrom/instrom.hex
-	$(SPLIT_INST)
-	$(VCS)
-	./simv +uart_loopback_smoke -l sim.log
+	./run.sh uart --test uart_loopback_echo --build
 
 prep-uart-echo-forever:
-	./vsrc/instrom/llvm.sh ./vsrc/instrom/uart_echo_forever.s
-	cp ./vsrc/instrom/uart_echo_forever.hex ./vsrc/instrom/instrom.hex
-	$(SPLIT_INST)
+	./run.sh prepare ./vsrc/instrom/uart_echo_forever.s
 
 test-riscv:
-	./prepare_test.sh ../verification/riscv-tests/isa/rv32ui-p-sw
-	./vsrc/instrom/elf2hex.sh ../verification/riscv-tests/isa/rv32ui-p-sw ./vsrc/instrom/instrom.hex
-	$(SPLIT_INST)
-	$(VCS)
-	./simv -l sim.log
+	./run.sh single rv32ui-p-sw --build
 
 coremark:
-	./run_coremark.sh
+	./run.sh coremark
+
 
 verdi:
 	verdi -ssf /home/jay/Desktop/graduation_project/rtl/testbench.fsdb

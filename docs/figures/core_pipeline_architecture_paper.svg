@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="980" viewBox="0 0 1700 980">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4b5563"/>
+    </marker>
+    <style>
+      .title { font: 700 28px 'Noto Sans CJK SC','Microsoft YaHei','PingFang SC',sans-serif; fill: #111827; }
+      .subtitle { font: 500 16px 'Noto Sans CJK SC','Microsoft YaHei','PingFang SC',sans-serif; fill: #475569; }
+      .cluster { fill: #ecfdf5; stroke: #10b981; stroke-width: 2.5; }
+      .mainbox { fill: #d1fae5; stroke: #64748b; stroke-width: 1.8; }
+      .sidebox { fill: #ffffff; stroke: #64748b; stroke-width: 1.8; }
+      .boxtitle { font: 700 14px 'Noto Sans CJK SC','Microsoft YaHei','PingFang SC',sans-serif; fill: #1f2937; text-anchor: middle; }
+      .boxtext { font: 500 13px 'Noto Sans CJK SC','Microsoft YaHei','PingFang SC',sans-serif; fill: #334155; text-anchor: middle; }
+      .cluster-title { font: 700 24px 'Noto Sans CJK SC','Microsoft YaHei','PingFang SC',sans-serif; fill: #065f46; text-anchor: middle; }
+      .cluster-note { font: 500 14px 'Noto Sans CJK SC','Microsoft YaHei','PingFang SC',sans-serif; fill: #475569; text-anchor: middle; }
+      .edge { stroke: #4b5563; stroke-width: 2.1; fill: none; marker-end: url(#arrow); }
+      .edge-thin { stroke: #64748b; stroke-width: 1.8; fill: none; marker-end: url(#arrow); }
+      .edge-dash { stroke: #2563eb; stroke-width: 1.9; stroke-dasharray: 8 6; fill: none; marker-end: url(#arrow); }
+      .ctrl-dash { stroke: #64748b; stroke-width: 1.7; stroke-dasharray: 8 6; fill: none; marker-end: url(#arrow); }
+      .edge-label { font: 500 12px 'Noto Sans CJK SC','Microsoft YaHei','PingFang SC',sans-serif; fill: #374151; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <text x="850" y="52" class="title" text-anchor="middle">CPU 五级流水内部结构图 / Core Pipeline Architecture</text>
+  <text x="850" y="82" class="subtitle" text-anchor="middle">用于说明取指、译码、执行、访存、回写，以及前递、分支预测和冒险控制</text>
+
+  <rect x="50" y="110" rx="24" ry="24" width="1600" height="800" class="cluster"/>
+  <text x="850" y="150" class="cluster-title">riscv_core 内部结构</text>
+  <text x="850" y="176" class="cluster-note">IF1/IF2 前端缓冲、IF/ID、ID/EX、EX/MEM、MEM/WB 流水寄存器与控制通路</text>
+
+  <rect x="90" y="220" rx="16" ry="16" width="170" height="110" class="sidebox"/>
+  <text x="175" y="257" class="boxtitle">Hazard Control</text>
+  <text x="175" y="281" class="boxtext">stall / flush</text>
+  <text x="175" y="304" class="boxtext">load-use / mul / div / MMIO</text>
+
+  <rect x="930" y="165" rx="16" ry="16" width="220" height="92" class="sidebox"/>
+  <text x="1040" y="198" class="boxtitle">Branch Predictor</text>
+  <text x="1040" y="222" class="boxtext">BTB + GShare</text>
+
+  <rect x="620" y="170" rx="16" ry="16" width="190" height="92" class="sidebox"/>
+  <text x="715" y="203" class="boxtitle">Register File</text>
+  <text x="715" y="227" class="boxtext">寄存器堆</text>
+
+  <rect x="1060" y="170" rx="16" ry="16" width="150" height="92" class="sidebox"/>
+  <text x="1135" y="203" class="boxtitle">CSR</text>
+  <text x="1135" y="227" class="boxtext">异常与计数器</text>
+
+  <rect x="120" y="430" rx="16" ry="16" width="130" height="86" class="mainbox"/>
+  <text x="185" y="462" class="boxtitle">PC</text>
+
+  <rect x="290" y="430" rx="16" ry="16" width="130" height="86" class="mainbox"/>
+  <text x="355" y="458" class="boxtitle">IF1 / IF2</text>
+  <text x="355" y="482" class="boxtext">同步 BRAM 前端缓冲</text>
+
+  <rect x="460" y="430" rx="16" ry="16" width="130" height="86" class="mainbox"/>
+  <text x="525" y="462" class="boxtitle">IF / ID</text>
+
+  <rect x="630" y="430" rx="16" ry="16" width="130" height="86" class="mainbox"/>
+  <text x="695" y="458" class="boxtitle">ID</text>
+  <text x="695" y="482" class="boxtext">译码</text>
+
+  <rect x="800" y="430" rx="16" ry="16" width="130" height="86" class="mainbox"/>
+  <text x="865" y="462" class="boxtitle">ID / EX</text>
+
+  <rect x="970" y="430" rx="16" ry="16" width="130" height="86" class="mainbox"/>
+  <text x="1035" y="458" class="boxtitle">EX</text>
+  <text x="1035" y="482" class="boxtext">执行</text>
+
+  <rect x="1140" y="430" rx="16" ry="16" width="130" height="86" class="mainbox"/>
+  <text x="1205" y="462" class="boxtitle">EX / MEM</text>
+
+  <rect x="1310" y="430" rx="16" ry="16" width="130" height="86" class="mainbox"/>
+  <text x="1375" y="462" class="boxtitle">MEM / WB</text>
+
+  <rect x="1480" y="430" rx="16" ry="16" width="130" height="86" class="mainbox"/>
+  <text x="1545" y="458" class="boxtitle">WB</text>
+  <text x="1545" y="482" class="boxtext">回写</text>
+
+  <rect x="980" y="690" rx="16" ry="16" width="130" height="92" class="sidebox"/>
+  <text x="1045" y="723" class="boxtitle">ALU</text>
+  <text x="1045" y="747" class="boxtext">整数运算</text>
+
+  <rect x="1150" y="690" rx="16" ry="16" width="150" height="92" class="sidebox"/>
+  <text x="1225" y="723" class="boxtitle">mul_3cycle</text>
+  <text x="1225" y="747" class="boxtext">乘法器</text>
+
+  <rect x="1340" y="690" rx="16" ry="16" width="120" height="92" class="sidebox"/>
+  <text x="1400" y="723" class="boxtitle">div</text>
+  <text x="1400" y="747" class="boxtext">除法器</text>
+
+  <rect x="250" y="790" rx="16" ry="16" width="210" height="96" class="sidebox"/>
+  <text x="355" y="823" class="boxtitle">Instruction Memory</text>
+  <text x="355" y="847" class="boxtext">指令存储</text>
+
+  <rect x="1140" y="790" rx="16" ry="16" width="210" height="96" class="sidebox"/>
+  <text x="1245" y="823" class="boxtitle">Data Memory</text>
+  <text x="1245" y="847" class="boxtext">数据存储</text>
+
+  <rect x="1410" y="790" rx="16" ry="16" width="210" height="96" class="sidebox"/>
+  <text x="1515" y="823" class="boxtitle">AXI4-Lite Bridge / UART</text>
+  <text x="1515" y="847" class="boxtext">MMIO 通路</text>
+
+  <path d="M 250 473 H 290" class="edge"/>
+  <path d="M 420 473 H 460" class="edge"/>
+  <path d="M 590 473 H 630" class="edge"/>
+  <path d="M 760 473 H 800" class="edge"/>
+  <path d="M 930 473 H 970" class="edge"/>
+  <path d="M 1100 473 H 1140" class="edge"/>
+  <path d="M 1270 473 H 1310" class="edge"/>
+  <path d="M 1440 473 H 1480" class="edge"/>
+
+  <text x="270" y="456" class="edge-label">PC</text>
+  <text x="440" y="456" class="edge-label">inst</text>
+  <text x="610" y="456" class="edge-label">IF/ID</text>
+  <text x="780" y="456" class="edge-label">控制 / 操作数</text>
+  <text x="950" y="456" class="edge-label">ID/EX</text>
+  <text x="1120" y="456" class="edge-label">结果 / 请求</text>
+  <text x="1290" y="456" class="edge-label">访存结果</text>
+  <text x="1460" y="456" class="edge-label">回写数据</text>
+
+  <path d="M 185 430 V 300 H 930" class="edge-thin"/>
+  <text x="555" y="284" class="edge-label">PC 查询</text>
+
+  <path d="M 930 230 H 230 V 430" class="edge-thin"/>
+  <text x="610" y="408" class="edge-label">预测 PC</text>
+
+  <path d="M 1035 430 V 257 H 1040" class="edge-thin"/>
+  <text x="1078" y="330" class="edge-label">分支更新</text>
+
+  <path d="M 1035 430 V 330 H 185 V 430" class="edge-thin"/>
+  <text x="430" y="350" class="edge-label">mispredict / jal / trap 重定向</text>
+
+  <path d="M 695 430 V 262" class="edge-thin"/>
+  <text x="742" y="344" class="edge-label">读寄存器地址</text>
+
+  <path d="M 715 262 V 430" class="edge-thin"/>
+  <text x="768" y="382" class="edge-label">rs1 / rs2 数据</text>
+
+  <path d="M 1545 430 V 262 H 810" class="edge-thin"/>
+  <text x="1220" y="286" class="edge-label">rd 写回</text>
+
+  <path d="M 1035 516 V 690" class="edge-thin"/>
+  <text x="1080" y="610" class="edge-label">整数运算</text>
+
+  <path d="M 1055 516 V 640 H 1225 V 690" class="edge-thin"/>
+  <text x="1150" y="628" class="edge-label">乘法</text>
+
+  <path d="M 1075 516 V 620 H 1400 V 690" class="edge-thin"/>
+  <text x="1285" y="612" class="edge-label">除法</text>
+
+  <path d="M 1135 262 V 430" class="edge-thin"/>
+  <text x="1185" y="344" class="edge-label">csr data / mtvec / mepc</text>
+
+  <path d="M 1205 516 V 790" class="edge"/>
+  <text x="1260" y="655" class="edge-label">本地 RAM 访问</text>
+
+  <path d="M 1235 516 V 735 H 1515 V 790" class="edge-thin"/>
+  <text x="1392" y="726" class="edge-label">UART / MMIO 请求</text>
+
+  <path d="M 1245 790 V 516 H 1375" class="edge-thin"/>
+  <text x="1305" y="606" class="edge-label">load rdata</text>
+
+  <path d="M 1515 790 V 560 H 1375 V 516" class="edge-thin"/>
+  <text x="1450" y="610" class="edge-label">rdata / stall</text>
+
+  <path d="M 185 516 V 790 H 355" class="edge"/>
+  <text x="270" y="628" class="edge-label">取指地址</text>
+
+  <path d="M 355 790 V 560 H 355 V 516" class="edge-thin"/>
+  <text x="420" y="610" class="edge-label">inst / return pc</text>
+
+  <path d="M 260 275 V 450 H 120" class="ctrl-dash"/>
+  <text x="230" y="360" class="edge-label">stall</text>
+
+  <path d="M 260 290 V 450 H 460" class="ctrl-dash"/>
+  <text x="360" y="380" class="edge-label">stall / flush</text>
+
+  <path d="M 260 305 V 450 H 800" class="ctrl-dash"/>
+  <text x="520" y="340" class="edge-label">stall / flush</text>
+
+  <path d="M 260 320 V 450 H 1140" class="ctrl-dash"/>
+  <text x="700" y="320" class="edge-label">stall</text>
+
+  <path d="M 260 335 V 450 H 1310" class="ctrl-dash"/>
+  <text x="790" y="300" class="edge-label">stall</text>
+
+  <path d="M 1205 516 V 610 H 1035 V 516" class="edge-dash"/>
+  <text x="1118" y="590" class="edge-label">MEM -&gt; EX 前递</text>
+
+  <path d="M 1545 430 V 360 H 1035 V 430" class="edge-dash"/>
+  <text x="1290" y="344" class="edge-label">WB -&gt; EX 前递</text>
+</svg>
