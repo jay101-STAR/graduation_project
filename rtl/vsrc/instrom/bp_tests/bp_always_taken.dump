@@ -1,5 +1,5 @@
 
-bp_tests/bp_always_taken.o:     file format elf32-littleriscv
+/home/jay/Desktop/graduation_project/rtl/vsrc/instrom/bp_tests/bp_always_taken.o:     file format elf32-littleriscv
 
 
 Disassembly of section .text:

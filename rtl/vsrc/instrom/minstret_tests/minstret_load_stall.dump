@@ -1,5 +1,5 @@
 
-minstret_tests/minstret_load_stall.o:     file format elf32-littleriscv
+/home/jay/Desktop/graduation_project/rtl/vsrc/instrom/minstret_tests/minstret_load_stall.o:     file format elf32-littleriscv
 
 
 Disassembly of section .text:

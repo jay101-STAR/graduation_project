@@ -14,7 +14,6 @@ module div (
 
   localparam IDLE = 2'b00;
   localparam WORK = 2'b01;
-  localparam DONE = 2'b10;
 
   reg [63:0] dividend_extended;
   reg [31:0] dividend_abs_reg;
@@ -40,10 +39,13 @@ module div (
   wire [63:0] shift_dividend_extended = {dividend_extended[62:0], 1'b0};
   wire [32:0] sub_result = {1'b0, shift_dividend_extended[63:32]} - {1'b0, divisor_reg};
   wire is_enough = ~sub_result[32];
+  wire [63:0] dividend_next = is_enough ?
+      {sub_result[31:0], shift_dividend_extended[31:1], 1'b1} :
+      shift_dividend_extended;
 
   // 【新增】通用结果恢复逻辑
   // 无论是正常计算结束，还是除以0异常，都可以用这个逻辑恢复数据
-  // 正常结束时：abs_val 是 dividend_extended[31:0] (商) 或 [63:32] (余)
+  // 正常结束时：abs_val 是最后一次迭代的 dividend_next[31:0] (商) 或 [63:32] (余)
   // 除以0时  ：abs_val 是 dividend_extended[31:0] (被除数绝对值)
   function [31:0] recover_val;
     input [31:0] abs_val;
@@ -109,8 +111,7 @@ module div (
     next_state = current_state;
     case (current_state)
       IDLE: if (div_start) next_state = WORK; else next_state = IDLE;
-      WORK: if (div_done)  next_state = DONE; else next_state = WORK;
-      DONE: next_state = IDLE;
+      WORK: if (div_done)  next_state = IDLE; else next_state = WORK;
       default: next_state = IDLE;
     endcase
   end
@@ -164,10 +165,17 @@ module div (
         end
 
         WORK: begin
+          // Return to idle on the edge that can transfer the completed result.
+          // EX retains pending completion if the pipeline is still blocked.
+          if (div_done) begin
+            div_busy <= 1'b0;
+            div_done <= 1'b0;
+            // Keep quotient, remainder, count, and iteration data stable.
+          end
           // ----------------------------------------------------
           // 情况 1: 除以 0 (返回 -1 和 原始被除数)
           // ----------------------------------------------------
-          if (is_div_by_zero) begin
+          else if (is_div_by_zero) begin
             div_result_q <= 32'hFFFFFFFF;
             // 【修复Bug并优化】
             // 此时 dividend_extended[31:0] 存的是 abs(dividend)
@@ -205,28 +213,24 @@ module div (
           // ----------------------------------------------------
           // 情况 4: 正常计算完成
           // ----------------------------------------------------
-          else if (cnt == 6'd32) begin
+          else if (cnt == 6'd31) begin
+            // Capture the last iteration's combinational result directly.
+            // Reading dividend_extended here would use the previous iteration.
+            dividend_extended <= dividend_next;
+            cnt               <= 6'd32;
             div_done     <= 1'b1;
-            // 使用函数处理符号恢复，逻辑更清晰
-            div_result_q <= recover_val(dividend_extended[31:0], sign_q);
-            div_result_r <= recover_val(dividend_extended[63:32], sign_r);
+            div_result_q <= recover_val(dividend_next[31:0], sign_q);
+            div_result_r <= recover_val(dividend_next[63:32], sign_r);
           end
           // ----------------------------------------------------
           // 情况 5: 计算中
           // ----------------------------------------------------
           else begin
-            cnt <= cnt + 1;
-            if (is_enough)
-              dividend_extended <= {sub_result[31:0], shift_dividend_extended[31:1], 1'b1};
-            else
-              dividend_extended <= shift_dividend_extended;
+            cnt <= cnt + 1'b1;
+            dividend_extended <= dividend_next;
           end
         end
 
-        DONE: begin
-          div_busy <= 1'b0;
-          div_done <= 1'b0;
-        end
         default: ;
       endcase
     end

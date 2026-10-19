@@ -113,6 +113,7 @@ module riscv_core (
   wire [31:0] ex_predicted_pc;  // 预测的目标PC
   wire [9:0] ex_predicted_pht_index;  // 预测时的gshare索引
   wire        ex_is_branch;  // 是否是分支指令
+  wire        ex_jal_resolved;
 
   // Multiplier control signal from ID/EX register
   wire        ex_is_mul_instruction;  // 是否是乘法指令
@@ -212,13 +213,28 @@ module riscv_core (
   // ex_pc_pc_wen在预测错误时为1，此时需要flush流水线
   wire branch_flush = ex_pc_pc_wen;
 
+  // Resolve direct jumps when ID advances. An older EX redirect wins, and
+  // flushing the front end must not discard the JAL entering ID/EX itself.
+  wire [31:0] id_jal_target = id_pc + id_imm;
+  wire id_jal_advance = !rst && if_id_valid && (id_aluc == `JAL_TYPE) &&
+                        !stall_if_id && !branch_flush;
+  wire id_jal_prediction_ok = if_id_predicted_taken &&
+                              (if_id_predicted_pc == id_jal_target);
+  wire id_jal_redirect = id_jal_advance && !id_jal_prediction_ok;
+  wire frontend_flush = branch_flush || id_jal_redirect;
+
+  // Train once on an accepted EX instruction; a stalled JAL must not retrain.
+  wire ex_is_jal = (ex_aluc == `JAL_TYPE);
+  wire bp_update_valid = ex_valid && !stall_ex_dataram && !ex_csr_trap_valid;
+  wire bp_invalidate = bp_update_valid && (ex_alucex == `FENCEI_TYPE);
+
   // Control signals
   assign stall_if_id = load_use_hazard || mul_hazard || div_hazard || top_core_mem_stall;
   assign stall_id_ex = mul_hazard || div_hazard || top_core_mem_stall;
   assign stall_ex_dataram = mul_hazard || div_hazard || top_core_mem_stall;  // Also stall EX/MEM register during multiplication/division
   assign stall_dataram_wb = stall_ex_dataram;
 
-  assign flush_if_id = branch_flush;
+  assign flush_if_id = frontend_flush;
   assign flush_id_ex = branch_flush || load_use_hazard;
   assign flush_ex_dataram = 1'b0;
   assign flush_dataram_wb = 1'b0;
@@ -259,8 +275,8 @@ module riscv_core (
       .rst          (rst),
       .stall        (load_use_hazard || mul_hazard || div_hazard || top_core_mem_stall),
       .ren          (core_instrom_ren),
-      .ex_pc_pc_wen (ex_pc_pc_wen),
-      .ex_pc_pc_data(ex_pc_pc_data),
+      .ex_pc_pc_wen (frontend_flush),
+      .ex_pc_pc_data(branch_flush ? ex_pc_pc_data : id_jal_target),
       // Branch prediction from IF stage
       .id_pc_wen    (if_bp_predict_taken),
       .id_pc_data   (if_bp_predict_pc),
@@ -288,7 +304,7 @@ module riscv_core (
       if_stall_pending_predicted_taken <= 1'b0;
       if_stall_pending_predicted_pc    <= (`PC_BASE_ADDR + 32'd4);
       if_stall_pending_predicted_pht_index <= 10'b0;
-    end else if (branch_flush) begin
+    end else if (frontend_flush) begin
       if1_pc                  <= `PC_BASE_ADDR;
       if1_valid               <= 1'b0;
       if1_predicted_taken     <= 1'b0;
@@ -387,14 +403,16 @@ module riscv_core (
   branch_predictor branch_predictor0 (
       .clk                (clk),
       .rst                (rst),
+      .invalidate         (bp_invalidate),
       .if_bp_pc           (core_instrom_addr),
       .if_bp_predict_taken(if_bp_predict_taken),
       .if_bp_predict_pc   (if_bp_predict_pc),
       .if_bp_predict_pht_index(if_bp_predict_pht_index),
-      .ex_bp_update_wen   (ex_bp_update_wen),
+      .ex_bp_update_wen   (bp_update_valid && (ex_bp_update_wen || ex_is_jal)),
+      .ex_bp_update_is_jal(ex_is_jal),
       .ex_bp_update_pc    (ex_bp_update_pc),
-      .ex_bp_update_taken (ex_bp_update_taken),
-      .ex_bp_update_target(ex_bp_update_target),
+      .ex_bp_update_taken (ex_is_jal || ex_bp_update_taken),
+      .ex_bp_update_target(ex_is_jal ? (id_ex_pc + ex_imm) : ex_bp_update_target),
       .ex_bp_update_pht_index(ex_bp_update_pht_index)
   );
 
@@ -455,6 +473,7 @@ module riscv_core (
       .id_predicted_pc      (id_predicted_pc),
       .id_predicted_pht_index(if_id_predicted_pht_index),
       .id_is_branch         (id_is_branch),
+      .id_jal_resolved      (id_jal_advance),
       // Multiplier control input
       .id_is_mul_instruction(id_is_mul_instruction),
       // Divider control input
@@ -478,6 +497,7 @@ module riscv_core (
       .ex_predicted_pc      (ex_predicted_pc),
       .ex_predicted_pht_index(ex_predicted_pht_index),
       .ex_is_branch         (ex_is_branch),
+      .ex_jal_resolved      (ex_jal_resolved),
       // Multiplier control output
       .ex_is_mul_instruction(ex_is_mul_instruction),
       // Divider control output
@@ -513,6 +533,8 @@ module riscv_core (
   ex ex0 (
       .clk                     (clk),
       .rst                     (rst),
+      .ex_can_advance          (!stall_ex_dataram),
+      .id_ex_jal_resolved      (ex_jal_resolved),
       .id_ex_aluc              (ex_aluc),
       .id_ex_alucex            (ex_alucex),
       .id_ex_rd_addr           (ex_rd_addr),

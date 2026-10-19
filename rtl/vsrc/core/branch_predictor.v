@@ -3,6 +3,7 @@
 module branch_predictor (
     input clk,
     input rst,
+    input invalidate,  // FENCE.I invalidates targets for possibly changed code.
 
     // Query from IF stage
     input  [31:0] if_bp_pc,
@@ -12,6 +13,7 @@ module branch_predictor (
 
     // Update from EX stage
     input        ex_bp_update_wen,
+    input        ex_bp_update_is_jal,
     input [31:0] ex_bp_update_pc,
     input        ex_bp_update_taken,
     input [31:0] ex_bp_update_target,
@@ -36,8 +38,9 @@ module branch_predictor (
   reg btb_valid[0:WAY_NUM-1][0:SET_NUM-1];
   reg [TAG_WIDTH-1:0] btb_tag[0:WAY_NUM-1][0:SET_NUM-1];
   reg [31:0] btb_target[0:WAY_NUM-1][0:SET_NUM-1];
+  reg btb_is_jal[0:WAY_NUM-1][0:SET_NUM-1];
 
-  // Entry epoch bit: invalidate whole predictor table without clear loop
+  // Entry epoch qualifies tags across reset; valid bits also clear on FENCE.I.
   reg bp_entry_epoch[0:WAY_NUM-1][0:SET_NUM-1];
   reg lru_way[0:SET_NUM-1];  // 2-way LRU: record which way is least recently used
   reg bp_epoch;
@@ -59,6 +62,8 @@ module branch_predictor (
   wire if_bp_way1_hit = if_bp_way1_entry_valid && (btb_valid[1][if_bp_set] == 1'b1) &&
                         (btb_tag[1][if_bp_set] == if_bp_tag);
   wire if_btb_hit = if_bp_way0_hit || if_bp_way1_hit;
+  wire if_btb_is_jal = if_bp_way0_hit ? btb_is_jal[0][if_bp_set] :
+                      if_bp_way1_hit ? btb_is_jal[1][if_bp_set] : 1'b0;
 
   wire ex_bp_way0_entry_valid = (bp_entry_epoch[0][ex_bp_set] === bp_epoch);
   wire ex_bp_way1_entry_valid = (bp_entry_epoch[1][ex_bp_set] === bp_epoch);
@@ -86,6 +91,23 @@ module branch_predictor (
       ex_bp_update_way = lru_way[ex_bp_set];
     end
   end
+
+  // Per-entry valid flops avoid a runtime loop over a multidimensional array.
+  genvar valid_way, valid_set;
+  generate
+    for (valid_way = 0; valid_way < WAY_NUM; valid_way = valid_way + 1) begin : valid_ways
+      for (valid_set = 0; valid_set < SET_NUM; valid_set = valid_set + 1) begin : valid_sets
+        localparam [SET_INDEX_WIDTH-1:0] ENTRY_INDEX = valid_set;
+        localparam ENTRY_WAY = (valid_way == 1);
+        always @(posedge clk) begin
+          if (rst || invalidate)
+            btb_valid[valid_way][valid_set] <= 1'b0;
+          else if (ex_bp_update_wen && ex_bp_update_way == ENTRY_WAY && ex_bp_set == ENTRY_INDEX)
+            btb_valid[valid_way][valid_set] <= 1'b1;
+        end
+      end
+    end
+  endgenerate
 
   reg [1:0] ex_bp_counter_next;
   always @(*) begin
@@ -126,21 +148,24 @@ module branch_predictor (
       for (pht_i = 0; pht_i < PHT_ENTRY_NUM; pht_i = pht_i + 1) begin
         pht_counter[pht_i] <= PHT_INIT_STATE;
       end
-    end else if (!rst && ex_bp_update_wen) begin
-      btb_valid[ex_bp_update_way][ex_bp_set] <= 1'b1;
+    end else if (!rst && !invalidate && ex_bp_update_wen) begin
       btb_tag[ex_bp_update_way][ex_bp_set] <= ex_bp_tag;
       btb_target[ex_bp_update_way][ex_bp_set] <= ex_bp_update_target;
+      btb_is_jal[ex_bp_update_way][ex_bp_set] <= ex_bp_update_is_jal;
       bp_entry_epoch[ex_bp_update_way][ex_bp_set] <= bp_epoch;
-      pht_counter[ex_bp_update_pht_index] <= ex_bp_counter_next;
-      ghr <= {ghr[GHR_WIDTH-2:0], ex_bp_update_taken};
+      // Unconditional jumps train targets only, without changing gshare history.
+      if (!ex_bp_update_is_jal) begin
+        pht_counter[ex_bp_update_pht_index] <= ex_bp_counter_next;
+        ghr <= {ghr[GHR_WIDTH-2:0], ex_bp_update_taken};
+      end
       // Update LRU state: the other way becomes least recently used.
       lru_way[ex_bp_set] <= ~ex_bp_update_way;
     end
   end
 
   assign if_bp_predict_pht_index = if_bp_pht_index;
-  // Predict taken only when BTB hit and BHT state is weak/strong taken.
-  assign if_bp_predict_taken = if_btb_hit && if_bp_counter[1];
+  // JAL is always taken; conditional branches still consult their PHT counter.
+  assign if_bp_predict_taken = if_btb_hit && (if_btb_is_jal || if_bp_counter[1]);
   assign if_bp_predict_pc = if_bp_way0_hit ? btb_target[0][if_bp_set] :
                             if_bp_way1_hit ? btb_target[1][if_bp_set] :
                                              (if_bp_pc + 32'd4);

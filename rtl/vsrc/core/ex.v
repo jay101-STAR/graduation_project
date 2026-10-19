@@ -3,6 +3,8 @@
 module ex (
     input clk,
     input rst,
+    input ex_can_advance,  // EX/MEM will accept the current EX instruction.
+    input id_ex_jal_resolved,
 
     input [ 3:0] id_ex_aluc,
     input [ 7:0] id_ex_alucex,
@@ -198,7 +200,8 @@ module ex (
   wire pc_redirect_trap = ex_csr_trap_valid;
   wire pc_redirect_mret = (id_ex_alucex == `MRET_TYPE) && !ex_csr_trap_valid;
   wire pc_redirect_fencei = (id_ex_alucex == `FENCEI_TYPE) && !ex_csr_trap_valid;
-  wire pc_redirect_jal = (id_ex_aluc == `JAL_TYPE) && !ex_csr_trap_valid;
+  wire pc_redirect_jal = (id_ex_aluc == `JAL_TYPE) && !id_ex_jal_resolved &&
+                         !ex_csr_trap_valid;
   wire pc_redirect_jalr = (id_ex_aluc == `JALR_TYPE) && !ex_csr_trap_valid;
 
   // 分支重定向：只有在预测错误时才需要重定向PC
@@ -351,6 +354,10 @@ module ex (
   wire mul_done_raw;
   reg  mul_inflight;
   reg  mul_done_latched;
+  // The multiplier registers its result together with raw completion. Use it
+  // immediately, or keep completion pending until EX/MEM actually accepts it.
+  wire mul_result_valid = mul_done_latched || (mul_inflight && mul_done_raw);
+  wire mul_result_accept = id_ex_is_mul_instruction && mul_result_valid && ex_can_advance;
   wire mul_a_sign = (id_ex_alucex == `MUL_TYPE) || (id_ex_alucex == `MULH_TYPE) ||
                     (id_ex_alucex == `MULHSU_TYPE);
   wire mul_b_sign = (id_ex_alucex == `MUL_TYPE) || (id_ex_alucex == `MULH_TYPE);
@@ -379,6 +386,8 @@ module ex (
   wire div_done_raw;
   reg  div_inflight;
   reg  div_done_latched;
+  wire div_result_valid = div_done_latched || (div_inflight && div_done_raw);
+  wire div_result_accept = id_ex_is_div_instruction && div_result_valid && ex_can_advance;
   wire div_sign = (id_ex_alucex == `DIV_TYPE) || (id_ex_alucex == `REM_TYPE);
   wire div_start = id_ex_is_div_instruction && !div_inflight && !div_done_latched && !div_busy_raw;
 
@@ -398,7 +407,7 @@ module ex (
   assign div_final_result = ((id_ex_alucex == `DIV_TYPE) || (id_ex_alucex == `DIVU_TYPE)) ?
                             div_result_q_raw : div_result_r_raw;
 
-  // Latch completion for one cycle so pipeline stall release is deterministic.
+  // MUL/DIV completion is visible immediately and held until EX/MEM acceptance.
   always @(posedge clk or posedge rst) begin
     if (rst) begin
       mul_inflight     <= 1'b0;
@@ -410,15 +419,14 @@ module ex (
       if (!id_ex_is_mul_instruction) begin
         mul_inflight     <= 1'b0;
         mul_done_latched <= 1'b0;
+      end else if (mul_result_accept) begin
+        mul_inflight     <= 1'b0;
+        mul_done_latched <= 1'b0;
       end else begin
-        if (mul_done_latched) begin
-          mul_done_latched <= 1'b0;
-        end
         if (mul_start) begin
           mul_inflight <= 1'b1;
         end
         if (mul_done_raw && mul_inflight) begin
-          mul_inflight     <= 1'b0;
           mul_done_latched <= 1'b1;
         end
       end
@@ -427,25 +435,24 @@ module ex (
       if (!id_ex_is_div_instruction) begin
         div_inflight     <= 1'b0;
         div_done_latched <= 1'b0;
+      end else if (div_result_accept) begin
+        div_inflight     <= 1'b0;
+        div_done_latched <= 1'b0;
       end else begin
-        if (div_done_latched) begin
-          div_done_latched <= 1'b0;
-        end
         if (div_start) begin
           div_inflight <= 1'b1;
         end
         if (div_done_raw && div_inflight) begin
-          div_inflight     <= 1'b0;
           div_done_latched <= 1'b1;
         end
       end
     end
   end
 
-  assign ex_mul_busy = id_ex_is_mul_instruction && (mul_inflight && !mul_done_latched);
-  assign ex_mul_done = id_ex_is_mul_instruction ? mul_done_latched : 1'b1;
-  assign ex_div_busy = id_ex_is_div_instruction && (div_inflight && !div_done_latched);
-  assign ex_div_done = id_ex_is_div_instruction ? div_done_latched : 1'b1;
+  assign ex_mul_busy = id_ex_is_mul_instruction && (mul_inflight && !mul_result_valid);
+  assign ex_mul_done = id_ex_is_mul_instruction ? mul_result_valid : 1'b1;
+  assign ex_div_busy = id_ex_is_div_instruction && (div_inflight && !div_result_valid);
+  assign ex_div_done = id_ex_is_div_instruction ? div_result_valid : 1'b1;
 
 
 endmodule

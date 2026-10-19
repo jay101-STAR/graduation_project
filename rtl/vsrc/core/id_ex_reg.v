@@ -29,6 +29,7 @@ module id_ex_reg (
     input [31:0] id_predicted_pc,      // 预测的目标PC
     input [ 9:0] id_predicted_pht_index,  // 预测时的gshare索引
     input        id_is_branch,         // 是否是分支指令
+    input        id_jal_resolved,      // JAL already redirected in ID
 
     // Multiplier control signal from ID
     input id_is_mul_instruction,  // 是否是乘法指令
@@ -57,6 +58,7 @@ module id_ex_reg (
     output reg [31:0] ex_predicted_pc,      // 预测的目标PC
     output reg [ 9:0] ex_predicted_pht_index,  // 预测时的gshare索引
     output reg        ex_is_branch,         // 是否是分支指令
+    output reg        ex_jal_resolved,
 
     // Multiplier control output to EX
     output reg ex_is_mul_instruction,  // 是否是乘法指令
@@ -86,6 +88,7 @@ module id_ex_reg (
       ex_predicted_pc       <= 32'h0;
       ex_predicted_pht_index <= 10'h0;
       ex_is_branch          <= 1'b0;
+      ex_jal_resolved       <= 1'b0;
       // Multiplier control signal
       ex_is_mul_instruction <= 1'b0;
       // Divider control signal
@@ -110,6 +113,7 @@ module id_ex_reg (
       ex_predicted_pc       <= 32'h0;
       ex_predicted_pht_index <= 10'h0;
       ex_is_branch          <= 1'b0;
+      ex_jal_resolved       <= 1'b0;
       // Multiplier control signal (clear on flush)
       ex_is_mul_instruction <= 1'b0;
       // Divider control signal (clear on flush)
@@ -134,6 +138,7 @@ module id_ex_reg (
       ex_predicted_pc       <= ex_predicted_pc;
       ex_predicted_pht_index <= ex_predicted_pht_index;
       ex_is_branch          <= ex_is_branch;
+      ex_jal_resolved       <= ex_jal_resolved;
       // Multiplier control signal (hold on stall)
       ex_is_mul_instruction <= ex_is_mul_instruction;
       // Divider control signal (hold on stall)
@@ -158,6 +163,7 @@ module id_ex_reg (
       ex_predicted_pc       <= id_predicted_pc;
       ex_predicted_pht_index <= id_predicted_pht_index;
       ex_is_branch          <= id_is_branch;
+      ex_jal_resolved       <= id_jal_resolved;
       // Multiplier control signal (latch on normal operation)
       ex_is_mul_instruction <= id_is_mul_instruction;
       // Divider control signal (latch on normal operation)
