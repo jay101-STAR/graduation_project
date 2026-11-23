@@ -17,3 +17,11 @@ ucli.key
 # Python bytecode caches
 __pycache__/
 *.pyc
+
+# Editor / simulation logs
+.nvimlog
+rtl/novas_dump.log
+rtl/sim.log
+
+# Test outputs
+rtl/test_results/
