@@ -189,7 +189,8 @@ def selected_tests(args):
         paths = sorted(folder.glob("*.s"))
         if not paths:
             raise ValueError(f"no assembly tests under {folder}")
-        ns = positive(os.environ.get("BP_TIMEOUT_NS", "10000000"))
+        # The shared AXI-Lite path is slower than the original local BRAM path.
+        ns = positive(os.environ.get("BP_TIMEOUT_NS", "100000000"))
         wall = positive(os.environ.get("BP_WALL_TIMEOUT_S", "120"))
         for path in paths:
             tests.append((args.mode, path.stem, path,

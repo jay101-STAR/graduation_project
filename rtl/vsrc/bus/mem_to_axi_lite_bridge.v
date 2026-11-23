@@ -68,8 +68,8 @@ module mem_to_axi_lite_bridge (
   wire req_present = cpu_axi_wen || cpu_axi_ren;
   wire req_fire = (bridge_state == ST_IDLE) && !wait_req_release && req_present;
 
-  // During an MMIO request, stall the pipeline until AXI response returns.
-  // Also stall on request fire cycle so EX/MEM request won't run ahead by one cycle.
+  // Pulse/busy side used by the shared RAM/MMIO request adapter. Stay busy
+  // through the AXI response, including the cycle accepting a new request.
   assign axi_cpu_stall = (bridge_state != ST_IDLE) || req_fire;
 
   always @(posedge clk) begin

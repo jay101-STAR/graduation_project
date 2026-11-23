@@ -8,6 +8,7 @@ module dataram_wb_reg (
 
     // Data from MEM
     input [31:0] dataram_alu_result,
+    input [31:0] dataram_load_data,
     input [ 4:0] dataram_rd_addr,
     input        dataram_valid,
 
@@ -17,6 +18,7 @@ module dataram_wb_reg (
 
     // Outputs to WB stage
     output reg [31:0] wb_alu_result,
+    output reg [31:0] wb_load_data,
     output reg [ 4:0] wb_rd_addr,
     output reg [ 3:0] wb_aluc,
     output reg        wb_rd_wen,
@@ -27,6 +29,7 @@ module dataram_wb_reg (
     if (rst) begin
       // Reset: clear all outputs
       wb_alu_result <= 32'h0;
+      wb_load_data <= 32'h0;
       wb_rd_addr    <= 5'h0;
       wb_aluc       <= 4'h0;
       wb_rd_wen     <= 1'b0;
@@ -34,6 +37,7 @@ module dataram_wb_reg (
     end else if (flush) begin
       // Flush: insert bubble
       wb_alu_result <= 32'h0;
+      wb_load_data <= 32'h0;
       wb_rd_addr    <= 5'h0;
       wb_aluc       <= 4'h0;
       wb_rd_wen     <= 1'b0;  // Critical: disable write
@@ -48,6 +52,7 @@ module dataram_wb_reg (
     end else begin
       // Normal operation: latch inputs
       wb_alu_result <= dataram_alu_result;
+      wb_load_data <= dataram_load_data;
       wb_rd_addr    <= dataram_rd_addr;
       wb_aluc       <= dataram_aluc;
       wb_rd_wen     <= dataram_rd_wen;

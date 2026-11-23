@@ -8,6 +8,7 @@ module ex_dataram_reg (
 
     // Data from EX
     input [31:0] ex_alu_result,
+    input [31:0] ex_pc,
     input [31:0] ex_dataram_addr,
     input [31:0] ex_dataram_wdata,
     input        ex_valid,
@@ -22,6 +23,7 @@ module ex_dataram_reg (
 
     // Outputs to MEM stage
     output reg [31:0] dataram_alu_result,
+    output reg [31:0] dataram_pc,
     output reg [31:0] dataram_addr,
     output reg [31:0] dataram_wdata,
     output reg        dataram_valid,
@@ -37,6 +39,7 @@ module ex_dataram_reg (
     if (rst) begin
       // Reset: clear all outputs
       dataram_alu_result <= 32'h0;
+      dataram_pc        <= 32'h0;
       dataram_addr       <= 32'h0;
       dataram_wdata      <= 32'h0;
       dataram_valid      <= 1'b0;
@@ -49,6 +52,7 @@ module ex_dataram_reg (
     end else if (flush) begin
       // Flush: insert bubble
       dataram_alu_result <= 32'h0;
+      dataram_pc        <= 32'h0;
       dataram_addr       <= 32'h0;
       dataram_wdata      <= 32'h0;
       dataram_valid      <= 1'b0;
@@ -73,6 +77,7 @@ module ex_dataram_reg (
     end else begin
       // Normal operation: latch inputs
       dataram_alu_result <= ex_alu_result;
+      dataram_pc        <= ex_pc;
       dataram_addr       <= ex_dataram_addr;
       dataram_wdata      <= ex_dataram_wdata;
       dataram_valid      <= ex_valid;

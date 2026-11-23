@@ -10,6 +10,7 @@ module if_id_reg (
     input [31:0] if_pc,
     input [31:0] if_instruction,
     input        if_valid,
+    input        if_fault,
     input        if_predicted_taken,
     input [31:0] if_predicted_pc,
     input [ 9:0] if_predicted_pht_index,
@@ -18,6 +19,7 @@ module if_id_reg (
     output reg [31:0] id_pc,
     output reg [31:0] id_instruction,
     output reg        id_valid,
+    output reg        id_fault,
     output reg        id_predicted_taken,
     output reg [31:0] id_predicted_pc,
     output reg [ 9:0] id_predicted_pht_index
@@ -29,6 +31,7 @@ module if_id_reg (
       id_pc          <= 32'h0;
       id_instruction <= 32'h0000_0013;  // NOP (addi x0, x0, 0)
       id_valid       <= 1'b0;
+      id_fault       <= 1'b0;
       id_predicted_taken <= 1'b0;
       id_predicted_pc <= 32'h0;
       id_predicted_pht_index <= 10'h0;
@@ -37,6 +40,7 @@ module if_id_reg (
       id_pc          <= 32'h0;
       id_instruction <= 32'h0000_0013;  // NOP
       id_valid       <= 1'b0;
+      id_fault       <= 1'b0;
       id_predicted_taken <= 1'b0;
       id_predicted_pc <= 32'h0;
       id_predicted_pht_index <= 10'h0;
@@ -53,6 +57,7 @@ module if_id_reg (
       id_pc          <= if_pc;
       id_instruction <= if_instruction;
       id_valid       <= if_valid;
+      id_fault       <= if_fault;
       id_predicted_taken <= if_predicted_taken;
       id_predicted_pc <= if_predicted_pc;
       id_predicted_pht_index <= if_predicted_pht_index;

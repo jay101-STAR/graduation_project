@@ -2,212 +2,85 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Response Language
+
+**Always respond in Chinese (简体中文), regardless of whether the user asks in Chinese or English.** Code, identifiers, commands and file paths stay as-is.
+
 ## Project Overview
 
-This is a RISC-V processor (graduation project) implemented in Verilog. The design implements RV32I + RV32M + Zicsr extensions using a **5-stage pipelined architecture** with data forwarding, hazard detection, and a dynamic branch predictor (gshare PHT + BTB).
+Graduation project: an in-order, single-issue RISC-V CPU (RV32I + RV32M + Zicsr, MRET, ECALL/EBREAK, FENCE.I, precise access faults) in Verilog/SystemVerilog, with a gshare + BTB branch predictor, optional ICache/DCache, and an AXI4 memory/UART subsystem. Active work is under `rtl/`. `AGENTS.md` holds the repo guidelines (style, testing, commits). `rtl/README.md` (Chinese) is the authoritative reference for `run.sh`, and `rtl/docs/*.md` documents each subsystem design.
 
-### Instruction Set Support
+Do not modify `practise/`, `rtl/vsrc_backup/`, or other historical directories unless asked.
 
-| Extension | Instructions | Notes |
-|-----------|-------------|-------|
-| **RV32I** | Main integer/load-store/branch/jump/system subset used by regression | Includes FENCE.I and trap path (ECALL/EBREAK) in current RTL |
-| **RV32M** | MUL, MULH, MULHSU, MULHU | 3-cycle Booth Radix-4 multiplier (4-cycle stall) |
-| | DIV, DIVU, REM, REMU | 32-iteration divider (33-cycle stall) |
-| **Zicsr** | CSRRW, CSRRS, CSRRC + immediate variants | mtvec, mepc, mcause, mstatus, mie, cycle/minstret |
-| | MRET | Exception return |
+## Build and Test (run from `rtl/`)
 
-## Build and Simulation Commands
+The main flow uses Synopsys VCS (`-cpp g++-4.8 -cc gcc-4.8`, `+lint=TFIPC-L`). The Makefile compiles **every** `*.v`/`*.sv` under `vsrc/`, so a new file there is picked up automatically, and a stray file there breaks the build. Python 3.9+, LLVM (`llvm-mc`/`llvm-objcopy`) and `riscv32-unknown-elf-*` are needed for image preparation.
 
-All commands run from the `rtl/` directory.
-
-### Prerequisites
-- Synopsys VCS (with GCC 4.8)
-- Verdi waveform viewer
-- LLVM toolchain: `llvm-mc`, `llvm-objcopy` (for RV32IM)
-- GNU RISC-V toolchain: `riscv32-unknown-elf-as`, `riscv32-unknown-elf-objcopy`
-
-### Core Commands
-```bash
-make comp              # Assemble bp_tntn.s, compile with VCS, run simulation
-make simv_build        # Compile RTL with VCS only
-make run_simv          # Run existing simv
-make coremark          # Run CoreMark flow (rtl/run.sh coremark)
-make verdi             # Open Verdi waveform viewer (testbench.fsdb)
-make clean             # Remove build artifacts
-make verdi_self_test   # Compile and open Verdi in one command
-```
-
-### Test Targets
-```bash
-./run.sh single rv32ui-p-add         # Run one ISA test
-./run.sh isa 'rv32u[im]-p-*'           # Batch ISA regression
-./run.sh bp [--build]               # Branch predictor pattern suite
-./run.sh all [--no-build]           # UART smoke + ISA regression
-./run.sh minstret                    # CSR minstret regression
-./run.sh coremark [ITERATIONS]            # CoreMark compile + sim flow
-```
-
-### Custom Assembly Workflow
-```bash
-# Option 1: Edit the Makefile comp target to use your .s file
-# Option 2: Manual workflow
-cd rtl/vsrc/instrom
-./llvm.sh your_test.s                    # Creates your_test.hex
-cp your_test.hex instrom.hex             # Set as active program
-cd ../..
-make comp                                 # Recompile and run
-```
-
-Assembly toolchains:
-- `llvm.sh`: LLVM (llvm-mc/objcopy) - supports RV32IM
-- `asm2hex.sh`: GNU (riscv32-unknown-elf-as/objcopy)
-
-## Architecture Overview
-
-### Top-Level Hierarchy
-```
-testbench.v
-└── top.v
-    ├── riscv_core.v (main 5-stage pipeline core)
-    │   ├── pc.v / if_id_reg.v / id.v / id_ex_reg.v
-    │   ├── ex.v / ex_dataram_reg.v / dataram_wb_reg.v / wb.v
-    │   ├── registerfile.v / csr.v / branch_predictor.v
-    │   └── mul_3cycle.v / div.v
-    ├── dataram_banked.v (shared instruction/data BRAM)
-    ├── mem_to_axi_lite_bridge.v (CPU local mem <-> AXI-Lite)
-    └── axi_lite_uart_slave.v (UART MMIO peripheral)
-```
-
-### 5-Stage Pipeline Execution Flow
-
-This is a **5-stage pipelined CPU** with pipeline registers between each stage:
-
-1. **IF (Instruction Fetch)**: `pc.v` generates address → `dataram_banked.v` instruction port supplies instruction → `if_id_reg.v` latches
-2. **ID (Instruction Decode)**: `id.v` decodes instruction → reads register file → `id_ex_reg.v` latches
-3. **EX (Execute)**: `ex.v` performs ALU operations, branch resolution, CSR operations → `ex_dataram_reg.v` latches
-4. **MEM (Memory Access)**: `dataram_banked.v` (RAM) / `mem_to_axi_lite_bridge.v` (MMIO) handle load/store operations → `dataram_wb_reg.v` latches
-5. **WB (Write Back)**: `wb.v` selects result → writes to register file
-
-**Key characteristics:**
-- Pipeline registers between all stages (clocked sequential logic)
-- Data forwarding from MEM and WB stages to EX stage to resolve hazards
-- Hazard detection: load-use hazards, multiplier stalls
-- Dynamic branch prediction: gshare direction predictor + 2-way BTB
-- Stall and flush control for pipeline bubbles
-- Ideal CPI = 1 (one instruction completes per cycle in steady state)
-- Branch misprediction penalty: 2 cycles
-- Load-use hazard penalty: 1 cycle stall
-
-### Key Modules
-
-| Module | Description |
-|--------|-------------|
-| **riscv_core.v** | Top-level processor core: pipeline control, hazard detection, forwarding |
-| **pc.v** | Program counter (base: `0x8000_0000`), handles stalls and redirects |
-| **id.v** | Instruction decode and immediate extraction |
-| **ex.v** | ALU, branch resolution, mul/div units, CSR interface |
-| **branch_predictor.v** | gshare PHT + BTB branch predictor |
-| **dataram_banked.v** | Banked BRAM memory model with unaligned access support |
-| **csr.v** | CSR registers and trap handling |
-| **mem_to_axi_lite_bridge.v** | MMIO bridge to AXI-Lite peripherals |
-| **axi_lite_uart_slave.v** | UART MMIO device |
-| **registerfile.v** | 32 registers (x0-x31), dual-read/single-write |
-
-**Pipeline Registers** (all support stall/flush):
-- `if_id_reg.v` → `id_ex_reg.v` → `ex_dataram_reg.v` → `dataram_wb_reg.v`
-
-**RV32M Modules**:
-- `mul_3cycle.v`: Booth Radix-4 multiplier with Wallace tree
-- `div.v`: 32-iteration iterative divider
-
-### Instruction Type Encoding (define.v)
-
-Two-level classification:
-- **aluc** (4-bit): Instruction category (R, I, S, B, JAL, LUI, etc.)
-- **alucex** (8-bit): Specific operation (ADD, SUB, BEQ, etc.)
-
-### Signal Naming Conventions
-- Pattern: `source_dest_signal` (e.g., `pc_id_pc`, `id_ex_rs1_data`, `ex_reg_rd_data`)
-- Suffixes: `ren`/`wen` (enable), `raddr`/`waddr` (address), `rdata`/`wdata` (data)
-
-### Pipeline Hazards and Control
-
-**Data Hazards:**
-- **Data Forwarding**: Results from MEM and WB stages forwarded to EX stage to resolve RAW hazards
-- **Load-Use Hazard**: 1-cycle stall when instruction in EX depends on load result in MEM stage
-- **Multiplier Hazard**: 4-cycle stall for MUL/MULH/MULHSU/MULHU instructions (3 computation stages + 1 register delay)
-- **Divider Hazard**: 33-cycle stall for DIV/DIVU/REM/REMU instructions (32 iterations + 1 result cycle)
-
-**Control Hazards:**
-- **Branch Prediction**: Dynamic predictor in IF stage
-  - gshare direction predictor (8-bit GHR + 2-bit saturating counters)
-  - 2-way set-associative BTB for target prediction
-  - Predictor updated from EX stage branch outcomes
-- **Branch Misprediction**: 2-cycle penalty (flush IF and ID stages)
-- **JAL/JALR**: Unconditional jumps resolved in ID stage, 1-cycle penalty
-
-**Stall and Flush Signals:**
-- `stall_if_id`, `stall_id_ex`, `stall_ex_dataram`, `stall_dataram_wb`: Hold pipeline stage
-- `flush_if_id`, `flush_id_ex`, `flush_ex_dataram`, `flush_dataram_wb`: Insert pipeline bubble (NOP)
-
-## Important Notes
-
-### Simulation Environment
-- Clock: 20ns (50 MHz), Reset: 200ns
-- Testbench timeout default: `4,000,000 ns` (supports override via `+timeout_ns=<N>`)
-- FSDB waveform dump always enabled
-
-### File Paths
-**CRITICAL**: Modules use absolute paths (e.g., `/home/jay/Desktop/graduation_project/`). Preserve these paths or update consistently across all files.
-
-### Limitations
-- Single-issue, in-order 5-stage pipeline
-- No cache hierarchy in current RTL
-- External interrupt delivery path to core is not fully wired yet
-- Simulation/build depends on VCS license availability
-
-### Testing and Verification
-
-#### RISC-V Official Test Suite
-Tests located in `verification/riscv-tests/isa/`.
+`./run.sh` is a thin wrapper around `tools/run.py`:
 
 ```bash
-# First compile to generate simv
-make comp
-
-# Run tests (default pattern: RV32UI + RV32UM)
-./run.sh isa                     # Run I and M extension tests
-./run.sh isa "rv32ui-p-*"        # All RV32UI tests
-./run.sh isa "rv32ui-p-add"      # Single test
-./run.sh isa "rv32ui-p-b*"       # All branch tests
+./run.sh build                         # compile only (same as make simv_build)
+./run.sh single rv32ui-p-add           # one ISA test
+./run.sh isa 'rv32u[im]-p-*'           # ISA batch (includes fence.i unless --skip-fencei)
+./run.sh all                           # UART smoke + ISA regression (forces rebuild)
+./run.sh uart [--test uart_rx_smoke] [--list]
+./run.sh bp | minstret | perf [--tests '...'] | benchmark multiply
+./run.sh coremark 1                    # CoreMark; CRC/perf checks done in run.py
+./run.sh prepare <elf|.s|.hex> [--toolchain gnu]   # load an image without simulating
+make comp                              # prepare bp_tests/bp_tntn.s, build, run
+make verdi                             # open testbench.fsdb
+python3 -m unittest discover -s tools -p 'test_run.py' -v   # test run.py itself (no VCS)
 ```
 
-**Test completion detection:**
-- Tests write to `tohost` at `0x80001000`
-- `tohost = 1`: PASS, `tohost != 1`: FAIL (value = failing test case)
+- `--build` / `--no-build` force or skip recompilation. By default it rebuilds when `simv` is missing or stale.
+- Test commands overwrite, then restore, `vsrc/instrom/instrom.hex` and `vsrc/dataram/bank{0,1}.{hex,coe,mem}`. **Never run two image-rewriting tests in parallel.** `prepare` keeps the new image.
+- Pass condition: the sim prints `TEST PASSED` (ISA: `tohost == 1`; 0 = incomplete, other values = failing case). Evidence goes to `rtl/test_results/` with timestamped summaries, per-test logs, and `failed_tests_*.txt`. `make clean` deletes `test_results/`.
+- Testbench plusargs: `+timeout_ns=<N>` (default 400000 ns), `+uart_tx_print`, `+bp_pattern_test`, `+perf_start_pc=/+perf_stop_pc=`, and others (see `vsrc/testbench.v`).
 
-**Results:** `rtl/test_results/<mode>_summary_*.txt`, `failed_tests_*.txt`, `<timestamp>_<suite>_<test>.sim.log`
+### Verilator-based unit and boundary benches (`rtl/tests/`)
 
-## Debugging
+The cache, AXI4 and handshake work is verified with standalone Verilator 5.x benches, because VCS licensing is not always available. The runners build in `/tmp/*_verilator`, take a lock on `test_results/.divider_simulation.lock`, and use a testbench copy with the FSDB calls stripped.
 
-### Common Issues
-| Problem | Check |
-|---------|-------|
-| Compilation fails | VCS/GCC 4.8 install, absolute paths in `include` |
-| X values | `sim.log` for X propagation, uninitialized regs |
-| Test hangs | PC incrementing in waveform, `tohost_value` signal |
+```bash
+python3 tests/run_axi4.py --cache-mode 10      # AXI4 unit benches + CPU regression (make test-axi4)
+python3 tests/run_cache.py --cache-mode 11     # cache-mode bits = ICache,DCache (00/10/01/11)
+python3 tests/run_axi4_units.py --bench axi4_ram_tb --delay 3
+```
 
-### Key Signals for Waveform Analysis
-- `pc_id_pc`: Program counter
-- `id_ex_alucex`: Current instruction in EX
-- `ex_reg_rd_wen/data`: Register writeback
-- `stall_*`, `flush_*`: Pipeline control
-- `tohost_value`: Test completion
-- `mul_start/done/busy`: Multiplier state
+Other runners: `run_icache.py`, `run_phys_{i,d}cache.py`, `run_access_faults.py`, `run_mem_handshake.py`, `run_{mul,div}_once.py`, `verify_jal_btb.py`. The `*_validation.md` notes next to them record the expected cycle counts.
 
-### Memory Layout
-| Region | Address | Size |
-|--------|---------|------|
-| Instruction/Data banked BRAM base | `0x8000_0000` | Address space mapped in `dataram_banked.v` (banked BRAM model) |
-| `tohost` register | `0x8000_1000` | 4 bytes |
-| UART MMIO base | `0x1000_0000` | AXI-Lite slave registers |
+## Architecture
+
+```text
+top.v
+├── async_reset                 (async assert / sync release)
+├── riscv_core  #(ICACHE_ENABLE=1, DCACHE_ENABLE=0)
+│   ├── pipeline: pc, IF1/IF2 regs, if_id_reg, id, id_ex_reg, ex (+mul_3cycle, div),
+│   │             ex_dataram_reg, dataram_wb_reg, wb, registerfile, csr, branch_predictor
+│   ├── fetch_mem_adapter -> addr_translate_bypass -> mem_attr_decode -> icache_phys_word | cache_word_bypass
+│   ├── mem_req_adapter -> lsu -> addr_translate_bypass -> mem_attr_decode -> dcache_phys_word | cache_word_bypass
+│   └── mem_burst_arbiter  --> native mem_rd_* / mem_wr_* burst ports (core boundary)
+├── axi4_master                 (native bursts -> AXI4, 1 read + 1 write in flight)
+└── axi4_subsystem
+    ├── axi4_interconnect       (RAM / UART decode, DECERR otherwise)
+    ├── axi4_ram_slave          (2 x std_bram_tdp, 64 KiB interleaved banks, tohost observer)
+    └── axi4_uart_slave
+```
+
+Key cross-file facts:
+- **Frontend is two fetch stages (IF1/IF2)** in `riscv_core.v` before `if_id_reg`. Redirects flush IF1, IF2, IF/ID and the stall-return buffer (`frontend_flush`).
+- **Control flow:** conditional branches and JALR resolve in EX (`branch_flush`). JAL is predicted in IF through a BTB entry flagged `btb_is_jal`, then checked or redirected in ID (`id_jal_advance` / `id_jal_redirect`). Redirects from older instructions in EX (mispredicts, JALR, traps, MRET, FENCE.I) take priority over the ID JAL redirect. FENCE.I also clears BTB valid bits and invalidates the ICache.
+- **Branch predictor:** gshare with `GHR_WIDTH=10` (1024-entry PHT) and a 2-way BTB (`ENTRY_NUM=256`). It trains only when a valid EX instruction is accepted.
+- **Stalls:** `stall_*` come from `load_use_hazard`, `mul_hazard`, `div_hazard`, `mem_wait` and `top_core_mem_stall`. `flush_ex_dataram`/`flush_dataram_wb` fire on `mem_trap_fire` (precise access faults from bus errors). MUL/DIV use a valid/accept handshake with `ex_can_advance`: MUL takes 5 EX periods, DIV/REM take N+2 periods (N = iterations, with early-out and fast paths).
+- **Memory map** (`mem_attr_decode.v`): RAM `0x8000_0000–0x8000_FFFF`, tohost `0x8000_1000` (its cache line is uncacheable), UART `0x1000_0000–0x1000_000F` (MMIO, single beat), anything else returns DECERR, which becomes an access fault.
+- **Native burst protocol:** `len` = beats − 1. Only `0` (bypass) or `15` (64-byte cache line) is produced. Reads use one request handshake plus per-beat responses with `last`. Writes use a per-beat request handshake with `wlast` and a single completion response. Details are in `rtl/docs/core_boundary.md` and `rtl/docs/axi4_bus.md`.
+- **Caches:** the ICache is 32 KiB, 4-way, 128 sets, 64 B lines, PLRU (`vsrc/cache/icache.sv`). The DCache is write-back (`dcache.sv`) and does its refill after the dirty writeback finishes. ICache reads can overlap DCache writes.
+- Instruction classes are encoded in `vsrc/define.v`: `aluc` (4-bit category) and `alucex` (8-bit operation).
+
+## Conventions and Gotchas
+
+- `include` directives and the Makefile's `verdi` targets use **absolute paths** (`/home/jay/Desktop/graduation_project/...`). Keep them consistent.
+- Signals are named `source_dest_signal` with stage prefixes (`id_ex_*`, `ex_reg_rd_wen`). Use two-space indent, explicit widths and named port connections. Comments mix Chinese and English.
+- Diagrams in docs and responses use plain-text boxes in ```text blocks, not Mermaid (from AGENTS.md).
+- Validation order for RTL changes: focused test, then the subsystem suite, then broad regression. Performance changes need CoreMark plus mcycle/minstret/CPI comparisons. Commit messages follow `<scope>: <action>` (e.g. `core/ex: fix BLTU compare path`).
+- `rtl/todolist.txt` tracks pending work (e.g. moving the adapters into the core and adding a refill buffer).

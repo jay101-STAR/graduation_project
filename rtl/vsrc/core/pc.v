@@ -18,14 +18,11 @@ module pc (
   //DPI-C
   // import "DPI-C" function void get_pc_value(input int station);
 
-  // PC更新优先级：
-  // 1. stall时保持当前PC
-  // 2. EX阶段重定向（包括预测错误修正、JAL/JALR、trap等）
-  // 3. ID阶段预测跳转
-  // 4. 顺序执行（PC+4）
+  // An accepted redirect must survive instruction-memory backpressure.
+  // Otherwise advance only when the current fetch request is accepted.
   wire [31:0] new_pc;
-  assign new_pc = stall ? next_pc :
-                  ex_pc_pc_wen ? ex_pc_pc_data :
+  assign new_pc = ex_pc_pc_wen ? ex_pc_pc_data :
+                  stall ? next_pc :
                   id_pc_wen ? id_pc_data :
                   next_pc + 4;
 

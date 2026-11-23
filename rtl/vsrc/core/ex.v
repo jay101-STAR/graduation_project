@@ -4,6 +4,7 @@ module ex (
     input clk,
     input rst,
     input ex_can_advance,  // EX/MEM will accept the current EX instruction.
+    input ex_operands_ready,  // An older variable-latency load has completed.
     input id_ex_jal_resolved,
 
     input [ 3:0] id_ex_aluc,
@@ -361,7 +362,8 @@ module ex (
   wire mul_a_sign = (id_ex_alucex == `MUL_TYPE) || (id_ex_alucex == `MULH_TYPE) ||
                     (id_ex_alucex == `MULHSU_TYPE);
   wire mul_b_sign = (id_ex_alucex == `MUL_TYPE) || (id_ex_alucex == `MULH_TYPE);
-  wire mul_start = id_ex_is_mul_instruction && !mul_inflight && !mul_done_latched && !mul_busy_raw;
+  wire mul_start = id_ex_is_mul_instruction && ex_operands_ready &&
+                   !mul_inflight && !mul_done_latched && !mul_busy_raw;
 
   mul_3cycle mul_3cycle0 (
       .clk       (clk),
@@ -389,7 +391,8 @@ module ex (
   wire div_result_valid = div_done_latched || (div_inflight && div_done_raw);
   wire div_result_accept = id_ex_is_div_instruction && div_result_valid && ex_can_advance;
   wire div_sign = (id_ex_alucex == `DIV_TYPE) || (id_ex_alucex == `REM_TYPE);
-  wire div_start = id_ex_is_div_instruction && !div_inflight && !div_done_latched && !div_busy_raw;
+  wire div_start = id_ex_is_div_instruction && ex_operands_ready &&
+                   !div_inflight && !div_done_latched && !div_busy_raw;
 
   div div0 (
       .clk         (clk),

@@ -1,5 +1,5 @@
 # Active RTL and unified test entry point
-SRCS =  $(shell find ./vsrc/ -name "*.v")
+SRCS =  $(shell find ./vsrc/ -type f \( -name "*.v" -o -name "*.sv" \))
 VCS = vcs -full64 -sverilog -timescale=1ns/1ns \
       		+v2k \
 		 +define+fsdb \
@@ -94,3 +94,7 @@ clean:
 	rm -f ./vsrc/instrom/perf_temp.hex ./vsrc/instrom/perf_temp.hex.bin
 	rm -f ./vsrc/instrom/*.backup ./vsrc/instrom/*.hex.*_backup
 	rm -f ./vsrc/dataram/*.backup ./vsrc/dataram/*.hex.*_backup
+
+.PHONY: test-axi4
+test-axi4:
+	python3 tests/run_axi4.py --cache-mode 10

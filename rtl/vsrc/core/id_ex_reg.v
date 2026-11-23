@@ -11,6 +11,7 @@ module id_ex_reg (
     input [31:0] id_rs1_data,
     input [31:0] id_rs2_data,
     input        id_valid,
+    input        id_fault,
     input [ 4:0] id_rs1_addr,
     input [ 4:0] id_rs2_addr,
     input [ 4:0] id_rd_addr,
@@ -42,6 +43,7 @@ module id_ex_reg (
     output reg [31:0] ex_rs1_data,
     output reg [31:0] ex_rs2_data,
     output reg        ex_valid,
+    output reg        ex_fault,
     output reg [ 4:0] ex_rs1_addr,
     output reg [ 4:0] ex_rs2_addr,
     output reg [ 4:0] ex_rd_addr,
@@ -74,6 +76,7 @@ module id_ex_reg (
       ex_rs1_data           <= 32'h0;
       ex_rs2_data           <= 32'h0;
       ex_valid              <= 1'b0;
+      ex_fault              <= 1'b0;
       ex_rs1_addr           <= 5'h0;
       ex_rs2_addr           <= 5'h0;
       ex_rd_addr            <= 5'h0;
@@ -99,6 +102,7 @@ module id_ex_reg (
       ex_rs1_data           <= 32'h0;
       ex_rs2_data           <= 32'h0;
       ex_valid              <= 1'b0;
+      ex_fault              <= 1'b0;
       ex_rs1_addr           <= 5'h0;
       ex_rs2_addr           <= 5'h0;
       ex_rd_addr            <= 5'h0;
@@ -149,6 +153,7 @@ module id_ex_reg (
       ex_rs1_data           <= id_rs1_data;
       ex_rs2_data           <= id_rs2_data;
       ex_valid              <= id_valid;
+      ex_fault              <= id_fault;
       ex_rs1_addr           <= id_rs1_addr;
       ex_rs2_addr           <= id_rs2_addr;
       ex_rd_addr            <= id_rd_addr;

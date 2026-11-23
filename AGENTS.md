@@ -31,6 +31,10 @@ Run commands from `rtl/`. Install VCS, Python 3, and the `riscv32-unknown-elf` t
 
 Use two-space indentation and preserve surrounding alignment; no automatic formatter is prescribed. Use lowercase underscore module names, stage-prefixed signals (`id_ex_*`), explicit widths (`[31:0]`), and named port connections. Define uppercase instruction macros in `rtl/vsrc/define.v`. Follow existing include conventions and document complex control logic. VCS enables lint warnings with `+lint=TFIPC-L`.
 
+## Communication & Diagrams
+
+Use plain-text boxes and connecting lines inside fenced `text` code blocks for module connection diagrams, architecture diagrams, and data-path diagrams, both in responses and project documentation. Do not use Mermaid `flowchart` format for these diagrams.
+
 ## Testing Guidelines
 
 For RTL changes, run a focused test, the relevant subsystem suite, then broad regression. Add assembly cases alongside existing tests, using patterns such as `uart_*.s`. ISA success requires `tohost = 1`; zero is incomplete, and other nonzero values indicate failure. Save timestamped evidence under `rtl/test_results/`. Document any `--skip-fencei` exclusion. Performance changes require CoreMark and `mcycle`, `minstret`, and CPI comparisons.

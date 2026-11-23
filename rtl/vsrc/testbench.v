@@ -161,7 +161,7 @@ module testbench ();
           perf_region_active = 1'b0;
           perf_region_done = 1'b1;
         end else begin
-          if (top.u_core.top_core_mem_stall) region_mem = region_mem + 1;
+          if (top.u_core.top_core_mem_stall || top.u_core.mem_wait) region_mem = region_mem + 1;
           else if (top.u_core.mul_hazard) region_mul = region_mul + 1;
           else if (top.u_core.div_hazard) region_div = region_div + 1;
           else if (top.u_core.load_use_hazard) region_load = region_load + 1;
@@ -238,20 +238,8 @@ module testbench ();
   //   end
   // end
   always @(posedge clk) begin
-    if (!rst && uart_tx_print_en &&
-        top.bridge_axi_awvalid && top.axi_bridge_awready &&
-        top.bridge_axi_wvalid && top.axi_bridge_wready &&
-        (top.bridge_axi_awaddr == UART_TXDATA_ADDR)) begin
-      if (top.bridge_axi_wstrb[0]) begin
-        $write("%c", top.bridge_axi_wdata[7:0]);
-      end else if (top.bridge_axi_wstrb[1]) begin
-        $write("%c", top.bridge_axi_wdata[15:8]);
-      end else if (top.bridge_axi_wstrb[2]) begin
-        $write("%c", top.bridge_axi_wdata[23:16]);
-      end else if (top.bridge_axi_wstrb[3]) begin
-        $write("%c", top.bridge_axi_wdata[31:24]);
-      end
-    end
+    if (!rst && uart_tx_print_en && top.axi4_subsystem0.uart.uart_tx_valid)
+      $write("%c", top.axi4_subsystem0.uart.uart_tx_data);
 
     if (!rst && (uart_rx_smoke_en || uart_rx_overrun_smoke_en)) begin
       if (top.bridge_axi_arvalid && top.axi_bridge_arready &&
@@ -259,7 +247,9 @@ module testbench ();
            (top.bridge_axi_araddr == UART_RXDATA_ADDR))) begin
         $display("[UART-RX] AR addr=0x%08h @t=%0t", top.bridge_axi_araddr, $time);
       end
-      if (top.axi_bridge_rvalid && top.bridge_axi_rready) begin
+      if (top.axi_bridge_rvalid && top.bridge_axi_rready &&
+          ((top.bridge_axi_araddr == UART_STATUS_ADDR) ||
+           (top.bridge_axi_araddr == UART_RXDATA_ADDR))) begin
         $display("[UART-RX] R data=0x%08h @t=%0t", top.axi_bridge_rdata, $time);
       end
     end
